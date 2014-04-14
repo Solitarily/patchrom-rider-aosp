@@ -7,7 +7,6 @@
 .annotation system Ldalvik/annotation/MemberClasses;
     value = {
         Landroid/provider/Telephony$Intents;,
-        Landroid/provider/Telephony$Blacklist;,
         Landroid/provider/Telephony$CellBroadcasts;,
         Landroid/provider/Telephony$Carriers;,
         Landroid/provider/Telephony$MmsSms;,

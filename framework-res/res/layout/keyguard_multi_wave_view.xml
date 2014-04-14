@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.internal.widget.multiwaveview.MultiWaveView android:orientation="horizontal" android:id="@id/multiwave_view" android:targetDescriptions="@array/lockscreen_target_descriptions_with_camera" android:directionDescriptions="@array/lockscreen_direction_descriptions" android:targetDrawables="@array/lockscreen_targets_with_camera" android:handleDrawable="@drawable/ic_lockscreen_handle" android:waveDrawable="@drawable/ic_lockscreen_outerring" android:outerRadius="@dimen/multiwaveview_target_placement_radius" android:vibrationDuration="20" android:snapMargin="@dimen/multiwaveview_snap_margin" android:feedbackCount="3"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -1414,7 +1414,7 @@
 
     .line 742
     :pswitch_0
-    const v1, 0x1040558
+    const v1, 0x10404fa
 
     invoke-virtual {v13, v1}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1422,7 +1422,7 @@
 
     .line 743
     .local v15, title:Ljava/lang/CharSequence;
-    const v1, 0x1040559
+    const v1, 0x10404fb
 
     invoke-virtual {v13, v1}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
@@ -1503,7 +1503,7 @@
     .end local v15           #title:Ljava/lang/CharSequence;
     .end local v16           #viewIntent:Landroid/content/Intent;
     :pswitch_1
-    const v1, 0x104055e
+    const v1, 0x1040500
 
     invoke-virtual {v13, v1}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1521,20 +1521,28 @@
 
     packed-switch v1, :pswitch_data_1
 
+    .line 778
     const/4 v15, 0x0
 
+    .line 782
     .restart local v15       #title:Ljava/lang/CharSequence;
     :goto_2
-    const v1, 0x1080576
+
+    .line 783
+    const v1, 0x1080522
 
     invoke-virtual {v9, v1}, Landroid/app/Notification$Builder;->setSmallIcon(I)Landroid/app/Notification$Builder;
 
+    .line 784
     invoke-virtual {v9, v15}, Landroid/app/Notification$Builder;->setTicker(Ljava/lang/CharSequence;)Landroid/app/Notification$Builder;
 
+    .line 785
     invoke-virtual {v9, v15}, Landroid/app/Notification$Builder;->setContentTitle(Ljava/lang/CharSequence;)Landroid/app/Notification$Builder;
 
+    .line 786
     invoke-virtual {v9, v8}, Landroid/app/Notification$Builder;->setContentText(Ljava/lang/CharSequence;)Landroid/app/Notification$Builder;
 
+    .line 788
     move-object/from16 v0, p1
 
     iget-object v1, v0, Landroid/net/NetworkPolicy;->template:Landroid/net/NetworkTemplate;
@@ -1565,7 +1573,7 @@
     .end local v10           #intent:Landroid/content/Intent;
     .end local v15           #title:Ljava/lang/CharSequence;
     :pswitch_2
-    const v1, 0x104055a
+    const v1, 0x10404fc
 
     invoke-virtual {v13, v1}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1578,7 +1586,7 @@
     .line 769
     .end local v15           #title:Ljava/lang/CharSequence;
     :pswitch_3
-    const v1, 0x104055b
+    const v1, 0x10404fd
 
     invoke-virtual {v13, v1}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1591,7 +1599,7 @@
     .line 772
     .end local v15           #title:Ljava/lang/CharSequence;
     :pswitch_4
-    const v1, 0x104055c
+    const v1, 0x10404fe
 
     invoke-virtual {v13, v1}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1604,7 +1612,7 @@
     .line 775
     .end local v15           #title:Ljava/lang/CharSequence;
     :pswitch_5
-    const v1, 0x104055d
+    const v1, 0x10404ff
 
     invoke-virtual {v13, v1}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1626,7 +1634,7 @@
 
     .line 795
     .local v11, overBytes:J
-    const v1, 0x1040563
+    const v1, 0x1040505
 
     const/4 v4, 0x1
 
@@ -1704,7 +1712,7 @@
     .end local v10           #intent:Landroid/content/Intent;
     .end local v15           #title:Ljava/lang/CharSequence;
     :pswitch_7
-    const v1, 0x104055f
+    const v1, 0x1040501
 
     invoke-virtual {v13, v1}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1717,7 +1725,7 @@
     .line 804
     .end local v15           #title:Ljava/lang/CharSequence;
     :pswitch_8
-    const v1, 0x1040560
+    const v1, 0x1040502
 
     invoke-virtual {v13, v1}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1730,7 +1738,7 @@
     .line 807
     .end local v15           #title:Ljava/lang/CharSequence;
     :pswitch_9
-    const v1, 0x1040561
+    const v1, 0x1040503
 
     invoke-virtual {v13, v1}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1743,7 +1751,7 @@
     .line 810
     .end local v15           #title:Ljava/lang/CharSequence;
     :pswitch_a
-    const v1, 0x1040562
+    const v1, 0x1040504
 
     invoke-virtual {v13, v1}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1815,7 +1823,7 @@
 
     .line 852
     .local v8, builder:Landroid/app/Notification$Builder;
-    const v0, 0x1040564
+    const v0, 0x1040506
 
     invoke-virtual {v10, v0}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1823,7 +1831,7 @@
 
     .line 853
     .local v11, title:Ljava/lang/CharSequence;
-    const v0, 0x1040565
+    const v0, 0x1040507
 
     invoke-virtual {v10, v0}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
@@ -4904,7 +4912,7 @@
 
     :cond_1
     const/4 v0, 0x2
-
+    
     invoke-direct {p0, v10, v0, v12, v13}, Lcom/android/server/net/NetworkPolicyManagerService;->enqueueValidNotification(Landroid/net/NetworkPolicy;IJ)V
 
     iget-object v0, v10, Landroid/net/NetworkPolicy;->template:Landroid/net/NetworkTemplate;

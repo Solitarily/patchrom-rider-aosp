@@ -26,13 +26,13 @@
 # static fields
 .field private static final DESCRIPTOR:Ljava/lang/String; = "android.content.pm.IPackageManager"
 
-.field static final TRANSACTION_addPackageToPreferred:I = 0x2e
+.field static final TRANSACTION_addPackageToPreferred:I = 0x2f
 
 .field static final TRANSACTION_addPermission:I = 0x11
 
-.field static final TRANSACTION_addPermissionAsync:I = 0x4d
+.field static final TRANSACTION_addPermissionAsync:I = 0x4c
 
-.field static final TRANSACTION_addPreferredActivity:I = 0x31
+.field static final TRANSACTION_addPreferredActivity:I = 0x32
 
 .field static final TRANSACTION_canonicalToCurrentPackageNames:I = 0x5
 
@@ -44,45 +44,47 @@
 
 .field static final TRANSACTION_checkUidSignatures:I = 0x17
 
-.field static final TRANSACTION_clearApplicationUserData:I = 0x3f
+.field static final TRANSACTION_clearApplicationUserData:I = 0x3e
 
-.field static final TRANSACTION_clearPackagePreferredActivities:I = 0x33
+.field static final TRANSACTION_clearPackagePreferredActivities:I = 0x34
 
 .field static final TRANSACTION_currentToCanonicalPackageNames:I = 0x4
 
-.field static final TRANSACTION_deleteApplicationCacheFiles:I = 0x3e
+.field static final TRANSACTION_deleteApplicationCacheFiles:I = 0x3d
 
-.field static final TRANSACTION_deletePackage:I = 0x2c
+.field static final TRANSACTION_deletePackage:I = 0x2d
 
-.field static final TRANSACTION_enterSafeMode:I = 0x44
+.field static final TRANSACTION_enterSafeMode:I = 0x43
 
-.field static final TRANSACTION_extendVerificationTimeout:I = 0x54
+.field static final TRANSACTION_extendVerificationTimeout:I = 0x53
 
-.field static final TRANSACTION_finishPackageInstall:I = 0x2a
+.field static final TRANSACTION_finishPackageInstall:I = 0x2b
 
-.field static final TRANSACTION_freeStorage:I = 0x3d
+.field static final TRANSACTION_freeStorage:I = 0x3c
 
-.field static final TRANSACTION_freeStorageAndNotify:I = 0x3c
+.field static final TRANSACTION_freeStorageAndNotify:I = 0x3b
 
 .field static final TRANSACTION_getActivityInfo:I = 0xb
 
 .field static final TRANSACTION_getAllPermissionGroups:I = 0x9
 
-.field static final TRANSACTION_getApplicationEnabledSetting:I = 0x3a
+.field static final TRANSACTION_getApplicationEnabledSetting:I = 0x39
 
 .field static final TRANSACTION_getApplicationInfo:I = 0xa
 
-.field static final TRANSACTION_getComponentEnabledSetting:I = 0x38
+.field static final TRANSACTION_getComponentEnabledSetting:I = 0x37
 
-.field static final TRANSACTION_getInstallLocation:I = 0x4f
+.field static final TRANSACTION_getInstallLocation:I = 0x4e
 
-.field static final TRANSACTION_getInstalledApplications:I = 0x22
+.field static final TRANSACTION_getInstalledApplications:I = 0x23
 
 .field static final TRANSACTION_getInstalledPackages:I = 0x21
 
-.field static final TRANSACTION_getInstallerPackageName:I = 0x2d
+.field static final TRANSACTION_getInstalledThemePackages:I = 0x22
 
-.field static final TRANSACTION_getInstrumentationInfo:I = 0x27
+.field static final TRANSACTION_getInstallerPackageName:I = 0x2e
+
+.field static final TRANSACTION_getInstrumentationInfo:I = 0x28
 
 .field static final TRANSACTION_getNameForUid:I = 0x19
 
@@ -90,7 +92,7 @@
 
 .field static final TRANSACTION_getPackageInfo:I = 0x1
 
-.field static final TRANSACTION_getPackageSizeInfo:I = 0x40
+.field static final TRANSACTION_getPackageSizeInfo:I = 0x3f
 
 .field static final TRANSACTION_getPackageUid:I = 0x2
 
@@ -100,13 +102,11 @@
 
 .field static final TRANSACTION_getPermissionInfo:I = 0x6
 
-.field static final TRANSACTION_getPersistentApplications:I = 0x23
+.field static final TRANSACTION_getPersistentApplications:I = 0x24
 
-.field static final TRANSACTION_getPreferredActivities:I = 0x34
+.field static final TRANSACTION_getPreferredActivities:I = 0x35
 
-.field static final TRANSACTION_getPreferredPackages:I = 0x30
-
-.field static final TRANSACTION_getPrivacyGuardSetting:I = 0x35
+.field static final TRANSACTION_getPreferredPackages:I = 0x31
 
 .field static final TRANSACTION_getProviderInfo:I = 0xe
 
@@ -114,51 +114,51 @@
 
 .field static final TRANSACTION_getServiceInfo:I = 0xd
 
-.field static final TRANSACTION_getSystemAvailableFeatures:I = 0x42
+.field static final TRANSACTION_getSystemAvailableFeatures:I = 0x41
 
-.field static final TRANSACTION_getSystemSharedLibraryNames:I = 0x41
+.field static final TRANSACTION_getSystemSharedLibraryNames:I = 0x40
 
 .field static final TRANSACTION_getUidForSharedUser:I = 0x1a
 
-.field static final TRANSACTION_getVerifierDeviceIdentity:I = 0x55
+.field static final TRANSACTION_getVerifierDeviceIdentity:I = 0x54
 
 .field static final TRANSACTION_grantPermission:I = 0x13
 
-.field static final TRANSACTION_hasSystemFeature:I = 0x43
+.field static final TRANSACTION_hasSystemFeature:I = 0x42
 
-.field static final TRANSACTION_hasSystemUidErrors:I = 0x47
+.field static final TRANSACTION_hasSystemUidErrors:I = 0x46
 
-.field static final TRANSACTION_installExistingPackage:I = 0x52
+.field static final TRANSACTION_installExistingPackage:I = 0x51
 
-.field static final TRANSACTION_installPackage:I = 0x29
+.field static final TRANSACTION_installPackage:I = 0x2a
 
-.field static final TRANSACTION_installPackageWithVerification:I = 0x50
+.field static final TRANSACTION_installPackageWithVerification:I = 0x4f
 
-.field static final TRANSACTION_installPackageWithVerificationAndEncryption:I = 0x51
+.field static final TRANSACTION_installPackageWithVerificationAndEncryption:I = 0x50
 
-.field static final TRANSACTION_isFirstBoot:I = 0x56
+.field static final TRANSACTION_isFirstBoot:I = 0x55
 
-.field static final TRANSACTION_isOnlyCoreApps:I = 0x57
+.field static final TRANSACTION_isOnlyCoreApps:I = 0x56
 
-.field static final TRANSACTION_isPermissionEnforced:I = 0x59
+.field static final TRANSACTION_isPermissionEnforced:I = 0x58
 
 .field static final TRANSACTION_isProtectedBroadcast:I = 0x15
 
-.field static final TRANSACTION_isSafeMode:I = 0x45
+.field static final TRANSACTION_isSafeMode:I = 0x44
 
-.field static final TRANSACTION_isStorageLow:I = 0x5a
+.field static final TRANSACTION_isStorageLow:I = 0x59
 
-.field static final TRANSACTION_movePackage:I = 0x4c
+.field static final TRANSACTION_movePackage:I = 0x4b
 
-.field static final TRANSACTION_nextPackageToClean:I = 0x4b
+.field static final TRANSACTION_nextPackageToClean:I = 0x4a
 
-.field static final TRANSACTION_performBootDexOpt:I = 0x48
+.field static final TRANSACTION_performBootDexOpt:I = 0x47
 
-.field static final TRANSACTION_performDexOpt:I = 0x49
+.field static final TRANSACTION_performDexOpt:I = 0x48
 
-.field static final TRANSACTION_queryContentProviders:I = 0x26
+.field static final TRANSACTION_queryContentProviders:I = 0x27
 
-.field static final TRANSACTION_queryInstrumentation:I = 0x28
+.field static final TRANSACTION_queryInstrumentation:I = 0x29
 
 .field static final TRANSACTION_queryIntentActivities:I = 0x1c
 
@@ -170,15 +170,15 @@
 
 .field static final TRANSACTION_queryPermissionsByGroup:I = 0x7
 
-.field static final TRANSACTION_querySyncProviders:I = 0x25
+.field static final TRANSACTION_querySyncProviders:I = 0x26
 
-.field static final TRANSACTION_removePackageFromPreferred:I = 0x2f
+.field static final TRANSACTION_removePackageFromPreferred:I = 0x30
 
 .field static final TRANSACTION_removePermission:I = 0x12
 
-.field static final TRANSACTION_replacePreferredActivity:I = 0x32
+.field static final TRANSACTION_replacePreferredActivity:I = 0x33
 
-.field static final TRANSACTION_resolveContentProvider:I = 0x24
+.field static final TRANSACTION_resolveContentProvider:I = 0x25
 
 .field static final TRANSACTION_resolveIntent:I = 0x1b
 
@@ -186,25 +186,23 @@
 
 .field static final TRANSACTION_revokePermission:I = 0x14
 
-.field static final TRANSACTION_setApplicationEnabledSetting:I = 0x39
+.field static final TRANSACTION_setApplicationEnabledSetting:I = 0x38
 
-.field static final TRANSACTION_setComponentEnabledSetting:I = 0x37
+.field static final TRANSACTION_setComponentEnabledSetting:I = 0x36
 
-.field static final TRANSACTION_setInstallLocation:I = 0x4e
+.field static final TRANSACTION_setInstallLocation:I = 0x4d
 
-.field static final TRANSACTION_setInstallerPackageName:I = 0x2b
+.field static final TRANSACTION_setInstallerPackageName:I = 0x2c
 
-.field static final TRANSACTION_setPackageStoppedState:I = 0x3b
+.field static final TRANSACTION_setPackageStoppedState:I = 0x3a
 
-.field static final TRANSACTION_setPermissionEnforced:I = 0x58
+.field static final TRANSACTION_setPermissionEnforced:I = 0x57
 
-.field static final TRANSACTION_setPrivacyGuardSetting:I = 0x36
+.field static final TRANSACTION_systemReady:I = 0x45
 
-.field static final TRANSACTION_systemReady:I = 0x46
+.field static final TRANSACTION_updateExternalMediaStatus:I = 0x49
 
-.field static final TRANSACTION_updateExternalMediaStatus:I = 0x4a
-
-.field static final TRANSACTION_verifyPendingInstall:I = 0x53
+.field static final TRANSACTION_verifyPendingInstall:I = 0x52
 
 
 # direct methods
@@ -296,7 +294,7 @@
     .line 44
     sparse-switch p1, :sswitch_data_0
 
-    .line 1360
+    .line 1343
     invoke-super/range {p0 .. p4}, Landroid/os/Binder;->onTransact(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z
 
     move-result v3
@@ -2481,24 +2479,54 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
+    .line 597
+    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->getInstalledThemePackages()Ljava/util/List;
+
+    move-result-object v22
+
     .line 598
+    .local v22, _result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/PackageInfo;>;"
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 599
+    move-object/from16 v0, p3
+
+    move-object/from16 v1, v22
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
+
+    .line 600
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 604
+    .end local v22           #_result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/PackageInfo;>;"
+    :sswitch_23
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 606
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v4
 
-    .line 600
+    .line 608
     .restart local v4       #_arg0:I
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v5
 
-    .line 602
+    .line 610
     .restart local v5       #_arg1:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v6
 
-    .line 603
+    .line 611
     .restart local v6       #_arg2:I
     move-object/from16 v0, p0
 
@@ -2506,21 +2534,21 @@
 
     move-result-object v19
 
-    .line 604
+    .line 612
     .restart local v19       #_result:Landroid/content/pm/ParceledListSlice;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 605
+    .line 613
     if-eqz v19, :cond_19
 
-    .line 606
+    .line 614
     const/4 v3, 0x1
 
     move-object/from16 v0, p3
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 607
+    .line 615
     const/4 v3, 0x1
 
     move-object/from16 v0, v19
@@ -2529,13 +2557,13 @@
 
     invoke-virtual {v0, v1, v3}, Landroid/content/pm/ParceledListSlice;->writeToParcel(Landroid/os/Parcel;I)V
 
-    .line 612
+    .line 620
     :goto_1a
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 610
+    .line 618
     :cond_19
     const/4 v3, 0x0
 
@@ -2545,50 +2573,11 @@
 
     goto :goto_1a
 
-    .line 616
+    .line 624
     .end local v4           #_arg0:I
     .end local v5           #_arg1:Ljava/lang/String;
     .end local v6           #_arg2:I
     .end local v19           #_result:Landroid/content/pm/ParceledListSlice;
-    :sswitch_23
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 618
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v4
-
-    .line 619
-    .restart local v4       #_arg0:I
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->getPersistentApplications(I)Ljava/util/List;
-
-    move-result-object v20
-
-    .line 620
-    .local v20, _result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ApplicationInfo;>;"
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 621
-    move-object/from16 v0, p3
-
-    move-object/from16 v1, v20
-
-    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
-
-    .line 622
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 626
-    .end local v4           #_arg0:I
-    .end local v20           #_result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ApplicationInfo;>;"
     :sswitch_24
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -2596,24 +2585,63 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
+    .line 626
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v4
+
+    .line 627
+    .restart local v4       #_arg0:I
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->getPersistentApplications(I)Ljava/util/List;
+
+    move-result-object v20
+
     .line 628
+    .local v20, _result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ApplicationInfo;>;"
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 629
+    move-object/from16 v0, p3
+
+    move-object/from16 v1, v20
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
+
+    .line 630
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 634
+    .end local v4           #_arg0:I
+    .end local v20           #_result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ApplicationInfo;>;"
+    :sswitch_25
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 636
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v4
 
-    .line 630
+    .line 638
     .local v4, _arg0:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v5
 
-    .line 632
+    .line 640
     .local v5, _arg1:I
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v6
 
-    .line 633
+    .line 641
     .restart local v6       #_arg2:I
     move-object/from16 v0, p0
 
@@ -2621,21 +2649,21 @@
 
     move-result-object v19
 
-    .line 634
+    .line 642
     .local v19, _result:Landroid/content/pm/ProviderInfo;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 635
+    .line 643
     if-eqz v19, :cond_1a
 
-    .line 636
+    .line 644
     const/4 v3, 0x1
 
     move-object/from16 v0, p3
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 637
+    .line 645
     const/4 v3, 0x1
 
     move-object/from16 v0, v19
@@ -2644,13 +2672,13 @@
 
     invoke-virtual {v0, v1, v3}, Landroid/content/pm/ProviderInfo;->writeToParcel(Landroid/os/Parcel;I)V
 
-    .line 642
+    .line 650
     :goto_1b
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 640
+    .line 648
     :cond_1a
     const/4 v3, 0x0
 
@@ -2660,24 +2688,24 @@
 
     goto :goto_1b
 
-    .line 646
+    .line 654
     .end local v4           #_arg0:Ljava/lang/String;
     .end local v5           #_arg1:I
     .end local v6           #_arg2:I
     .end local v19           #_result:Landroid/content/pm/ProviderInfo;
-    :sswitch_25
+    :sswitch_26
     const-string v3, "android.content.pm.IPackageManager"
 
     move-object/from16 v0, p2
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 648
+    .line 656
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->createStringArrayList()Ljava/util/ArrayList;
 
     move-result-object v14
 
-    .line 650
+    .line 658
     .local v14, _arg0:Ljava/util/List;,"Ljava/util/List<Ljava/lang/String;>;"
     sget-object v3, Landroid/content/pm/ProviderInfo;->CREATOR:Landroid/os/Parcelable$Creator;
 
@@ -2687,7 +2715,7 @@
 
     move-result-object v16
 
-    .line 651
+    .line 659
     .local v16, _arg1:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ProviderInfo;>;"
     move-object/from16 v0, p0
 
@@ -2695,82 +2723,29 @@
 
     invoke-virtual {v0, v14, v1}, Landroid/content/pm/IPackageManager$Stub;->querySyncProviders(Ljava/util/List;Ljava/util/List;)V
 
-    .line 652
+    .line 660
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 653
+    .line 661
     move-object/from16 v0, p3
 
     invoke-virtual {v0, v14}, Landroid/os/Parcel;->writeStringList(Ljava/util/List;)V
 
-    .line 654
+    .line 662
     move-object/from16 v0, p3
 
     move-object/from16 v1, v16
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
 
-    .line 655
+    .line 663
     const/4 v3, 0x1
 
     goto/16 :goto_0
-
-    .line 659
-    .end local v14           #_arg0:Ljava/util/List;,"Ljava/util/List<Ljava/lang/String;>;"
-    .end local v16           #_arg1:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ProviderInfo;>;"
-    :sswitch_26
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 661
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 663
-    .restart local v4       #_arg0:Ljava/lang/String;
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v5
-
-    .line 665
-    .restart local v5       #_arg1:I
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v6
-
-    .line 666
-    .restart local v6       #_arg2:I
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4, v5, v6}, Landroid/content/pm/IPackageManager$Stub;->queryContentProviders(Ljava/lang/String;II)Ljava/util/List;
-
-    move-result-object v25
 
     .line 667
-    .local v25, _result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ProviderInfo;>;"
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 668
-    move-object/from16 v0, p3
-
-    move-object/from16 v1, v25
-
-    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
-
-    .line 669
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 673
-    .end local v4           #_arg0:Ljava/lang/String;
-    .end local v5           #_arg1:I
-    .end local v6           #_arg2:I
-    .end local v25           #_result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ProviderInfo;>;"
+    .end local v14           #_arg0:Ljava/util/List;,"Ljava/util/List<Ljava/lang/String;>;"
+    .end local v16           #_arg1:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ProviderInfo;>;"
     :sswitch_27
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -2778,14 +2753,67 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
+    .line 669
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v4
+
+    .line 671
+    .restart local v4       #_arg0:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v5
+
+    .line 673
+    .restart local v5       #_arg1:I
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v6
+
+    .line 674
+    .restart local v6       #_arg2:I
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4, v5, v6}, Landroid/content/pm/IPackageManager$Stub;->queryContentProviders(Ljava/lang/String;II)Ljava/util/List;
+
+    move-result-object v25
+
     .line 675
+    .local v25, _result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ProviderInfo;>;"
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 676
+    move-object/from16 v0, p3
+
+    move-object/from16 v1, v25
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
+
+    .line 677
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 681
+    .end local v4           #_arg0:Ljava/lang/String;
+    .end local v5           #_arg1:I
+    .end local v6           #_arg2:I
+    .end local v25           #_result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ProviderInfo;>;"
+    :sswitch_28
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 683
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
     if-eqz v3, :cond_1b
 
-    .line 676
+    .line 684
     sget-object v3, Landroid/content/ComponentName;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -2796,14 +2824,14 @@
 
     check-cast v4, Landroid/content/ComponentName;
 
-    .line 682
+    .line 690
     .local v4, _arg0:Landroid/content/ComponentName;
     :goto_1c
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v5
 
-    .line 683
+    .line 691
     .restart local v5       #_arg1:I
     move-object/from16 v0, p0
 
@@ -2811,21 +2839,21 @@
 
     move-result-object v19
 
-    .line 684
+    .line 692
     .local v19, _result:Landroid/content/pm/InstrumentationInfo;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 685
+    .line 693
     if-eqz v19, :cond_1c
 
-    .line 686
+    .line 694
     const/4 v3, 0x1
 
     move-object/from16 v0, p3
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 687
+    .line 695
     const/4 v3, 0x1
 
     move-object/from16 v0, v19
@@ -2834,13 +2862,13 @@
 
     invoke-virtual {v0, v1, v3}, Landroid/content/pm/InstrumentationInfo;->writeToParcel(Landroid/os/Parcel;I)V
 
-    .line 692
+    .line 700
     :goto_1d
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 679
+    .line 687
     .end local v4           #_arg0:Landroid/content/ComponentName;
     .end local v5           #_arg1:I
     .end local v19           #_result:Landroid/content/pm/InstrumentationInfo;
@@ -2850,7 +2878,7 @@
     .restart local v4       #_arg0:Landroid/content/ComponentName;
     goto :goto_1c
 
-    .line 690
+    .line 698
     .restart local v5       #_arg1:I
     .restart local v19       #_result:Landroid/content/pm/InstrumentationInfo;
     :cond_1c
@@ -2862,56 +2890,10 @@
 
     goto :goto_1d
 
-    .line 696
+    .line 704
     .end local v4           #_arg0:Landroid/content/ComponentName;
     .end local v5           #_arg1:I
     .end local v19           #_result:Landroid/content/pm/InstrumentationInfo;
-    :sswitch_28
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 698
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 700
-    .local v4, _arg0:Ljava/lang/String;
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v5
-
-    .line 701
-    .restart local v5       #_arg1:I
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->queryInstrumentation(Ljava/lang/String;I)Ljava/util/List;
-
-    move-result-object v21
-
-    .line 702
-    .local v21, _result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/InstrumentationInfo;>;"
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 703
-    move-object/from16 v0, p3
-
-    move-object/from16 v1, v21
-
-    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
-
-    .line 704
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 708
-    .end local v4           #_arg0:Ljava/lang/String;
-    .end local v5           #_arg1:I
-    .end local v21           #_result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/InstrumentationInfo;>;"
     :sswitch_29
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -2919,14 +2901,60 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
+    .line 706
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v4
+
+    .line 708
+    .local v4, _arg0:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v5
+
+    .line 709
+    .restart local v5       #_arg1:I
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->queryInstrumentation(Ljava/lang/String;I)Ljava/util/List;
+
+    move-result-object v21
+
     .line 710
+    .local v21, _result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/InstrumentationInfo;>;"
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 711
+    move-object/from16 v0, p3
+
+    move-object/from16 v1, v21
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
+
+    .line 712
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 716
+    .end local v4           #_arg0:Ljava/lang/String;
+    .end local v5           #_arg1:I
+    .end local v21           #_result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/InstrumentationInfo;>;"
+    :sswitch_2a
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 718
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
     if-eqz v3, :cond_1d
 
-    .line 711
+    .line 719
     sget-object v3, Landroid/net/Uri;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -2937,7 +2965,7 @@
 
     check-cast v4, Landroid/net/Uri;
 
-    .line 717
+    .line 725
     .local v4, _arg0:Landroid/net/Uri;
     :goto_1e
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
@@ -2948,33 +2976,33 @@
 
     move-result-object v5
 
-    .line 719
+    .line 727
     .local v5, _arg1:Landroid/content/pm/IPackageInstallObserver;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v6
 
-    .line 721
+    .line 729
     .restart local v6       #_arg2:I
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v7
 
-    .line 722
+    .line 730
     .local v7, _arg3:Ljava/lang/String;
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4, v5, v6, v7}, Landroid/content/pm/IPackageManager$Stub;->installPackage(Landroid/net/Uri;Landroid/content/pm/IPackageInstallObserver;ILjava/lang/String;)V
 
-    .line 723
+    .line 731
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 724
+    .line 732
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 714
+    .line 722
     .end local v4           #_arg0:Landroid/net/Uri;
     .end local v5           #_arg1:Landroid/content/pm/IPackageInstallObserver;
     .end local v6           #_arg2:I
@@ -2985,36 +3013,8 @@
     .restart local v4       #_arg0:Landroid/net/Uri;
     goto :goto_1e
 
-    .line 728
+    .line 736
     .end local v4           #_arg0:Landroid/net/Uri;
-    :sswitch_2a
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 730
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v4
-
-    .line 731
-    .local v4, _arg0:I
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->finishPackageInstall(I)V
-
-    .line 732
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 733
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 737
-    .end local v4           #_arg0:I
     :sswitch_2b
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -3022,34 +3022,27 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
+    .line 738
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v4
+
     .line 739
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 741
-    .local v4, _arg0:Ljava/lang/String;
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v5
-
-    .line 742
-    .local v5, _arg1:Ljava/lang/String;
+    .local v4, _arg0:I
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->setInstallerPackageName(Ljava/lang/String;Ljava/lang/String;)V
+    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->finishPackageInstall(I)V
 
-    .line 743
+    .line 740
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 744
+    .line 741
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 748
-    .end local v4           #_arg0:Ljava/lang/String;
-    .end local v5           #_arg1:Ljava/lang/String;
+    .line 745
+    .end local v4           #_arg0:I
     :sswitch_2c
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -3057,12 +3050,47 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 750
+    .line 747
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v4
 
+    .line 749
+    .local v4, _arg0:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v5
+
+    .line 750
+    .local v5, _arg1:Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->setInstallerPackageName(Ljava/lang/String;Ljava/lang/String;)V
+
+    .line 751
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
     .line 752
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 756
+    .end local v4           #_arg0:Ljava/lang/String;
+    .end local v5           #_arg1:Ljava/lang/String;
+    :sswitch_2d
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 758
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v4
+
+    .line 760
     .restart local v4       #_arg0:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
 
@@ -3072,69 +3100,30 @@
 
     move-result-object v5
 
-    .line 754
+    .line 762
     .local v5, _arg1:Landroid/content/pm/IPackageDeleteObserver;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v6
 
-    .line 755
+    .line 763
     .restart local v6       #_arg2:I
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4, v5, v6}, Landroid/content/pm/IPackageManager$Stub;->deletePackage(Ljava/lang/String;Landroid/content/pm/IPackageDeleteObserver;I)V
 
-    .line 756
+    .line 764
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 757
+    .line 765
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 761
+    .line 769
     .end local v4           #_arg0:Ljava/lang/String;
     .end local v5           #_arg1:Landroid/content/pm/IPackageDeleteObserver;
     .end local v6           #_arg2:I
-    :sswitch_2d
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 763
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 764
-    .restart local v4       #_arg0:Ljava/lang/String;
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->getInstallerPackageName(Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v19
-
-    .line 765
-    .local v19, _result:Ljava/lang/String;
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 766
-    move-object/from16 v0, p3
-
-    move-object/from16 v1, v19
-
-    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
-
-    .line 767
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 771
-    .end local v4           #_arg0:Ljava/lang/String;
-    .end local v19           #_result:Ljava/lang/String;
     :sswitch_2e
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -3142,27 +3131,38 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 773
+    .line 771
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v4
 
-    .line 774
+    .line 772
     .restart local v4       #_arg0:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->addPackageToPreferred(Ljava/lang/String;)V
+    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->getInstallerPackageName(Ljava/lang/String;)Ljava/lang/String;
 
-    .line 775
+    move-result-object v19
+
+    .line 773
+    .local v19, _result:Ljava/lang/String;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 776
+    .line 774
+    move-object/from16 v0, p3
+
+    move-object/from16 v1, v19
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    .line 775
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 780
+    .line 779
     .end local v4           #_arg0:Ljava/lang/String;
+    .end local v19           #_result:Ljava/lang/String;
     :sswitch_2f
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -3170,26 +3170,26 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 782
+    .line 781
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v4
 
-    .line 783
+    .line 782
     .restart local v4       #_arg0:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->removePackageFromPreferred(Ljava/lang/String;)V
+    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->addPackageToPreferred(Ljava/lang/String;)V
 
-    .line 784
+    .line 783
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 785
+    .line 784
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 789
+    .line 788
     .end local v4           #_arg0:Ljava/lang/String;
     :sswitch_30
     const-string v3, "android.content.pm.IPackageManager"
@@ -3198,38 +3198,27 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
+    .line 790
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v4
+
     .line 791
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v4
-
-    .line 792
-    .local v4, _arg0:I
+    .restart local v4       #_arg0:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->getPreferredPackages(I)Ljava/util/List;
+    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->removePackageFromPreferred(Ljava/lang/String;)V
 
-    move-result-object v22
-
-    .line 793
-    .local v22, _result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/PackageInfo;>;"
+    .line 792
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 794
-    move-object/from16 v0, p3
-
-    move-object/from16 v1, v22
-
-    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
-
-    .line 795
+    .line 793
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 799
-    .end local v4           #_arg0:I
-    .end local v22           #_result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/PackageInfo;>;"
+    .line 797
+    .end local v4           #_arg0:Ljava/lang/String;
     :sswitch_31
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -3237,14 +3226,53 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
+    .line 799
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v4
+
+    .line 800
+    .local v4, _arg0:I
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->getPreferredPackages(I)Ljava/util/List;
+
+    move-result-object v22
+
     .line 801
+    .restart local v22       #_result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/PackageInfo;>;"
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 802
+    move-object/from16 v0, p3
+
+    move-object/from16 v1, v22
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
+
+    .line 803
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 807
+    .end local v4           #_arg0:I
+    .end local v22           #_result:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/PackageInfo;>;"
+    :sswitch_32
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 809
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
     if-eqz v3, :cond_1e
 
-    .line 802
+    .line 810
     sget-object v3, Landroid/content/IntentFilter;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -3255,14 +3283,14 @@
 
     check-cast v4, Landroid/content/IntentFilter;
 
-    .line 808
+    .line 816
     .local v4, _arg0:Landroid/content/IntentFilter;
     :goto_1f
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v5
 
-    .line 810
+    .line 818
     .local v5, _arg1:I
     sget-object v3, Landroid/content/ComponentName;->CREATOR:Landroid/os/Parcelable$Creator;
 
@@ -3274,7 +3302,7 @@
 
     check-cast v6, [Landroid/content/ComponentName;
 
-    .line 812
+    .line 820
     .local v6, _arg2:[Landroid/content/ComponentName;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
@@ -3282,7 +3310,7 @@
 
     if-eqz v3, :cond_1f
 
-    .line 813
+    .line 821
     sget-object v3, Landroid/content/ComponentName;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -3293,7 +3321,7 @@
 
     check-cast v7, Landroid/content/ComponentName;
 
-    .line 819
+    .line 827
     .local v7, _arg3:Landroid/content/ComponentName;
     :goto_20
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
@@ -3303,18 +3331,18 @@
     .local v8, _arg4:I
     move-object/from16 v3, p0
 
-    .line 820
+    .line 828
     invoke-virtual/range {v3 .. v8}, Landroid/content/pm/IPackageManager$Stub;->addPreferredActivity(Landroid/content/IntentFilter;I[Landroid/content/ComponentName;Landroid/content/ComponentName;I)V
 
-    .line 821
+    .line 829
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 822
+    .line 830
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 805
+    .line 813
     .end local v4           #_arg0:Landroid/content/IntentFilter;
     .end local v5           #_arg1:I
     .end local v6           #_arg2:[Landroid/content/ComponentName;
@@ -3326,7 +3354,7 @@
     .restart local v4       #_arg0:Landroid/content/IntentFilter;
     goto :goto_1f
 
-    .line 816
+    .line 824
     .restart local v5       #_arg1:I
     .restart local v6       #_arg2:[Landroid/content/ComponentName;
     :cond_1f
@@ -3335,110 +3363,7 @@
     .restart local v7       #_arg3:Landroid/content/ComponentName;
     goto :goto_20
 
-    .line 826
-    .end local v4           #_arg0:Landroid/content/IntentFilter;
-    .end local v5           #_arg1:I
-    .end local v6           #_arg2:[Landroid/content/ComponentName;
-    .end local v7           #_arg3:Landroid/content/ComponentName;
-    :sswitch_32
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 828
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v3
-
-    if-eqz v3, :cond_20
-
-    .line 829
-    sget-object v3, Landroid/content/IntentFilter;->CREATOR:Landroid/os/Parcelable$Creator;
-
-    move-object/from16 v0, p2
-
-    invoke-interface {v3, v0}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
-
-    move-result-object v4
-
-    check-cast v4, Landroid/content/IntentFilter;
-
-    .line 835
-    .restart local v4       #_arg0:Landroid/content/IntentFilter;
-    :goto_21
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v5
-
-    .line 837
-    .restart local v5       #_arg1:I
-    sget-object v3, Landroid/content/ComponentName;->CREATOR:Landroid/os/Parcelable$Creator;
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->createTypedArray(Landroid/os/Parcelable$Creator;)[Ljava/lang/Object;
-
-    move-result-object v6
-
-    check-cast v6, [Landroid/content/ComponentName;
-
-    .line 839
-    .restart local v6       #_arg2:[Landroid/content/ComponentName;
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v3
-
-    if-eqz v3, :cond_21
-
-    .line 840
-    sget-object v3, Landroid/content/ComponentName;->CREATOR:Landroid/os/Parcelable$Creator;
-
-    move-object/from16 v0, p2
-
-    invoke-interface {v3, v0}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
-
-    move-result-object v7
-
-    check-cast v7, Landroid/content/ComponentName;
-
-    .line 845
-    .restart local v7       #_arg3:Landroid/content/ComponentName;
-    :goto_22
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4, v5, v6, v7}, Landroid/content/pm/IPackageManager$Stub;->replacePreferredActivity(Landroid/content/IntentFilter;I[Landroid/content/ComponentName;Landroid/content/ComponentName;)V
-
-    .line 846
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 847
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 832
-    .end local v4           #_arg0:Landroid/content/IntentFilter;
-    .end local v5           #_arg1:I
-    .end local v6           #_arg2:[Landroid/content/ComponentName;
-    .end local v7           #_arg3:Landroid/content/ComponentName;
-    :cond_20
-    const/4 v4, 0x0
-
-    .restart local v4       #_arg0:Landroid/content/IntentFilter;
-    goto :goto_21
-
-    .line 843
-    .restart local v5       #_arg1:I
-    .restart local v6       #_arg2:[Landroid/content/ComponentName;
-    :cond_21
-    const/4 v7, 0x0
-
-    .restart local v7       #_arg3:Landroid/content/ComponentName;
-    goto :goto_22
-
-    .line 851
+    .line 834
     .end local v4           #_arg0:Landroid/content/IntentFilter;
     .end local v5           #_arg1:I
     .end local v6           #_arg2:[Landroid/content/ComponentName;
@@ -3450,27 +3375,102 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 853
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+    .line 836
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    if-eqz v3, :cond_20
+
+    .line 837
+    sget-object v3, Landroid/content/IntentFilter;->CREATOR:Landroid/os/Parcelable$Creator;
+
+    move-object/from16 v0, p2
+
+    invoke-interface {v3, v0}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
 
     move-result-object v4
 
-    .line 854
-    .local v4, _arg0:Ljava/lang/String;
+    check-cast v4, Landroid/content/IntentFilter;
+
+    .line 843
+    .restart local v4       #_arg0:Landroid/content/IntentFilter;
+    :goto_21
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v5
+
+    .line 845
+    .restart local v5       #_arg1:I
+    sget-object v3, Landroid/content/ComponentName;->CREATOR:Landroid/os/Parcelable$Creator;
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->createTypedArray(Landroid/os/Parcelable$Creator;)[Ljava/lang/Object;
+
+    move-result-object v6
+
+    check-cast v6, [Landroid/content/ComponentName;
+
+    .line 847
+    .restart local v6       #_arg2:[Landroid/content/ComponentName;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    if-eqz v3, :cond_21
+
+    .line 848
+    sget-object v3, Landroid/content/ComponentName;->CREATOR:Landroid/os/Parcelable$Creator;
+
+    move-object/from16 v0, p2
+
+    invoke-interface {v3, v0}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
+
+    move-result-object v7
+
+    check-cast v7, Landroid/content/ComponentName;
+
+    .line 853
+    .restart local v7       #_arg3:Landroid/content/ComponentName;
+    :goto_22
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->clearPackagePreferredActivities(Ljava/lang/String;)V
+    invoke-virtual {v0, v4, v5, v6, v7}, Landroid/content/pm/IPackageManager$Stub;->replacePreferredActivity(Landroid/content/IntentFilter;I[Landroid/content/ComponentName;Landroid/content/ComponentName;)V
 
-    .line 855
+    .line 854
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 856
+    .line 855
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 860
-    .end local v4           #_arg0:Ljava/lang/String;
+    .line 840
+    .end local v4           #_arg0:Landroid/content/IntentFilter;
+    .end local v5           #_arg1:I
+    .end local v6           #_arg2:[Landroid/content/ComponentName;
+    .end local v7           #_arg3:Landroid/content/ComponentName;
+    :cond_20
+    const/4 v4, 0x0
+
+    .restart local v4       #_arg0:Landroid/content/IntentFilter;
+    goto :goto_21
+
+    .line 851
+    .restart local v5       #_arg1:I
+    .restart local v6       #_arg2:[Landroid/content/ComponentName;
+    :cond_21
+    const/4 v7, 0x0
+
+    .restart local v7       #_arg3:Landroid/content/ComponentName;
+    goto :goto_22
+
+    .line 859
+    .end local v4           #_arg0:Landroid/content/IntentFilter;
+    .end local v5           #_arg1:I
+    .end local v6           #_arg2:[Landroid/content/ComponentName;
+    .end local v7           #_arg3:Landroid/content/ComponentName;
     :sswitch_34
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -3478,62 +3478,27 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 862
-    new-instance v13, Ljava/util/ArrayList;
-
-    invoke-direct {v13}, Ljava/util/ArrayList;-><init>()V
-
-    .line 864
-    .local v13, _arg0:Ljava/util/List;,"Ljava/util/List<Landroid/content/IntentFilter;>;"
-    new-instance v15, Ljava/util/ArrayList;
-
-    invoke-direct {v15}, Ljava/util/ArrayList;-><init>()V
-
-    .line 866
-    .local v15, _arg1:Ljava/util/List;,"Ljava/util/List<Landroid/content/ComponentName;>;"
+    .line 861
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v6
+    move-result-object v4
 
-    .line 867
-    .local v6, _arg2:Ljava/lang/String;
+    .line 862
+    .local v4, _arg0:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v13, v15, v6}, Landroid/content/pm/IPackageManager$Stub;->getPreferredActivities(Ljava/util/List;Ljava/util/List;Ljava/lang/String;)I
+    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->clearPackagePreferredActivities(Ljava/lang/String;)V
 
-    move-result v19
-
-    .line 868
-    .local v19, _result:I
+    .line 863
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 869
-    move-object/from16 v0, p3
-
-    move/from16 v1, v19
-
-    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
-
-    .line 870
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v13}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
-
-    .line 871
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v15}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
-
-    .line 872
+    .line 864
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 876
-    .end local v6           #_arg2:Ljava/lang/String;
-    .end local v13           #_arg0:Ljava/util/List;,"Ljava/util/List<Landroid/content/IntentFilter;>;"
-    .end local v15           #_arg1:Ljava/util/List;,"Ljava/util/List<Landroid/content/ComponentName;>;"
-    .end local v19           #_result:I
+    .line 868
+    .end local v4           #_arg0:Ljava/lang/String;
     :sswitch_35
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -3541,54 +3506,62 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 878
+    .line 870
+    new-instance v13, Ljava/util/ArrayList;
+
+    invoke-direct {v13}, Ljava/util/ArrayList;-><init>()V
+
+    .line 872
+    .local v13, _arg0:Ljava/util/List;,"Ljava/util/List<Landroid/content/IntentFilter;>;"
+    new-instance v15, Ljava/util/ArrayList;
+
+    invoke-direct {v15}, Ljava/util/ArrayList;-><init>()V
+
+    .line 874
+    .local v15, _arg1:Ljava/util/List;,"Ljava/util/List<Landroid/content/ComponentName;>;"
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
-    move-result-object v4
+    move-result-object v6
 
-    .line 880
-    .restart local v4       #_arg0:Ljava/lang/String;
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v5
-
-    .line 881
-    .restart local v5       #_arg1:I
+    .line 875
+    .local v6, _arg2:Ljava/lang/String;
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->getPrivacyGuardSetting(Ljava/lang/String;I)Z
+    invoke-virtual {v0, v13, v15, v6}, Landroid/content/pm/IPackageManager$Stub;->getPreferredActivities(Ljava/util/List;Ljava/util/List;Ljava/lang/String;)I
 
     move-result v19
 
-    .line 882
-    .local v19, _result:Z
+    .line 876
+    .local v19, _result:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 883
-    if-eqz v19, :cond_22
-
-    const/4 v3, 0x1
-
-    :goto_23
+    .line 877
     move-object/from16 v0, p3
 
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
+    move/from16 v1, v19
 
-    .line 884
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
+
+    .line 878
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v13}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
+
+    .line 879
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v15}, Landroid/os/Parcel;->writeTypedList(Ljava/util/List;)V
+
+    .line 880
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 883
-    :cond_22
-    const/4 v3, 0x0
-
-    goto :goto_23
-
-    .line 888
-    .end local v4           #_arg0:Ljava/lang/String;
-    .end local v5           #_arg1:I
-    .end local v19           #_result:Z
+    .line 884
+    .end local v6           #_arg2:Ljava/lang/String;
+    .end local v13           #_arg0:Ljava/util/List;,"Ljava/util/List<Landroid/content/IntentFilter;>;"
+    .end local v15           #_arg1:Ljava/util/List;,"Ljava/util/List<Landroid/content/ComponentName;>;"
+    .end local v19           #_result:I
     :sswitch_36
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -3596,67 +3569,14 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 890
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 892
-    .restart local v4       #_arg0:Ljava/lang/String;
+    .line 886
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
-    if-eqz v3, :cond_23
+    if-eqz v3, :cond_22
 
-    const/4 v5, 0x1
-
-    .line 894
-    .local v5, _arg1:Z
-    :goto_24
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v6
-
-    .line 895
-    .local v6, _arg2:I
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4, v5, v6}, Landroid/content/pm/IPackageManager$Stub;->setPrivacyGuardSetting(Ljava/lang/String;ZI)V
-
-    .line 896
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 897
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 892
-    .end local v5           #_arg1:Z
-    .end local v6           #_arg2:I
-    :cond_23
-    const/4 v5, 0x0
-
-    goto :goto_24
-
-    .line 901
-    .end local v4           #_arg0:Ljava/lang/String;
-    :sswitch_37
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 903
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v3
-
-    if-eqz v3, :cond_24
-
-    .line 904
+    .line 887
     sget-object v3, Landroid/content/ComponentName;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -3667,49 +3587,117 @@
 
     check-cast v4, Landroid/content/ComponentName;
 
-    .line 910
+    .line 893
     .local v4, _arg0:Landroid/content/ComponentName;
-    :goto_25
+    :goto_23
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v5
 
-    .line 912
-    .local v5, _arg1:I
+    .line 895
+    .restart local v5       #_arg1:I
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v6
 
-    .line 914
-    .restart local v6       #_arg2:I
+    .line 897
+    .local v6, _arg2:I
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v7
 
-    .line 915
+    .line 898
     .local v7, _arg3:I
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4, v5, v6, v7}, Landroid/content/pm/IPackageManager$Stub;->setComponentEnabledSetting(Landroid/content/ComponentName;III)V
 
-    .line 916
+    .line 899
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 900
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 890
+    .end local v4           #_arg0:Landroid/content/ComponentName;
+    .end local v5           #_arg1:I
+    .end local v6           #_arg2:I
+    .end local v7           #_arg3:I
+    :cond_22
+    const/4 v4, 0x0
+
+    .restart local v4       #_arg0:Landroid/content/ComponentName;
+    goto :goto_23
+
+    .line 904
+    .end local v4           #_arg0:Landroid/content/ComponentName;
+    :sswitch_37
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 906
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    if-eqz v3, :cond_23
+
+    .line 907
+    sget-object v3, Landroid/content/ComponentName;->CREATOR:Landroid/os/Parcelable$Creator;
+
+    move-object/from16 v0, p2
+
+    invoke-interface {v3, v0}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
+
+    move-result-object v4
+
+    check-cast v4, Landroid/content/ComponentName;
+
+    .line 913
+    .restart local v4       #_arg0:Landroid/content/ComponentName;
+    :goto_24
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v5
+
+    .line 914
+    .restart local v5       #_arg1:I
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->getComponentEnabledSetting(Landroid/content/ComponentName;I)I
+
+    move-result v19
+
+    .line 915
+    .restart local v19       #_result:I
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 916
+    move-object/from16 v0, p3
+
+    move/from16 v1, v19
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
     .line 917
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 907
+    .line 910
     .end local v4           #_arg0:Landroid/content/ComponentName;
     .end local v5           #_arg1:I
-    .end local v6           #_arg2:I
-    .end local v7           #_arg3:I
-    :cond_24
+    .end local v19           #_result:I
+    :cond_23
     const/4 v4, 0x0
 
     .restart local v4       #_arg0:Landroid/content/ComponentName;
-    goto :goto_25
+    goto :goto_24
 
     .line 921
     .end local v4           #_arg0:Landroid/content/ComponentName;
@@ -3721,66 +3709,47 @@
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
     .line 923
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v3
-
-    if-eqz v3, :cond_25
-
-    .line 924
-    sget-object v3, Landroid/content/ComponentName;->CREATOR:Landroid/os/Parcelable$Creator;
-
-    move-object/from16 v0, p2
-
-    invoke-interface {v3, v0}, Landroid/os/Parcelable$Creator;->createFromParcel(Landroid/os/Parcel;)Ljava/lang/Object;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v4
 
-    check-cast v4, Landroid/content/ComponentName;
-
-    .line 930
-    .restart local v4       #_arg0:Landroid/content/ComponentName;
-    :goto_26
+    .line 925
+    .local v4, _arg0:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v5
 
-    .line 931
+    .line 927
     .restart local v5       #_arg1:I
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v6
+
+    .line 929
+    .restart local v6       #_arg2:I
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v7
+
+    .line 930
+    .restart local v7       #_arg3:I
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->getComponentEnabledSetting(Landroid/content/ComponentName;I)I
+    invoke-virtual {v0, v4, v5, v6, v7}, Landroid/content/pm/IPackageManager$Stub;->setApplicationEnabledSetting(Ljava/lang/String;III)V
 
-    move-result v19
-
-    .line 932
-    .local v19, _result:I
+    .line 931
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 933
-    move-object/from16 v0, p3
-
-    move/from16 v1, v19
-
-    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
-
-    .line 934
+    .line 932
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 927
-    .end local v4           #_arg0:Landroid/content/ComponentName;
+    .line 936
+    .end local v4           #_arg0:Ljava/lang/String;
     .end local v5           #_arg1:I
-    .end local v19           #_result:I
-    :cond_25
-    const/4 v4, 0x0
-
-    .restart local v4       #_arg0:Landroid/content/ComponentName;
-    goto :goto_26
-
-    .line 938
-    .end local v4           #_arg0:Landroid/content/ComponentName;
+    .end local v6           #_arg2:I
+    .end local v7           #_arg3:I
     :sswitch_39
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -3788,67 +3757,18 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
+    .line 938
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v4
+
     .line 940
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 942
-    .local v4, _arg0:Ljava/lang/String;
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v5
-
-    .line 944
-    .restart local v5       #_arg1:I
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v6
-
-    .line 946
-    .restart local v6       #_arg2:I
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v7
-
-    .line 947
-    .restart local v7       #_arg3:I
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4, v5, v6, v7}, Landroid/content/pm/IPackageManager$Stub;->setApplicationEnabledSetting(Ljava/lang/String;III)V
-
-    .line 948
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 949
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 953
-    .end local v4           #_arg0:Ljava/lang/String;
-    .end local v5           #_arg1:I
-    .end local v6           #_arg2:I
-    .end local v7           #_arg3:I
-    :sswitch_3a
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 955
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 957
     .restart local v4       #_arg0:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v5
 
-    .line 958
+    .line 941
     .restart local v5       #_arg1:I
     move-object/from16 v0, p0
 
@@ -3856,26 +3776,79 @@
 
     move-result v19
 
-    .line 959
+    .line 942
     .restart local v19       #_result:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 960
+    .line 943
     move-object/from16 v0, p3
 
     move/from16 v1, v19
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 961
+    .line 944
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 965
+    .line 948
     .end local v4           #_arg0:Ljava/lang/String;
     .end local v5           #_arg1:I
     .end local v19           #_result:I
+    :sswitch_3a
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 950
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v4
+
+    .line 952
+    .restart local v4       #_arg0:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    if-eqz v3, :cond_24
+
+    const/4 v5, 0x1
+
+    .line 954
+    .local v5, _arg1:Z
+    :goto_25
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v6
+
+    .line 955
+    .restart local v6       #_arg2:I
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4, v5, v6}, Landroid/content/pm/IPackageManager$Stub;->setPackageStoppedState(Ljava/lang/String;ZI)V
+
+    .line 956
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 957
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 952
+    .end local v5           #_arg1:Z
+    .end local v6           #_arg2:I
+    :cond_24
+    const/4 v5, 0x0
+
+    goto :goto_25
+
+    .line 961
+    .end local v4           #_arg0:Ljava/lang/String;
     :sswitch_3b
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -3883,65 +3856,12 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 967
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 969
-    .restart local v4       #_arg0:Ljava/lang/String;
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v3
-
-    if-eqz v3, :cond_26
-
-    const/4 v5, 0x1
-
-    .line 971
-    .local v5, _arg1:Z
-    :goto_27
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v6
-
-    .line 972
-    .restart local v6       #_arg2:I
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4, v5, v6}, Landroid/content/pm/IPackageManager$Stub;->setPackageStoppedState(Ljava/lang/String;ZI)V
-
-    .line 973
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 974
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 969
-    .end local v5           #_arg1:Z
-    .end local v6           #_arg2:I
-    :cond_26
-    const/4 v5, 0x0
-
-    goto :goto_27
-
-    .line 978
-    .end local v4           #_arg0:Ljava/lang/String;
-    :sswitch_3c
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 980
+    .line 963
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readLong()J
 
     move-result-wide v11
 
-    .line 982
+    .line 965
     .local v11, _arg0:J
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
 
@@ -3951,44 +3871,44 @@
 
     move-result-object v5
 
-    .line 983
+    .line 966
     .local v5, _arg1:Landroid/content/pm/IPackageDataObserver;
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v11, v12, v5}, Landroid/content/pm/IPackageManager$Stub;->freeStorageAndNotify(JLandroid/content/pm/IPackageDataObserver;)V
 
-    .line 984
+    .line 967
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 985
+    .line 968
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 989
+    .line 972
     .end local v5           #_arg1:Landroid/content/pm/IPackageDataObserver;
     .end local v11           #_arg0:J
-    :sswitch_3d
+    :sswitch_3c
     const-string v3, "android.content.pm.IPackageManager"
 
     move-object/from16 v0, p2
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 991
+    .line 974
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readLong()J
 
     move-result-wide v11
 
-    .line 993
+    .line 976
     .restart local v11       #_arg0:J
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
-    if-eqz v3, :cond_27
+    if-eqz v3, :cond_25
 
-    .line 994
+    .line 977
     sget-object v3, Landroid/content/IntentSender;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -3999,32 +3919,71 @@
 
     check-cast v5, Landroid/content/IntentSender;
 
-    .line 999
+    .line 982
     .local v5, _arg1:Landroid/content/IntentSender;
-    :goto_28
+    :goto_26
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v11, v12, v5}, Landroid/content/pm/IPackageManager$Stub;->freeStorage(JLandroid/content/IntentSender;)V
 
-    .line 1000
+    .line 983
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1001
+    .line 984
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 997
+    .line 980
     .end local v5           #_arg1:Landroid/content/IntentSender;
-    :cond_27
+    :cond_25
     const/4 v5, 0x0
 
     .restart local v5       #_arg1:Landroid/content/IntentSender;
-    goto :goto_28
+    goto :goto_26
 
-    .line 1005
+    .line 988
     .end local v5           #_arg1:Landroid/content/IntentSender;
     .end local v11           #_arg0:J
+    :sswitch_3d
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 990
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v4
+
+    .line 992
+    .restart local v4       #_arg0:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
+
+    move-result-object v3
+
+    invoke-static {v3}, Landroid/content/pm/IPackageDataObserver$Stub;->asInterface(Landroid/os/IBinder;)Landroid/content/pm/IPackageDataObserver;
+
+    move-result-object v5
+
+    .line 993
+    .local v5, _arg1:Landroid/content/pm/IPackageDataObserver;
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->deleteApplicationCacheFiles(Ljava/lang/String;Landroid/content/pm/IPackageDataObserver;)V
+
+    .line 994
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 995
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 999
+    .end local v4           #_arg0:Ljava/lang/String;
+    .end local v5           #_arg1:Landroid/content/pm/IPackageDataObserver;
     :sswitch_3e
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -4032,12 +3991,12 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1007
+    .line 1001
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v4
 
-    .line 1009
+    .line 1003
     .restart local v4       #_arg0:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
 
@@ -4047,23 +4006,30 @@
 
     move-result-object v5
 
-    .line 1010
-    .local v5, _arg1:Landroid/content/pm/IPackageDataObserver;
+    .line 1005
+    .restart local v5       #_arg1:Landroid/content/pm/IPackageDataObserver;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v6
+
+    .line 1006
+    .restart local v6       #_arg2:I
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->deleteApplicationCacheFiles(Ljava/lang/String;Landroid/content/pm/IPackageDataObserver;)V
+    invoke-virtual {v0, v4, v5, v6}, Landroid/content/pm/IPackageManager$Stub;->clearApplicationUserData(Ljava/lang/String;Landroid/content/pm/IPackageDataObserver;I)V
 
-    .line 1011
+    .line 1007
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1012
+    .line 1008
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1016
+    .line 1012
     .end local v4           #_arg0:Ljava/lang/String;
     .end local v5           #_arg1:Landroid/content/pm/IPackageDataObserver;
+    .end local v6           #_arg2:I
     :sswitch_3f
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -4071,64 +4037,18 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1018
+    .line 1014
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v4
 
-    .line 1020
-    .restart local v4       #_arg0:Ljava/lang/String;
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
-
-    move-result-object v3
-
-    invoke-static {v3}, Landroid/content/pm/IPackageDataObserver$Stub;->asInterface(Landroid/os/IBinder;)Landroid/content/pm/IPackageDataObserver;
-
-    move-result-object v5
-
-    .line 1022
-    .restart local v5       #_arg1:Landroid/content/pm/IPackageDataObserver;
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v6
-
-    .line 1023
-    .restart local v6       #_arg2:I
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4, v5, v6}, Landroid/content/pm/IPackageManager$Stub;->clearApplicationUserData(Ljava/lang/String;Landroid/content/pm/IPackageDataObserver;I)V
-
-    .line 1024
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1025
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1029
-    .end local v4           #_arg0:Ljava/lang/String;
-    .end local v5           #_arg1:Landroid/content/pm/IPackageDataObserver;
-    .end local v6           #_arg2:I
-    :sswitch_40
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1031
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 1033
+    .line 1016
     .restart local v4       #_arg0:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v5
 
-    .line 1035
+    .line 1018
     .local v5, _arg1:I
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
 
@@ -4138,24 +4058,54 @@
 
     move-result-object v6
 
-    .line 1036
+    .line 1019
     .local v6, _arg2:Landroid/content/pm/IPackageStatsObserver;
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4, v5, v6}, Landroid/content/pm/IPackageManager$Stub;->getPackageSizeInfo(Ljava/lang/String;ILandroid/content/pm/IPackageStatsObserver;)V
 
-    .line 1037
+    .line 1020
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1038
+    .line 1021
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1042
+    .line 1025
     .end local v4           #_arg0:Ljava/lang/String;
     .end local v5           #_arg1:I
     .end local v6           #_arg2:Landroid/content/pm/IPackageStatsObserver;
+    :sswitch_40
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 1026
+    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->getSystemSharedLibraryNames()[Ljava/lang/String;
+
+    move-result-object v19
+
+    .line 1027
+    .local v19, _result:[Ljava/lang/String;
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 1028
+    move-object/from16 v0, p3
+
+    move-object/from16 v1, v19
+
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeStringArray([Ljava/lang/String;)V
+
+    .line 1029
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 1033
+    .end local v19           #_result:[Ljava/lang/String;
     :sswitch_41
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -4163,46 +4113,16 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1043
-    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->getSystemSharedLibraryNames()[Ljava/lang/String;
-
-    move-result-object v19
-
-    .line 1044
-    .local v19, _result:[Ljava/lang/String;
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1045
-    move-object/from16 v0, p3
-
-    move-object/from16 v1, v19
-
-    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeStringArray([Ljava/lang/String;)V
-
-    .line 1046
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1050
-    .end local v19           #_result:[Ljava/lang/String;
-    :sswitch_42
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1051
+    .line 1034
     invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->getSystemAvailableFeatures()[Landroid/content/pm/FeatureInfo;
 
     move-result-object v19
 
-    .line 1052
+    .line 1035
     .local v19, _result:[Landroid/content/pm/FeatureInfo;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1053
+    .line 1036
     const/4 v3, 0x1
 
     move-object/from16 v0, p3
@@ -4211,26 +4131,26 @@
 
     invoke-virtual {v0, v1, v3}, Landroid/os/Parcel;->writeTypedArray([Landroid/os/Parcelable;I)V
 
-    .line 1054
+    .line 1037
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1058
+    .line 1041
     .end local v19           #_result:[Landroid/content/pm/FeatureInfo;
-    :sswitch_43
+    :sswitch_42
     const-string v3, "android.content.pm.IPackageManager"
 
     move-object/from16 v0, p2
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1060
+    .line 1043
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v4
 
-    .line 1061
+    .line 1044
     .restart local v4       #_arg0:Ljava/lang/String;
     move-object/from16 v0, p0
 
@@ -4238,11 +4158,128 @@
 
     move-result v19
 
-    .line 1062
+    .line 1045
     .local v19, _result:Z
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1063
+    .line 1046
+    if-eqz v19, :cond_26
+
+    const/4 v3, 0x1
+
+    :goto_27
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
+
+    .line 1047
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 1046
+    :cond_26
+    const/4 v3, 0x0
+
+    goto :goto_27
+
+    .line 1051
+    .end local v4           #_arg0:Ljava/lang/String;
+    .end local v19           #_result:Z
+    :sswitch_43
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 1052
+    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->enterSafeMode()V
+
+    .line 1053
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 1054
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 1058
+    :sswitch_44
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 1059
+    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->isSafeMode()Z
+
+    move-result v19
+
+    .line 1060
+    .restart local v19       #_result:Z
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 1061
+    if-eqz v19, :cond_27
+
+    const/4 v3, 0x1
+
+    :goto_28
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
+
+    .line 1062
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 1061
+    :cond_27
+    const/4 v3, 0x0
+
+    goto :goto_28
+
+    .line 1066
+    .end local v19           #_result:Z
+    :sswitch_45
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 1067
+    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->systemReady()V
+
+    .line 1068
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 1069
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 1073
+    :sswitch_46
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 1074
+    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->hasSystemUidErrors()Z
+
+    move-result v19
+
+    .line 1075
+    .restart local v19       #_result:Z
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 1076
     if-eqz v19, :cond_28
 
     const/4 v3, 0x1
@@ -4252,97 +4289,19 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 1064
+    .line 1077
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1063
+    .line 1076
     :cond_28
     const/4 v3, 0x0
 
     goto :goto_29
 
-    .line 1068
-    .end local v4           #_arg0:Ljava/lang/String;
+    .line 1081
     .end local v19           #_result:Z
-    :sswitch_44
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1069
-    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->enterSafeMode()V
-
-    .line 1070
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1071
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1075
-    :sswitch_45
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1076
-    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->isSafeMode()Z
-
-    move-result v19
-
-    .line 1077
-    .restart local v19       #_result:Z
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1078
-    if-eqz v19, :cond_29
-
-    const/4 v3, 0x1
-
-    :goto_2a
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
-
-    .line 1079
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1078
-    :cond_29
-    const/4 v3, 0x0
-
-    goto :goto_2a
-
-    .line 1083
-    .end local v19           #_result:Z
-    :sswitch_46
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1084
-    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->systemReady()V
-
-    .line 1085
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1086
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1090
     :sswitch_47
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -4350,8 +4309,35 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
+    .line 1082
+    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->performBootDexOpt()V
+
+    .line 1083
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 1084
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 1088
+    :sswitch_48
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 1090
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v4
+
     .line 1091
-    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->hasSystemUidErrors()Z
+    .restart local v4       #_arg0:Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->performDexOpt(Ljava/lang/String;)Z
 
     move-result v19
 
@@ -4360,11 +4346,11 @@
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
     .line 1093
-    if-eqz v19, :cond_2a
+    if-eqz v19, :cond_29
 
     const/4 v3, 0x1
 
-    :goto_2b
+    :goto_2a
     move-object/from16 v0, p3
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
@@ -4375,32 +4361,14 @@
     goto/16 :goto_0
 
     .line 1093
-    :cond_2a
+    :cond_29
     const/4 v3, 0x0
 
-    goto :goto_2b
+    goto :goto_2a
 
     .line 1098
+    .end local v4           #_arg0:Ljava/lang/String;
     .end local v19           #_result:Z
-    :sswitch_48
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1099
-    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->performBootDexOpt()V
-
-    .line 1100
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1101
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1105
     :sswitch_49
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -4408,47 +4376,58 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1107
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+    .line 1100
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
-    move-result-object v4
+    move-result v3
 
-    .line 1108
-    .restart local v4       #_arg0:Ljava/lang/String;
+    if-eqz v3, :cond_2a
+
+    const/4 v4, 0x1
+
+    .line 1102
+    .local v4, _arg0:Z
+    :goto_2b
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    if-eqz v3, :cond_2b
+
+    const/4 v5, 0x1
+
+    .line 1103
+    .local v5, _arg1:Z
+    :goto_2c
     move-object/from16 v0, p0
 
-    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->performDexOpt(Ljava/lang/String;)Z
+    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->updateExternalMediaStatus(ZZ)V
 
-    move-result v19
-
-    .line 1109
-    .restart local v19       #_result:Z
+    .line 1104
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1110
-    if-eqz v19, :cond_2b
-
-    const/4 v3, 0x1
-
-    :goto_2c
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
-
-    .line 1111
+    .line 1105
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1110
+    .line 1100
+    .end local v4           #_arg0:Z
+    .end local v5           #_arg1:Z
+    :cond_2a
+    const/4 v4, 0x0
+
+    goto :goto_2b
+
+    .line 1102
+    .restart local v4       #_arg0:Z
     :cond_2b
-    const/4 v3, 0x0
+    const/4 v5, 0x0
 
     goto :goto_2c
 
-    .line 1115
-    .end local v4           #_arg0:Ljava/lang/String;
-    .end local v19           #_result:Z
+    .line 1109
+    .end local v4           #_arg0:Z
     :sswitch_4a
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -4456,73 +4435,14 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1117
+    .line 1111
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
     if-eqz v3, :cond_2c
 
-    const/4 v4, 0x1
-
-    .line 1119
-    .local v4, _arg0:Z
-    :goto_2d
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v3
-
-    if-eqz v3, :cond_2d
-
-    const/4 v5, 0x1
-
-    .line 1120
-    .local v5, _arg1:Z
-    :goto_2e
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->updateExternalMediaStatus(ZZ)V
-
-    .line 1121
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1122
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1117
-    .end local v4           #_arg0:Z
-    .end local v5           #_arg1:Z
-    :cond_2c
-    const/4 v4, 0x0
-
-    goto :goto_2d
-
-    .line 1119
-    .restart local v4       #_arg0:Z
-    :cond_2d
-    const/4 v5, 0x0
-
-    goto :goto_2e
-
-    .line 1126
-    .end local v4           #_arg0:Z
-    :sswitch_4b
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1128
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v3
-
-    if-eqz v3, :cond_2e
-
-    .line 1129
+    .line 1112
     sget-object v3, Landroid/content/pm/PackageCleanItem;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -4533,30 +4453,30 @@
 
     check-cast v4, Landroid/content/pm/PackageCleanItem;
 
-    .line 1134
+    .line 1117
     .local v4, _arg0:Landroid/content/pm/PackageCleanItem;
-    :goto_2f
+    :goto_2d
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->nextPackageToClean(Landroid/content/pm/PackageCleanItem;)Landroid/content/pm/PackageCleanItem;
 
     move-result-object v19
 
-    .line 1135
+    .line 1118
     .local v19, _result:Landroid/content/pm/PackageCleanItem;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1136
-    if-eqz v19, :cond_2f
+    .line 1119
+    if-eqz v19, :cond_2d
 
-    .line 1137
+    .line 1120
     const/4 v3, 0x1
 
     move-object/from16 v0, p3
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 1138
+    .line 1121
     const/4 v3, 0x1
 
     move-object/from16 v0, v19
@@ -4565,48 +4485,48 @@
 
     invoke-virtual {v0, v1, v3}, Landroid/content/pm/PackageCleanItem;->writeToParcel(Landroid/os/Parcel;I)V
 
-    .line 1143
-    :goto_30
+    .line 1126
+    :goto_2e
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1132
+    .line 1115
     .end local v4           #_arg0:Landroid/content/pm/PackageCleanItem;
     .end local v19           #_result:Landroid/content/pm/PackageCleanItem;
-    :cond_2e
+    :cond_2c
     const/4 v4, 0x0
 
     .restart local v4       #_arg0:Landroid/content/pm/PackageCleanItem;
-    goto :goto_2f
+    goto :goto_2d
 
-    .line 1141
+    .line 1124
     .restart local v19       #_result:Landroid/content/pm/PackageCleanItem;
-    :cond_2f
+    :cond_2d
     const/4 v3, 0x0
 
     move-object/from16 v0, p3
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    goto :goto_30
+    goto :goto_2e
 
-    .line 1147
+    .line 1130
     .end local v4           #_arg0:Landroid/content/pm/PackageCleanItem;
     .end local v19           #_result:Landroid/content/pm/PackageCleanItem;
-    :sswitch_4c
+    :sswitch_4b
     const-string v3, "android.content.pm.IPackageManager"
 
     move-object/from16 v0, p2
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1149
+    .line 1132
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v4
 
-    .line 1151
+    .line 1134
     .local v4, _arg0:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
 
@@ -4616,45 +4536,45 @@
 
     move-result-object v5
 
-    .line 1153
+    .line 1136
     .local v5, _arg1:Landroid/content/pm/IPackageMoveObserver;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v6
 
-    .line 1154
+    .line 1137
     .local v6, _arg2:I
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4, v5, v6}, Landroid/content/pm/IPackageManager$Stub;->movePackage(Ljava/lang/String;Landroid/content/pm/IPackageMoveObserver;I)V
 
-    .line 1155
+    .line 1138
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1156
+    .line 1139
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1160
+    .line 1143
     .end local v4           #_arg0:Ljava/lang/String;
     .end local v5           #_arg1:Landroid/content/pm/IPackageMoveObserver;
     .end local v6           #_arg2:I
-    :sswitch_4d
+    :sswitch_4c
     const-string v3, "android.content.pm.IPackageManager"
 
     move-object/from16 v0, p2
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1162
+    .line 1145
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
-    if-eqz v3, :cond_30
+    if-eqz v3, :cond_2e
 
-    .line 1163
+    .line 1146
     sget-object v3, Landroid/content/pm/PermissionInfo;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -4665,52 +4585,100 @@
 
     check-cast v4, Landroid/content/pm/PermissionInfo;
 
-    .line 1168
+    .line 1151
     .local v4, _arg0:Landroid/content/pm/PermissionInfo;
-    :goto_31
+    :goto_2f
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->addPermissionAsync(Landroid/content/pm/PermissionInfo;)Z
 
     move-result v19
 
-    .line 1169
+    .line 1152
     .local v19, _result:Z
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1170
-    if-eqz v19, :cond_31
+    .line 1153
+    if-eqz v19, :cond_2f
 
     const/4 v3, 0x1
 
-    :goto_32
+    :goto_30
     move-object/from16 v0, p3
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 1171
+    .line 1154
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1166
+    .line 1149
     .end local v4           #_arg0:Landroid/content/pm/PermissionInfo;
     .end local v19           #_result:Z
-    :cond_30
+    :cond_2e
     const/4 v4, 0x0
 
     .restart local v4       #_arg0:Landroid/content/pm/PermissionInfo;
-    goto :goto_31
+    goto :goto_2f
 
-    .line 1170
+    .line 1153
     .restart local v19       #_result:Z
-    :cond_31
+    :cond_2f
     const/4 v3, 0x0
 
-    goto :goto_32
+    goto :goto_30
 
-    .line 1175
+    .line 1158
     .end local v4           #_arg0:Landroid/content/pm/PermissionInfo;
+    .end local v19           #_result:Z
+    :sswitch_4d
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 1160
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v4
+
+    .line 1161
+    .local v4, _arg0:I
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->setInstallLocation(I)Z
+
+    move-result v19
+
+    .line 1162
+    .restart local v19       #_result:Z
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 1163
+    if-eqz v19, :cond_30
+
+    const/4 v3, 0x1
+
+    :goto_31
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
+
+    .line 1164
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 1163
+    :cond_30
+    const/4 v3, 0x0
+
+    goto :goto_31
+
+    .line 1168
+    .end local v4           #_arg0:I
     .end local v19           #_result:Z
     :sswitch_4e
     const-string v3, "android.content.pm.IPackageManager"
@@ -4719,47 +4687,29 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1177
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v4
-
-    .line 1178
-    .local v4, _arg0:I
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->setInstallLocation(I)Z
+    .line 1169
+    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->getInstallLocation()I
 
     move-result v19
 
-    .line 1179
-    .restart local v19       #_result:Z
+    .line 1170
+    .local v19, _result:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1180
-    if-eqz v19, :cond_32
-
-    const/4 v3, 0x1
-
-    :goto_33
+    .line 1171
     move-object/from16 v0, p3
 
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
+    move/from16 v1, v19
 
-    .line 1181
+    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
+
+    .line 1172
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1180
-    :cond_32
-    const/4 v3, 0x0
-
-    goto :goto_33
-
-    .line 1185
-    .end local v4           #_arg0:I
-    .end local v19           #_result:Z
+    .line 1176
+    .end local v19           #_result:I
     :sswitch_4f
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -4767,44 +4717,14 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1186
-    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->getInstallLocation()I
-
-    move-result v19
-
-    .line 1187
-    .local v19, _result:I
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1188
-    move-object/from16 v0, p3
-
-    move/from16 v1, v19
-
-    invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
-
-    .line 1189
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1193
-    .end local v19           #_result:I
-    :sswitch_50
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1195
+    .line 1178
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
-    if-eqz v3, :cond_33
+    if-eqz v3, :cond_31
 
-    .line 1196
+    .line 1179
     sget-object v3, Landroid/net/Uri;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -4815,9 +4735,9 @@
 
     check-cast v4, Landroid/net/Uri;
 
-    .line 1202
+    .line 1185
     .local v4, _arg0:Landroid/net/Uri;
-    :goto_34
+    :goto_32
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
 
     move-result-object v3
@@ -4826,27 +4746,27 @@
 
     move-result-object v5
 
-    .line 1204
+    .line 1187
     .local v5, _arg1:Landroid/content/pm/IPackageInstallObserver;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v6
 
-    .line 1206
+    .line 1189
     .restart local v6       #_arg2:I
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v7
 
-    .line 1208
+    .line 1191
     .local v7, _arg3:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
-    if-eqz v3, :cond_34
+    if-eqz v3, :cond_32
 
-    .line 1209
+    .line 1192
     sget-object v3, Landroid/net/Uri;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -4857,16 +4777,16 @@
 
     check-cast v8, Landroid/net/Uri;
 
-    .line 1215
+    .line 1198
     .local v8, _arg4:Landroid/net/Uri;
-    :goto_35
+    :goto_33
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
-    if-eqz v3, :cond_35
+    if-eqz v3, :cond_33
 
-    .line 1216
+    .line 1199
     sget-object v3, Landroid/content/pm/ManifestDigest;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -4877,16 +4797,16 @@
 
     check-cast v9, Landroid/content/pm/ManifestDigest;
 
-    .line 1222
+    .line 1205
     .local v9, _arg5:Landroid/content/pm/ManifestDigest;
-    :goto_36
+    :goto_34
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
-    if-eqz v3, :cond_36
+    if-eqz v3, :cond_34
 
-    .line 1223
+    .line 1206
     sget-object v3, Landroid/content/pm/ContainerEncryptionParams;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -4898,21 +4818,21 @@
     check-cast v10, Landroid/content/pm/ContainerEncryptionParams;
 
     .local v10, _arg6:Landroid/content/pm/ContainerEncryptionParams;
-    :goto_37
+    :goto_35
     move-object/from16 v3, p0
 
-    .line 1228
+    .line 1211
     invoke-virtual/range {v3 .. v10}, Landroid/content/pm/IPackageManager$Stub;->installPackageWithVerification(Landroid/net/Uri;Landroid/content/pm/IPackageInstallObserver;ILjava/lang/String;Landroid/net/Uri;Landroid/content/pm/ManifestDigest;Landroid/content/pm/ContainerEncryptionParams;)V
 
-    .line 1229
+    .line 1212
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1230
+    .line 1213
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1199
+    .line 1182
     .end local v4           #_arg0:Landroid/net/Uri;
     .end local v5           #_arg1:Landroid/content/pm/IPackageInstallObserver;
     .end local v6           #_arg2:I
@@ -4920,37 +4840,37 @@
     .end local v8           #_arg4:Landroid/net/Uri;
     .end local v9           #_arg5:Landroid/content/pm/ManifestDigest;
     .end local v10           #_arg6:Landroid/content/pm/ContainerEncryptionParams;
-    :cond_33
+    :cond_31
     const/4 v4, 0x0
 
     .restart local v4       #_arg0:Landroid/net/Uri;
-    goto :goto_34
+    goto :goto_32
 
-    .line 1212
+    .line 1195
     .restart local v5       #_arg1:Landroid/content/pm/IPackageInstallObserver;
     .restart local v6       #_arg2:I
     .restart local v7       #_arg3:Ljava/lang/String;
-    :cond_34
+    :cond_32
     const/4 v8, 0x0
 
     .restart local v8       #_arg4:Landroid/net/Uri;
-    goto :goto_35
+    goto :goto_33
 
-    .line 1219
-    :cond_35
+    .line 1202
+    :cond_33
     const/4 v9, 0x0
 
     .restart local v9       #_arg5:Landroid/content/pm/ManifestDigest;
-    goto :goto_36
+    goto :goto_34
 
-    .line 1226
-    :cond_36
+    .line 1209
+    :cond_34
     const/4 v10, 0x0
 
     .restart local v10       #_arg6:Landroid/content/pm/ContainerEncryptionParams;
-    goto :goto_37
+    goto :goto_35
 
-    .line 1234
+    .line 1217
     .end local v4           #_arg0:Landroid/net/Uri;
     .end local v5           #_arg1:Landroid/content/pm/IPackageInstallObserver;
     .end local v6           #_arg2:I
@@ -4958,21 +4878,21 @@
     .end local v8           #_arg4:Landroid/net/Uri;
     .end local v9           #_arg5:Landroid/content/pm/ManifestDigest;
     .end local v10           #_arg6:Landroid/content/pm/ContainerEncryptionParams;
-    :sswitch_51
+    :sswitch_50
     const-string v3, "android.content.pm.IPackageManager"
 
     move-object/from16 v0, p2
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1236
+    .line 1219
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
-    if-eqz v3, :cond_37
+    if-eqz v3, :cond_35
 
-    .line 1237
+    .line 1220
     sget-object v3, Landroid/net/Uri;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -4983,9 +4903,9 @@
 
     check-cast v4, Landroid/net/Uri;
 
-    .line 1243
+    .line 1226
     .restart local v4       #_arg0:Landroid/net/Uri;
-    :goto_38
+    :goto_36
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readStrongBinder()Landroid/os/IBinder;
 
     move-result-object v3
@@ -4994,27 +4914,27 @@
 
     move-result-object v5
 
-    .line 1245
+    .line 1228
     .restart local v5       #_arg1:Landroid/content/pm/IPackageInstallObserver;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v6
 
-    .line 1247
+    .line 1230
     .restart local v6       #_arg2:I
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v7
 
-    .line 1249
+    .line 1232
     .restart local v7       #_arg3:Ljava/lang/String;
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
-    if-eqz v3, :cond_38
+    if-eqz v3, :cond_36
 
-    .line 1250
+    .line 1233
     sget-object v3, Landroid/content/pm/VerificationParams;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -5025,16 +4945,16 @@
 
     check-cast v8, Landroid/content/pm/VerificationParams;
 
-    .line 1256
+    .line 1239
     .local v8, _arg4:Landroid/content/pm/VerificationParams;
-    :goto_39
+    :goto_37
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
-    if-eqz v3, :cond_39
+    if-eqz v3, :cond_37
 
-    .line 1257
+    .line 1240
     sget-object v3, Landroid/content/pm/ContainerEncryptionParams;->CREATOR:Landroid/os/Parcelable$Creator;
 
     move-object/from16 v0, p2
@@ -5046,70 +4966,70 @@
     check-cast v9, Landroid/content/pm/ContainerEncryptionParams;
 
     .local v9, _arg5:Landroid/content/pm/ContainerEncryptionParams;
-    :goto_3a
+    :goto_38
     move-object/from16 v3, p0
 
-    .line 1262
+    .line 1245
     invoke-virtual/range {v3 .. v9}, Landroid/content/pm/IPackageManager$Stub;->installPackageWithVerificationAndEncryption(Landroid/net/Uri;Landroid/content/pm/IPackageInstallObserver;ILjava/lang/String;Landroid/content/pm/VerificationParams;Landroid/content/pm/ContainerEncryptionParams;)V
 
-    .line 1263
+    .line 1246
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1264
+    .line 1247
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1240
+    .line 1223
     .end local v4           #_arg0:Landroid/net/Uri;
     .end local v5           #_arg1:Landroid/content/pm/IPackageInstallObserver;
     .end local v6           #_arg2:I
     .end local v7           #_arg3:Ljava/lang/String;
     .end local v8           #_arg4:Landroid/content/pm/VerificationParams;
     .end local v9           #_arg5:Landroid/content/pm/ContainerEncryptionParams;
-    :cond_37
+    :cond_35
     const/4 v4, 0x0
 
     .restart local v4       #_arg0:Landroid/net/Uri;
-    goto :goto_38
+    goto :goto_36
 
-    .line 1253
+    .line 1236
     .restart local v5       #_arg1:Landroid/content/pm/IPackageInstallObserver;
     .restart local v6       #_arg2:I
     .restart local v7       #_arg3:Ljava/lang/String;
-    :cond_38
+    :cond_36
     const/4 v8, 0x0
 
     .restart local v8       #_arg4:Landroid/content/pm/VerificationParams;
-    goto :goto_39
+    goto :goto_37
 
-    .line 1260
-    :cond_39
+    .line 1243
+    :cond_37
     const/4 v9, 0x0
 
     .restart local v9       #_arg5:Landroid/content/pm/ContainerEncryptionParams;
-    goto :goto_3a
+    goto :goto_38
 
-    .line 1268
+    .line 1251
     .end local v4           #_arg0:Landroid/net/Uri;
     .end local v5           #_arg1:Landroid/content/pm/IPackageInstallObserver;
     .end local v6           #_arg2:I
     .end local v7           #_arg3:Ljava/lang/String;
     .end local v8           #_arg4:Landroid/content/pm/VerificationParams;
     .end local v9           #_arg5:Landroid/content/pm/ContainerEncryptionParams;
-    :sswitch_52
+    :sswitch_51
     const-string v3, "android.content.pm.IPackageManager"
 
     move-object/from16 v0, p2
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1270
+    .line 1253
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v4
 
-    .line 1271
+    .line 1254
     .local v4, _arg0:Ljava/lang/String;
     move-object/from16 v0, p0
 
@@ -5117,25 +5037,60 @@
 
     move-result v19
 
-    .line 1272
+    .line 1255
     .restart local v19       #_result:I
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1273
+    .line 1256
     move-object/from16 v0, p3
 
     move/from16 v1, v19
 
     invoke-virtual {v0, v1}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 1274
+    .line 1257
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1278
+    .line 1261
     .end local v4           #_arg0:Ljava/lang/String;
     .end local v19           #_result:I
+    :sswitch_52
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 1263
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v4
+
+    .line 1265
+    .local v4, _arg0:I
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v5
+
+    .line 1266
+    .local v5, _arg1:I
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->verifyPendingInstall(II)V
+
+    .line 1267
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 1268
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 1272
+    .end local v4           #_arg0:I
+    .end local v5           #_arg1:I
     :sswitch_53
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -5143,59 +5098,24 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1280
+    .line 1274
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v4
 
-    .line 1282
-    .local v4, _arg0:I
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v5
-
-    .line 1283
-    .local v5, _arg1:I
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->verifyPendingInstall(II)V
-
-    .line 1284
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1285
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1289
-    .end local v4           #_arg0:I
-    .end local v5           #_arg1:I
-    :sswitch_54
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1291
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v4
-
-    .line 1293
+    .line 1276
     .restart local v4       #_arg0:I
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
 
     move-result v5
 
-    .line 1295
+    .line 1278
     .restart local v5       #_arg1:I
     invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readLong()J
 
     move-result-wide v17
 
-    .line 1296
+    .line 1279
     .local v17, _arg2:J
     move-object/from16 v0, p0
 
@@ -5203,45 +5123,45 @@
 
     invoke-virtual {v0, v4, v5, v1, v2}, Landroid/content/pm/IPackageManager$Stub;->extendVerificationTimeout(IIJ)V
 
-    .line 1297
+    .line 1280
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1298
+    .line 1281
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1302
+    .line 1285
     .end local v4           #_arg0:I
     .end local v5           #_arg1:I
     .end local v17           #_arg2:J
-    :sswitch_55
+    :sswitch_54
     const-string v3, "android.content.pm.IPackageManager"
 
     move-object/from16 v0, p2
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1303
+    .line 1286
     invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->getVerifierDeviceIdentity()Landroid/content/pm/VerifierDeviceIdentity;
 
     move-result-object v19
 
-    .line 1304
+    .line 1287
     .local v19, _result:Landroid/content/pm/VerifierDeviceIdentity;
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1305
-    if-eqz v19, :cond_3a
+    .line 1288
+    if-eqz v19, :cond_38
 
-    .line 1306
+    .line 1289
     const/4 v3, 0x1
 
     move-object/from16 v0, p3
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 1307
+    .line 1290
     const/4 v3, 0x1
 
     move-object/from16 v0, v19
@@ -5250,8 +5170,90 @@
 
     invoke-virtual {v0, v1, v3}, Landroid/content/pm/VerifierDeviceIdentity;->writeToParcel(Landroid/os/Parcel;I)V
 
-    .line 1312
+    .line 1295
+    :goto_39
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 1293
+    :cond_38
+    const/4 v3, 0x0
+
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
+
+    goto :goto_39
+
+    .line 1299
+    .end local v19           #_result:Landroid/content/pm/VerifierDeviceIdentity;
+    :sswitch_55
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 1300
+    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->isFirstBoot()Z
+
+    move-result v19
+
+    .line 1301
+    .local v19, _result:Z
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 1302
+    if-eqz v19, :cond_39
+
+    const/4 v3, 0x1
+
+    :goto_3a
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
+
+    .line 1303
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 1302
+    :cond_39
+    const/4 v3, 0x0
+
+    goto :goto_3a
+
+    .line 1307
+    .end local v19           #_result:Z
+    :sswitch_56
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 1308
+    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->isOnlyCoreApps()Z
+
+    move-result v19
+
+    .line 1309
+    .restart local v19       #_result:Z
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 1310
+    if-eqz v19, :cond_3a
+
+    const/4 v3, 0x1
+
     :goto_3b
+    move-object/from16 v0, p3
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
+
+    .line 1311
     const/4 v3, 0x1
 
     goto/16 :goto_0
@@ -5260,52 +5262,9 @@
     :cond_3a
     const/4 v3, 0x0
 
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
-
     goto :goto_3b
 
-    .line 1316
-    .end local v19           #_result:Landroid/content/pm/VerifierDeviceIdentity;
-    :sswitch_56
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1317
-    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->isFirstBoot()Z
-
-    move-result v19
-
-    .line 1318
-    .local v19, _result:Z
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1319
-    if-eqz v19, :cond_3b
-
-    const/4 v3, 0x1
-
-    :goto_3c
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
-
-    .line 1320
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1319
-    :cond_3b
-    const/4 v3, 0x0
-
-    goto :goto_3c
-
-    .line 1324
+    .line 1315
     .end local v19           #_result:Z
     :sswitch_57
     const-string v3, "android.content.pm.IPackageManager"
@@ -5314,16 +5273,70 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1325
-    invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->isOnlyCoreApps()Z
+    .line 1317
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v4
+
+    .line 1319
+    .local v4, _arg0:Ljava/lang/String;
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
+
+    move-result v3
+
+    if-eqz v3, :cond_3b
+
+    const/4 v5, 0x1
+
+    .line 1320
+    .local v5, _arg1:Z
+    :goto_3c
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->setPermissionEnforced(Ljava/lang/String;Z)V
+
+    .line 1321
+    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
+
+    .line 1322
+    const/4 v3, 0x1
+
+    goto/16 :goto_0
+
+    .line 1319
+    .end local v5           #_arg1:Z
+    :cond_3b
+    const/4 v5, 0x0
+
+    goto :goto_3c
+
+    .line 1326
+    .end local v4           #_arg0:Ljava/lang/String;
+    :sswitch_58
+    const-string v3, "android.content.pm.IPackageManager"
+
+    move-object/from16 v0, p2
+
+    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
+
+    .line 1328
+    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v4
+
+    .line 1329
+    .restart local v4       #_arg0:Ljava/lang/String;
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->isPermissionEnforced(Ljava/lang/String;)Z
 
     move-result v19
 
-    .line 1326
+    .line 1330
     .restart local v19       #_result:Z
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1327
+    .line 1331
     if-eqz v19, :cond_3c
 
     const/4 v3, 0x1
@@ -5333,65 +5346,20 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 1328
+    .line 1332
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1327
+    .line 1331
     :cond_3c
     const/4 v3, 0x0
 
     goto :goto_3d
 
-    .line 1332
-    .end local v19           #_result:Z
-    :sswitch_58
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1334
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v4
-
     .line 1336
-    .local v4, _arg0:Ljava/lang/String;
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v3
-
-    if-eqz v3, :cond_3d
-
-    const/4 v5, 0x1
-
-    .line 1337
-    .local v5, _arg1:Z
-    :goto_3e
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4, v5}, Landroid/content/pm/IPackageManager$Stub;->setPermissionEnforced(Ljava/lang/String;Z)V
-
-    .line 1338
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1339
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1336
-    .end local v5           #_arg1:Z
-    :cond_3d
-    const/4 v5, 0x0
-
-    goto :goto_3e
-
-    .line 1343
     .end local v4           #_arg0:Ljava/lang/String;
+    .end local v19           #_result:Z
     :sswitch_59
     const-string v3, "android.content.pm.IPackageManager"
 
@@ -5399,83 +5367,35 @@
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 1345
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v4
-
-    .line 1346
-    .restart local v4       #_arg0:Ljava/lang/String;
-    move-object/from16 v0, p0
-
-    invoke-virtual {v0, v4}, Landroid/content/pm/IPackageManager$Stub;->isPermissionEnforced(Ljava/lang/String;)Z
-
-    move-result v19
-
-    .line 1347
-    .restart local v19       #_result:Z
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1348
-    if-eqz v19, :cond_3e
-
-    const/4 v3, 0x1
-
-    :goto_3f
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
-
-    .line 1349
-    const/4 v3, 0x1
-
-    goto/16 :goto_0
-
-    .line 1348
-    :cond_3e
-    const/4 v3, 0x0
-
-    goto :goto_3f
-
-    .line 1353
-    .end local v4           #_arg0:Ljava/lang/String;
-    .end local v19           #_result:Z
-    :sswitch_5a
-    const-string v3, "android.content.pm.IPackageManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v3}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1354
+    .line 1337
     invoke-virtual/range {p0 .. p0}, Landroid/content/pm/IPackageManager$Stub;->isStorageLow()Z
 
     move-result v19
 
-    .line 1355
+    .line 1338
     .restart local v19       #_result:Z
     invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 1356
-    if-eqz v19, :cond_3f
+    .line 1339
+    if-eqz v19, :cond_3d
 
     const/4 v3, 0x1
 
-    :goto_40
+    :goto_3e
     move-object/from16 v0, p3
 
     invoke-virtual {v0, v3}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 1357
+    .line 1340
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 1356
-    :cond_3f
+    .line 1339
+    :cond_3d
     const/4 v3, 0x0
 
-    goto :goto_40
+    goto :goto_3e
 
     .line 44
     nop
@@ -5571,7 +5491,6 @@
         0x57 -> :sswitch_57
         0x58 -> :sswitch_58
         0x59 -> :sswitch_59
-        0x5a -> :sswitch_5a
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

@@ -349,7 +349,7 @@
 
     const/4 v3, 0x0
 
-    .line 1422
+    .line 1413
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     .line 236
@@ -370,38 +370,38 @@
     .line 241
     iput-boolean v2, p0, Landroid/content/IntentFilter;->mHasPartialTypes:Z
 
-    .line 1423
+    .line 1414
     new-instance v3, Ljava/util/ArrayList;
 
     invoke-direct {v3}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v3, p0, Landroid/content/IntentFilter;->mActions:Ljava/util/ArrayList;
 
-    .line 1424
+    .line 1415
     iget-object v3, p0, Landroid/content/IntentFilter;->mActions:Ljava/util/ArrayList;
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->readStringList(Ljava/util/List;)V
 
-    .line 1425
+    .line 1416
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
 
     if-eqz v3, :cond_0
 
-    .line 1426
+    .line 1417
     new-instance v3, Ljava/util/ArrayList;
 
     invoke-direct {v3}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v3, p0, Landroid/content/IntentFilter;->mCategories:Ljava/util/ArrayList;
 
-    .line 1427
+    .line 1418
     iget-object v3, p0, Landroid/content/IntentFilter;->mCategories:Ljava/util/ArrayList;
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->readStringList(Ljava/util/List;)V
 
-    .line 1429
+    .line 1420
     :cond_0
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
@@ -409,19 +409,19 @@
 
     if-eqz v3, :cond_1
 
-    .line 1430
+    .line 1421
     new-instance v3, Ljava/util/ArrayList;
 
     invoke-direct {v3}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v3, p0, Landroid/content/IntentFilter;->mDataSchemes:Ljava/util/ArrayList;
 
-    .line 1431
+    .line 1422
     iget-object v3, p0, Landroid/content/IntentFilter;->mDataSchemes:Ljava/util/ArrayList;
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->readStringList(Ljava/util/List;)V
 
-    .line 1433
+    .line 1424
     :cond_1
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
@@ -429,43 +429,43 @@
 
     if-eqz v3, :cond_2
 
-    .line 1434
+    .line 1425
     new-instance v3, Ljava/util/ArrayList;
 
     invoke-direct {v3}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v3, p0, Landroid/content/IntentFilter;->mDataTypes:Ljava/util/ArrayList;
 
-    .line 1435
+    .line 1426
     iget-object v3, p0, Landroid/content/IntentFilter;->mDataTypes:Ljava/util/ArrayList;
 
     invoke-virtual {p1, v3}, Landroid/os/Parcel;->readStringList(Ljava/util/List;)V
 
-    .line 1437
+    .line 1428
     :cond_2
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v0
 
-    .line 1438
+    .line 1429
     .local v0, N:I
     if-lez v0, :cond_3
 
-    .line 1439
+    .line 1430
     new-instance v3, Ljava/util/ArrayList;
 
     invoke-direct {v3}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v3, p0, Landroid/content/IntentFilter;->mDataAuthorities:Ljava/util/ArrayList;
 
-    .line 1440
+    .line 1431
     const/4 v1, 0x0
 
     .local v1, i:I
     :goto_0
     if-ge v1, v0, :cond_3
 
-    .line 1441
+    .line 1432
     iget-object v3, p0, Landroid/content/IntentFilter;->mDataAuthorities:Ljava/util/ArrayList;
 
     new-instance v4, Landroid/content/IntentFilter$AuthorityEntry;
@@ -474,36 +474,36 @@
 
     invoke-virtual {v3, v4}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 1440
+    .line 1431
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 1444
+    .line 1435
     .end local v1           #i:I
     :cond_3
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v0
 
-    .line 1445
+    .line 1436
     if-lez v0, :cond_4
 
-    .line 1446
+    .line 1437
     new-instance v3, Ljava/util/ArrayList;
 
     invoke-direct {v3}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v3, p0, Landroid/content/IntentFilter;->mDataPaths:Ljava/util/ArrayList;
 
-    .line 1447
+    .line 1438
     const/4 v1, 0x0
 
     .restart local v1       #i:I
     :goto_1
     if-ge v1, v0, :cond_4
 
-    .line 1448
+    .line 1439
     iget-object v3, p0, Landroid/content/IntentFilter;->mDataPaths:Ljava/util/ArrayList;
 
     new-instance v4, Landroid/os/PatternMatcher;
@@ -512,12 +512,12 @@
 
     invoke-virtual {v3, v4}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 1447
+    .line 1438
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_1
 
-    .line 1451
+    .line 1442
     .end local v1           #i:I
     :cond_4
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
@@ -526,7 +526,7 @@
 
     iput v3, p0, Landroid/content/IntentFilter;->mPriority:I
 
-    .line 1452
+    .line 1443
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v3
@@ -538,7 +538,7 @@
     :cond_5
     iput-boolean v2, p0, Landroid/content/IntentFilter;->mHasPartialTypes:Z
 
-    .line 1453
+    .line 1444
     return-void
 .end method
 
@@ -785,21 +785,21 @@
 
     const/4 v7, 0x0
 
-    .line 1456
+    .line 1447
     iget-object v3, p0, Landroid/content/IntentFilter;->mDataTypes:Ljava/util/ArrayList;
 
-    .line 1458
+    .line 1449
     .local v3, t:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Ljava/lang/String;>;"
     if-nez p1, :cond_1
 
     move v6, v7
 
-    .line 1495
+    .line 1486
     :cond_0
     :goto_0
     return v6
 
-    .line 1462
+    .line 1453
     :cond_1
     invoke-virtual {v3, p1}, Ljava/util/ArrayList;->contains(Ljava/lang/Object;)Z
 
@@ -807,12 +807,12 @@
 
     if-nez v8, :cond_0
 
-    .line 1467
+    .line 1458
     invoke-virtual {p1}, Ljava/lang/String;->length()I
 
     move-result v4
 
-    .line 1468
+    .line 1459
     .local v4, typeLength:I
     const/4 v8, 0x3
 
@@ -826,7 +826,7 @@
 
     if-eqz v8, :cond_2
 
-    .line 1469
+    .line 1460
     invoke-virtual {v3}, Ljava/util/ArrayList;->isEmpty()Z
 
     move-result v8
@@ -837,7 +837,7 @@
 
     goto :goto_0
 
-    .line 1473
+    .line 1464
     :cond_2
     iget-boolean v8, p0, Landroid/content/IntentFilter;->mHasPartialTypes:Z
 
@@ -851,7 +851,7 @@
 
     if-nez v8, :cond_0
 
-    .line 1477
+    .line 1468
     :cond_3
     const/16 v8, 0x2f
 
@@ -859,11 +859,11 @@
 
     move-result v2
 
-    .line 1478
+    .line 1469
     .local v2, slashpos:I
     if-lez v2, :cond_5
 
-    .line 1479
+    .line 1470
     iget-boolean v8, p0, Landroid/content/IntentFilter;->mHasPartialTypes:Z
 
     if-eqz v8, :cond_4
@@ -878,7 +878,7 @@
 
     if-nez v8, :cond_0
 
-    .line 1482
+    .line 1473
     :cond_4
     add-int/lit8 v8, v2, 0x2
 
@@ -894,12 +894,12 @@
 
     if-ne v8, v9, :cond_5
 
-    .line 1485
+    .line 1476
     invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
 
     move-result v1
 
-    .line 1486
+    .line 1477
     .local v1, numTypes:I
     const/4 v0, 0x0
 
@@ -907,14 +907,14 @@
     :goto_1
     if-ge v0, v1, :cond_5
 
-    .line 1487
+    .line 1478
     invoke-virtual {v3, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
     move-result-object v5
 
     check-cast v5, Ljava/lang/String;
 
-    .line 1488
+    .line 1479
     .local v5, v:Ljava/lang/String;
     add-int/lit8 v8, v2, 0x1
 
@@ -924,7 +924,7 @@
 
     if-nez v8, :cond_0
 
-    .line 1486
+    .line 1477
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_1
@@ -935,7 +935,7 @@
     :cond_5
     move v6, v7
 
-    .line 1495
+    .line 1486
     goto :goto_0
 .end method
 
@@ -1645,7 +1645,7 @@
     .locals 1
 
     .prologue
-    .line 1403
+    .line 1394
     const/4 v0, 0x1
 
     return v0
@@ -2867,17 +2867,6 @@
 
     .line 862
     goto :goto_0
-.end method
-
-.method public onCompareTie(Landroid/content/IntentFilter;)I
-    .locals 1
-    .parameter "other"
-
-    .prologue
-    .line 1393
-    const/4 v0, 0x0
-
-    return v0
 .end method
 
 .method public final pathsIterator()Ljava/util/Iterator;

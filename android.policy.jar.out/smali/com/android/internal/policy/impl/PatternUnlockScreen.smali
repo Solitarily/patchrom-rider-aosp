@@ -151,7 +151,7 @@
     invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 167
-    const v0, 0x109006f
+    const v0, 0x1090071
 
     invoke-virtual {v6, v0, p0, v5}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;Z)Landroid/view/View;
 
@@ -172,7 +172,7 @@
     iput-object v0, p0, Lcom/android/internal/policy/impl/PatternUnlockScreen;->mKeyguardStatusViewManager:Lcom/android/internal/policy/impl/KeyguardStatusViewManager;
 
     .line 176
-    const v0, 0x10202fa
+    const v0, 0x10202fe
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/PatternUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -183,7 +183,7 @@
     iput-object v0, p0, Lcom/android/internal/policy/impl/PatternUnlockScreen;->mLockPatternView:Lcom/android/internal/widget/LockPatternView;
 
     .line 178
-    const v0, 0x10202f9
+    const v0, 0x10202fd
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/PatternUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -196,7 +196,7 @@
     .line 179
     iget-object v0, p0, Lcom/android/internal/policy/impl/PatternUnlockScreen;->mForgotPatternButton:Landroid/widget/Button;
 
-    const v1, 0x104037c
+    const v1, 0x104031e
 
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setText(I)V
 
@@ -278,7 +278,7 @@
     invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 
     .line 170
-    const v0, 0x109006e
+    const v0, 0x1090070
 
     invoke-virtual {v6, v0, p0, v5}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;Z)Landroid/view/View;
 

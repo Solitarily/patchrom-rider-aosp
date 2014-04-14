@@ -517,6 +517,8 @@
         <enum name="KEYCODE_YEN" value="216" />
         <enum name="KEYCODE_RO" value="217" />
         <enum name="KEYCODE_KANA" value="218" />
+        <enum name="KEYCODE_QUECHAR" value="220" />
+        <enum name="KEYCODE_FUNC_3" value="221" />
     </attr>
     <attr name="fullDark" format="reference|color" />
     <attr name="topDark" format="reference|color" />
@@ -1801,7 +1803,10 @@
     <attr name="keyboardViewStyle" format="reference" />
     <attr name="outerRingDrawable" format="reference" />
     <attr name="pointDrawable" format="reference" />
+    <attr name="hitRadius" format="dimension" />
     <attr name="glowRadius" format="dimension" />
+    <attr name="verticalOffset" format="dimension" />
+    <attr name="horizontalOffset" format="dimension" />
     <attr name="firstItemOffset" format="float" />
     <attr name="magneticTargets" format="boolean" />
     <attr name="allowScaling" format="boolean" />

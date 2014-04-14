@@ -855,9 +855,9 @@
     .parameter "visible"
 
     .prologue
-    const v12, 0x1040478
+    const v12, 0x104041a
 
-    const v9, 0x1040477
+    const v9, 0x1040419
 
     const/4 v11, 0x1
 
@@ -936,7 +936,7 @@
 
     .line 352
     .local v0, details:Ljava/lang/CharSequence;
-    const v1, 0x108057b
+    const v1, 0x1080526
 
     .line 356
     .local v1, icon:I
@@ -1017,7 +1017,7 @@
 
     .line 336
     :pswitch_0
-    const v7, 0x1040476
+    const v7, 0x1040418
 
     new-array v8, v11, [Ljava/lang/Object;
 
@@ -1049,7 +1049,7 @@
 
     .line 339
     .restart local v0       #details:Ljava/lang/CharSequence;
-    const v1, 0x108057f
+    const v1, 0x108052a
 
     .line 340
     .restart local v1       #icon:I
@@ -1082,7 +1082,7 @@
 
     .line 346
     .restart local v0       #details:Ljava/lang/CharSequence;
-    const v1, 0x108057b
+    const v1, 0x1080526
 
     .line 347
     .restart local v1       #icon:I

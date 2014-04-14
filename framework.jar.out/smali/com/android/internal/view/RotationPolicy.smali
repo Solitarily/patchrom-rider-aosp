@@ -86,18 +86,6 @@
 
     if-nez v1, :cond_0
 
-    invoke-virtual {p0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
-
-    move-result-object v1
-
-    const v2, 0x1110054
-
-    invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getBoolean(I)Z
-
-    move-result v1
-
-    if-nez v1, :cond_0
-
     const/4 v0, 0x1
 
     :cond_0
@@ -111,7 +99,7 @@
     .prologue
     const/4 v0, 0x0
 
-    .line 70
+    .line 68
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v1
@@ -138,14 +126,14 @@
     .parameter "listener"
 
     .prologue
-    .line 134
+    .line 132
     invoke-static {}, Landroid/os/UserHandle;->getCallingUserId()I
 
     move-result v0
 
     invoke-static {p0, p1, v0}, Lcom/android/internal/view/RotationPolicy;->registerRotationPolicyListener(Landroid/content/Context;Lcom/android/internal/view/RotationPolicy$RotationPolicyListener;I)V
 
-    .line 135
+    .line 133
     return-void
 .end method
 
@@ -158,7 +146,7 @@
     .prologue
     const/4 v3, 0x0
 
-    .line 143
+    .line 141
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v0
@@ -173,7 +161,7 @@
 
     invoke-virtual {v0, v1, v3, v2, p2}, Landroid/content/ContentResolver;->registerContentObserver(Landroid/net/Uri;ZLandroid/database/ContentObserver;I)V
 
-    .line 146
+    .line 144
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v0
@@ -188,7 +176,7 @@
 
     invoke-virtual {v0, v1, v3, v2, p2}, Landroid/content/ContentResolver;->registerContentObserver(Landroid/net/Uri;ZLandroid/database/ContentObserver;I)V
 
-    .line 149
+    .line 147
     return-void
 .end method
 
@@ -198,7 +186,7 @@
     .parameter "enabled"
 
     .prologue
-    .line 80
+    .line 78
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v0
@@ -211,14 +199,14 @@
 
     invoke-static {v0, v1, v2, v3}, Landroid/provider/Settings$System;->putIntForUser(Landroid/content/ContentResolver;Ljava/lang/String;II)Z
 
-    .line 84
+    .line 82
     new-instance v0, Lcom/android/internal/view/RotationPolicy$1;
 
     invoke-direct {v0, p1}, Lcom/android/internal/view/RotationPolicy$1;-><init>(Z)V
 
     invoke-static {v0}, Landroid/os/AsyncTask;->execute(Ljava/lang/Runnable;)V
 
-    .line 99
+    .line 97
     return-void
 .end method
 
@@ -228,7 +216,7 @@
     .parameter "enabled"
 
     .prologue
-    .line 108
+    .line 106
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v1
@@ -244,17 +232,17 @@
 
     invoke-static {v1, v2, v0, v3}, Landroid/provider/Settings$System;->putIntForUser(Landroid/content/ContentResolver;Ljava/lang/String;II)Z
 
-    .line 112
+    .line 110
     new-instance v0, Lcom/android/internal/view/RotationPolicy$2;
 
     invoke-direct {v0, p1}, Lcom/android/internal/view/RotationPolicy$2;-><init>(Z)V
 
     invoke-static {v0}, Landroid/os/AsyncTask;->execute(Ljava/lang/Runnable;)V
 
-    .line 127
+    .line 125
     return-void
 
-    .line 108
+    .line 106
     :cond_0
     const/4 v0, 0x0
 
@@ -267,7 +255,7 @@
     .parameter "listener"
 
     .prologue
-    .line 156
+    .line 154
     invoke-virtual {p0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
 
     move-result-object v0
@@ -276,6 +264,6 @@
 
     invoke-virtual {v0, v1}, Landroid/content/ContentResolver;->unregisterContentObserver(Landroid/database/ContentObserver;)V
 
-    .line 157
+    .line 155
     return-void
 .end method

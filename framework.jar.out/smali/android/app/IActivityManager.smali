@@ -165,8 +165,6 @@
 
 .field public static final IS_INTENT_SENDER_TARGETED_TO_PACKAGE_TRANSACTION:I = 0x87
 
-.field public static final IS_PRIVACY_GUARD_ENABLED_TRANSACTION:I = 0xa2
-
 .field public static final IS_TOP_ACTIVITY_IMMERSIVE_TRANSACTION:I = 0x71
 
 .field public static final IS_USER_A_MONKEY_TRANSACTION:I = 0x68
@@ -968,14 +966,6 @@
 .end method
 
 .method public abstract isIntentSenderTargetedToPackage(Landroid/content/IIntentSender;)Z
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
-.method public abstract isPrivacyGuardEnabledForProcess(I)Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

@@ -57,7 +57,7 @@
 
     sget-object v1, Landroid/os/RecoverySystem;->RECOVERY_DIR:Ljava/io/File;
 
-    const-string v2, "extendedcommand"
+    const-string v2, "command"
 
     invoke-direct {v0, v1, v2}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
 
@@ -513,9 +513,9 @@
 
     .line 329
     .local v1, filename:Ljava/lang/String;
-    const-string v2, "sdcard"
+    const-string v2, "storage/emulated"
 
-    const-string v3, "emmc"
+    const-string v3, "data/media"
 
     invoke-virtual {v1, v2, v3}, Ljava/lang/String;->replace(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;
 
@@ -554,7 +554,7 @@
 
     invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v3, "install_zip(\""
+    const-string v3, "--update_package="
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -564,7 +564,7 @@
 
     move-result-object v2
 
-    const-string v3, "\")\n--locale="
+    const-string v3, "\n--locale="
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 

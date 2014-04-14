@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 715
+    .line 697
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
 
     iput-boolean p2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$3;->val$show:Z
@@ -44,17 +44,17 @@
     .parameter "animation"
 
     .prologue
-    .line 725
+    .line 707
     iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$3;->val$show:Z
 
     if-nez v1, :cond_2
 
-    .line 726
+    .line 708
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
 
     invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->disablePageContentLayers()V
 
-    .line 727
+    .line 709
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
 
     iget-object v2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
@@ -68,7 +68,7 @@
 
     move-result-object v0
 
-    .line 728
+    .line 710
     .local v0, frame:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetFrame;
     if-eqz v0, :cond_1
 
@@ -94,11 +94,11 @@
 
     if-nez v1, :cond_1
 
-    .line 730
+    .line 712
     :cond_0
     invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetFrame;->resetSize()V
 
-    .line 732
+    .line 714
     :cond_1
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
 
@@ -107,14 +107,14 @@
     #setter for: Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->mWidgetToResetAfterFadeOut:I
     invoke-static {v1, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->access$102(Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;I)I
 
-    .line 733
+    .line 715
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
 
     const/4 v2, 0x0
 
     iput-boolean v2, v1, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->mShowingInitialHints:Z
 
-    .line 735
+    .line 717
     .end local v0           #frame:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetFrame;
     :cond_2
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
@@ -122,7 +122,7 @@
     #calls: Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->updateWidgetFramesImportantForAccessibility()V
     invoke-static {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->access$200(Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;)V
 
-    .line 736
+    .line 718
     return-void
 .end method
 
@@ -131,17 +131,17 @@
     .parameter "animation"
 
     .prologue
-    .line 718
+    .line 700
     iget-boolean v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$3;->val$show:Z
 
     if-eqz v0, :cond_0
 
-    .line 719
+    .line 701
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
 
     invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->enablePageContentLayers()V
 
-    .line 721
+    .line 703
     :cond_0
     return-void
 .end method

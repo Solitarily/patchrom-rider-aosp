@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 176
+    .line 151
     iput-object p1, p0, Lcom/android/server/power/ShutdownThread$2;->val$context:Landroid/content/Context;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,22 +38,45 @@
 
 # virtual methods
 .method public onClick(Landroid/content/DialogInterface;I)V
-    .locals 1
+    .locals 3
     .parameter "dialog"
     .parameter "which"
 
     .prologue
-    .line 178
-    const/4 v0, 0x1
+    const/4 v2, 0x1
 
-    invoke-static {v0}, Lcom/android/server/power/ShutdownThread;->access$002(Z)Z
+    .line 153
+    invoke-static {v2}, Lcom/android/server/power/ShutdownThread;->access$002(Z)Z
 
-    .line 179
+    .line 154
+    invoke-static {}, Lcom/android/server/power/ShutdownThread;->access$100()Ljava/lang/String;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_0
+
+    invoke-static {}, Lcom/android/server/power/ShutdownThread;->access$100()Ljava/lang/String;
+
+    move-result-object v0
+
+    const-string v1, "hot"
+
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    .line 155
+    invoke-static {v2}, Lcom/android/server/power/ShutdownThread;->access$202(Z)Z
+
+    .line 157
+    :cond_0
     iget-object v0, p0, Lcom/android/server/power/ShutdownThread$2;->val$context:Landroid/content/Context;
 
     #calls: Lcom/android/server/power/ShutdownThread;->beginShutdownSequence(Landroid/content/Context;)V
-    invoke-static {v0}, Lcom/android/server/power/ShutdownThread;->access$100(Landroid/content/Context;)V
+    invoke-static {v0}, Lcom/android/server/power/ShutdownThread;->access$300(Landroid/content/Context;)V
 
-    .line 180
+    .line 158
     return-void
 .end method

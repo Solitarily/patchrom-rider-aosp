@@ -24,15 +24,15 @@
     .parameter
 
     .prologue
-    .line 113
+    .line 111
     iput-object p1, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$AdbSettingsObserver;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
 
-    .line 114
+    .line 112
     const/4 v0, 0x0
 
     invoke-direct {p0, v0}, Landroid/database/ContentObserver;-><init>(Landroid/os/Handler;)V
 
-    .line 115
+    .line 113
     return-void
 .end method
 
@@ -47,7 +47,7 @@
 
     const/4 v0, 0x0
 
-    .line 118
+    .line 116
     iget-object v2, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$AdbSettingsObserver;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
 
     #getter for: Lcom/android/server/usb/LegacyUsbDeviceManager;->mContentResolver:Landroid/content/ContentResolver;
@@ -65,7 +65,7 @@
 
     move v0, v1
 
-    .line 120
+    .line 118
     .local v0, enable:Z
     :cond_0
     iget-object v2, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$AdbSettingsObserver;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
@@ -77,6 +77,6 @@
 
     invoke-virtual {v2, v1, v0}, Lcom/android/server/usb/LegacyUsbDeviceManager$LegacyUsbHandler;->sendMessage(IZ)V
 
-    .line 121
+    .line 119
     return-void
 .end method

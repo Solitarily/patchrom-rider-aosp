@@ -336,7 +336,7 @@
     .parameter "userId"
 
     .prologue
-    .line 310
+    .line 301
     const/4 v0, 0x1
 
     const/4 v1, 0x0
@@ -349,7 +349,7 @@
 
     invoke-virtual {v0, p1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
 
-    .line 311
+    .line 302
     return-void
 .end method
 
@@ -359,7 +359,7 @@
     .parameter "userId"
 
     .prologue
-    .line 314
+    .line 305
     const/4 v0, 0x0
 
     const/4 v1, 0x1
@@ -372,7 +372,7 @@
 
     invoke-virtual {v0, p1}, Ljava/util/HashSet;->add(Ljava/lang/Object;)Z
 
-    .line 315
+    .line 306
     return-void
 .end method
 
@@ -479,14 +479,14 @@
     .prologue
     const/4 v0, 0x0
 
-    .line 326
+    .line 317
     const/4 v2, 0x1
 
     invoke-virtual {p0, p2, v2, v0}, Lcom/android/server/pm/PackageSettingBase;->modifyUserStateComponents(IZZ)Landroid/content/pm/PackageUserState;
 
     move-result-object v1
 
-    .line 327
+    .line 318
     .local v1, state:Landroid/content/pm/PackageUserState;
     iget-object v2, v1, Landroid/content/pm/PackageUserState;->enabledComponents:Ljava/util/HashSet;
 
@@ -498,7 +498,7 @@
 
     move-result v0
 
-    .line 329
+    .line 320
     .local v0, changed:Z
     :cond_0
     iget-object v2, v1, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
@@ -509,7 +509,7 @@
 
     or-int/2addr v0, v2
 
-    .line 330
+    .line 321
     return v0
 .end method
 
@@ -521,14 +521,14 @@
     .prologue
     const/4 v0, 0x0
 
-    .line 318
+    .line 309
     const/4 v2, 0x1
 
     invoke-virtual {p0, p2, v0, v2}, Lcom/android/server/pm/PackageSettingBase;->modifyUserStateComponents(IZZ)Landroid/content/pm/PackageUserState;
 
     move-result-object v1
 
-    .line 319
+    .line 310
     .local v1, state:Landroid/content/pm/PackageUserState;
     iget-object v2, v1, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
 
@@ -540,7 +540,7 @@
 
     move-result v0
 
-    .line 321
+    .line 312
     .local v0, changed:Z
     :cond_0
     iget-object v2, v1, Landroid/content/pm/PackageUserState;->enabledComponents:Ljava/util/HashSet;
@@ -551,7 +551,7 @@
 
     or-int/2addr v0, v2
 
-    .line 322
+    .line 313
     return v0
 .end method
 
@@ -561,12 +561,12 @@
     .parameter "userId"
 
     .prologue
-    .line 343
+    .line 334
     invoke-virtual {p0, p2}, Lcom/android/server/pm/PackageSettingBase;->readUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
 
-    .line 344
+    .line 335
     .local v0, state:Landroid/content/pm/PackageUserState;
     iget-object v1, v0, Landroid/content/pm/PackageUserState;->enabledComponents:Ljava/util/HashSet;
 
@@ -580,14 +580,14 @@
 
     if-eqz v1, :cond_0
 
-    .line 345
+    .line 336
     const/4 v1, 0x1
 
-    .line 350
+    .line 341
     :goto_0
     return v1
 
-    .line 346
+    .line 337
     :cond_0
     iget-object v1, v0, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
 
@@ -601,12 +601,12 @@
 
     if-eqz v1, :cond_1
 
-    .line 348
+    .line 339
     const/4 v1, 0x2
 
     goto :goto_0
 
-    .line 350
+    .line 341
     :cond_1
     const/4 v1, 0x0
 
@@ -627,7 +627,7 @@
     .end annotation
 
     .prologue
-    .line 277
+    .line 268
     invoke-virtual {p0, p1}, Lcom/android/server/pm/PackageSettingBase;->readUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
@@ -666,7 +666,7 @@
     .end annotation
 
     .prologue
-    .line 273
+    .line 264
     invoke-virtual {p0, p1}, Lcom/android/server/pm/PackageSettingBase;->readUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
@@ -691,7 +691,7 @@
     .parameter "userId"
 
     .prologue
-    .line 213
+    .line 205
     invoke-virtual {p0, p1}, Lcom/android/server/pm/PackageSettingBase;->readUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
@@ -716,7 +716,7 @@
     .parameter "userId"
 
     .prologue
-    .line 252
+    .line 244
     invoke-virtual {p0, p1}, Lcom/android/server/pm/PackageSettingBase;->readUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
@@ -731,7 +731,7 @@
     .parameter "userId"
 
     .prologue
-    .line 244
+    .line 236
     invoke-virtual {p0, p1}, Lcom/android/server/pm/PackageSettingBase;->readUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
@@ -784,7 +784,7 @@
     .parameter "users"
 
     .prologue
-    .line 217
+    .line 209
     move-object v0, p1
 
     .local v0, arr$:[I
@@ -799,7 +799,7 @@
 
     aget v3, v0, v1
 
-    .line 218
+    .line 210
     .local v3, user:I
     invoke-virtual {p0, v3}, Lcom/android/server/pm/PackageSettingBase;->readUserState(I)Landroid/content/pm/PackageUserState;
 
@@ -809,42 +809,27 @@
 
     if-eqz v4, :cond_0
 
-    .line 219
+    .line 211
     const/4 v4, 0x1
 
-    .line 222
+    .line 214
     .end local v3           #user:I
     :goto_1
     return v4
 
-    .line 217
+    .line 209
     .restart local v3       #user:I
     :cond_0
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 222
+    .line 214
     .end local v3           #user:I
     :cond_1
     const/4 v4, 0x0
 
     goto :goto_1
-.end method
-
-.method isPrivacyGuard(I)Z
-    .locals 1
-    .parameter "userId"
-
-    .prologue
-    .line 205
-    invoke-virtual {p0, p1}, Lcom/android/server/pm/PackageSettingBase;->readUserState(I)Landroid/content/pm/PackageUserState;
-
-    move-result-object v0
-
-    iget-boolean v0, v0, Landroid/content/pm/PackageUserState;->privacyGuard:Z
-
-    return v0
 .end method
 
 .method modifyUserStateComponents(IZZ)Landroid/content/pm/PackageUserState;
@@ -856,12 +841,12 @@
     .prologue
     const/4 v2, 0x1
 
-    .line 299
+    .line 290
     invoke-direct {p0, p1}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
 
-    .line 300
+    .line 291
     .local v0, state:Landroid/content/pm/PackageUserState;
     if-eqz p2, :cond_0
 
@@ -869,14 +854,14 @@
 
     if-nez v1, :cond_0
 
-    .line 301
+    .line 292
     new-instance v1, Ljava/util/HashSet;
 
     invoke-direct {v1, v2}, Ljava/util/HashSet;-><init>(I)V
 
     iput-object v1, v0, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
 
-    .line 303
+    .line 294
     :cond_0
     if-eqz p3, :cond_1
 
@@ -884,14 +869,14 @@
 
     if-nez v1, :cond_1
 
-    .line 304
+    .line 295
     new-instance v1, Ljava/util/HashSet;
 
     invoke-direct {v1, v2}, Ljava/util/HashSet;-><init>(I)V
 
     iput-object v1, v0, Landroid/content/pm/PackageUserState;->enabledComponents:Ljava/util/HashSet;
 
-    .line 306
+    .line 297
     :cond_1
     return-object v0
 .end method
@@ -902,10 +887,10 @@
     .parameter "installed"
 
     .prologue
-    .line 226
+    .line 218
     const/4 v3, 0x0
 
-    .line 227
+    .line 219
     .local v3, num:I
     move-object v0, p1
 
@@ -921,7 +906,7 @@
 
     aget v5, v0, v1
 
-    .line 228
+    .line 220
     .local v5, user:I
     invoke-virtual {p0, v5}, Lcom/android/server/pm/PackageSettingBase;->getInstalled(I)Z
 
@@ -929,25 +914,25 @@
 
     if-ne v6, p2, :cond_0
 
-    .line 229
+    .line 221
     add-int/lit8 v3, v3, 0x1
 
-    .line 227
+    .line 219
     :cond_0
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 232
+    .line 224
     .end local v5           #user:I
     :cond_1
     new-array v4, v3, [I
 
-    .line 233
+    .line 225
     .local v4, res:[I
     const/4 v3, 0x0
 
-    .line 234
+    .line 226
     move-object v0, p1
 
     array-length v2, v0
@@ -959,7 +944,7 @@
 
     aget v5, v0, v1
 
-    .line 235
+    .line 227
     .restart local v5       #user:I
     invoke-virtual {p0, v5}, Lcom/android/server/pm/PackageSettingBase;->getInstalled(I)Z
 
@@ -967,19 +952,19 @@
 
     if-ne v6, p2, :cond_2
 
-    .line 236
+    .line 228
     aput v5, v4, v3
 
-    .line 237
+    .line 229
     add-int/lit8 v3, v3, 0x1
 
-    .line 234
+    .line 226
     :cond_2
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_1
 
-    .line 240
+    .line 232
     .end local v5           #user:I
     :cond_3
     return-object v4
@@ -1020,12 +1005,12 @@
     .parameter "userId"
 
     .prologue
-    .line 355
+    .line 346
     iget-object v0, p0, Lcom/android/server/pm/PackageSettingBase;->userState:Landroid/util/SparseArray;
 
     invoke-virtual {v0, p1}, Landroid/util/SparseArray;->delete(I)V
 
-    .line 356
+    .line 347
     return-void
 .end method
 
@@ -1039,12 +1024,12 @@
 
     const/4 v2, 0x0
 
-    .line 334
+    .line 325
     invoke-virtual {p0, p2, v3, v3}, Lcom/android/server/pm/PackageSettingBase;->modifyUserStateComponents(IZZ)Landroid/content/pm/PackageUserState;
 
     move-result-object v1
 
-    .line 335
+    .line 326
     .local v1, state:Landroid/content/pm/PackageUserState;
     iget-object v3, v1, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
 
@@ -1056,7 +1041,7 @@
 
     move-result v0
 
-    .line 337
+    .line 328
     .local v0, changed:Z
     :goto_0
     iget-object v3, v1, Landroid/content/pm/PackageUserState;->enabledComponents:Ljava/util/HashSet;
@@ -1072,14 +1057,14 @@
     :cond_0
     or-int/2addr v0, v2
 
-    .line 339
+    .line 330
     return v0
 
     .end local v0           #changed:Z
     :cond_1
     move v0, v2
 
-    .line 335
+    .line 326
     goto :goto_0
 .end method
 
@@ -1098,7 +1083,7 @@
     .end annotation
 
     .prologue
-    .line 285
+    .line 276
     .local p1, components:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
     invoke-direct {p0, p2}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
 
@@ -1106,7 +1091,7 @@
 
     iput-object p1, v0, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
 
-    .line 286
+    .line 277
     return-void
 .end method
 
@@ -1125,7 +1110,7 @@
     .end annotation
 
     .prologue
-    .line 294
+    .line 285
     .local p1, components:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
     invoke-direct {p0, p2}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
 
@@ -1140,10 +1125,10 @@
     :goto_0
     iput-object v0, v1, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
 
-    .line 296
+    .line 287
     return-void
 
-    .line 294
+    .line 285
     :cond_0
     const/4 v0, 0x0
 
@@ -1182,7 +1167,7 @@
     .end annotation
 
     .prologue
-    .line 281
+    .line 272
     .local p1, components:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
     invoke-direct {p0, p2}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
 
@@ -1190,7 +1175,7 @@
 
     iput-object p1, v0, Landroid/content/pm/PackageUserState;->enabledComponents:Ljava/util/HashSet;
 
-    .line 282
+    .line 273
     return-void
 .end method
 
@@ -1209,7 +1194,7 @@
     .end annotation
 
     .prologue
-    .line 289
+    .line 280
     .local p1, components:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
     invoke-direct {p0, p2}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
 
@@ -1224,10 +1209,10 @@
     :goto_0
     iput-object v0, v1, Landroid/content/pm/PackageUserState;->enabledComponents:Ljava/util/HashSet;
 
-    .line 291
+    .line 282
     return-void
 
-    .line 289
+    .line 280
     :cond_0
     const/4 v0, 0x0
 
@@ -1252,14 +1237,14 @@
     .parameter "userId"
 
     .prologue
-    .line 209
+    .line 201
     invoke-direct {p0, p2}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
 
     iput-boolean p1, v0, Landroid/content/pm/PackageUserState;->installed:Z
 
-    .line 210
+    .line 202
     return-void
 .end method
 
@@ -1281,31 +1266,14 @@
     .parameter "userId"
 
     .prologue
-    .line 256
+    .line 248
     invoke-direct {p0, p2}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
 
     iput-boolean p1, v0, Landroid/content/pm/PackageUserState;->notLaunched:Z
 
-    .line 257
-    return-void
-.end method
-
-.method setPrivacyGuard(ZI)V
-    .locals 1
-    .parameter "enabled"
-    .parameter "userId"
-
-    .prologue
-    .line 201
-    invoke-direct {p0, p2}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
-
-    move-result-object v0
-
-    iput-boolean p1, v0, Landroid/content/pm/PackageUserState;->privacyGuard:Z
-
-    .line 202
+    .line 249
     return-void
 .end method
 
@@ -1315,14 +1283,14 @@
     .parameter "userId"
 
     .prologue
-    .line 248
+    .line 240
     invoke-direct {p0, p2}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
 
     iput-boolean p1, v0, Landroid/content/pm/PackageUserState;->stopped:Z
 
-    .line 249
+    .line 241
     return-void
 .end method
 
@@ -1338,19 +1306,18 @@
     return-void
 .end method
 
-.method setUserState(IIZZZZLjava/util/HashSet;Ljava/util/HashSet;)V
+.method setUserState(IIZZZLjava/util/HashSet;Ljava/util/HashSet;)V
     .locals 1
     .parameter "userId"
     .parameter "enabled"
     .parameter "installed"
     .parameter "stopped"
     .parameter "notLaunched"
-    .parameter "privacyGuard"
     .parameter
     .parameter
     .annotation system Ldalvik/annotation/Signature;
         value = {
-            "(IIZZZZ",
+            "(IIZZZ",
             "Ljava/util/HashSet",
             "<",
             "Ljava/lang/String;",
@@ -1363,35 +1330,32 @@
     .end annotation
 
     .prologue
-    .line 262
-    .local p7, enabledComponents:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
-    .local p8, disabledComponents:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
+    .line 254
+    .local p6, enabledComponents:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
+    .local p7, disabledComponents:Ljava/util/HashSet;,"Ljava/util/HashSet<Ljava/lang/String;>;"
     invoke-direct {p0, p1}, Lcom/android/server/pm/PackageSettingBase;->modifyUserState(I)Landroid/content/pm/PackageUserState;
 
     move-result-object v0
 
-    .line 263
+    .line 255
     .local v0, state:Landroid/content/pm/PackageUserState;
     iput p2, v0, Landroid/content/pm/PackageUserState;->enabled:I
 
-    .line 264
+    .line 256
     iput-boolean p3, v0, Landroid/content/pm/PackageUserState;->installed:Z
 
-    .line 265
+    .line 257
     iput-boolean p4, v0, Landroid/content/pm/PackageUserState;->stopped:Z
 
-    .line 266
+    .line 258
     iput-boolean p5, v0, Landroid/content/pm/PackageUserState;->notLaunched:Z
 
-    .line 267
-    iput-boolean p6, v0, Landroid/content/pm/PackageUserState;->privacyGuard:Z
+    .line 259
+    iput-object p6, v0, Landroid/content/pm/PackageUserState;->enabledComponents:Ljava/util/HashSet;
 
-    .line 268
-    iput-object p7, v0, Landroid/content/pm/PackageUserState;->enabledComponents:Ljava/util/HashSet;
+    .line 260
+    iput-object p7, v0, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
 
-    .line 269
-    iput-object p8, v0, Landroid/content/pm/PackageUserState;->disabledComponents:Ljava/util/HashSet;
-
-    .line 270
+    .line 261
     return-void
 .end method

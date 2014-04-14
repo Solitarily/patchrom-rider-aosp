@@ -19,7 +19,7 @@
     <dimen name="default_app_widget_padding_top">4.0dip</dimen>
     <dimen name="default_app_widget_padding_right">12.0dip</dimen>
     <dimen name="default_app_widget_padding_bottom">20.0dip</dimen>
-    <dimen name="kg_status_clock_font_size">170.0dip</dimen>
+    <dimen name="kg_status_clock_font_size">188.0dip</dimen>
     <dimen name="kg_status_date_font_size">34.0dip</dimen>
     <dimen name="kg_status_line_font_size">19.0sp</dimen>
     <dimen name="kg_status_line_font_right_margin">32.0dip</dimen>

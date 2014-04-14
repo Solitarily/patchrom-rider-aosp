@@ -618,7 +618,7 @@
 
     .line 502
     :cond_0
-    invoke-virtual {v0}, Ljava/io/File;->mkdir()Z
+    invoke-virtual {v0}, Ljava/io/File;->mkdirs()Z
 
     move-result v1
 

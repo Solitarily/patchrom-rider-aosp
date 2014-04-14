@@ -23,7 +23,7 @@
     .locals 3
 
     .prologue
-    .line 513
+    .line 512
     invoke-static {}, Landroid/net/NetworkInfo$DetailedState;->values()[Landroid/net/NetworkInfo$DetailedState;
 
     move-result-object v0

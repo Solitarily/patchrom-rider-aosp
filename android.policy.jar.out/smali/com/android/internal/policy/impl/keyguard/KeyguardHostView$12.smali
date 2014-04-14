@@ -1,141 +1,206 @@
-.class Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;
+.class synthetic Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;
 .super Ljava/lang/Object;
 .source "KeyguardHostView.java"
 
-# interfaces
-.implements Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$UserSwitcherCallback;
-
 
 # annotations
-.annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->enableUserSelectorIfNecessary()V
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x0
+    accessFlags = 0x1008
     name = null
 .end annotation
 
 
-# instance fields
-.field final synthetic this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+# static fields
+.field static final synthetic $SwitchMap$com$android$internal$policy$impl$keyguard$KeyguardSecurityModel$SecurityMode:[I
 
 
 # direct methods
-.method constructor <init>(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)V
-    .locals 0
-    .parameter
-
-    .prologue
-    .line 1531
-    iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
-
-    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
-
-    return-void
-.end method
-
-
-# virtual methods
-.method public hideSecurityView(I)V
+.method static constructor <clinit>()V
     .locals 3
-    .parameter "duration"
 
     .prologue
-    .line 1534
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
-
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mSecurityViewContainer:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityViewFlipper;
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$2300(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityViewFlipper;
+    .line 513
+    invoke-static {}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->values()[Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
 
     move-result-object v0
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityViewFlipper;->animate()Landroid/view/ViewPropertyAnimator;
+    array-length v0, v0
 
-    move-result-object v0
+    new-array v0, v0, [I
 
-    const/4 v1, 0x0
+    sput-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->$SwitchMap$com$android$internal$policy$impl$keyguard$KeyguardSecurityModel$SecurityMode:[I
 
-    invoke-virtual {v0, v1}, Landroid/view/ViewPropertyAnimator;->alpha(F)Landroid/view/ViewPropertyAnimator;
+    :try_start_0
+    sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->$SwitchMap$com$android$internal$policy$impl$keyguard$KeyguardSecurityModel$SecurityMode:[I
 
-    move-result-object v0
+    sget-object v1, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->Pattern:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
 
-    int-to-long v1, p1
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->ordinal()I
 
-    invoke-virtual {v0, v1, v2}, Landroid/view/ViewPropertyAnimator;->setDuration(J)Landroid/view/ViewPropertyAnimator;
+    move-result v1
 
-    .line 1535
+    const/4 v2, 0x1
+
+    aput v2, v0, v1
+    :try_end_0
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_0 .. :try_end_0} :catch_7
+
+    :goto_0
+    :try_start_1
+    sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->$SwitchMap$com$android$internal$policy$impl$keyguard$KeyguardSecurityModel$SecurityMode:[I
+
+    sget-object v1, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->PIN:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
+
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->ordinal()I
+
+    move-result v1
+
+    const/4 v2, 0x2
+
+    aput v2, v0, v1
+    :try_end_1
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_1 .. :try_end_1} :catch_6
+
+    :goto_1
+    :try_start_2
+    sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->$SwitchMap$com$android$internal$policy$impl$keyguard$KeyguardSecurityModel$SecurityMode:[I
+
+    sget-object v1, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->Password:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
+
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->ordinal()I
+
+    move-result v1
+
+    const/4 v2, 0x3
+
+    aput v2, v0, v1
+    :try_end_2
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_2 .. :try_end_2} :catch_5
+
+    :goto_2
+    :try_start_3
+    sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->$SwitchMap$com$android$internal$policy$impl$keyguard$KeyguardSecurityModel$SecurityMode:[I
+
+    sget-object v1, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->Account:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
+
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->ordinal()I
+
+    move-result v1
+
+    const/4 v2, 0x4
+
+    aput v2, v0, v1
+    :try_end_3
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_3 .. :try_end_3} :catch_4
+
+    :goto_3
+    :try_start_4
+    sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->$SwitchMap$com$android$internal$policy$impl$keyguard$KeyguardSecurityModel$SecurityMode:[I
+
+    sget-object v1, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->Biometric:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
+
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->ordinal()I
+
+    move-result v1
+
+    const/4 v2, 0x5
+
+    aput v2, v0, v1
+    :try_end_4
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_4 .. :try_end_4} :catch_3
+
+    :goto_4
+    :try_start_5
+    sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->$SwitchMap$com$android$internal$policy$impl$keyguard$KeyguardSecurityModel$SecurityMode:[I
+
+    sget-object v1, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->SimPin:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
+
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->ordinal()I
+
+    move-result v1
+
+    const/4 v2, 0x6
+
+    aput v2, v0, v1
+    :try_end_5
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_5 .. :try_end_5} :catch_2
+
+    :goto_5
+    :try_start_6
+    sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->$SwitchMap$com$android$internal$policy$impl$keyguard$KeyguardSecurityModel$SecurityMode:[I
+
+    sget-object v1, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->SimPuk:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
+
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->ordinal()I
+
+    move-result v1
+
+    const/4 v2, 0x7
+
+    aput v2, v0, v1
+    :try_end_6
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_6 .. :try_end_6} :catch_1
+
+    :goto_6
+    :try_start_7
+    sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->$SwitchMap$com$android$internal$policy$impl$keyguard$KeyguardSecurityModel$SecurityMode:[I
+
+    sget-object v1, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->None:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
+
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->ordinal()I
+
+    move-result v1
+
+    const/16 v2, 0x8
+
+    aput v2, v0, v1
+    :try_end_7
+    .catch Ljava/lang/NoSuchFieldError; {:try_start_7 .. :try_end_7} :catch_0
+
+    :goto_7
     return-void
-.end method
 
-.method public showSecurityView()V
-    .locals 2
+    :catch_0
+    move-exception v0
 
-    .prologue
-    .line 1539
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+    goto :goto_7
 
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mSecurityViewContainer:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityViewFlipper;
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$2300(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityViewFlipper;
+    :catch_1
+    move-exception v0
 
-    move-result-object v0
+    goto :goto_6
 
-    const/high16 v1, 0x3f80
+    :catch_2
+    move-exception v0
 
-    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityViewFlipper;->setAlpha(F)V
+    goto :goto_5
 
-    .line 1540
-    return-void
-.end method
+    :catch_3
+    move-exception v0
 
-.method public showUnlockHint()V
-    .locals 1
+    goto :goto_4
 
-    .prologue
-    .line 1544
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+    :catch_4
+    move-exception v0
 
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mKeyguardSelectorView:Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$2400(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
+    goto :goto_3
 
-    move-result-object v0
+    :catch_5
+    move-exception v0
 
-    if-eqz v0, :cond_0
+    goto :goto_2
 
-    .line 1545
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+    :catch_6
+    move-exception v0
 
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mKeyguardSelectorView:Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$2400(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
+    goto :goto_1
 
-    move-result-object v0
+    :catch_7
+    move-exception v0
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->showUsabilityHint()V
-
-    .line 1547
-    :cond_0
-    return-void
-.end method
-
-.method public userActivity()V
-    .locals 1
-
-    .prologue
-    .line 1551
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
-
-    iget-object v0, v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mViewMediatorCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$ViewMediatorCallback;
-
-    if-eqz v0, :cond_0
-
-    .line 1552
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$12;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
-
-    iget-object v0, v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mViewMediatorCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$ViewMediatorCallback;
-
-    invoke-interface {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$ViewMediatorCallback;->userActivity()V
-
-    .line 1554
-    :cond_0
-    return-void
+    goto :goto_0
 .end method

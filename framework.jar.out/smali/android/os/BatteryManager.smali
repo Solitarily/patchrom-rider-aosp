@@ -36,26 +36,6 @@
 
 .field public static final BATTERY_STATUS_UNKNOWN:I = 0x1
 
-.field public static final EXTRA_DOCK_HEALTH:Ljava/lang/String; = "dock_health"
-
-.field public static final EXTRA_DOCK_ICON_SMALL:Ljava/lang/String; = "dock_icon-small"
-
-.field public static final EXTRA_DOCK_LEVEL:Ljava/lang/String; = "dock_level"
-
-.field public static final EXTRA_DOCK_PLUGGED:Ljava/lang/String; = "dock_plugged"
-
-.field public static final EXTRA_DOCK_PRESENT:Ljava/lang/String; = "dock_present"
-
-.field public static final EXTRA_DOCK_SCALE:Ljava/lang/String; = "dock_scale"
-
-.field public static final EXTRA_DOCK_STATUS:Ljava/lang/String; = "dock_status"
-
-.field public static final EXTRA_DOCK_TECHNOLOGY:Ljava/lang/String; = "dock_technology"
-
-.field public static final EXTRA_DOCK_TEMPERATURE:Ljava/lang/String; = "dock_temperature"
-
-.field public static final EXTRA_DOCK_VOLTAGE:Ljava/lang/String; = "dock_voltage"
-
 .field public static final EXTRA_HEALTH:Ljava/lang/String; = "health"
 
 .field public static final EXTRA_ICON_SMALL:Ljava/lang/String; = "icon-small"

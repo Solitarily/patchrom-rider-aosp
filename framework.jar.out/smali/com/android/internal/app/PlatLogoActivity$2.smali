@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 118
+    .line 109
     iput-object p1, p0, Lcom/android/internal/app/PlatLogoActivity$2;->this$0:Lcom/android/internal/app/PlatLogoActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -38,11 +38,11 @@
 
 # virtual methods
 .method public onLongClick(Landroid/view/View;)Z
-    .locals 5
+    .locals 4
     .parameter "v"
 
     .prologue
-    .line 122
+    .line 113
     :try_start_0
     iget-object v1, p0, Lcom/android/internal/app/PlatLogoActivity$2;->this$0:Lcom/android/internal/app/PlatLogoActivity;
 
@@ -58,19 +58,6 @@
 
     move-result-object v2
 
-    const-string v3, "is_cid"
-
-    iget-object v4, p0, Lcom/android/internal/app/PlatLogoActivity$2;->this$0:Lcom/android/internal/app/PlatLogoActivity;
-
-    #getter for: Lcom/android/internal/app/PlatLogoActivity;->mIsCid:Z
-    invoke-static {v4}, Lcom/android/internal/app/PlatLogoActivity;->access$000(Lcom/android/internal/app/PlatLogoActivity;)Z
-
-    move-result v4
-
-    invoke-virtual {v2, v3, v4}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Z)Landroid/content/Intent;
-
-    move-result-object v2
-
     const-string v3, "com.android.internal.category.PLATLOGO"
 
     invoke-virtual {v2, v3}, Landroid/content/Intent;->addCategory(Ljava/lang/String;)Landroid/content/Intent;
@@ -81,22 +68,22 @@
     :try_end_0
     .catch Landroid/content/ActivityNotFoundException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 132
+    .line 122
     :goto_0
     iget-object v1, p0, Lcom/android/internal/app/PlatLogoActivity$2;->this$0:Lcom/android/internal/app/PlatLogoActivity;
 
     invoke-virtual {v1}, Lcom/android/internal/app/PlatLogoActivity;->finish()V
 
-    .line 133
+    .line 123
     const/4 v1, 0x1
 
     return v1
 
-    .line 129
+    .line 119
     :catch_0
     move-exception v0
 
-    .line 130
+    .line 120
     .local v0, ex:Landroid/content/ActivityNotFoundException;
     const-string v1, "PlatLogoActivity"
 

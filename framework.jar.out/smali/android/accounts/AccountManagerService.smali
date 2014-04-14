@@ -1348,7 +1348,7 @@
 
     iget-object v2, v0, Landroid/accounts/AccountManagerService;->mContext:Landroid/content/Context;
 
-    const v3, 0x10404ef
+    const v3, 0x1040491
 
     const/4 v4, 0x1
 
@@ -1611,7 +1611,7 @@
 
     iget-object v4, v0, Landroid/accounts/AccountManagerService;->mContext:Landroid/content/Context;
 
-    const v5, 0x104013d
+    const v5, 0x10400cf
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 

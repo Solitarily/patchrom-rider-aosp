@@ -766,7 +766,7 @@
 
     .line 365
     .local v1, imageResId:I
-    const v0, 0x104036d
+    const v0, 0x104030f
 
     .line 366
     .local v0, imageDescId:I
@@ -825,7 +825,7 @@
 
     .line 347
     .restart local v1       #imageResId:I
-    const v0, 0x104036d
+    const v0, 0x104030f
 
     .line 348
     .restart local v0       #imageDescId:I
@@ -839,7 +839,7 @@
 
     .line 352
     .restart local v1       #imageResId:I
-    const v0, 0x104036c
+    const v0, 0x104030e
 
     .line 353
     .restart local v0       #imageDescId:I
@@ -852,11 +852,11 @@
     .end local v0           #imageDescId:I
     .end local v1           #imageResId:I
     :sswitch_2
-    const v1, 0x1080355
+    const v1, 0x1080321
 
     .line 358
     .restart local v1       #imageResId:I
-    const v0, 0x104036e
+    const v0, 0x1040310
 
     .line 359
     .restart local v0       #imageDescId:I
@@ -1144,7 +1144,7 @@
     invoke-virtual {v5, v7}, Landroid/widget/TextView;->setSelected(Z)V
 
     .line 210
-    const v5, 0x1020305
+    const v5, 0x102030a
 
     invoke-virtual {p0, v5}, Lcom/android/internal/widget/TransportControlView;->findViewById(I)Landroid/view/View;
 
@@ -1155,7 +1155,7 @@
     iput-object v5, p0, Lcom/android/internal/widget/TransportControlView;->mAlbumArt:Landroid/widget/ImageView;
 
     .line 211
-    const v5, 0x1020306
+    const v5, 0x102030b
 
     invoke-virtual {p0, v5}, Lcom/android/internal/widget/TransportControlView;->findViewById(I)Landroid/view/View;
 
@@ -1166,7 +1166,7 @@
     iput-object v5, p0, Lcom/android/internal/widget/TransportControlView;->mBtnPrev:Landroid/widget/ImageView;
 
     .line 212
-    const v5, 0x1020307
+    const v5, 0x102030c
 
     invoke-virtual {p0, v5}, Lcom/android/internal/widget/TransportControlView;->findViewById(I)Landroid/view/View;
 
@@ -1177,7 +1177,7 @@
     iput-object v5, p0, Lcom/android/internal/widget/TransportControlView;->mBtnPlay:Landroid/widget/ImageView;
 
     .line 213
-    const v5, 0x1020308
+    const v5, 0x102030d
 
     invoke-virtual {p0, v5}, Lcom/android/internal/widget/TransportControlView;->findViewById(I)Landroid/view/View;
 

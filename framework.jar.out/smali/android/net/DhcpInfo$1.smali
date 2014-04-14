@@ -32,7 +32,7 @@
     .locals 0
 
     .prologue
-    .line 90
+    .line 100
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
@@ -45,12 +45,12 @@
     .parameter "in"
 
     .prologue
-    .line 92
+    .line 102
     new-instance v0, Landroid/net/DhcpInfo;
 
     invoke-direct {v0}, Landroid/net/DhcpInfo;-><init>()V
 
-    .line 93
+    .line 103
     .local v0, info:Landroid/net/DhcpInfo;
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
@@ -58,49 +58,63 @@
 
     iput v1, v0, Landroid/net/DhcpInfo;->ipAddress:I
 
-    .line 94
+    .line 104
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v1
 
     iput v1, v0, Landroid/net/DhcpInfo;->gateway:I
 
-    .line 95
+    .line 105
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v1
 
     iput v1, v0, Landroid/net/DhcpInfo;->netmask:I
 
-    .line 96
+    .line 106
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v1
 
     iput v1, v0, Landroid/net/DhcpInfo;->dns1:I
 
-    .line 97
+    .line 107
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v1
 
     iput v1, v0, Landroid/net/DhcpInfo;->dns2:I
 
-    .line 98
+    .line 108
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/net/DhcpInfo;->dns3:I
+
+    .line 109
+    invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
+
+    move-result v1
+
+    iput v1, v0, Landroid/net/DhcpInfo;->dns4:I
+
+    .line 110
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v1
 
     iput v1, v0, Landroid/net/DhcpInfo;->serverAddress:I
 
-    .line 99
+    .line 111
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v1
 
     iput v1, v0, Landroid/net/DhcpInfo;->leaseDuration:I
 
-    .line 100
+    .line 112
     return-object v0
 .end method
 
@@ -109,7 +123,7 @@
     .parameter "x0"
 
     .prologue
-    .line 90
+    .line 100
     invoke-virtual {p0, p1}, Landroid/net/DhcpInfo$1;->createFromParcel(Landroid/os/Parcel;)Landroid/net/DhcpInfo;
 
     move-result-object v0
@@ -122,7 +136,7 @@
     .parameter "size"
 
     .prologue
-    .line 104
+    .line 116
     new-array v0, p1, [Landroid/net/DhcpInfo;
 
     return-object v0
@@ -133,7 +147,7 @@
     .parameter "x0"
 
     .prologue
-    .line 90
+    .line 100
     invoke-virtual {p0, p1}, Landroid/net/DhcpInfo$1;->newArray(I)[Landroid/net/DhcpInfo;
 
     move-result-object v0

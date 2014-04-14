@@ -129,7 +129,7 @@
 
     .prologue
     .line 1382
-    const v0, 0x1020246
+    const v0, 0x1020248
 
     invoke-virtual {p0, v0}, Lcom/android/internal/widget/ActionBarView$HomeView;->findViewById(I)Landroid/view/View;
 

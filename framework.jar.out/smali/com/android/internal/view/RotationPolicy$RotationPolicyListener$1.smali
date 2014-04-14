@@ -25,7 +25,7 @@
     .parameter "x0"
 
     .prologue
-    .line 163
+    .line 161
     iput-object p1, p0, Lcom/android/internal/view/RotationPolicy$RotationPolicyListener$1;->this$0:Lcom/android/internal/view/RotationPolicy$RotationPolicyListener;
 
     invoke-direct {p0, p2}, Landroid/database/ContentObserver;-><init>(Landroid/os/Handler;)V
@@ -41,11 +41,11 @@
     .parameter "uri"
 
     .prologue
-    .line 165
+    .line 163
     iget-object v0, p0, Lcom/android/internal/view/RotationPolicy$RotationPolicyListener$1;->this$0:Lcom/android/internal/view/RotationPolicy$RotationPolicyListener;
 
     invoke-virtual {v0}, Lcom/android/internal/view/RotationPolicy$RotationPolicyListener;->onChange()V
 
-    .line 166
+    .line 164
     return-void
 .end method

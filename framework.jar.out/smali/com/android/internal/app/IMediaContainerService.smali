@@ -71,14 +71,6 @@
     .end annotation
 .end method
 
-.method public abstract deleteFile(Ljava/lang/String;)V
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
 .method public abstract getFileSystemStats(Ljava/lang/String;)[J
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -96,14 +88,6 @@
 .end method
 
 .method public abstract getObbInfo(Ljava/lang/String;)Landroid/content/res/ObbInfo;
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
-.method public abstract listDirectory(Ljava/lang/String;)[B
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

@@ -164,7 +164,7 @@
 
     move-result-object v1
 
-    const v2, 0x10405a9
+    const v2, 0x104054b
 
     invoke-interface {v1, v2, v4}, Lcom/android/internal/policy/impl/keyguard/SecurityMessageDisplay;->setMessage(IZ)V
 

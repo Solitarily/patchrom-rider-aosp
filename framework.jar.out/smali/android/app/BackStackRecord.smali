@@ -906,7 +906,7 @@
     .line 246
     invoke-virtual {p2, p1}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    const-string/jumbo v5, "mTransition=#"
+    const-string v5, "mTransition=#"
 
     invoke-virtual {p2, v5}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
@@ -1444,6 +1444,8 @@
     return-void
 
     .line 284
+    nop
+
     :pswitch_data_0
     .packed-switch 0x0
         :pswitch_0

@@ -155,7 +155,7 @@
 
     move-result-object v5
 
-    const v6, 0x10400d1
+    const v6, 0x1040064
 
     invoke-virtual {v5, v6}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -173,7 +173,7 @@
     iput-object p4, p0, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->mCallback:Lcom/android/internal/policy/impl/KeyguardScreenCallback;
 
     .line 178
-    const v5, 0x10202e6
+    const v5, 0x10202ea
 
     invoke-direct {p0, v5}, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->findViewById(I)Landroid/view/View;
 
@@ -195,7 +195,7 @@
     iput-object v5, p0, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->mDateView:Landroid/widget/TextView;
 
     .line 180
-    const v5, 0x10202e5
+    const v5, 0x10202e9
 
     invoke-direct {p0, v5}, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->findViewById(I)Landroid/view/View;
 
@@ -206,7 +206,7 @@
     iput-object v5, p0, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->mStatus1View:Landroid/widget/TextView;
 
     .line 181
-    const v5, 0x10202e4
+    const v5, 0x10202e8
 
     invoke-direct {p0, v5}, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->findViewById(I)Landroid/view/View;
 
@@ -217,7 +217,7 @@
     iput-object v5, p0, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->mAlarmStatusView:Landroid/widget/TextView;
 
     .line 182
-    const v5, 0x10202f6
+    const v5, 0x10202fa
 
     invoke-direct {p0, v5}, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->findViewById(I)Landroid/view/View;
 
@@ -228,7 +228,7 @@
     iput-object v5, p0, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->mOwnerInfoView:Landroid/widget/TextView;
 
     .line 183
-    const v5, 0x10202e8
+    const v5, 0x10202ec
 
     invoke-direct {p0, v5}, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->findViewById(I)Landroid/view/View;
 
@@ -239,7 +239,7 @@
     iput-object v5, p0, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->mTransportView:Lcom/android/internal/widget/TransportControlView;
 
     .line 184
-    const v5, 0x10202d0
+    const v5, 0x10202d4
 
     invoke-direct {p0, v5}, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->findViewById(I)Landroid/view/View;
 
@@ -284,7 +284,7 @@
     .line 194
     iget-object v5, p0, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->mEmergencyCallButton:Landroid/widget/Button;
 
-    const v6, 0x104035a
+    const v6, 0x10402fc
 
     invoke-virtual {v5, v6}, Landroid/widget/Button;->setText(I)V
 
@@ -557,7 +557,7 @@
 
     if-eqz v1, :cond_1
 
-    const v1, 0x1040361
+    const v1, 0x1040303
 
     :goto_0
     const/4 v3, 0x1
@@ -586,7 +586,7 @@
 
     .line 378
     :cond_1
-    const v1, 0x1040360
+    const v1, 0x1040302
 
     goto :goto_0
 
@@ -601,7 +601,7 @@
 
     move-result-object v1
 
-    const v2, 0x1040363
+    const v2, 0x1040305
 
     invoke-virtual {v1, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -684,7 +684,7 @@
 
     if-eqz v1, :cond_2
 
-    const v1, 0x1040361
+    const v1, 0x1040303
 
     :goto_1
     const/4 v3, 0x1
@@ -710,7 +710,7 @@
 
     .line 402
     :cond_2
-    const v1, 0x1040360
+    const v1, 0x1040302
 
     goto :goto_1
 
@@ -725,7 +725,7 @@
 
     move-result-object v1
 
-    const v2, 0x1040363
+    const v2, 0x1040305
 
     invoke-virtual {v1, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -1074,7 +1074,7 @@
     .parameter "simState"
 
     .prologue
-    const v5, 0x1040364
+    const v5, 0x1040306
 
     const/4 v4, 0x1
 
@@ -1143,7 +1143,7 @@
 
     move-result-object v2
 
-    const v3, 0x1040370
+    const v3, 0x1040312
 
     invoke-virtual {v2, v3}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -1156,7 +1156,7 @@
     move-result-object v1
 
     .line 486
-    const v0, 0x1040358
+    const v0, 0x10402fa
 
     .line 487
     goto :goto_0
@@ -1178,7 +1178,7 @@
     move-result-object v1
 
     .line 497
-    const v0, 0x1040367
+    const v0, 0x1040309
 
     .line 498
     goto :goto_0
@@ -1189,14 +1189,14 @@
 
     move-result-object v2
 
-    const v3, 0x1040368
+    const v3, 0x104030a
 
     invoke-virtual {v2, v3}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
     move-result-object v1
 
     .line 503
-    const v0, 0x1040369
+    const v0, 0x104030b
 
     .line 504
     iput-boolean v4, p0, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->mEmergencyButtonEnabledBecauseSimLocked:Z
@@ -1220,7 +1220,7 @@
     move-result-object v1
 
     .line 511
-    const v0, 0x1040366
+    const v0, 0x1040308
 
     .line 512
     iput-boolean v4, p0, Lcom/android/internal/policy/impl/KeyguardStatusViewManager;->mEmergencyButtonEnabledBecauseSimLocked:Z
@@ -1233,7 +1233,7 @@
 
     move-result-object v2
 
-    const v3, 0x1040373
+    const v3, 0x1040315
 
     invoke-virtual {v2, v3}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -1256,7 +1256,7 @@
 
     move-result-object v2
 
-    const v3, 0x1040371
+    const v3, 0x1040313
 
     invoke-virtual {v2, v3}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -1752,7 +1752,7 @@
 
     move-result-object v0
 
-    const v1, 0x104035f
+    const v1, 0x1040301
 
     invoke-virtual {v0, v1}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 

@@ -325,7 +325,7 @@
 
     .line 245
     .local v1, res:Landroid/content/res/Resources;
-    const v3, 0x1050076
+    const v3, 0x1050077
 
     invoke-virtual {v1, v3}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
@@ -403,7 +403,7 @@
     iput v3, p0, Lcom/android/internal/policy/impl/keyguard/SlidingChallengeLayout;->mDragHandleOpenBelow:I
 
     .line 260
-    const v3, 0x105006a
+    const v3, 0x105006b
 
     invoke-virtual {v1, v3}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
@@ -1468,7 +1468,7 @@
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/SlidingChallengeLayout;->mContext:Landroid/content/Context;
 
-    const v2, 0x104038f
+    const v2, 0x1040331
 
     invoke-virtual {v1, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -1512,7 +1512,7 @@
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/SlidingChallengeLayout;->mContext:Landroid/content/Context;
 
-    const v2, 0x1040390
+    const v2, 0x1040332
 
     invoke-virtual {v1, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -3317,7 +3317,7 @@
     if-nez v2, :cond_5
 
     .line 833
-    const v2, 0x10202fb
+    const v2, 0x10202ff
 
     invoke-virtual {v8, v2}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 

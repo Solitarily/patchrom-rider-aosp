@@ -13,5 +13,5 @@
 .method public abstract makeNewWindow(Landroid/content/Context;)Landroid/view/Window;
 .end method
 
-.method public abstract makeNewWindowManager(Lcom/android/internal/os/IDeviceHandler;)Landroid/view/WindowManagerPolicy;
+.method public abstract makeNewWindowManager()Landroid/view/WindowManagerPolicy;
 .end method

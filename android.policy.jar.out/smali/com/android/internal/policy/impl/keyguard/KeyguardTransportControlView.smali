@@ -63,17 +63,11 @@
 
 .field private mPopulateMetadataWhenAttached:Landroid/os/Bundle;
 
-.field private mSettingsObserver:Landroid/database/ContentObserver;
-
-.field private mShouldBeShown:Z
-
 .field private mTrackTitle:Landroid/widget/TextView;
 
 .field private mTransportCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;
 
 .field private mTransportControlFlags:I
-
-.field mUpdateCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitorCallback;
 
 
 # direct methods
@@ -83,53 +77,34 @@
     .parameter "attrs"
 
     .prologue
-    const/4 v1, 0x1
-
-    .line 209
+    .line 191
     invoke-direct {p0, p1, p2}, Landroid/widget/FrameLayout;-><init>(Landroid/content/Context;Landroid/util/AttributeSet;)V
 
-    .line 73
+    .line 70
     new-instance v0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     invoke-direct {v0, p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;-><init>(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;)V
 
     iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
-    .line 80
-    iput-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMusicClientPresent:Z
+    .line 77
+    const/4 v0, 0x1
 
-    .line 81
-    iput-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mShouldBeShown:Z
+    iput-boolean v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMusicClientPresent:Z
 
-    .line 86
+    .line 82
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mPopulateMetadataWhenAttached:Landroid/os/Bundle;
 
-    .line 90
+    .line 86
     new-instance v0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$1;
 
     invoke-direct {v0, p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$1;-><init>(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;)V
 
     iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mHandler:Landroid/os/Handler;
 
-    .line 133
-    new-instance v0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$2;
-
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mHandler:Landroid/os/Handler;
-
-    invoke-direct {v0, p0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$2;-><init>(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;Landroid/os/Handler;)V
-
-    iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mSettingsObserver:Landroid/database/ContentObserver;
-
-    .line 140
-    new-instance v0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$3;
-
-    invoke-direct {v0, p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$3;-><init>(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;)V
-
-    iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mUpdateCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitorCallback;
-
-    .line 211
+    .line 193
     new-instance v0, Landroid/media/AudioManager;
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mContext:Landroid/content/Context;
@@ -138,12 +113,12 @@
 
     iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mAudioManager:Landroid/media/AudioManager;
 
-    .line 212
+    .line 194
     const/4 v0, 0x0
 
     iput v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mCurrentPlayState:I
 
-    .line 213
+    .line 195
     new-instance v0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$IRemoteControlDisplayWeak;
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mHandler:Landroid/os/Handler;
@@ -152,7 +127,7 @@
 
     iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mIRCD:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$IRemoteControlDisplayWeak;
 
-    .line 214
+    .line 196
     return-void
 .end method
 
@@ -161,7 +136,7 @@
     .parameter "x0"
 
     .prologue
-    .line 56
+    .line 53
     iget v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mClientGeneration:I
 
     return v0
@@ -173,7 +148,7 @@
     .parameter "x1"
 
     .prologue
-    .line 56
+    .line 53
     iput p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mClientGeneration:I
 
     return p1
@@ -185,7 +160,7 @@
     .parameter "x1"
 
     .prologue
-    .line 56
+    .line 53
     invoke-direct {p0, p1}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->updatePlayPauseState(I)V
 
     return-void
@@ -197,7 +172,7 @@
     .parameter "x1"
 
     .prologue
-    .line 56
+    .line 53
     invoke-direct {p0, p1}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->updateMetadata(Landroid/os/Bundle;)V
 
     return-void
@@ -209,7 +184,7 @@
     .parameter "x1"
 
     .prologue
-    .line 56
+    .line 53
     invoke-direct {p0, p1}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->updateTransportControls(I)V
 
     return-void
@@ -220,7 +195,7 @@
     .parameter "x0"
 
     .prologue
-    .line 56
+    .line 53
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     return-object v0
@@ -231,7 +206,7 @@
     .parameter "x0"
 
     .prologue
-    .line 56
+    .line 53
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mAlbumArt:Landroid/widget/ImageView;
 
     return-object v0
@@ -242,7 +217,7 @@
     .parameter "x0"
 
     .prologue
-    .line 56
+    .line 53
     invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->onListenerAttached()V
 
     return-void
@@ -254,82 +229,10 @@
     .parameter "x1"
 
     .prologue
-    .line 56
+    .line 53
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mClientIntent:Landroid/app/PendingIntent;
 
     return-object p1
-.end method
-
-.method static synthetic access$900(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;)V
-    .locals 0
-    .parameter "x0"
-
-    .prologue
-    .line 56
-    invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->updateSettings()V
-
-    return-void
-.end method
-
-.method private callAppropriateCallback()V
-    .locals 3
-
-    .prologue
-    .line 244
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;
-
-    if-nez v1, :cond_0
-
-    .line 245
-    const-string v1, "TransportControlView"
-
-    const-string v2, "callAppropriateCallback: no callback"
-
-    invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 257
-    :goto_0
-    return-void
-
-    .line 249
-    :cond_0
-    iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMusicClientPresent:Z
-
-    if-eqz v1, :cond_1
-
-    iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mShouldBeShown:Z
-
-    if-eqz v1, :cond_1
-
-    const/4 v0, 0x1
-
-    .line 252
-    .local v0, shouldBeAttached:Z
-    :goto_1
-    if-eqz v0, :cond_2
-
-    .line 253
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;
-
-    invoke-interface {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;->onListenerAttached()V
-
-    goto :goto_0
-
-    .line 249
-    .end local v0           #shouldBeAttached:Z
-    :cond_1
-    const/4 v0, 0x0
-
-    goto :goto_1
-
-    .line 255
-    .restart local v0       #shouldBeAttached:Z
-    :cond_2
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;
-
-    invoke-interface {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;->onListenerDetached()V
-
-    goto :goto_0
 .end method
 
 .method private getMdString(Landroid/os/Bundle;I)Ljava/lang/String;
@@ -338,7 +241,7 @@
     .parameter "id"
 
     .prologue
-    .line 323
+    .line 275
     invoke-static {p2}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
 
     move-result-object v0
@@ -351,19 +254,37 @@
 .end method
 
 .method private onListenerAttached()V
-    .locals 1
+    .locals 2
 
     .prologue
-    .line 223
+    .line 209
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMusicClientPresent:Z
 
-    .line 225
-    invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->callAppropriateCallback()V
+    .line 211
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;
 
-    .line 226
+    if-eqz v0, :cond_0
+
+    .line 212
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;
+
+    invoke-interface {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;->onListenerAttached()V
+
+    .line 216
+    :goto_0
     return-void
+
+    .line 214
+    :cond_0
+    const-string v0, "TransportControlView"
+
+    const-string v1, "onListenerAttached(): no callback"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
 .end method
 
 .method private populateMetadata()V
@@ -372,21 +293,21 @@
     .prologue
     const/16 v7, 0x21
 
-    .line 341
+    .line 293
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 
-    .line 342
+    .line 294
     .local v1, sb:Ljava/lang/StringBuilder;
     const/4 v3, 0x0
 
-    .line 343
+    .line 295
     .local v3, trackTitleLength:I
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->trackTitle:Ljava/lang/String;
-    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1100(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
+    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1000(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
 
     move-result-object v4
 
@@ -396,21 +317,21 @@
 
     if-nez v4, :cond_0
 
-    .line 344
+    .line 296
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->trackTitle:Ljava/lang/String;
-    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1100(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
+    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1000(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
 
     move-result-object v4
 
     invoke-virtual {v1, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 345
+    .line 297
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->trackTitle:Ljava/lang/String;
-    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1100(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
+    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1000(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
 
     move-result-object v4
 
@@ -418,12 +339,12 @@
 
     move-result v3
 
-    .line 347
+    .line 299
     :cond_0
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->artist:Ljava/lang/String;
-    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1000(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
+    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$900(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
 
     move-result-object v4
 
@@ -433,35 +354,35 @@
 
     if-nez v4, :cond_2
 
-    .line 348
+    .line 300
     invoke-virtual {v1}, Ljava/lang/StringBuilder;->length()I
 
     move-result v4
 
     if-eqz v4, :cond_1
 
-    .line 349
+    .line 301
     const-string v4, " - "
 
     invoke-virtual {v1, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 351
+    .line 303
     :cond_1
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->artist:Ljava/lang/String;
-    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1000(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
+    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$900(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
 
     move-result-object v4
 
     invoke-virtual {v1, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 353
+    .line 305
     :cond_2
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->albumTitle:Ljava/lang/String;
-    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1200(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
+    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1100(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
 
     move-result-object v4
 
@@ -471,30 +392,30 @@
 
     if-nez v4, :cond_4
 
-    .line 354
+    .line 306
     invoke-virtual {v1}, Ljava/lang/StringBuilder;->length()I
 
     move-result v4
 
     if-eqz v4, :cond_3
 
-    .line 355
+    .line 307
     const-string v4, " - "
 
     invoke-virtual {v1, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 357
+    .line 309
     :cond_3
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->albumTitle:Ljava/lang/String;
-    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1200(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
+    invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1100(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
 
     move-result-object v4
 
     invoke-virtual {v1, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    .line 359
+    .line 311
     :cond_4
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTrackTitle:Landroid/widget/TextView;
 
@@ -506,7 +427,7 @@
 
     invoke-virtual {v4, v5, v6}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;Landroid/widget/TextView$BufferType;)V
 
-    .line 360
+    .line 312
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTrackTitle:Landroid/widget/TextView;
 
     invoke-virtual {v4}, Landroid/widget/TextView;->getText()Ljava/lang/CharSequence;
@@ -515,11 +436,11 @@
 
     check-cast v2, Landroid/text/Spannable;
 
-    .line 361
+    .line 313
     .local v2, str:Landroid/text/Spannable;
     if-eqz v3, :cond_5
 
-    .line 362
+    .line 314
     new-instance v4, Landroid/text/style/ForegroundColorSpan;
 
     const/4 v5, -0x1
@@ -530,10 +451,10 @@
 
     invoke-interface {v2, v4, v5, v3, v7}, Landroid/text/Spannable;->setSpan(Ljava/lang/Object;III)V
 
-    .line 364
+    .line 316
     add-int/lit8 v3, v3, 0x1
 
-    .line 366
+    .line 318
     :cond_5
     invoke-virtual {v1}, Ljava/lang/StringBuilder;->length()I
 
@@ -541,7 +462,7 @@
 
     if-le v4, v3, :cond_6
 
-    .line 367
+    .line 319
     new-instance v4, Landroid/text/style/ForegroundColorSpan;
 
     const v5, 0x7fffffff
@@ -554,7 +475,7 @@
 
     invoke-interface {v2, v4, v3, v5, v7}, Landroid/text/Spannable;->setSpan(Ljava/lang/Object;III)V
 
-    .line 371
+    .line 323
     :cond_6
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mAlbumArt:Landroid/widget/ImageView;
 
@@ -567,10 +488,10 @@
 
     invoke-virtual {v4, v5}, Landroid/widget/ImageView;->setImageBitmap(Landroid/graphics/Bitmap;)V
 
-    .line 372
+    .line 324
     iget v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportControlFlags:I
 
-    .line 373
+    .line 325
     .local v0, flags:I
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mBtnPrev:Landroid/widget/ImageView;
 
@@ -578,26 +499,26 @@
 
     invoke-static {v4, v0, v5}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->setVisibilityBasedOnFlag(Landroid/view/View;II)V
 
-    .line 374
+    .line 326
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mBtnNext:Landroid/widget/ImageView;
 
     const/16 v5, 0x80
 
     invoke-static {v4, v0, v5}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->setVisibilityBasedOnFlag(Landroid/view/View;II)V
 
-    .line 375
+    .line 327
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mBtnPlay:Landroid/widget/ImageView;
 
     const/16 v5, 0x3c
 
     invoke-static {v4, v0, v5}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->setVisibilityBasedOnFlag(Landroid/view/View;II)V
 
-    .line 381
+    .line 333
     iget v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mCurrentPlayState:I
 
     invoke-direct {p0, v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->updatePlayPauseState(I)V
 
-    .line 382
+    .line 334
     return-void
 .end method
 
@@ -608,29 +529,29 @@
     .prologue
     const/4 v4, 0x0
 
-    .line 508
+    .line 455
     iget-object v3, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mClientIntent:Landroid/app/PendingIntent;
 
     if-nez v3, :cond_0
 
-    .line 510
+    .line 457
     const-string v3, "TransportControlView"
 
     const-string v4, "sendMediaButtonClick(): No client is currently registered"
 
     invoke-static {v3, v4}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 534
+    .line 481
     :goto_0
     return-void
 
-    .line 515
+    .line 462
     :cond_0
     new-instance v2, Landroid/view/KeyEvent;
 
     invoke-direct {v2, v4, p1}, Landroid/view/KeyEvent;-><init>(II)V
 
-    .line 516
+    .line 463
     .local v2, keyEvent:Landroid/view/KeyEvent;
     new-instance v1, Landroid/content/Intent;
 
@@ -638,13 +559,13 @@
 
     invoke-direct {v1, v3}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
-    .line 517
+    .line 464
     .local v1, intent:Landroid/content/Intent;
     const-string v3, "android.intent.extra.KEY_EVENT"
 
     invoke-virtual {v1, v3, v2}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;
 
-    .line 519
+    .line 466
     :try_start_0
     iget-object v3, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mClientIntent:Landroid/app/PendingIntent;
 
@@ -658,7 +579,7 @@
     :try_end_0
     .catch Landroid/app/PendingIntent$CanceledException; {:try_start_0 .. :try_end_0} :catch_1
 
-    .line 525
+    .line 472
     :goto_1
     new-instance v2, Landroid/view/KeyEvent;
 
@@ -667,7 +588,7 @@
 
     invoke-direct {v2, v3, p1}, Landroid/view/KeyEvent;-><init>(II)V
 
-    .line 526
+    .line 473
     .restart local v2       #keyEvent:Landroid/view/KeyEvent;
     new-instance v1, Landroid/content/Intent;
 
@@ -676,13 +597,13 @@
 
     invoke-direct {v1, v3}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
-    .line 527
+    .line 474
     .restart local v1       #intent:Landroid/content/Intent;
     const-string v3, "android.intent.extra.KEY_EVENT"
 
     invoke-virtual {v1, v3, v2}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;
 
-    .line 529
+    .line 476
     :try_start_1
     iget-object v3, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mClientIntent:Landroid/app/PendingIntent;
 
@@ -698,11 +619,11 @@
 
     goto :goto_0
 
-    .line 530
+    .line 477
     :catch_0
     move-exception v0
 
-    .line 531
+    .line 478
     .local v0, e:Landroid/app/PendingIntent$CanceledException;
     const-string v3, "TransportControlView"
 
@@ -726,17 +647,17 @@
 
     invoke-static {v3, v4}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 532
+    .line 479
     invoke-virtual {v0}, Landroid/app/PendingIntent$CanceledException;->printStackTrace()V
 
     goto :goto_0
 
-    .line 520
+    .line 467
     .end local v0           #e:Landroid/app/PendingIntent$CanceledException;
     :catch_1
     move-exception v0
 
-    .line 521
+    .line 468
     .restart local v0       #e:Landroid/app/PendingIntent$CanceledException;
     const-string v3, "TransportControlView"
 
@@ -760,7 +681,7 @@
 
     invoke-static {v3, v4}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 522
+    .line 469
     invoke-virtual {v0}, Landroid/app/PendingIntent$CanceledException;->printStackTrace()V
 
     goto :goto_1
@@ -773,21 +694,21 @@
     .parameter "flag"
 
     .prologue
-    .line 393
+    .line 342
     and-int v0, p1, p2
 
     if-eqz v0, :cond_0
 
-    .line 394
+    .line 343
     const/4 v0, 0x0
 
     invoke-virtual {p0, v0}, Landroid/view/View;->setVisibility(I)V
 
-    .line 398
+    .line 347
     :goto_0
     return-void
 
-    .line 396
+    .line 345
     :cond_0
     const/16 v0, 0x8
 
@@ -801,12 +722,12 @@
     .parameter "data"
 
     .prologue
-    .line 327
+    .line 279
     iget-boolean v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mAttached:Z
 
     if-eqz v0, :cond_0
 
-    .line 328
+    .line 280
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     const/16 v1, 0xd
@@ -816,9 +737,9 @@
     move-result-object v1
 
     #setter for: Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->artist:Ljava/lang/String;
-    invoke-static {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1002(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$902(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;Ljava/lang/String;)Ljava/lang/String;
 
-    .line 329
+    .line 281
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     const/4 v1, 0x7
@@ -828,9 +749,9 @@
     move-result-object v1
 
     #setter for: Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->trackTitle:Ljava/lang/String;
-    invoke-static {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1102(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1002(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;Ljava/lang/String;)Ljava/lang/String;
 
-    .line 330
+    .line 282
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMetadata:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;
 
     const/4 v1, 0x1
@@ -840,16 +761,16 @@
     move-result-object v1
 
     #setter for: Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->albumTitle:Ljava/lang/String;
-    invoke-static {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1202(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;Ljava/lang/String;)Ljava/lang/String;
+    invoke-static {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->access$1102(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;Ljava/lang/String;)Ljava/lang/String;
 
-    .line 331
+    .line 283
     invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->populateMetadata()V
 
-    .line 335
+    .line 287
     :goto_0
     return-void
 
-    .line 333
+    .line 285
     :cond_0
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mPopulateMetadataWhenAttached:Landroid/os/Bundle;
 
@@ -861,35 +782,34 @@
     .parameter "state"
 
     .prologue
-    .line 403
+    .line 352
     iget v2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mCurrentPlayState:I
 
-    if-ne p1, v2, :cond_1
+    if-ne p1, v2, :cond_0
 
-    .line 438
-    :cond_0
+    .line 385
     :goto_0
     return-void
 
-    .line 408
-    :cond_1
+    .line 357
+    :cond_0
     sparse-switch p1, :sswitch_data_0
 
-    .line 428
+    .line 377
     const v1, 0x1080024
 
-    .line 429
+    .line 378
     .local v1, imageResId:I
-    const v0, 0x104036d
+    const v0, 0x104030f
 
-    .line 432
+    .line 381
     .local v0, imageDescId:I
     :goto_1
     iget-object v2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mBtnPlay:Landroid/widget/ImageView;
 
     invoke-virtual {v2, v1}, Landroid/widget/ImageView;->setImageResource(I)V
 
-    .line 433
+    .line 382
     iget-object v2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mBtnPlay:Landroid/widget/ImageView;
 
     invoke-virtual {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->getResources()Landroid/content/res/Resources;
@@ -902,64 +822,59 @@
 
     invoke-virtual {v2, v3}, Landroid/widget/ImageView;->setContentDescription(Ljava/lang/CharSequence;)V
 
-    .line 434
+    .line 383
     iput p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mCurrentPlayState:I
 
-    .line 435
-    iget-boolean v2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mShouldBeShown:Z
-
-    if-eqz v2, :cond_0
-
-    .line 436
+    .line 384
     iget-object v2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;
 
     invoke-interface {v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;->onPlayStateChanged()V
 
     goto :goto_0
 
-    .line 410
+    .line 359
     .end local v0           #imageDescId:I
     .end local v1           #imageResId:I
     :sswitch_0
     const v1, 0x108008a
 
-    .line 413
+    .line 362
     .restart local v1       #imageResId:I
-    const v0, 0x104036d
+    const v0, 0x104030f
 
-    .line 414
+    .line 363
     .restart local v0       #imageDescId:I
     goto :goto_1
 
-    .line 417
+    .line 366
     .end local v0           #imageDescId:I
     .end local v1           #imageResId:I
     :sswitch_1
     const v1, 0x1080023
 
-    .line 418
+    .line 367
     .restart local v1       #imageResId:I
-    const v0, 0x104036c
+    const v0, 0x104030e
 
-    .line 419
+    .line 368
     .restart local v0       #imageDescId:I
     goto :goto_1
 
-    .line 422
+    .line 371
     .end local v0           #imageDescId:I
     .end local v1           #imageResId:I
     :sswitch_2
-    const v1, 0x1080355
+    const v1, 0x1080321
 
-    .line 423
+    .line 372
     .restart local v1       #imageResId:I
-    const v0, 0x104036e
+    const v0, 0x1040310
 
-    .line 424
+    .line 373
     .restart local v0       #imageDescId:I
     goto :goto_1
 
-    .line 408
+    .line 357
     nop
 
     :sswitch_data_0
@@ -970,82 +885,15 @@
     .end sparse-switch
 .end method
 
-.method private updateSettings()V
-    .locals 5
-
-    .prologue
-    const/4 v1, 0x1
-
-    .line 229
-    iget-boolean v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mShouldBeShown:Z
-
-    .line 230
-    .local v0, oldShown:Z
-    iget-object v2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v2}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
-
-    move-result-object v2
-
-    const-string v3, "lockscreen_music_controls"
-
-    const/4 v4, -0x2
-
-    invoke-static {v2, v3, v1, v4}, Landroid/provider/Settings$System;->getIntForUser(Landroid/content/ContentResolver;Ljava/lang/String;II)I
-
-    move-result v2
-
-    if-eqz v2, :cond_1
-
-    :goto_0
-    iput-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mShouldBeShown:Z
-
-    .line 233
-    iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mShouldBeShown:Z
-
-    if-eq v0, v1, :cond_0
-
-    .line 234
-    invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->callAppropriateCallback()V
-
-    .line 235
-    iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mShouldBeShown:Z
-
-    if-eqz v1, :cond_0
-
-    iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMusicClientPresent:Z
-
-    if-eqz v1, :cond_0
-
-    iget v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mCurrentPlayState:I
-
-    if-eqz v1, :cond_0
-
-    .line 238
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;
-
-    invoke-interface {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;->onPlayStateChanged()V
-
-    .line 241
-    :cond_0
-    return-void
-
-    .line 230
-    :cond_1
-    const/4 v1, 0x0
-
-    goto :goto_0
-.end method
-
 .method private updateTransportControls(I)V
     .locals 0
     .parameter "transportControlFlags"
 
     .prologue
-    .line 260
+    .line 219
     iput p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportControlFlags:I
 
-    .line 261
+    .line 220
     return-void
 .end method
 
@@ -1059,10 +907,10 @@
 
     const/4 v1, 0x0
 
-    .line 541
+    .line 488
     packed-switch p1, :pswitch_data_0
 
-    .line 565
+    .line 512
     const-string v0, "TransportControlView"
 
     new-instance v2, Ljava/lang/StringBuilder;
@@ -1093,7 +941,7 @@
 
     move v0, v1
 
-    .line 566
+    .line 513
     :cond_0
     :goto_0
     :pswitch_0
@@ -1102,10 +950,10 @@
     :pswitch_1
     move v0, v1
 
-    .line 551
+    .line 498
     goto :goto_0
 
-    .line 563
+    .line 510
     :pswitch_2
     invoke-static {}, Landroid/os/SystemClock;->elapsedRealtime()J
 
@@ -1123,7 +971,7 @@
 
     goto :goto_0
 
-    .line 541
+    .line 488
     :pswitch_data_0
     .packed-switch 0x0
         :pswitch_1
@@ -1142,119 +990,76 @@
 
 # virtual methods
 .method public isMusicPlaying()Z
-    .locals 3
+    .locals 2
 
     .prologue
-    const/4 v0, 0x0
+    .line 337
+    iget v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mCurrentPlayState:I
 
-    .line 385
-    iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMusicClientPresent:Z
+    const/4 v1, 0x3
 
-    if-eqz v1, :cond_0
+    if-eq v0, v1, :cond_0
 
-    iget-boolean v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mShouldBeShown:Z
+    iget v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mCurrentPlayState:I
 
-    if-nez v1, :cond_1
+    const/16 v1, 0x8
 
-    .line 388
+    if-ne v0, v1, :cond_1
+
     :cond_0
+    const/4 v0, 0x1
+
     :goto_0
     return v0
 
     :cond_1
-    iget v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mCurrentPlayState:I
-
-    const/4 v2, 0x3
-
-    if-eq v1, v2, :cond_2
-
-    iget v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mCurrentPlayState:I
-
-    const/16 v2, 0x8
-
-    if-ne v1, v2, :cond_0
-
-    :cond_2
-    const/4 v0, 0x1
+    const/4 v0, 0x0
 
     goto :goto_0
 .end method
 
 .method public onAttachedToWindow()V
-    .locals 4
+    .locals 2
 
     .prologue
-    .line 280
+    .line 239
     invoke-super {p0}, Landroid/widget/FrameLayout;->onAttachedToWindow()V
 
-    .line 282
+    .line 241
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mPopulateMetadataWhenAttached:Landroid/os/Bundle;
 
     if-eqz v0, :cond_0
 
-    .line 283
+    .line 242
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mPopulateMetadataWhenAttached:Landroid/os/Bundle;
 
     invoke-direct {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->updateMetadata(Landroid/os/Bundle;)V
 
-    .line 284
+    .line 243
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mPopulateMetadataWhenAttached:Landroid/os/Bundle;
 
-    .line 286
+    .line 245
     :cond_0
     iget-boolean v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mAttached:Z
 
     if-nez v0, :cond_1
 
-    .line 288
+    .line 247
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mAudioManager:Landroid/media/AudioManager;
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mIRCD:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$IRemoteControlDisplayWeak;
 
     invoke-virtual {v0, v1}, Landroid/media/AudioManager;->registerRemoteControlDisplay(Landroid/media/IRemoteControlDisplay;)V
 
-    .line 289
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mContext:Landroid/content/Context;
-
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;->getInstance(Landroid/content/Context;)Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;
-
-    move-result-object v0
-
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mUpdateCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitorCallback;
-
-    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;->registerCallback(Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitorCallback;)V
-
-    .line 290
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
-
-    move-result-object v0
-
-    const-string v1, "lockscreen_music_controls"
-
-    invoke-static {v1}, Landroid/provider/Settings$System;->getUriFor(Ljava/lang/String;)Landroid/net/Uri;
-
-    move-result-object v1
-
-    const/4 v2, 0x0
-
-    iget-object v3, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mSettingsObserver:Landroid/database/ContentObserver;
-
-    invoke-virtual {v0, v1, v2, v3}, Landroid/content/ContentResolver;->registerContentObserver(Landroid/net/Uri;ZLandroid/database/ContentObserver;)V
-
-    .line 293
-    invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->updateSettings()V
-
-    .line 295
+    .line 249
     :cond_1
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mAttached:Z
 
-    .line 296
+    .line 250
     return-void
 .end method
 
@@ -1263,50 +1068,50 @@
     .parameter "v"
 
     .prologue
-    .line 493
+    .line 440
     const/4 v0, -0x1
 
-    .line 494
+    .line 441
     .local v0, keyCode:I
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mBtnPrev:Landroid/widget/ImageView;
 
     if-ne p1, v1, :cond_2
 
-    .line 495
+    .line 442
     const/16 v0, 0x58
 
-    .line 502
+    .line 449
     :cond_0
     :goto_0
     const/4 v1, -0x1
 
     if-eq v0, v1, :cond_1
 
-    .line 503
+    .line 450
     invoke-direct {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->sendMediaButtonClick(I)V
 
-    .line 505
+    .line 452
     :cond_1
     return-void
 
-    .line 496
+    .line 443
     :cond_2
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mBtnNext:Landroid/widget/ImageView;
 
     if-ne p1, v1, :cond_3
 
-    .line 497
+    .line 444
     const/16 v0, 0x57
 
     goto :goto_0
 
-    .line 498
+    .line 445
     :cond_3
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mBtnPlay:Landroid/widget/ImageView;
 
     if-ne p1, v1, :cond_0
 
-    .line 499
+    .line 446
     const/16 v0, 0x55
 
     goto :goto_0
@@ -1316,50 +1121,28 @@
     .locals 2
 
     .prologue
-    .line 301
+    .line 255
     invoke-super {p0}, Landroid/widget/FrameLayout;->onDetachedFromWindow()V
 
-    .line 302
+    .line 256
     iget-boolean v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mAttached:Z
 
     if-eqz v0, :cond_0
 
-    .line 304
+    .line 258
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mAudioManager:Landroid/media/AudioManager;
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mIRCD:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$IRemoteControlDisplayWeak;
 
     invoke-virtual {v0, v1}, Landroid/media/AudioManager;->unregisterRemoteControlDisplay(Landroid/media/IRemoteControlDisplay;)V
 
-    .line 305
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mContext:Landroid/content/Context;
-
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;->getInstance(Landroid/content/Context;)Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;
-
-    move-result-object v0
-
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mUpdateCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitorCallback;
-
-    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;->removeCallback(Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitorCallback;)V
-
-    .line 306
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v0}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
-
-    move-result-object v0
-
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mSettingsObserver:Landroid/database/ContentObserver;
-
-    invoke-virtual {v0, v1}, Landroid/content/ContentResolver;->unregisterContentObserver(Landroid/database/ContentObserver;)V
-
-    .line 308
+    .line 260
     :cond_0
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mAttached:Z
 
-    .line 309
+    .line 261
     return-void
 .end method
 
@@ -1369,10 +1152,10 @@
     .prologue
     const/4 v7, 0x1
 
-    .line 265
+    .line 224
     invoke-super {p0}, Landroid/widget/FrameLayout;->onFinishInflate()V
 
-    .line 266
+    .line 225
     const v5, 0x1020016
 
     invoke-virtual {p0, v5}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->findViewById(I)Landroid/view/View;
@@ -1383,13 +1166,13 @@
 
     iput-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTrackTitle:Landroid/widget/TextView;
 
-    .line 267
+    .line 226
     iget-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTrackTitle:Landroid/widget/TextView;
 
     invoke-virtual {v5, v7}, Landroid/widget/TextView;->setSelected(Z)V
 
-    .line 268
-    const v5, 0x1020305
+    .line 227
+    const v5, 0x102030a
 
     invoke-virtual {p0, v5}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->findViewById(I)Landroid/view/View;
 
@@ -1399,8 +1182,8 @@
 
     iput-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mAlbumArt:Landroid/widget/ImageView;
 
-    .line 269
-    const v5, 0x1020306
+    .line 228
+    const v5, 0x102030b
 
     invoke-virtual {p0, v5}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->findViewById(I)Landroid/view/View;
 
@@ -1410,8 +1193,8 @@
 
     iput-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mBtnPrev:Landroid/widget/ImageView;
 
-    .line 270
-    const v5, 0x1020307
+    .line 229
+    const v5, 0x102030c
 
     invoke-virtual {p0, v5}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->findViewById(I)Landroid/view/View;
 
@@ -1421,8 +1204,8 @@
 
     iput-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mBtnPlay:Landroid/widget/ImageView;
 
-    .line 271
-    const v5, 0x1020308
+    .line 230
+    const v5, 0x102030d
 
     invoke-virtual {p0, v5}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->findViewById(I)Landroid/view/View;
 
@@ -1432,7 +1215,7 @@
 
     iput-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mBtnNext:Landroid/widget/ImageView;
 
-    .line 272
+    .line 231
     const/4 v5, 0x3
 
     new-array v1, v5, [Landroid/view/View;
@@ -1453,7 +1236,7 @@
 
     aput-object v6, v1, v5
 
-    .line 273
+    .line 232
     .local v1, buttons:[Landroid/view/View;
     move-object v0, v1
 
@@ -1469,35 +1252,53 @@
 
     aget-object v4, v0, v2
 
-    .line 274
+    .line 233
     .local v4, view:Landroid/view/View;
     invoke-virtual {v4, p0}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 273
+    .line 232
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 276
+    .line 235
     .end local v4           #view:Landroid/view/View;
     :cond_0
     return-void
 .end method
 
 .method protected onListenerDetached()V
-    .locals 1
+    .locals 2
 
     .prologue
-    .line 217
+    .line 199
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMusicClientPresent:Z
 
-    .line 219
-    invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->callAppropriateCallback()V
+    .line 201
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;
 
-    .line 220
+    if-eqz v0, :cond_0
+
+    .line 202
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;
+
+    invoke-interface {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;->onListenerDetached()V
+
+    .line 206
+    :goto_0
     return-void
+
+    .line 204
+    :cond_0
+    const-string v0, "TransportControlView"
+
+    const-string v1, "onListenerDetached: no callback"
+
+    invoke-static {v0, v1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
 .end method
 
 .method public onRestoreInstanceState(Landroid/os/Parcelable;)V
@@ -1505,15 +1306,15 @@
     .parameter "state"
 
     .prologue
-    .line 480
+    .line 427
     instance-of v1, p1, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$SavedState;
 
     if-nez v1, :cond_1
 
-    .line 481
+    .line 428
     invoke-super {p0, p1}, Landroid/widget/FrameLayout;->onRestoreInstanceState(Landroid/os/Parcelable;)V
 
-    .line 490
+    .line 437
     :cond_0
     :goto_0
     return-void
@@ -1521,10 +1322,10 @@
     :cond_1
     move-object v0, p1
 
-    .line 484
+    .line 431
     check-cast v0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$SavedState;
 
-    .line 485
+    .line 432
     .local v0, ss:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$SavedState;
     invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$SavedState;->getSuperState()Landroid/os/Parcelable;
 
@@ -1532,12 +1333,12 @@
 
     invoke-super {p0, v1}, Landroid/widget/FrameLayout;->onRestoreInstanceState(Landroid/os/Parcelable;)V
 
-    .line 486
+    .line 433
     iget-boolean v1, v0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$SavedState;->clientPresent:Z
 
     if-eqz v1, :cond_0
 
-    .line 488
+    .line 435
     invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->onListenerAttached()V
 
     goto :goto_0
@@ -1547,24 +1348,24 @@
     .locals 3
 
     .prologue
-    .line 472
+    .line 419
     invoke-super {p0}, Landroid/widget/FrameLayout;->onSaveInstanceState()Landroid/os/Parcelable;
 
     move-result-object v1
 
-    .line 473
+    .line 420
     .local v1, superState:Landroid/os/Parcelable;
     new-instance v0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$SavedState;
 
     invoke-direct {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$SavedState;-><init>(Landroid/os/Parcelable;)V
 
-    .line 474
+    .line 421
     .local v0, ss:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$SavedState;
     iget-boolean v2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mMusicClientPresent:Z
 
     iput-boolean v2, v0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$SavedState;->clientPresent:Z
 
-    .line 475
+    .line 422
     return-object v0
 .end method
 
@@ -1572,7 +1373,7 @@
     .locals 1
 
     .prologue
-    .line 537
+    .line 484
     const/4 v0, 0x0
 
     return v0
@@ -1583,9 +1384,9 @@
     .parameter "transportCallback"
 
     .prologue
-    .line 571
+    .line 518
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;->mTransportCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$TransportCallback;
 
-    .line 572
+    .line 519
     return-void
 .end method

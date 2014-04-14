@@ -25,77 +25,37 @@
     .parameter "withDepthBuffer"
 
     .prologue
-    const/4 v0, 0x5
-
-    const/16 v1, 0x8
+    const/16 v2, 0x8
 
     const/4 v5, 0x0
 
-    .line 978
+    .line 976
     iput-object p1, p0, Landroid/opengl/GLSurfaceView$SimpleEGLConfigChooser;->this$0:Landroid/opengl/GLSurfaceView;
 
-    .line 979
-    invoke-static {}, Landroid/opengl/GLSurfaceView;->access$300()Z
-
-    move-result v2
-
-    if-eqz v2, :cond_0
-
-    move v2, v0
-
-    :goto_0
-    invoke-static {}, Landroid/opengl/GLSurfaceView;->access$300()Z
-
-    move-result v3
-
-    if-eqz v3, :cond_1
-
-    const/4 v3, 0x6
-
-    :goto_1
-    invoke-static {}, Landroid/opengl/GLSurfaceView;->access$300()Z
-
-    move-result v4
-
-    if-eqz v4, :cond_2
-
-    move v4, v0
-
-    :goto_2
-    if-eqz p2, :cond_3
+    .line 977
+    if-eqz p2, :cond_0
 
     const/16 v6, 0x10
 
-    :goto_3
+    :goto_0
     move-object v0, p0
 
     move-object v1, p1
+
+    move v3, v2
+
+    move v4, v2
 
     move v7, v5
 
     invoke-direct/range {v0 .. v7}, Landroid/opengl/GLSurfaceView$ComponentSizeChooser;-><init>(Landroid/opengl/GLSurfaceView;IIIIII)V
 
-    .line 980
+    .line 978
     return-void
 
     :cond_0
-    move v2, v1
-
-    .line 979
-    goto :goto_0
-
-    :cond_1
-    move v3, v1
-
-    goto :goto_1
-
-    :cond_2
-    move v4, v1
-
-    goto :goto_2
-
-    :cond_3
     move v6, v5
 
-    goto :goto_3
+    .line 977
+    goto :goto_0
 .end method

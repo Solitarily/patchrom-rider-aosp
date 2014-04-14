@@ -2,4 +2,7 @@
 <merge
   xmlns:android="http://schemas.android.com/apk/res/android">
     <include android:layout_gravity="bottom|center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="-60.0dip" layout="@layout/keyguard_glow_pad_view" />
+    <include android:layout_gravity="bottom|center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="-60.0dip" layout="@layout/keyguard_multi_wave_view" />
+    <include android:layout_gravity="bottom|center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="80.0dip" layout="@layout/keyguard_sliding_tab_view" />
+    <include android:layout_gravity="bottom|center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="60.0dip" layout="@layout/keyguard_rotary_selector_view" />
 </merge>

@@ -13,7 +13,7 @@
 
 
 # static fields
-.field private static final MAX_NUM_PIXELS_MICRO_THUMBNAIL:I = 0x4b00
+.field private static final MAX_NUM_PIXELS_MICRO_THUMBNAIL:I = 0x4000
 
 .field private static final MAX_NUM_PIXELS_THUMBNAIL:I = 0x30000
 
@@ -414,7 +414,7 @@
     .line 95
     .restart local v11       #targetSize:I
     :cond_5
-    const/16 v5, 0x4b00
+    const/16 v5, 0x4000
 
     goto :goto_2
 

@@ -1,6 +1,9 @@
 .class Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$5;
-.super Landroid/widget/RemoteViews$OnClickHandler;
+.super Ljava/lang/Object;
 .source "KeyguardHostView.java"
+
+# interfaces
+.implements Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
 
 
 # annotations
@@ -24,89 +27,83 @@
     .parameter
 
     .prologue
-    .line 761
+    .line 755
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$5;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
 
-    invoke-direct {p0}, Landroid/widget/RemoteViews$OnClickHandler;-><init>()V
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onClickHandler(Landroid/view/View;Landroid/app/PendingIntent;Landroid/content/Intent;)Z
-    .locals 3
-    .parameter "view"
-    .parameter "pendingIntent"
-    .parameter "fillInIntent"
+.method public dismiss(Z)V
+    .locals 0
+    .parameter "securityVerified"
 
     .prologue
-    const/4 v0, 0x1
-
-    .line 766
-    invoke-virtual {p2}, Landroid/app/PendingIntent;->isActivity()Z
-
-    move-result v1
-
-    if-eqz v1, :cond_1
-
-    .line 767
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$5;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
-
-    new-instance v2, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$5$1;
-
-    invoke-direct {v2, p0, p1, p2, p3}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$5$1;-><init>(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$5;Landroid/view/View;Landroid/app/PendingIntent;Landroid/content/Intent;)V
-
-    invoke-virtual {v1, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->setOnDismissAction(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$OnDismissAction;)V
-
     .line 789
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$5;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+    return-void
+.end method
 
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mViewStateManager:Lcom/android/internal/policy/impl/keyguard/KeyguardViewStateManager;
-    invoke-static {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$1500(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardViewStateManager;
+.method public getFailedAttempts()I
+    .locals 1
 
-    move-result-object v1
+    .prologue
+    .line 784
+    const/4 v0, 0x0
 
-    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewStateManager;->isChallengeShowing()Z
-
-    move-result v1
-
-    if-eqz v1, :cond_0
-
-    .line 790
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$5;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
-
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mViewStateManager:Lcom/android/internal/policy/impl/keyguard/KeyguardViewStateManager;
-    invoke-static {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$1500(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardViewStateManager;
-
-    move-result-object v1
-
-    invoke-virtual {v1, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewStateManager;->showBouncer(Z)V
-
-    .line 796
-    :goto_0
     return v0
+.end method
 
-    .line 792
-    :cond_0
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$5;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+.method public isVerifyUnlockOnly()Z
+    .locals 1
 
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
-    invoke-static {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$1600(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
+    .prologue
+    .line 779
+    const/4 v0, 0x0
 
-    move-result-object v1
+    return v0
+.end method
 
-    const/4 v2, 0x0
+.method public reportFailedUnlockAttempt()V
+    .locals 0
 
-    invoke-interface {v1, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;->dismiss(Z)V
+    .prologue
+    .line 775
+    return-void
+.end method
 
-    goto :goto_0
+.method public reportSuccessfulUnlockAttempt()V
+    .locals 0
 
-    .line 796
-    :cond_1
-    invoke-super {p0, p1, p2, p3}, Landroid/widget/RemoteViews$OnClickHandler;->onClickHandler(Landroid/view/View;Landroid/app/PendingIntent;Landroid/content/Intent;)Z
+    .prologue
+    .line 771
+    return-void
+.end method
 
-    move-result v0
+.method public setOnDismissAction(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$OnDismissAction;)V
+    .locals 0
+    .parameter "action"
 
-    goto :goto_0
+    .prologue
+    .line 767
+    return-void
+.end method
+
+.method public showBackupSecurity()V
+    .locals 0
+
+    .prologue
+    .line 763
+    return-void
+.end method
+
+.method public userActivity(J)V
+    .locals 0
+    .parameter "timeout"
+
+    .prologue
+    .line 759
+    return-void
 .end method

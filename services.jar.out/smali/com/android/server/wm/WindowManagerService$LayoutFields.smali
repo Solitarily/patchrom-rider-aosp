@@ -72,101 +72,124 @@
 
     const/4 v2, 0x0
 
-    .line 605
+    .line 604
     iput-object p1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->this$0:Lcom/android/server/wm/WindowManagerService;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 612
+    .line 611
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mWallpaperForceHidingChanged:Z
 
-    .line 613
+    .line 612
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mWallpaperMayChange:Z
 
-    .line 614
+    .line 613
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mOrientationChangeComplete:Z
 
-    .line 615
+    .line 614
     iput v2, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mAdjResult:I
 
-    .line 616
+    .line 615
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mHoldScreen:Lcom/android/server/wm/Session;
 
-    .line 617
+    .line 616
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mObscured:Z
 
-    .line 618
+    .line 617
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDimming:Z
 
-    .line 619
+    .line 618
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mSyswin:Z
 
-    .line 620
+    .line 619
     iput v1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
 
-    .line 621
+    .line 620
     iput v1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
 
-    .line 622
+    .line 621
     const-wide/16 v0, -0x1
 
     iput-wide v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUserActivityTimeout:J
 
-    .line 623
+    .line 622
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUpdateRotation:Z
 
-    .line 628
+    .line 627
     iput v2, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDisplayHasContent:I
 
     return-void
 .end method
 
-.method static synthetic access$1800(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Lcom/android/server/wm/Session;
+.method static synthetic access$1700(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Lcom/android/server/wm/Session;
     .locals 1
     .parameter "x0"
 
     .prologue
-    .line 605
+    .line 604
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mHoldScreen:Lcom/android/server/wm/Session;
 
     return-object v0
 .end method
 
-.method static synthetic access$1802(Lcom/android/server/wm/WindowManagerService$LayoutFields;Lcom/android/server/wm/Session;)Lcom/android/server/wm/Session;
+.method static synthetic access$1702(Lcom/android/server/wm/WindowManagerService$LayoutFields;Lcom/android/server/wm/Session;)Lcom/android/server/wm/Session;
     .locals 0
     .parameter "x0"
     .parameter "x1"
 
     .prologue
-    .line 605
+    .line 604
     iput-object p1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mHoldScreen:Lcom/android/server/wm/Session;
 
     return-object p1
 .end method
 
-.method static synthetic access$1900(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
+.method static synthetic access$1800(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
     .locals 1
     .parameter "x0"
 
     .prologue
-    .line 605
+    .line 604
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mSyswin:Z
 
     return v0
 .end method
 
-.method static synthetic access$1902(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
+.method static synthetic access$1802(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
     .locals 0
     .parameter "x0"
     .parameter "x1"
 
     .prologue
-    .line 605
+    .line 604
     iput-boolean p1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mSyswin:Z
+
+    return p1
+.end method
+
+.method static synthetic access$1900(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    .line 604
+    iget v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
+
+    return v0
+.end method
+
+.method static synthetic access$1902(Lcom/android/server/wm/WindowManagerService$LayoutFields;F)F
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
+
+    .prologue
+    .line 604
+    iput p1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
 
     return p1
 .end method
@@ -176,8 +199,8 @@
     .parameter "x0"
 
     .prologue
-    .line 605
-    iget v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
+    .line 604
+    iget v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
 
     return v0
 .end method
@@ -188,77 +211,77 @@
     .parameter "x1"
 
     .prologue
-    .line 605
-    iput p1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
-
-    return p1
-.end method
-
-.method static synthetic access$2100(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
-    .locals 1
-    .parameter "x0"
-
-    .prologue
-    .line 605
-    iget v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
-
-    return v0
-.end method
-
-.method static synthetic access$2102(Lcom/android/server/wm/WindowManagerService$LayoutFields;F)F
-    .locals 0
-    .parameter "x0"
-    .parameter "x1"
-
-    .prologue
-    .line 605
+    .line 604
     iput p1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
 
     return p1
 .end method
 
-.method static synthetic access$2200(Lcom/android/server/wm/WindowManagerService$LayoutFields;)J
+.method static synthetic access$2100(Lcom/android/server/wm/WindowManagerService$LayoutFields;)J
     .locals 2
     .parameter "x0"
 
     .prologue
-    .line 605
+    .line 604
     iget-wide v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUserActivityTimeout:J
 
     return-wide v0
 .end method
 
-.method static synthetic access$2202(Lcom/android/server/wm/WindowManagerService$LayoutFields;J)J
+.method static synthetic access$2102(Lcom/android/server/wm/WindowManagerService$LayoutFields;J)J
     .locals 0
     .parameter "x0"
     .parameter "x1"
 
     .prologue
-    .line 605
+    .line 604
     iput-wide p1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUserActivityTimeout:J
 
     return-wide p1
 .end method
 
-.method static synthetic access$2300(Lcom/android/server/wm/WindowManagerService$LayoutFields;)I
+.method static synthetic access$2200(Lcom/android/server/wm/WindowManagerService$LayoutFields;)I
     .locals 1
     .parameter "x0"
 
     .prologue
-    .line 605
+    .line 604
     iget v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDisplayHasContent:I
 
     return v0
 .end method
 
-.method static synthetic access$2302(Lcom/android/server/wm/WindowManagerService$LayoutFields;I)I
+.method static synthetic access$2202(Lcom/android/server/wm/WindowManagerService$LayoutFields;I)I
     .locals 0
     .parameter "x0"
     .parameter "x1"
 
     .prologue
-    .line 605
+    .line 604
     iput p1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDisplayHasContent:I
+
+    return p1
+.end method
+
+.method static synthetic access$2300(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    .line 604
+    iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mObscured:Z
+
+    return v0
+.end method
+
+.method static synthetic access$2302(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
+
+    .prologue
+    .line 604
+    iput-boolean p1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mObscured:Z
 
     return p1
 .end method
@@ -268,8 +291,8 @@
     .parameter "x0"
 
     .prologue
-    .line 605
-    iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mObscured:Z
+    .line 604
+    iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUpdateRotation:Z
 
     return v0
 .end method
@@ -280,30 +303,7 @@
     .parameter "x1"
 
     .prologue
-    .line 605
-    iput-boolean p1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mObscured:Z
-
-    return p1
-.end method
-
-.method static synthetic access$2500(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
-    .locals 1
-    .parameter "x0"
-
-    .prologue
-    .line 605
-    iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUpdateRotation:Z
-
-    return v0
-.end method
-
-.method static synthetic access$2502(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
-    .locals 0
-    .parameter "x0"
-    .parameter "x1"
-
-    .prologue
-    .line 605
+    .line 604
     iput-boolean p1, p0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUpdateRotation:Z
 
     return p1

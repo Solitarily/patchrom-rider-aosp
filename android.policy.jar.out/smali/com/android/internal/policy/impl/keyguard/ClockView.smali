@@ -319,7 +319,7 @@
     invoke-super {p0}, Landroid/widget/RelativeLayout;->onFinishInflate()V
 
     .line 156
-    const v0, 0x1020303
+    const v0, 0x1020308
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/keyguard/ClockView;->findViewById(I)Landroid/view/View;
 

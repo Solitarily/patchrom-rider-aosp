@@ -109,8 +109,6 @@
 
 .field public static final CAMERA:Ljava/lang/String; = "android.permission.CAMERA"
 
-.field public static final CANCEL_NOTIFICATIONS:Ljava/lang/String; = "android.permission.CANCEL_NOTIFICATIONS"
-
 .field public static final CHANGE_BACKGROUND_DATA_SETTING:Ljava/lang/String; = "android.permission.CHANGE_BACKGROUND_DATA_SETTING"
 
 .field public static final CHANGE_COMPONENT_ENABLED_STATE:Ljava/lang/String; = "android.permission.CHANGE_COMPONENT_ENABLED_STATE"
@@ -118,8 +116,6 @@
 .field public static final CHANGE_CONFIGURATION:Ljava/lang/String; = "android.permission.CHANGE_CONFIGURATION"
 
 .field public static final CHANGE_NETWORK_STATE:Ljava/lang/String; = "android.permission.CHANGE_NETWORK_STATE"
-
-.field public static final CHANGE_PRIVACY_GUARD_STATE:Ljava/lang/String; = "android.permission.CHANGE_PRIVACY_GUARD_STATE"
 
 .field public static final CHANGE_WIFI_MULTICAST_STATE:Ljava/lang/String; = "android.permission.CHANGE_WIFI_MULTICAST_STATE"
 
@@ -165,10 +161,6 @@
 
 .field public static final FLASHLIGHT:Ljava/lang/String; = "android.permission.FLASHLIGHT"
 
-.field public static final FM_RADIO_RECEIVER:Ljava/lang/String; = "com.stericsson.permission.FM_RADIO_RECEIVER"
-
-.field public static final FM_RADIO_TRANSMITTER:Ljava/lang/String; = "com.stericsson.permission.FM_RADIO_TRANSMITTER"
-
 .field public static final FORCE_BACK:Ljava/lang/String; = "android.permission.FORCE_BACK"
 
 .field public static final FORCE_STOP_PACKAGES:Ljava/lang/String; = "android.permission.FORCE_STOP_PACKAGES"
@@ -200,8 +192,6 @@
 .field public static final INTERACT_ACROSS_USERS:Ljava/lang/String; = "android.permission.INTERACT_ACROSS_USERS"
 
 .field public static final INTERACT_ACROSS_USERS_FULL:Ljava/lang/String; = "android.permission.INTERACT_ACROSS_USERS_FULL"
-
-.field public static final INTERCEPT_SMS:Ljava/lang/String; = "android.permission.INTERCEPT_SMS"
 
 .field public static final INTERNAL_SYSTEM_WINDOW:Ljava/lang/String; = "android.permission.INTERNAL_SYSTEM_WINDOW"
 

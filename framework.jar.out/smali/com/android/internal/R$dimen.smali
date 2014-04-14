@@ -15,11 +15,11 @@
 
 
 # static fields
-.field public static final accessibility_touch_slop:I = 0x105006c
+.field public static final accessibility_touch_slop:I = 0x105006d
 
-.field public static final action_bar_stacked_max_height:I = 0x1050053
+.field public static final action_bar_stacked_max_height:I = 0x1050055
 
-.field public static final action_bar_stacked_tab_max_width:I = 0x1050054
+.field public static final action_bar_stacked_tab_max_width:I = 0x1050056
 
 .field public static final app_icon_size:I = 0x1050000
 
@@ -31,23 +31,23 @@
 
 .field public static final config_viewConfigurationTouchSlop:I = 0x1050008
 
-.field public static final default_app_widget_padding_bottom:I = 0x1050051
+.field public static final default_app_widget_padding_bottom:I = 0x1050053
 
-.field public static final default_app_widget_padding_left:I = 0x105004e
+.field public static final default_app_widget_padding_left:I = 0x1050050
 
-.field public static final default_app_widget_padding_right:I = 0x1050050
+.field public static final default_app_widget_padding_right:I = 0x1050052
 
-.field public static final default_app_widget_padding_top:I = 0x105004f
+.field public static final default_app_widget_padding_top:I = 0x1050051
 
-.field public static final default_gap:I = 0x1050048
+.field public static final default_gap:I = 0x105004a
 
 .field public static final dialog_min_width_major:I = 0x1050003
 
 .field public static final dialog_min_width_minor:I = 0x1050004
 
-.field public static final dropdownitem_icon_width:I = 0x105004b
+.field public static final dropdownitem_icon_width:I = 0x105004d
 
-.field public static final dropdownitem_text_padding_left:I = 0x1050049
+.field public static final dropdownitem_text_padding_left:I = 0x105004b
 
 .field public static final fastscroll_overlay_size:I = 0x1050015
 
@@ -55,25 +55,23 @@
 
 .field public static final fastscroll_thumb_width:I = 0x1050016
 
-.field public static final keyguard_avatar_frame_shadow_radius:I = 0x1050073
+.field public static final keyguard_avatar_frame_shadow_radius:I = 0x1050074
 
-.field public static final keyguard_avatar_frame_stroke_width:I = 0x1050072
+.field public static final keyguard_avatar_frame_stroke_width:I = 0x1050073
 
-.field public static final keyguard_avatar_size:I = 0x1050074
+.field public static final keyguard_avatar_size:I = 0x1050075
 
-.field public static final kg_edge_swipe_region_size:I = 0x1050076
+.field public static final kg_edge_swipe_region_size:I = 0x1050077
 
-.field public static final kg_small_widget_height:I = 0x1050078
+.field public static final kg_small_widget_height:I = 0x1050079
 
-.field public static final kg_squashed_layout_threshold:I = 0x1050077
+.field public static final kg_squashed_layout_threshold:I = 0x1050078
 
-.field public static final kg_widget_pager_bottom_padding:I = 0x105006a
+.field public static final kg_widget_pager_bottom_padding:I = 0x105006b
 
-.field public static final kg_widget_pager_horizontal_padding:I = 0x1050068
+.field public static final kg_widget_pager_horizontal_padding:I = 0x1050069
 
-.field public static final kg_widget_pager_top_padding:I = 0x1050069
-
-.field public static final lockscreen_target_inset:I = 0x1050058
+.field public static final kg_widget_pager_top_padding:I = 0x105006a
 
 .field public static final navigation_bar_height:I = 0x105000d
 
@@ -85,25 +83,19 @@
 
 .field public static final notification_large_icon_width:I = 0x1050005
 
-.field public static final notification_subtext_size:I = 0x1050057
+.field public static final notification_subtext_size:I = 0x1050059
 
-.field public static final notification_text_size:I = 0x1050055
+.field public static final notification_text_size:I = 0x1050057
 
-.field public static final notification_title_text_size:I = 0x1050056
+.field public static final notification_title_text_size:I = 0x1050058
 
 .field public static final password_keyboard_spacebar_vertical_correction:I = 0x105001b
 
-.field public static final pie_perpendicular_distance:I = 0x105007b
+.field public static final preference_fragment_padding_bottom:I = 0x105002a
 
-.field public static final pie_trigger_distance:I = 0x105007a
+.field public static final preference_fragment_padding_side:I = 0x105002b
 
-.field public static final pie_trigger_thickness:I = 0x105007c
-
-.field public static final preference_fragment_padding_bottom:I = 0x1050028
-
-.field public static final preference_fragment_padding_side:I = 0x1050029
-
-.field public static final search_view_preferred_width:I = 0x1050037
+.field public static final search_view_preferred_width:I = 0x1050039
 
 .field public static final status_bar_height:I = 0x105000c
 
@@ -111,7 +103,7 @@
 
 .field public static final system_bar_icon_size:I = 0x1050013
 
-.field public static final textview_error_popup_default_width:I = 0x105004c
+.field public static final textview_error_popup_default_width:I = 0x105004e
 
 .field public static final thumbnail_height:I = 0x1050001
 
@@ -119,7 +111,7 @@
 
 .field public static final toast_y_offset:I = 0x105000b
 
-.field public static final volume_panel_top:I = 0x105004d
+.field public static final volume_panel_top:I = 0x105004f
 
 
 # direct methods
@@ -127,7 +119,7 @@
     .locals 0
 
     .prologue
-    .line 11504
+    .line 11448
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

@@ -30,6 +30,10 @@
 
 .field public static final enum COPYRIGHT_INDEX:Landroid/content/pm/ThemeInfo$AttributeIndex;
 
+.field public static final enum HAS_MODDED_BATTERY_INDEX:Landroid/content/pm/ThemeInfo$AttributeIndex;
+
+.field public static final enum HAS_MODDED_SIGNAL_INDEX:Landroid/content/pm/ThemeInfo$AttributeIndex;
+
 .field public static final enum NOTIFICATION_RINGTONE_FILE_NAME_INDEX:Landroid/content/pm/ThemeInfo$AttributeIndex;
 
 .field public static final enum NOTIFICATION_RINGTONE_NAME_INDEX:Landroid/content/pm/ThemeInfo$AttributeIndex;
@@ -201,8 +205,30 @@
 
     sput-object v0, Landroid/content/pm/ThemeInfo$AttributeIndex;->STYLE_INDEX:Landroid/content/pm/ThemeInfo$AttributeIndex;
 
+    .line 61
+    new-instance v0, Landroid/content/pm/ThemeInfo$AttributeIndex;
+
+    const-string v1, "HAS_MODDED_BATTERY_INDEX"
+
+    const/16 v2, 0xd
+
+    invoke-direct {v0, v1, v2}, Landroid/content/pm/ThemeInfo$AttributeIndex;-><init>(Ljava/lang/String;I)V
+
+    sput-object v0, Landroid/content/pm/ThemeInfo$AttributeIndex;->HAS_MODDED_BATTERY_INDEX:Landroid/content/pm/ThemeInfo$AttributeIndex;
+
+    .line 62
+    new-instance v0, Landroid/content/pm/ThemeInfo$AttributeIndex;
+
+    const-string v1, "HAS_MODDED_SIGNAL_INDEX"
+
+    const/16 v2, 0xe
+
+    invoke-direct {v0, v1, v2}, Landroid/content/pm/ThemeInfo$AttributeIndex;-><init>(Ljava/lang/String;I)V
+
+    sput-object v0, Landroid/content/pm/ThemeInfo$AttributeIndex;->HAS_MODDED_SIGNAL_INDEX:Landroid/content/pm/ThemeInfo$AttributeIndex;
+
     .line 47
-    const/16 v0, 0xd
+    const/16 v0, 0xf
 
     new-array v0, v0, [Landroid/content/pm/ThemeInfo$AttributeIndex;
 
@@ -274,6 +300,18 @@
 
     aput-object v2, v0, v1
 
+    const/16 v1, 0xd
+
+    sget-object v2, Landroid/content/pm/ThemeInfo$AttributeIndex;->HAS_MODDED_BATTERY_INDEX:Landroid/content/pm/ThemeInfo$AttributeIndex;
+
+    aput-object v2, v0, v1
+
+    const/16 v1, 0xe
+
+    sget-object v2, Landroid/content/pm/ThemeInfo$AttributeIndex;->HAS_MODDED_SIGNAL_INDEX:Landroid/content/pm/ThemeInfo$AttributeIndex;
+
+    aput-object v2, v0, v1
+
     sput-object v0, Landroid/content/pm/ThemeInfo$AttributeIndex;->$VALUES:[Landroid/content/pm/ThemeInfo$AttributeIndex;
 
     return-void
@@ -301,7 +339,7 @@
     .parameter "ordinal"
 
     .prologue
-    .line 63
+    .line 65
     invoke-static {}, Landroid/content/pm/ThemeInfo$AttributeIndex;->values()[Landroid/content/pm/ThemeInfo$AttributeIndex;
 
     move-result-object v0

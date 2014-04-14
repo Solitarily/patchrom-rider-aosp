@@ -81,7 +81,18 @@
     return-void
 .end method
 
-.method static synthetic access$000(Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;Landroid/content/Intent;Landroid/os/Bundle;Landroid/os/Handler;Ljava/lang/Runnable;)V
+.method static synthetic access$000(Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;)V
+    .locals 0
+    .parameter "x0"
+
+    .prologue
+    .line 43
+    invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->dismissKeyguardOnNextActivity()V
+
+    return-void
+.end method
+
+.method static synthetic access$100(Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;Landroid/content/Intent;Landroid/os/Bundle;Landroid/os/Handler;Ljava/lang/Runnable;)V
     .locals 0
     .parameter "x0"
     .parameter "x1"
@@ -96,7 +107,7 @@
     return-void
 .end method
 
-.method static synthetic access$100()Z
+.method static synthetic access$200()Z
     .locals 1
 
     .prologue
@@ -106,7 +117,7 @@
     return v0
 .end method
 
-.method static synthetic access$200()Ljava/lang/String;
+.method static synthetic access$300()Ljava/lang/String;
     .locals 1
 
     .prologue
@@ -114,6 +125,39 @@
     sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->TAG:Ljava/lang/String;
 
     return-object v0
+.end method
+
+.method private dismissKeyguardOnNextActivity()V
+    .locals 3
+
+    .prologue
+    .line 202
+    :try_start_0
+    invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
+
+    move-result-object v1
+
+    invoke-interface {v1}, Landroid/app/IActivityManager;->dismissKeyguardOnNextActivity()V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 206
+    :goto_0
+    return-void
+
+    .line 203
+    :catch_0
+    move-exception v0
+
+    .line 204
+    .local v0, e:Landroid/os/RemoteException;
+    sget-object v1, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->TAG:Ljava/lang/String;
+
+    const-string v2, "can\'t dismiss keyguard on launch"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
 .end method
 
 .method private getCameraIntent()Landroid/content/Intent;
@@ -337,39 +381,6 @@
 
 
 # virtual methods
-.method protected dismissKeyguardOnNextActivity()V
-    .locals 3
-
-    .prologue
-    .line 202
-    :try_start_0
-    invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
-
-    move-result-object v1
-
-    invoke-interface {v1}, Landroid/app/IActivityManager;->dismissKeyguardOnNextActivity()V
-    :try_end_0
-    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
-
-    .line 206
-    :goto_0
-    return-void
-
-    .line 203
-    :catch_0
-    move-exception v0
-
-    .line 204
-    .local v0, e:Landroid/os/RemoteException;
-    sget-object v1, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->TAG:Ljava/lang/String;
-
-    const-string v2, "can\'t dismiss keyguard on launch"
-
-    invoke-static {v1, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
-
-    goto :goto_0
-.end method
-
 .method abstract getCallback()Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
 .end method
 
@@ -695,7 +706,7 @@
     if-nez v8, :cond_1
 
     .line 175
-    invoke-virtual {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->dismissKeyguardOnNextActivity()V
+    invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->dismissKeyguardOnNextActivity()V
 
     .line 178
     :cond_1

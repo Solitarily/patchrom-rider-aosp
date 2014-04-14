@@ -890,7 +890,7 @@
     iput-object v5, v2, Lcom/android/internal/app/MediaRouteChooserDialogFragment$ViewHolder;->icon:Landroid/widget/ImageView;
 
     .line 422
-    const v5, 0x102031e
+    const v5, 0x1020323
 
     invoke-virtual {p2, v5}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -901,7 +901,7 @@
     iput-object v5, v2, Lcom/android/internal/app/MediaRouteChooserDialogFragment$ViewHolder;->check:Landroid/widget/CheckBox;
 
     .line 423
-    const v5, 0x102031d
+    const v5, 0x1020322
 
     invoke-virtual {p2, v5}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 

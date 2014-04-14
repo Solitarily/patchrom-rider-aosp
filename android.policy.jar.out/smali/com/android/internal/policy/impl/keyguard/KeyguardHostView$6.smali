@@ -3,7 +3,7 @@
 .source "KeyguardHostView.java"
 
 # interfaces
-.implements Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
+.implements Lcom/android/internal/policy/impl/keyguard/CameraWidgetFrame$Callbacks;
 
 
 # annotations
@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 803
+    .line 1046
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$6;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -35,75 +35,114 @@
     return-void
 .end method
 
+.method private setSliderHandleAlpha(F)V
+    .locals 3
+    .parameter "alpha"
+
+    .prologue
+    .line 1067
+    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$6;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+
+    const v2, 0x10202b9
+
+    invoke-virtual {v1, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->findViewById(I)Landroid/view/View;
+
+    move-result-object v0
+
+    check-cast v0, Lcom/android/internal/policy/impl/keyguard/SlidingChallengeLayout;
+
+    .line 1069
+    .local v0, slider:Lcom/android/internal/policy/impl/keyguard/SlidingChallengeLayout;
+    if-eqz v0, :cond_0
+
+    .line 1070
+    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/keyguard/SlidingChallengeLayout;->setHandleAlpha(F)V
+
+    .line 1072
+    :cond_0
+    return-void
+.end method
+
 
 # virtual methods
-.method public dismiss(Z)V
-    .locals 0
-    .parameter "securityVerified"
+.method public onCameraLaunchedSuccessfully()V
+    .locals 2
 
     .prologue
-    .line 837
+    .line 1054
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$6;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+
+    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mAppWidgetContainer:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$400(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
+
+    move-result-object v0
+
+    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$6;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+
+    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mAppWidgetContainer:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
+    invoke-static {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$400(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
+
+    move-result-object v1
+
+    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->getCurrentPage()I
+
+    move-result v1
+
+    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->isCameraPage(I)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_0
+
+    .line 1055
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$6;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+
+    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mAppWidgetContainer:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$400(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->scrollLeft()V
+
+    .line 1057
+    :cond_0
+    const/high16 v0, 0x3f80
+
+    invoke-direct {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$6;->setSliderHandleAlpha(F)V
+
+    .line 1058
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$6;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+
+    const/4 v1, 0x1
+
+    iput-boolean v1, v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mShowSecurityWhenReturn:Z
+
+    .line 1059
     return-void
 .end method
 
-.method public getFailedAttempts()I
+.method public onCameraLaunchedUnsuccessfully()V
     .locals 1
 
     .prologue
-    .line 832
-    const/4 v0, 0x0
+    .line 1063
+    const/high16 v0, 0x3f80
 
-    return v0
+    invoke-direct {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$6;->setSliderHandleAlpha(F)V
+
+    .line 1064
+    return-void
 .end method
 
-.method public isVerifyUnlockOnly()Z
+.method public onLaunchingCamera()V
     .locals 1
 
     .prologue
-    .line 827
+    .line 1049
     const/4 v0, 0x0
 
-    return v0
-.end method
+    invoke-direct {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$6;->setSliderHandleAlpha(F)V
 
-.method public reportFailedUnlockAttempt()V
-    .locals 0
-
-    .prologue
-    .line 823
-    return-void
-.end method
-
-.method public reportSuccessfulUnlockAttempt()V
-    .locals 0
-
-    .prologue
-    .line 819
-    return-void
-.end method
-
-.method public setOnDismissAction(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$OnDismissAction;)V
-    .locals 0
-    .parameter "action"
-
-    .prologue
-    .line 815
-    return-void
-.end method
-
-.method public showBackupSecurity()V
-    .locals 0
-
-    .prologue
-    .line 811
-    return-void
-.end method
-
-.method public userActivity(J)V
-    .locals 0
-    .parameter "timeout"
-
-    .prologue
-    .line 807
+    .line 1050
     return-void
 .end method

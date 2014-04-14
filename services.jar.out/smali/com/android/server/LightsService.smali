@@ -36,7 +36,9 @@
 
 .field public static final LIGHT_ID_CAPS:I = 0x8
 
-.field public static final LIGHT_ID_COUNT:I = 0xa
+.field public static final LIGHT_ID_COUNT:I = 0xc
+
+.field public static final LIGHT_ID_FLASHLIGHT:I = 0xb
 
 .field public static final LIGHT_ID_FUNC:I = 0x9
 
@@ -45,6 +47,8 @@
 .field public static final LIGHT_ID_NOTIFICATIONS:I = 0x4
 
 .field public static final LIGHT_ID_WIFI:I = 0x7
+
+.field public static final LIGHT_ID_WIMAX:I = 0xa
 
 .field private static final TAG:Ljava/lang/String; = "LightsService"
 
@@ -67,55 +71,55 @@
     .parameter "context"
 
     .prologue
-    const/16 v4, 0xa
+    const/16 v4, 0xc
 
-    .line 177
+    .line 179
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 60
+    .line 62
     new-array v1, v4, [Lcom/android/server/LightsService$Light;
 
     iput-object v1, p0, Lcom/android/server/LightsService;->mLights:[Lcom/android/server/LightsService$Light;
 
-    .line 142
+    .line 144
     new-instance v1, Lcom/android/server/LightsService$1;
 
     invoke-direct {v1, p0}, Lcom/android/server/LightsService$1;-><init>(Lcom/android/server/LightsService;)V
 
     iput-object v1, p0, Lcom/android/server/LightsService;->mLegacyFlashlightHack:Landroid/os/IHardwareService$Stub;
 
-    .line 198
+    .line 200
     new-instance v1, Lcom/android/server/LightsService$2;
 
     invoke-direct {v1, p0}, Lcom/android/server/LightsService$2;-><init>(Lcom/android/server/LightsService;)V
 
     iput-object v1, p0, Lcom/android/server/LightsService;->mH:Landroid/os/Handler;
 
-    .line 179
+    .line 181
     invoke-static {}, Lcom/android/server/LightsService;->init_native()I
 
     move-result v1
 
     iput v1, p0, Lcom/android/server/LightsService;->mNativePointer:I
 
-    .line 180
+    .line 182
     iput-object p1, p0, Lcom/android/server/LightsService;->mContext:Landroid/content/Context;
 
-    .line 182
+    .line 184
     const-string v1, "hardware"
 
     iget-object v2, p0, Lcom/android/server/LightsService;->mLegacyFlashlightHack:Landroid/os/IHardwareService$Stub;
 
     invoke-static {v1, v2}, Landroid/os/ServiceManager;->addService(Ljava/lang/String;Landroid/os/IBinder;)V
 
-    .line 184
+    .line 186
     const/4 v0, 0x0
 
     .local v0, i:I
     :goto_0
     if-ge v0, v4, :cond_0
 
-    .line 185
+    .line 187
     iget-object v1, p0, Lcom/android/server/LightsService;->mLights:[Lcom/android/server/LightsService$Light;
 
     new-instance v2, Lcom/android/server/LightsService$Light;
@@ -126,12 +130,12 @@
 
     aput-object v2, v1, v0
 
-    .line 184
+    .line 186
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    .line 187
+    .line 189
     :cond_0
     return-void
 .end method
@@ -206,15 +210,15 @@
     .end annotation
 
     .prologue
-    .line 190
+    .line 192
     iget v0, p0, Lcom/android/server/LightsService;->mNativePointer:I
 
     invoke-static {v0}, Lcom/android/server/LightsService;->finalize_native(I)V
 
-    .line 191
+    .line 193
     invoke-super {p0}, Ljava/lang/Object;->finalize()V
 
-    .line 192
+    .line 194
     return-void
 .end method
 
@@ -223,7 +227,7 @@
     .parameter "id"
 
     .prologue
-    .line 195
+    .line 197
     iget-object v0, p0, Lcom/android/server/LightsService;->mLights:[Lcom/android/server/LightsService$Light;
 
     aget-object v0, v0, p1

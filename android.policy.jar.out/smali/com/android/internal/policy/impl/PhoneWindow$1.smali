@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 249
+    .line 197
     iput-object p1, p0, Lcom/android/internal/policy/impl/PhoneWindow$1;->this$0:Lcom/android/internal/policy/impl/PhoneWindow;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -43,7 +43,7 @@
     .prologue
     const/4 v3, 0x0
 
-    .line 251
+    .line 199
     const/4 v0, 0x0
 
     .local v0, i:I
@@ -52,11 +52,11 @@
 
     if-gt v0, v1, :cond_1
 
-    .line 252
+    .line 200
     iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$1;->this$0:Lcom/android/internal/policy/impl/PhoneWindow;
 
     #getter for: Lcom/android/internal/policy/impl/PhoneWindow;->mInvalidatePanelMenuFeatures:I
-    invoke-static {v1}, Lcom/android/internal/policy/impl/PhoneWindow;->access$200(Lcom/android/internal/policy/impl/PhoneWindow;)I
+    invoke-static {v1}, Lcom/android/internal/policy/impl/PhoneWindow;->access$000(Lcom/android/internal/policy/impl/PhoneWindow;)I
 
     move-result v1
 
@@ -68,30 +68,30 @@
 
     if-eqz v1, :cond_0
 
-    .line 253
+    .line 201
     iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$1;->this$0:Lcom/android/internal/policy/impl/PhoneWindow;
 
     invoke-virtual {v1, v0}, Lcom/android/internal/policy/impl/PhoneWindow;->doInvalidatePanelMenu(I)V
 
-    .line 251
+    .line 199
     :cond_0
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    .line 256
+    .line 204
     :cond_1
     iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$1;->this$0:Lcom/android/internal/policy/impl/PhoneWindow;
 
     #setter for: Lcom/android/internal/policy/impl/PhoneWindow;->mInvalidatePanelMenuPosted:Z
-    invoke-static {v1, v3}, Lcom/android/internal/policy/impl/PhoneWindow;->access$302(Lcom/android/internal/policy/impl/PhoneWindow;Z)Z
+    invoke-static {v1, v3}, Lcom/android/internal/policy/impl/PhoneWindow;->access$102(Lcom/android/internal/policy/impl/PhoneWindow;Z)Z
 
-    .line 257
+    .line 205
     iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindow$1;->this$0:Lcom/android/internal/policy/impl/PhoneWindow;
 
     #setter for: Lcom/android/internal/policy/impl/PhoneWindow;->mInvalidatePanelMenuFeatures:I
-    invoke-static {v1, v3}, Lcom/android/internal/policy/impl/PhoneWindow;->access$202(Lcom/android/internal/policy/impl/PhoneWindow;I)I
+    invoke-static {v1, v3}, Lcom/android/internal/policy/impl/PhoneWindow;->access$002(Lcom/android/internal/policy/impl/PhoneWindow;I)I
 
-    .line 258
+    .line 206
     return-void
 .end method

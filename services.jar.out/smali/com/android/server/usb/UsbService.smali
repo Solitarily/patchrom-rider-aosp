@@ -36,11 +36,11 @@
 
 # direct methods
 .method public constructor <init>(Landroid/content/Context;)V
-    .locals 6
+    .locals 5
     .parameter "context"
 
     .prologue
-    const/4 v5, 0x0
+    const/4 v4, 0x0
 
     .line 72
     invoke-direct {p0}, Landroid/hardware/usb/IUsbManager$Stub;-><init>()V
@@ -59,7 +59,7 @@
 
     iput-object v2, p0, Lcom/android/server/usb/UsbService;->mSettingsByUser:Landroid/util/SparseArray;
 
-    .line 93
+    .line 91
     new-instance v2, Lcom/android/server/usb/UsbService$1;
 
     invoke-direct {v2, p0}, Lcom/android/server/usb/UsbService$1;-><init>(Lcom/android/server/usb/UsbService;)V
@@ -105,7 +105,7 @@
 
     move-result v2
 
-    if-eqz v2, :cond_2
+    if-eqz v2, :cond_1
 
     .line 80
     new-instance v2, Lcom/android/server/usb/UsbDeviceManager;
@@ -114,70 +114,37 @@
 
     iput-object v2, p0, Lcom/android/server/usb/UsbService;->mDeviceManager:Lcom/android/server/usb/UsbDeviceManager;
 
-    .line 85
+    .line 83
     :cond_1
-    :goto_0
     const/4 v2, 0x0
 
     invoke-direct {p0, v2}, Lcom/android/server/usb/UsbService;->setCurrentUser(I)V
 
-    .line 87
+    .line 85
     new-instance v1, Landroid/content/IntentFilter;
 
     invoke-direct {v1}, Landroid/content/IntentFilter;-><init>()V
 
-    .line 88
+    .line 86
     .local v1, userFilter:Landroid/content/IntentFilter;
     const-string v2, "android.intent.action.USER_SWITCHED"
 
     invoke-virtual {v1, v2}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
-    .line 89
+    .line 87
     const-string v2, "android.intent.action.USER_STOPPED"
 
     invoke-virtual {v1, v2}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
 
-    .line 90
+    .line 88
     iget-object v2, p0, Lcom/android/server/usb/UsbService;->mContext:Landroid/content/Context;
 
     iget-object v3, p0, Lcom/android/server/usb/UsbService;->mUserReceiver:Landroid/content/BroadcastReceiver;
 
-    invoke-virtual {v2, v3, v1, v5, v5}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;)Landroid/content/Intent;
+    invoke-virtual {v2, v3, v1, v4, v4}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;Ljava/lang/String;Landroid/os/Handler;)Landroid/content/Intent;
 
-    .line 91
+    .line 89
     return-void
-
-    .line 82
-    .end local v1           #userFilter:Landroid/content/IntentFilter;
-    :cond_2
-    new-instance v2, Ljava/io/File;
-
-    invoke-static {}, Landroid/content/res/Resources;->getSystem()Landroid/content/res/Resources;
-
-    move-result-object v3
-
-    const v4, 0x1040097
-
-    invoke-virtual {v3, v4}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-direct {v2, v3}, Ljava/io/File;-><init>(Ljava/lang/String;)V
-
-    invoke-virtual {v2}, Ljava/io/File;->exists()Z
-
-    move-result v2
-
-    if-eqz v2, :cond_1
-
-    .line 83
-    new-instance v2, Lcom/android/server/usb/LegacyUsbDeviceManager;
-
-    invoke-direct {v2, p1}, Lcom/android/server/usb/LegacyUsbDeviceManager;-><init>(Landroid/content/Context;)V
-
-    iput-object v2, p0, Lcom/android/server/usb/UsbService;->mDeviceManager:Lcom/android/server/usb/UsbDeviceManager;
-
-    goto :goto_0
 .end method
 
 .method static synthetic access$000(Lcom/android/server/usb/UsbService;I)V
@@ -275,40 +242,74 @@
 .end method
 
 .method private setCurrentUser(I)V
-    .locals 2
+    .locals 4
     .parameter "userId"
 
     .prologue
-    .line 109
+    .line 107
     invoke-direct {p0, p1}, Lcom/android/server/usb/UsbService;->getSettingsForUser(I)Lcom/android/server/usb/UsbSettingsManager;
 
     move-result-object v0
 
-    .line 110
+    .line 108
     .local v0, userSettings:Lcom/android/server/usb/UsbSettingsManager;
     iget-object v1, p0, Lcom/android/server/usb/UsbService;->mHostManager:Lcom/android/server/usb/UsbHostManager;
 
     if-eqz v1, :cond_0
 
-    .line 111
+    .line 109
     iget-object v1, p0, Lcom/android/server/usb/UsbService;->mHostManager:Lcom/android/server/usb/UsbHostManager;
 
     invoke-virtual {v1, v0}, Lcom/android/server/usb/UsbHostManager;->setCurrentSettings(Lcom/android/server/usb/UsbSettingsManager;)V
 
-    .line 113
+    .line 111
     :cond_0
     iget-object v1, p0, Lcom/android/server/usb/UsbService;->mDeviceManager:Lcom/android/server/usb/UsbDeviceManager;
 
-    if-eqz v1, :cond_1
+    if-eqz v1, :cond_2
 
-    .line 114
+    .line 112
     iget-object v1, p0, Lcom/android/server/usb/UsbService;->mDeviceManager:Lcom/android/server/usb/UsbDeviceManager;
 
     invoke-virtual {v1, v0}, Lcom/android/server/usb/UsbDeviceManager;->setCurrentSettings(Lcom/android/server/usb/UsbSettingsManager;)V
 
     .line 116
     :cond_1
+    :goto_0
     return-void
+
+    .line 114
+    :cond_2
+    new-instance v1, Ljava/io/File;
+
+    invoke-static {}, Landroid/content/res/Resources;->getSystem()Landroid/content/res/Resources;
+
+    move-result-object v2
+
+    const v3, 0x104002d
+
+    invoke-virtual {v2, v3}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-direct {v1, v2}, Ljava/io/File;-><init>(Ljava/lang/String;)V
+
+    invoke-virtual {v1}, Ljava/io/File;->exists()Z
+
+    move-result v1
+
+    if-eqz v1, :cond_1
+
+    .line 115
+    new-instance v1, Lcom/android/server/usb/LegacyUsbDeviceManager;
+
+    iget-object v2, p0, Lcom/android/server/usb/UsbService;->mContext:Landroid/content/Context;
+
+    invoke-direct {v1, v2}, Lcom/android/server/usb/LegacyUsbDeviceManager;-><init>(Landroid/content/Context;)V
+
+    iput-object v1, p0, Lcom/android/server/usb/UsbService;->mDeviceManager:Lcom/android/server/usb/UsbDeviceManager;
+
+    goto :goto_0
 .end method
 
 

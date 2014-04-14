@@ -3,12 +3,12 @@
 .source "DisplayPowerController.java"
 
 # interfaces
-.implements Ljava/lang/Runnable;
+.implements Landroid/hardware/SensorEventListener;
 
 
 # annotations
-.annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/power/DisplayPowerController;->dump(Ljava/io/PrintWriter;)V
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lcom/android/server/power/DisplayPowerController;
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,20 +20,15 @@
 # instance fields
 .field final synthetic this$0:Lcom/android/server/power/DisplayPowerController;
 
-.field final synthetic val$pw:Ljava/io/PrintWriter;
-
 
 # direct methods
-.method constructor <init>(Lcom/android/server/power/DisplayPowerController;Ljava/io/PrintWriter;)V
+.method constructor <init>(Lcom/android/server/power/DisplayPowerController;)V
     .locals 0
-    .parameter
     .parameter
 
     .prologue
-    .line 1301
+    .line 1290
     iput-object p1, p0, Lcom/android/server/power/DisplayPowerController$7;->this$0:Lcom/android/server/power/DisplayPowerController;
-
-    iput-object p2, p0, Lcom/android/server/power/DisplayPowerController$7;->val$pw:Ljava/io/PrintWriter;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -42,18 +37,77 @@
 
 
 # virtual methods
-.method public run()V
-    .locals 2
+.method public onAccuracyChanged(Landroid/hardware/Sensor;I)V
+    .locals 0
+    .parameter "sensor"
+    .parameter "accuracy"
 
     .prologue
     .line 1304
-    iget-object v0, p0, Lcom/android/server/power/DisplayPowerController$7;->this$0:Lcom/android/server/power/DisplayPowerController;
+    return-void
+.end method
 
-    iget-object v1, p0, Lcom/android/server/power/DisplayPowerController$7;->val$pw:Ljava/io/PrintWriter;
+.method public onSensorChanged(Landroid/hardware/SensorEvent;)V
+    .locals 5
+    .parameter "event"
 
-    #calls: Lcom/android/server/power/DisplayPowerController;->dumpLocal(Ljava/io/PrintWriter;)V
-    invoke-static {v0, v1}, Lcom/android/server/power/DisplayPowerController;->access$300(Lcom/android/server/power/DisplayPowerController;Ljava/io/PrintWriter;)V
+    .prologue
+    const/4 v1, 0x0
 
-    .line 1305
+    .line 1293
+    iget-object v4, p0, Lcom/android/server/power/DisplayPowerController$7;->this$0:Lcom/android/server/power/DisplayPowerController;
+
+    #getter for: Lcom/android/server/power/DisplayPowerController;->mProximitySensorEnabled:Z
+    invoke-static {v4}, Lcom/android/server/power/DisplayPowerController;->access$600(Lcom/android/server/power/DisplayPowerController;)Z
+
+    move-result v4
+
+    if-eqz v4, :cond_1
+
+    .line 1294
+    invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
+
+    move-result-wide v2
+
+    .line 1295
+    .local v2, time:J
+    iget-object v4, p1, Landroid/hardware/SensorEvent;->values:[F
+
+    aget v0, v4, v1
+
+    .line 1296
+    .local v0, distance:F
+    const/4 v4, 0x0
+
+    cmpl-float v4, v0, v4
+
+    if-ltz v4, :cond_0
+
+    iget-object v4, p0, Lcom/android/server/power/DisplayPowerController$7;->this$0:Lcom/android/server/power/DisplayPowerController;
+
+    #getter for: Lcom/android/server/power/DisplayPowerController;->mProximityThreshold:F
+    invoke-static {v4}, Lcom/android/server/power/DisplayPowerController;->access$700(Lcom/android/server/power/DisplayPowerController;)F
+
+    move-result v4
+
+    cmpg-float v4, v0, v4
+
+    if-gez v4, :cond_0
+
+    const/4 v1, 0x1
+
+    .line 1297
+    .local v1, positive:Z
+    :cond_0
+    iget-object v4, p0, Lcom/android/server/power/DisplayPowerController$7;->this$0:Lcom/android/server/power/DisplayPowerController;
+
+    #calls: Lcom/android/server/power/DisplayPowerController;->handleProximitySensorEvent(JZ)V
+    invoke-static {v4, v2, v3, v1}, Lcom/android/server/power/DisplayPowerController;->access$800(Lcom/android/server/power/DisplayPowerController;JZ)V
+
+    .line 1299
+    .end local v0           #distance:F
+    .end local v1           #positive:Z
+    .end local v2           #time:J
+    :cond_1
     return-void
 .end method

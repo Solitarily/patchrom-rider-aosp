@@ -1,11 +1,14 @@
 .class Lcom/android/server/power/DisplayPowerController$1;
-.super Landroid/database/ContentObserver;
+.super Ljava/lang/Object;
 .source "DisplayPowerController.java"
+
+# interfaces
+.implements Landroid/animation/Animator$AnimatorListener;
 
 
 # annotations
-.annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/server/power/DisplayPowerController;-><init>(Landroid/os/Looper;Landroid/content/Context;Lcom/android/server/power/Notifier;Lcom/android/server/LightsService;Lcom/android/server/TwilightService;Landroid/hardware/SensorManager;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/power/DisplayBlanker;Lcom/android/server/power/DisplayPowerController$Callbacks;Landroid/os/Handler;)V
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lcom/android/server/power/DisplayPowerController;
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -19,52 +22,59 @@
 
 
 # direct methods
-.method constructor <init>(Lcom/android/server/power/DisplayPowerController;Landroid/os/Handler;)V
+.method constructor <init>(Lcom/android/server/power/DisplayPowerController;)V
     .locals 0
     .parameter
-    .parameter "x0"
 
     .prologue
-    .line 397
+    .line 539
     iput-object p1, p0, Lcom/android/server/power/DisplayPowerController$1;->this$0:Lcom/android/server/power/DisplayPowerController;
 
-    invoke-direct {p0, p2}, Landroid/database/ContentObserver;-><init>(Landroid/os/Handler;)V
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onChange(ZLandroid/net/Uri;)V
-    .locals 4
-    .parameter "selfChange"
-    .parameter "uri"
+.method public onAnimationCancel(Landroid/animation/Animator;)V
+    .locals 0
+    .parameter "animation"
 
     .prologue
-    const/4 v3, 0x4
+    .line 552
+    return-void
+.end method
 
-    .line 403
+.method public onAnimationEnd(Landroid/animation/Animator;)V
+    .locals 1
+    .parameter "animation"
+
+    .prologue
+    .line 545
     iget-object v0, p0, Lcom/android/server/power/DisplayPowerController$1;->this$0:Lcom/android/server/power/DisplayPowerController;
 
-    #getter for: Lcom/android/server/power/DisplayPowerController;->mHandler:Lcom/android/server/power/DisplayPowerController$DisplayControllerHandler;
-    invoke-static {v0}, Lcom/android/server/power/DisplayPowerController;->access$000(Lcom/android/server/power/DisplayPowerController;)Lcom/android/server/power/DisplayPowerController$DisplayControllerHandler;
+    #calls: Lcom/android/server/power/DisplayPowerController;->sendUpdatePowerState()V
+    invoke-static {v0}, Lcom/android/server/power/DisplayPowerController;->access$000(Lcom/android/server/power/DisplayPowerController;)V
 
-    move-result-object v0
+    .line 546
+    return-void
+.end method
 
-    invoke-virtual {v0, v3}, Lcom/android/server/power/DisplayPowerController$DisplayControllerHandler;->removeMessages(I)V
+.method public onAnimationRepeat(Landroid/animation/Animator;)V
+    .locals 0
+    .parameter "animation"
 
-    .line 404
-    iget-object v0, p0, Lcom/android/server/power/DisplayPowerController$1;->this$0:Lcom/android/server/power/DisplayPowerController;
+    .prologue
+    .line 549
+    return-void
+.end method
 
-    #getter for: Lcom/android/server/power/DisplayPowerController;->mHandler:Lcom/android/server/power/DisplayPowerController$DisplayControllerHandler;
-    invoke-static {v0}, Lcom/android/server/power/DisplayPowerController;->access$000(Lcom/android/server/power/DisplayPowerController;)Lcom/android/server/power/DisplayPowerController$DisplayControllerHandler;
+.method public onAnimationStart(Landroid/animation/Animator;)V
+    .locals 0
+    .parameter "animation"
 
-    move-result-object v0
-
-    const-wide/16 v1, 0x3e8
-
-    invoke-virtual {v0, v3, v1, v2}, Lcom/android/server/power/DisplayPowerController$DisplayControllerHandler;->sendEmptyMessageDelayed(IJ)Z
-
-    .line 405
+    .prologue
+    .line 542
     return-void
 .end method

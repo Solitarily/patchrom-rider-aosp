@@ -26,6 +26,10 @@
 
 .field public copyright:Ljava/lang/String;
 
+.field public hasModdedBattery:Ljava/lang/String;
+
+.field public hasModdedSignal:Ljava/lang/String;
+
 .field public isDrmProtected:Z
 
 .field public name:Ljava/lang/String;
@@ -58,7 +62,7 @@
     .locals 1
 
     .prologue
-    .line 198
+    .line 203
     new-instance v0, Landroid/content/pm/BaseThemeInfo$1;
 
     invoke-direct {v0}, Landroid/content/pm/BaseThemeInfo$1;-><init>()V
@@ -74,16 +78,16 @@
     .prologue
     const/4 v0, 0x0
 
-    .line 218
+    .line 223
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 62
+    .line 65
     iput v0, p0, Landroid/content/pm/BaseThemeInfo;->styleResourceId:I
 
-    .line 129
+    .line 132
     iput-boolean v0, p0, Landroid/content/pm/BaseThemeInfo;->isDrmProtected:Z
 
-    .line 219
+    .line 224
     return-void
 .end method
 
@@ -94,93 +98,93 @@
     .prologue
     const/4 v0, 0x0
 
-    .line 221
+    .line 226
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 62
+    .line 65
     iput v0, p0, Landroid/content/pm/BaseThemeInfo;->styleResourceId:I
 
-    .line 129
+    .line 132
     iput-boolean v0, p0, Landroid/content/pm/BaseThemeInfo;->isDrmProtected:Z
 
-    .line 222
+    .line 227
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v1
 
     iput v1, p0, Landroid/content/pm/BaseThemeInfo;->wallpaperResourceId:I
 
-    .line 223
+    .line 228
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v1
 
     iput v1, p0, Landroid/content/pm/BaseThemeInfo;->thumbnailResourceId:I
 
-    .line 224
+    .line 229
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v1
 
     iput-object v1, p0, Landroid/content/pm/BaseThemeInfo;->themeId:Ljava/lang/String;
 
-    .line 225
+    .line 230
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v1
 
     iput v1, p0, Landroid/content/pm/BaseThemeInfo;->styleResourceId:I
 
-    .line 226
+    .line 231
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v1
 
     iput-object v1, p0, Landroid/content/pm/BaseThemeInfo;->name:Ljava/lang/String;
 
-    .line 227
+    .line 232
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v1
 
     iput-object v1, p0, Landroid/content/pm/BaseThemeInfo;->ringtoneFileName:Ljava/lang/String;
 
-    .line 228
+    .line 233
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v1
 
     iput-object v1, p0, Landroid/content/pm/BaseThemeInfo;->notificationRingtoneFileName:Ljava/lang/String;
 
-    .line 229
+    .line 234
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v1
 
     iput-object v1, p0, Landroid/content/pm/BaseThemeInfo;->ringtoneName:Ljava/lang/String;
 
-    .line 230
+    .line 235
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v1
 
     iput-object v1, p0, Landroid/content/pm/BaseThemeInfo;->notificationRingtoneName:Ljava/lang/String;
 
-    .line 231
+    .line 236
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v1
 
     iput-object v1, p0, Landroid/content/pm/BaseThemeInfo;->author:Ljava/lang/String;
 
-    .line 232
+    .line 237
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v1
 
     iput-object v1, p0, Landroid/content/pm/BaseThemeInfo;->copyright:Ljava/lang/String;
 
-    .line 233
+    .line 238
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v1
@@ -192,28 +196,42 @@
     :cond_0
     iput-boolean v0, p0, Landroid/content/pm/BaseThemeInfo;->isDrmProtected:Z
 
-    .line 234
+    .line 239
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v0
 
     iput-object v0, p0, Landroid/content/pm/BaseThemeInfo;->soundPackName:Ljava/lang/String;
 
-    .line 235
+    .line 240
     invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v0
 
     iput-object v0, p0, Landroid/content/pm/BaseThemeInfo;->themeStyleName:Ljava/lang/String;
 
-    .line 236
+    .line 241
     invoke-virtual {p1}, Landroid/os/Parcel;->readInt()I
 
     move-result v0
 
     iput v0, p0, Landroid/content/pm/BaseThemeInfo;->previewResourceId:I
 
-    .line 237
+    .line 242
+    invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v0
+
+    iput-object v0, p0, Landroid/content/pm/BaseThemeInfo;->hasModdedBattery:Ljava/lang/String;
+
+    .line 243
+    invoke-virtual {p1}, Landroid/os/Parcel;->readString()Ljava/lang/String;
+
+    move-result-object v0
+
+    iput-object v0, p0, Landroid/content/pm/BaseThemeInfo;->hasModdedSignal:Ljava/lang/String;
+
+    .line 244
     return-void
 .end method
 
@@ -224,7 +242,7 @@
     .parameter "resourcePath"
 
     .prologue
-    .line 240
+    .line 247
     if-eqz p1, :cond_0
 
     const-string v0, "locked/"
@@ -235,12 +253,12 @@
 
     if-eqz v0, :cond_0
 
-    .line 241
+    .line 248
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Landroid/content/pm/BaseThemeInfo;->isDrmProtected:Z
 
-    .line 243
+    .line 250
     :cond_0
     return-void
 .end method
@@ -249,7 +267,7 @@
     .locals 1
 
     .prologue
-    .line 167
+    .line 170
     const/4 v0, 0x0
 
     return v0
@@ -262,23 +280,23 @@
     .parameter "index"
 
     .prologue
-    .line 211
+    .line 216
     const/4 v1, 0x0
 
     invoke-interface {p2, p3, v1}, Landroid/util/AttributeSet;->getAttributeResourceValue(II)I
 
     move-result v0
 
-    .line 212
+    .line 217
     .local v0, resId:I
     if-eqz v0, :cond_0
 
-    .line 213
+    .line 218
     invoke-virtual {p1, v0}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 
     move-result-object v1
 
-    .line 215
+    .line 220
     :goto_0
     return-object v1
 
@@ -296,62 +314,62 @@
     .parameter "flags"
 
     .prologue
-    .line 180
+    .line 183
     iget v0, p0, Landroid/content/pm/BaseThemeInfo;->wallpaperResourceId:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 181
+    .line 184
     iget v0, p0, Landroid/content/pm/BaseThemeInfo;->thumbnailResourceId:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 182
+    .line 185
     iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->themeId:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 183
+    .line 186
     iget v0, p0, Landroid/content/pm/BaseThemeInfo;->styleResourceId:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 184
+    .line 187
     iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->name:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 185
+    .line 188
     iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->ringtoneFileName:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 186
+    .line 189
     iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->notificationRingtoneFileName:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 187
+    .line 190
     iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->ringtoneName:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 188
+    .line 191
     iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->notificationRingtoneName:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 189
+    .line 192
     iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->author:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 190
+    .line 193
     iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->copyright:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 191
+    .line 194
     iget-boolean v0, p0, Landroid/content/pm/BaseThemeInfo;->isDrmProtected:Z
 
     if-eqz v0, :cond_0
@@ -361,25 +379,35 @@
     :goto_0
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 192
+    .line 195
     iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->soundPackName:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 193
+    .line 196
     iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->themeStyleName:Ljava/lang/String;
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
 
-    .line 194
+    .line 197
     iget v0, p0, Landroid/content/pm/BaseThemeInfo;->previewResourceId:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 195
+    .line 198
+    iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->hasModdedBattery:Ljava/lang/String;
+
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    .line 199
+    iget-object v0, p0, Landroid/content/pm/BaseThemeInfo;->hasModdedSignal:Ljava/lang/String;
+
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeString(Ljava/lang/String;)V
+
+    .line 200
     return-void
 
-    .line 191
+    .line 194
     :cond_0
     const/4 v0, 0x0
 

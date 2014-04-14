@@ -19,7 +19,7 @@
     .locals 0
 
     .prologue
-    .line 552
+    .line 545
     invoke-direct {p0}, Landroid/app/ContextImpl$ServiceFetcher;-><init>()V
 
     return-void
@@ -28,26 +28,20 @@
 
 # virtual methods
 .method public createService(Landroid/app/ContextImpl;)Ljava/lang/Object;
-    .locals 3
+    .locals 1
     .parameter "ctx"
 
     .prologue
-    .line 554
-    invoke-virtual {p1}, Landroid/app/ContextImpl;->getOuterContext()Landroid/content/Context;
+    .line 547
+    iget-object v0, p1, Landroid/app/ContextImpl;->mMainThread:Landroid/app/ActivityThread;
+
+    invoke-virtual {v0}, Landroid/app/ActivityThread;->getHandler()Landroid/os/Handler;
 
     move-result-object v0
 
-    .line 555
-    .local v0, outerContext:Landroid/content/Context;
-    new-instance v1, Landroid/app/ProfileManager;
+    invoke-static {p1, v0}, Landroid/net/wimax/WimaxHelper;->createWimaxService(Landroid/content/Context;Landroid/os/Handler;)Ljava/lang/Object;
 
-    iget-object v2, p1, Landroid/app/ContextImpl;->mMainThread:Landroid/app/ActivityThread;
+    move-result-object v0
 
-    invoke-virtual {v2}, Landroid/app/ActivityThread;->getHandler()Landroid/os/Handler;
-
-    move-result-object v2
-
-    invoke-direct {v1, v0, v2}, Landroid/app/ProfileManager;-><init>(Landroid/content/Context;Landroid/os/Handler;)V
-
-    return-object v1
+    return-object v0
 .end method

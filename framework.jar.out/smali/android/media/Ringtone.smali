@@ -240,7 +240,7 @@
 
     .line 140
     .local v8, actualTitle:Ljava/lang/String;
-    const v2, 0x1040472
+    const v2, 0x1040414
 
     const/4 v3, 0x1
 
@@ -263,7 +263,7 @@
     if-nez v12, :cond_1
 
     .line 179
-    const v2, 0x1040475
+    const v2, 0x1040417
 
     invoke-virtual {p0, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 

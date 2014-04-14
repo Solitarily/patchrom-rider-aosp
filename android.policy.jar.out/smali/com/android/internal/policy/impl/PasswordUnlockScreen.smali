@@ -112,7 +112,7 @@
     if-eq v1, v2, :cond_4
 
     .line 98
-    const v1, 0x1090065
+    const v1, 0x1090067
 
     const/4 v2, 0x1
 
@@ -162,7 +162,7 @@
     iput-boolean v1, p0, Lcom/android/internal/policy/impl/PasswordUnlockScreen;->mIsAlpha:Z
 
     .line 111
-    const v1, 0x102021e
+    const v1, 0x1020220
 
     invoke-virtual {p0, v1}, Lcom/android/internal/policy/impl/PasswordUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -173,7 +173,7 @@
     iput-object v1, p0, Lcom/android/internal/policy/impl/PasswordUnlockScreen;->mKeyboardView:Lcom/android/internal/widget/PasswordEntryKeyboardView;
 
     .line 112
-    const v1, 0x10202be
+    const v1, 0x10202c1
 
     invoke-virtual {p0, v1}, Lcom/android/internal/policy/impl/PasswordUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -289,7 +289,7 @@
     invoke-virtual {v1, v2}, Landroid/widget/EditText;->addTextChangedListener(Landroid/text/TextWatcher;)V
 
     .line 181
-    const v1, 0x10202bf
+    const v1, 0x10202c2
 
     invoke-virtual {p0, v1}, Lcom/android/internal/policy/impl/PasswordUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -380,7 +380,7 @@
     .end local v12           #quality:I
     .end local v13           #switchImeButton:Landroid/view/View;
     :cond_4
-    const v1, 0x1090064
+    const v1, 0x1090066
 
     const/4 v2, 0x1
 
@@ -419,7 +419,7 @@
     invoke-virtual {v2, v1}, Lcom/android/internal/widget/PasswordEntryKeyboardView;->setVisibility(I)V
 
     .line 130
-    const v1, 0x10202e7
+    const v1, 0x10202eb
 
     invoke-virtual {p0, v1}, Lcom/android/internal/policy/impl/PasswordUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -794,7 +794,7 @@
     .locals 6
 
     .prologue
-    const v5, 0x104035e
+    const v5, 0x1040300
 
     .line 294
     iget-object v3, p0, Lcom/android/internal/policy/impl/PasswordUnlockScreen;->mPasswordEntry:Landroid/widget/EditText;
@@ -935,7 +935,25 @@
     return-void
 .end method
 
-.method public needsInput()Z
+.method getKeyboardView()Lcom/android/internal/widget/PasswordEntryKeyboardView;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PasswordUnlockScreen;->mKeyboardView:Lcom/android/internal/widget/PasswordEntryKeyboardView;
+
+    return-object v0
+.end method
+
+.method getLockPatternUtils()Lcom/android/internal/widget/LockPatternUtils;
+    .locals 1
+
+    .prologue
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PasswordUnlockScreen;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
+
+    return-object v0
+.end method
+
+.method public isAlphaOrDefaultImeIsCustomizedForMiui()Z
     .locals 1
 
     .prologue

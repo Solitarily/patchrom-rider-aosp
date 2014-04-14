@@ -1130,6 +1130,8 @@
     .parameter "isProactiveCmd"
 
     .prologue
+    const v2, 0x111004f
+
     const/4 v5, 0x0
 
     const/4 v3, 0x0
@@ -1395,7 +1397,7 @@
     .line 280
     iget-object v0, p0, Lcom/android/internal/telephony/cat/CatService;->mContext:Landroid/content/Context;
 
-    const v1, 0x104057a
+    const v1, 0x104051c
 
     invoke-virtual {v0, v1}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -1416,11 +1418,19 @@
 
     goto/16 :goto_2
 
-    .line 291
+    .line 290
     .end local v10           #message:Ljava/lang/CharSequence;
     .restart local p1
     :pswitch_9
-    instance-of v0, p1, Lcom/android/internal/telephony/cat/SendSMSParams;
+    iget-object v0, p0, Lcom/android/internal/telephony/cat/CatService;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v2}, Landroid/content/res/Resources;->getBoolean(I)Z
+
+    move-result v0
 
     if-eqz v0, :cond_3
 
@@ -1431,10 +1441,18 @@
 
     invoke-direct {p0, v0}, Lcom/android/internal/telephony/cat/CatService;->handleProactiveCommandSendSMS(Lcom/android/internal/telephony/cat/SendSMSParams;)V
 
-    .line 298
+    .line 297
     :cond_3
     :pswitch_a
-    instance-of v0, p1, Lcom/android/internal/telephony/cat/SendUSSDParams;
+    iget-object v0, p0, Lcom/android/internal/telephony/cat/CatService;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v0}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v0
+
+    invoke-virtual {v0, v2}, Landroid/content/res/Resources;->getBoolean(I)Z
+
+    move-result v0
 
     if-eqz v0, :cond_4
 
@@ -1476,7 +1494,7 @@
     .line 304
     iget-object v0, p0, Lcom/android/internal/telephony/cat/CatService;->mContext:Landroid/content/Context;
 
-    const v1, 0x1040579
+    const v1, 0x104051b
 
     invoke-virtual {v0, v1}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -1530,7 +1548,7 @@
     .line 313
     iget-object v0, p0, Lcom/android/internal/telephony/cat/CatService;->mContext:Landroid/content/Context;
 
-    const v1, 0x104057b
+    const v1, 0x104051d
 
     invoke-virtual {v0, v1}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -1751,8 +1769,6 @@
     goto/16 :goto_2
 
     .line 238
-    nop
-
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_0
@@ -2847,7 +2863,7 @@
 
     move-result-object v0
 
-    const v1, 0x1110057
+    const v1, 0x111004f
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getBoolean(I)Z
 

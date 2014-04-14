@@ -151,124 +151,28 @@
     .parameter "dialog"
 
     .prologue
-    .line 332
+    .line 325
     invoke-virtual {p1}, Landroid/app/Dialog;->getWindow()Landroid/view/Window;
 
     move-result-object v0
 
-    .line 333
+    .line 326
     .local v0, window:Landroid/view/Window;
     const/4 v1, 0x5
 
     invoke-virtual {v0, v1}, Landroid/view/Window;->setSoftInputMode(I)V
 
-    .line 334
+    .line 327
     return-void
 .end method
 
 
 # virtual methods
-.method protected createDialog()Landroid/app/Dialog;
-    .locals 4
-
-    .prologue
-    .line 293
-    invoke-virtual {p0}, Landroid/preference/DialogPreference;->getContext()Landroid/content/Context;
-
-    move-result-object v1
-
-    .line 295
-    .local v1, context:Landroid/content/Context;
-    const/4 v2, -0x2
-
-    iput v2, p0, Landroid/preference/DialogPreference;->mWhichButtonClicked:I
-
-    .line 297
-    new-instance v2, Landroid/app/AlertDialog$Builder;
-
-    invoke-direct {v2, v1}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
-
-    iget-object v3, p0, Landroid/preference/DialogPreference;->mDialogTitle:Ljava/lang/CharSequence;
-
-    invoke-virtual {v2, v3}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
-
-    move-result-object v2
-
-    iget-object v3, p0, Landroid/preference/DialogPreference;->mDialogIcon:Landroid/graphics/drawable/Drawable;
-
-    invoke-virtual {v2, v3}, Landroid/app/AlertDialog$Builder;->setIcon(Landroid/graphics/drawable/Drawable;)Landroid/app/AlertDialog$Builder;
-
-    move-result-object v2
-
-    iget-object v3, p0, Landroid/preference/DialogPreference;->mPositiveButtonText:Ljava/lang/CharSequence;
-
-    invoke-virtual {v2, v3, p0}, Landroid/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
-
-    move-result-object v2
-
-    iget-object v3, p0, Landroid/preference/DialogPreference;->mNegativeButtonText:Ljava/lang/CharSequence;
-
-    invoke-virtual {v2, v3, p0}, Landroid/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
-
-    move-result-object v2
-
-    iput-object v2, p0, Landroid/preference/DialogPreference;->mBuilder:Landroid/app/AlertDialog$Builder;
-
-    .line 303
-    invoke-virtual {p0}, Landroid/preference/DialogPreference;->onCreateDialogView()Landroid/view/View;
-
-    move-result-object v0
-
-    .line 304
-    .local v0, contentView:Landroid/view/View;
-    if-eqz v0, :cond_0
-
-    .line 305
-    invoke-virtual {p0, v0}, Landroid/preference/DialogPreference;->onBindDialogView(Landroid/view/View;)V
-
-    .line 306
-    iget-object v2, p0, Landroid/preference/DialogPreference;->mBuilder:Landroid/app/AlertDialog$Builder;
-
-    invoke-virtual {v2, v0}, Landroid/app/AlertDialog$Builder;->setView(Landroid/view/View;)Landroid/app/AlertDialog$Builder;
-
-    .line 311
-    :goto_0
-    iget-object v2, p0, Landroid/preference/DialogPreference;->mBuilder:Landroid/app/AlertDialog$Builder;
-
-    invoke-virtual {p0, v2}, Landroid/preference/DialogPreference;->onPrepareDialogBuilder(Landroid/app/AlertDialog$Builder;)V
-
-    .line 313
-    invoke-virtual {p0}, Landroid/preference/DialogPreference;->getPreferenceManager()Landroid/preference/PreferenceManager;
-
-    move-result-object v2
-
-    invoke-virtual {v2, p0}, Landroid/preference/PreferenceManager;->registerOnActivityDestroyListener(Landroid/preference/PreferenceManager$OnActivityDestroyListener;)V
-
-    .line 315
-    iget-object v2, p0, Landroid/preference/DialogPreference;->mBuilder:Landroid/app/AlertDialog$Builder;
-
-    invoke-virtual {v2}, Landroid/app/AlertDialog$Builder;->create()Landroid/app/AlertDialog;
-
-    move-result-object v2
-
-    return-object v2
-
-    .line 308
-    :cond_0
-    iget-object v2, p0, Landroid/preference/DialogPreference;->mBuilder:Landroid/app/AlertDialog$Builder;
-
-    iget-object v3, p0, Landroid/preference/DialogPreference;->mDialogMessage:Ljava/lang/CharSequence;
-
-    invoke-virtual {v2, v3}, Landroid/app/AlertDialog$Builder;->setMessage(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
-
-    goto :goto_0
-.end method
-
 .method public getDialog()Landroid/app/Dialog;
     .locals 1
 
     .prologue
-    .line 409
+    .line 402
     iget-object v0, p0, Landroid/preference/DialogPreference;->mDialog:Landroid/app/Dialog;
 
     return-object v0
@@ -338,7 +242,7 @@
     .locals 1
 
     .prologue
-    .line 325
+    .line 318
     const/4 v0, 0x0
 
     return v0
@@ -348,7 +252,7 @@
     .locals 1
 
     .prologue
-    .line 417
+    .line 410
     iget-object v0, p0, Landroid/preference/DialogPreference;->mDialog:Landroid/app/Dialog;
 
     if-eqz v0, :cond_0
@@ -361,12 +265,12 @@
 
     if-nez v0, :cond_1
 
-    .line 422
+    .line 415
     :cond_0
     :goto_0
     return-void
 
-    .line 421
+    .line 414
     :cond_1
     iget-object v0, p0, Landroid/preference/DialogPreference;->mDialog:Landroid/app/Dialog;
 
@@ -380,27 +284,27 @@
     .parameter "view"
 
     .prologue
-    .line 361
+    .line 354
     const v3, 0x102000b
 
     invoke-virtual {p1, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
     move-result-object v0
 
-    .line 363
+    .line 356
     .local v0, dialogMessageView:Landroid/view/View;
     if-eqz v0, :cond_2
 
-    .line 364
+    .line 357
     invoke-virtual {p0}, Landroid/preference/DialogPreference;->getDialogMessage()Ljava/lang/CharSequence;
 
     move-result-object v1
 
-    .line 365
+    .line 358
     .local v1, message:Ljava/lang/CharSequence;
     const/16 v2, 0x8
 
-    .line 367
+    .line 360
     .local v2, newVisibility:I
     invoke-static {v1}, Landroid/text/TextUtils;->isEmpty(Ljava/lang/CharSequence;)Z
 
@@ -408,23 +312,23 @@
 
     if-nez v3, :cond_1
 
-    .line 368
+    .line 361
     instance-of v3, v0, Landroid/widget/TextView;
 
     if-eqz v3, :cond_0
 
     move-object v3, v0
 
-    .line 369
+    .line 362
     check-cast v3, Landroid/widget/TextView;
 
     invoke-virtual {v3, v1}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 372
+    .line 365
     :cond_0
     const/4 v2, 0x0
 
-    .line 375
+    .line 368
     :cond_1
     invoke-virtual {v0}, Landroid/view/View;->getVisibility()I
 
@@ -432,10 +336,10 @@
 
     if-eq v3, v2, :cond_2
 
-    .line 376
+    .line 369
     invoke-virtual {v0, v2}, Landroid/view/View;->setVisibility(I)V
 
-    .line 379
+    .line 372
     .end local v1           #message:Ljava/lang/CharSequence;
     .end local v2           #newVisibility:I
     :cond_2
@@ -478,10 +382,10 @@
     .parameter "which"
 
     .prologue
-    .line 382
+    .line 375
     iput p2, p0, Landroid/preference/DialogPreference;->mWhichButtonClicked:I
 
-    .line 383
+    .line 376
     return-void
 .end method
 
@@ -491,16 +395,16 @@
     .prologue
     const/4 v1, 0x0
 
-    .line 345
+    .line 338
     iget v2, p0, Landroid/preference/DialogPreference;->mDialogLayoutResId:I
 
     if-nez v2, :cond_0
 
-    .line 350
+    .line 343
     :goto_0
     return-object v1
 
-    .line 349
+    .line 342
     :cond_0
     iget-object v2, p0, Landroid/preference/DialogPreference;->mBuilder:Landroid/app/AlertDialog$Builder;
 
@@ -512,7 +416,7 @@
 
     move-result-object v0
 
-    .line 350
+    .line 343
     .local v0, inflater:Landroid/view/LayoutInflater;
     iget v2, p0, Landroid/preference/DialogPreference;->mDialogLayoutResId:I
 
@@ -528,7 +432,7 @@
     .parameter "positiveResult"
 
     .prologue
-    .line 401
+    .line 394
     return-void
 .end method
 
@@ -537,19 +441,19 @@
     .parameter "dialog"
 
     .prologue
-    .line 387
+    .line 380
     invoke-virtual {p0}, Landroid/preference/DialogPreference;->getPreferenceManager()Landroid/preference/PreferenceManager;
 
     move-result-object v0
 
     invoke-virtual {v0, p0}, Landroid/preference/PreferenceManager;->unregisterOnActivityDestroyListener(Landroid/preference/PreferenceManager$OnActivityDestroyListener;)V
 
-    .line 389
+    .line 382
     const/4 v0, 0x0
 
     iput-object v0, p0, Landroid/preference/DialogPreference;->mDialog:Landroid/app/Dialog;
 
-    .line 390
+    .line 383
     iget v0, p0, Landroid/preference/DialogPreference;->mWhichButtonClicked:I
 
     const/4 v1, -0x1
@@ -561,10 +465,10 @@
     :goto_0
     invoke-virtual {p0, v0}, Landroid/preference/DialogPreference;->onDialogClosed(Z)V
 
-    .line 391
+    .line 384
     return-void
 
-    .line 390
+    .line 383
     :cond_0
     const/4 v0, 0x0
 
@@ -585,7 +489,7 @@
     .parameter "state"
 
     .prologue
-    .line 439
+    .line 432
     if-eqz p1, :cond_0
 
     invoke-virtual {p1}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
@@ -600,11 +504,11 @@
 
     if-nez v1, :cond_2
 
-    .line 441
+    .line 434
     :cond_0
     invoke-super {p0, p1}, Landroid/preference/Preference;->onRestoreInstanceState(Landroid/os/Parcelable;)V
 
-    .line 450
+    .line 443
     :cond_1
     :goto_0
     return-void
@@ -612,10 +516,10 @@
     :cond_2
     move-object v0, p1
 
-    .line 445
+    .line 438
     check-cast v0, Landroid/preference/DialogPreference$SavedState;
 
-    .line 446
+    .line 439
     .local v0, myState:Landroid/preference/DialogPreference$SavedState;
     invoke-virtual {v0}, Landroid/preference/DialogPreference$SavedState;->getSuperState()Landroid/os/Parcelable;
 
@@ -623,12 +527,12 @@
 
     invoke-super {p0, v1}, Landroid/preference/Preference;->onRestoreInstanceState(Landroid/os/Parcelable;)V
 
-    .line 447
+    .line 440
     iget-boolean v1, v0, Landroid/preference/DialogPreference$SavedState;->isDialogShowing:Z
 
     if-eqz v1, :cond_1
 
-    .line 448
+    .line 441
     iget-object v1, v0, Landroid/preference/DialogPreference$SavedState;->dialogBundle:Landroid/os/Bundle;
 
     invoke-virtual {p0, v1}, Landroid/preference/DialogPreference;->showDialog(Landroid/os/Bundle;)V
@@ -640,12 +544,12 @@
     .locals 3
 
     .prologue
-    .line 426
+    .line 419
     invoke-super {p0}, Landroid/preference/Preference;->onSaveInstanceState()Landroid/os/Parcelable;
 
     move-result-object v1
 
-    .line 427
+    .line 420
     .local v1, superState:Landroid/os/Parcelable;
     iget-object v2, p0, Landroid/preference/DialogPreference;->mDialog:Landroid/app/Dialog;
 
@@ -662,23 +566,23 @@
     :cond_0
     move-object v0, v1
 
-    .line 434
+    .line 427
     :goto_0
     return-object v0
 
-    .line 431
+    .line 424
     :cond_1
     new-instance v0, Landroid/preference/DialogPreference$SavedState;
 
     invoke-direct {v0, v1}, Landroid/preference/DialogPreference$SavedState;-><init>(Landroid/os/Parcelable;)V
 
-    .line 432
+    .line 425
     .local v0, myState:Landroid/preference/DialogPreference$SavedState;
     const/4 v2, 0x1
 
     iput-boolean v2, v0, Landroid/preference/DialogPreference$SavedState;->isDialogShowing:Z
 
-    .line 433
+    .line 426
     iget-object v2, p0, Landroid/preference/DialogPreference;->mDialog:Landroid/app/Dialog;
 
     invoke-virtual {v2}, Landroid/app/Dialog;->onSaveInstanceState()Landroid/os/Bundle;
@@ -867,42 +771,127 @@
 .end method
 
 .method protected showDialog(Landroid/os/Bundle;)V
-    .locals 2
+    .locals 5
     .parameter "state"
 
     .prologue
-    .line 278
-    invoke-virtual {p0}, Landroid/preference/DialogPreference;->createDialog()Landroid/app/Dialog;
+    .line 277
+    invoke-virtual {p0}, Landroid/preference/DialogPreference;->getContext()Landroid/content/Context;
+
+    move-result-object v1
+
+    .line 279
+    .local v1, context:Landroid/content/Context;
+    const/4 v3, -0x2
+
+    iput v3, p0, Landroid/preference/DialogPreference;->mWhichButtonClicked:I
+
+    .line 281
+    new-instance v3, Landroid/app/AlertDialog$Builder;
+
+    invoke-direct {v3, v1}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
+
+    iget-object v4, p0, Landroid/preference/DialogPreference;->mDialogTitle:Ljava/lang/CharSequence;
+
+    invoke-virtual {v3, v4}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v3
+
+    iget-object v4, p0, Landroid/preference/DialogPreference;->mDialogIcon:Landroid/graphics/drawable/Drawable;
+
+    invoke-virtual {v3, v4}, Landroid/app/AlertDialog$Builder;->setIcon(Landroid/graphics/drawable/Drawable;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v3
+
+    iget-object v4, p0, Landroid/preference/DialogPreference;->mPositiveButtonText:Ljava/lang/CharSequence;
+
+    invoke-virtual {v3, v4, p0}, Landroid/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v3
+
+    iget-object v4, p0, Landroid/preference/DialogPreference;->mNegativeButtonText:Ljava/lang/CharSequence;
+
+    invoke-virtual {v3, v4, p0}, Landroid/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v3
+
+    iput-object v3, p0, Landroid/preference/DialogPreference;->mBuilder:Landroid/app/AlertDialog$Builder;
+
+    .line 287
+    invoke-virtual {p0}, Landroid/preference/DialogPreference;->onCreateDialogView()Landroid/view/View;
 
     move-result-object v0
 
-    iput-object v0, p0, Landroid/preference/DialogPreference;->mDialog:Landroid/app/Dialog;
+    .line 288
+    .local v0, contentView:Landroid/view/View;
+    if-eqz v0, :cond_2
 
-    .line 279
-    .local v0, dialog:Landroid/app/Dialog;
+    .line 289
+    invoke-virtual {p0, v0}, Landroid/preference/DialogPreference;->onBindDialogView(Landroid/view/View;)V
+
+    .line 290
+    iget-object v3, p0, Landroid/preference/DialogPreference;->mBuilder:Landroid/app/AlertDialog$Builder;
+
+    invoke-virtual {v3, v0}, Landroid/app/AlertDialog$Builder;->setView(Landroid/view/View;)Landroid/app/AlertDialog$Builder;
+
+    .line 295
+    :goto_0
+    iget-object v3, p0, Landroid/preference/DialogPreference;->mBuilder:Landroid/app/AlertDialog$Builder;
+
+    invoke-virtual {p0, v3}, Landroid/preference/DialogPreference;->onPrepareDialogBuilder(Landroid/app/AlertDialog$Builder;)V
+
+    .line 297
+    invoke-virtual {p0}, Landroid/preference/DialogPreference;->getPreferenceManager()Landroid/preference/PreferenceManager;
+
+    move-result-object v3
+
+    invoke-virtual {v3, p0}, Landroid/preference/PreferenceManager;->registerOnActivityDestroyListener(Landroid/preference/PreferenceManager$OnActivityDestroyListener;)V
+
+    .line 300
+    iget-object v3, p0, Landroid/preference/DialogPreference;->mBuilder:Landroid/app/AlertDialog$Builder;
+
+    invoke-virtual {v3}, Landroid/app/AlertDialog$Builder;->create()Landroid/app/AlertDialog;
+
+    move-result-object v2
+
+    iput-object v2, p0, Landroid/preference/DialogPreference;->mDialog:Landroid/app/Dialog;
+
+    .line 301
+    .local v2, dialog:Landroid/app/Dialog;
     if-eqz p1, :cond_0
 
-    .line 280
-    invoke-virtual {v0, p1}, Landroid/app/Dialog;->onRestoreInstanceState(Landroid/os/Bundle;)V
+    .line 302
+    invoke-virtual {v2, p1}, Landroid/app/Dialog;->onRestoreInstanceState(Landroid/os/Bundle;)V
 
-    .line 282
+    .line 304
     :cond_0
     invoke-virtual {p0}, Landroid/preference/DialogPreference;->needInputMethod()Z
 
-    move-result v1
+    move-result v3
 
-    if-eqz v1, :cond_1
+    if-eqz v3, :cond_1
 
-    .line 283
-    invoke-direct {p0, v0}, Landroid/preference/DialogPreference;->requestInputMethod(Landroid/app/Dialog;)V
+    .line 305
+    invoke-direct {p0, v2}, Landroid/preference/DialogPreference;->requestInputMethod(Landroid/app/Dialog;)V
 
-    .line 285
+    .line 307
     :cond_1
-    invoke-virtual {v0, p0}, Landroid/app/Dialog;->setOnDismissListener(Landroid/content/DialogInterface$OnDismissListener;)V
+    invoke-virtual {v2, p0}, Landroid/app/Dialog;->setOnDismissListener(Landroid/content/DialogInterface$OnDismissListener;)V
 
-    .line 286
-    invoke-virtual {v0}, Landroid/app/Dialog;->show()V
+    .line 308
+    invoke-virtual {v2}, Landroid/app/Dialog;->show()V
 
-    .line 287
+    .line 309
     return-void
+
+    .line 292
+    .end local v2           #dialog:Landroid/app/Dialog;
+    :cond_2
+    iget-object v3, p0, Landroid/preference/DialogPreference;->mBuilder:Landroid/app/AlertDialog$Builder;
+
+    iget-object v4, p0, Landroid/preference/DialogPreference;->mDialogMessage:Ljava/lang/CharSequence;
+
+    invoke-virtual {v3, v4}, Landroid/app/AlertDialog$Builder;->setMessage(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
+
+    goto :goto_0
 .end method

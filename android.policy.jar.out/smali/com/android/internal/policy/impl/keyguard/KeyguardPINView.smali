@@ -43,7 +43,7 @@
 
     .prologue
     .line 55
-    const v0, 0x10202c3
+    const v0, 0x10202c6
 
     return v0
 .end method
@@ -53,7 +53,7 @@
 
     .prologue
     .line 118
-    const v0, 0x1040595
+    const v0, 0x1040537
 
     return v0
 .end method
@@ -66,7 +66,7 @@
     invoke-super {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardAbsKeyInputView;->onFinishInflate()V
 
     .line 62
-    const v2, 0x10202cf
+    const v2, 0x10202d2
 
     invoke-virtual {p0, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardPINView;->findViewById(I)Landroid/view/View;
 
@@ -96,7 +96,7 @@
 
     .line 78
     :cond_0
-    const v2, 0x10202c4
+    const v2, 0x10202c7
 
     invoke-virtual {p0, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardPINView;->findViewById(I)Landroid/view/View;
 
@@ -173,7 +173,7 @@
     .line 46
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardPINView;->mSecurityMessageDisplay:Lcom/android/internal/policy/impl/keyguard/SecurityMessageDisplay;
 
-    const v1, 0x104035f
+    const v1, 0x1040301
 
     invoke-interface {v0, v1, v3}, Lcom/android/internal/policy/impl/keyguard/SecurityMessageDisplay;->setMessage(IZ)V
 
@@ -190,7 +190,7 @@
     :cond_0
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardPINView;->mSecurityMessageDisplay:Lcom/android/internal/policy/impl/keyguard/SecurityMessageDisplay;
 
-    const v1, 0x1040599
+    const v1, 0x104053b
 
     const/4 v2, 0x0
 

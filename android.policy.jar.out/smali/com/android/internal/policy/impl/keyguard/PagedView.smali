@@ -543,7 +543,7 @@
 
     .line 280
     .local v1, r:Landroid/content/res/Resources;
-    const v2, 0x1050076
+    const v2, 0x1050077
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
@@ -4521,7 +4521,7 @@
     .line 2131
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/PagedView;->mContext:Landroid/content/Context;
 
-    const v2, 0x1040397
+    const v2, 0x1040339
 
     invoke-virtual {v1, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -6047,7 +6047,7 @@
     .line 2097
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/PagedView;->mContext:Landroid/content/Context;
 
-    const v2, 0x1040396
+    const v2, 0x1040338
 
     invoke-virtual {v1, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 

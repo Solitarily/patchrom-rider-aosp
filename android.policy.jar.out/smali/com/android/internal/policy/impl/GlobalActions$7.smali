@@ -5,7 +5,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/internal/policy/impl/GlobalActions;->createDialog()Lcom/android/internal/policy/impl/GlobalActions$GlobalActionsDialog;
+    value = Lcom/android/internal/policy/impl/GlobalActions;->addUsersToMenu(Ljava/util/ArrayList;)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -17,105 +17,89 @@
 # instance fields
 .field final synthetic this$0:Lcom/android/internal/policy/impl/GlobalActions;
 
+.field final synthetic val$user:Landroid/content/pm/UserInfo;
+
 
 # direct methods
-.method constructor <init>(Lcom/android/internal/policy/impl/GlobalActions;II)V
+.method constructor <init>(Lcom/android/internal/policy/impl/GlobalActions;ILandroid/graphics/drawable/Drawable;Ljava/lang/CharSequence;Landroid/content/pm/UserInfo;)V
     .locals 0
     .parameter
     .parameter "x0"
     .parameter "x1"
+    .parameter "x2"
+    .parameter
 
     .prologue
-    .line 411
+    .line 446
     iput-object p1, p0, Lcom/android/internal/policy/impl/GlobalActions$7;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
 
-    invoke-direct {p0, p2, p3}, Lcom/android/internal/policy/impl/GlobalActions$SinglePressAction;-><init>(II)V
+    iput-object p5, p0, Lcom/android/internal/policy/impl/GlobalActions$7;->val$user:Landroid/content/pm/UserInfo;
+
+    invoke-direct {p0, p2, p3, p4}, Lcom/android/internal/policy/impl/GlobalActions$SinglePressAction;-><init>(ILandroid/graphics/drawable/Drawable;Ljava/lang/CharSequence;)V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onLongPress()Z
-    .locals 1
-
-    .prologue
-    .line 442
-    const/4 v0, 0x0
-
-    return v0
-.end method
-
 .method public onPress()V
     .locals 4
 
     .prologue
-    .line 414
-    new-instance v0, Landroid/app/AlertDialog$Builder;
-
-    iget-object v2, p0, Lcom/android/internal/policy/impl/GlobalActions$7;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
-
-    #calls: Lcom/android/internal/policy/impl/GlobalActions;->getUiContext()Landroid/content/Context;
-    invoke-static {v2}, Lcom/android/internal/policy/impl/GlobalActions;->access$900(Lcom/android/internal/policy/impl/GlobalActions;)Landroid/content/Context;
-
-    move-result-object v2
-
-    invoke-direct {v0, v2}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
-
-    .line 415
-    .local v0, builder:Landroid/app/AlertDialog$Builder;
-    const v2, 0x1040157
-
-    invoke-virtual {v0, v2}, Landroid/app/AlertDialog$Builder;->setTitle(I)Landroid/app/AlertDialog$Builder;
-
-    .line 416
-    const v2, 0x1040158
-
-    invoke-virtual {v0, v2}, Landroid/app/AlertDialog$Builder;->setMessage(I)Landroid/app/AlertDialog$Builder;
-
-    .line 417
-    const/high16 v2, 0x104
-
-    const/4 v3, 0x0
-
-    invoke-virtual {v0, v2, v3}, Landroid/app/AlertDialog$Builder;->setNegativeButton(ILandroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
-
-    .line 418
-    const v2, 0x104044b
-
-    new-instance v3, Lcom/android/internal/policy/impl/GlobalActions$7$1;
-
-    invoke-direct {v3, p0}, Lcom/android/internal/policy/impl/GlobalActions$7$1;-><init>(Lcom/android/internal/policy/impl/GlobalActions$7;)V
-
-    invoke-virtual {v0, v2, v3}, Landroid/app/AlertDialog$Builder;->setPositiveButton(ILandroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
-
-    .line 436
-    invoke-virtual {v0}, Landroid/app/AlertDialog$Builder;->create()Landroid/app/AlertDialog;
+    .line 449
+    :try_start_0
+    invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
     move-result-object v1
 
-    .line 437
-    .local v1, dialog:Landroid/app/AlertDialog;
-    invoke-virtual {v1}, Landroid/app/AlertDialog;->getWindow()Landroid/view/Window;
+    iget-object v2, p0, Lcom/android/internal/policy/impl/GlobalActions$7;->val$user:Landroid/content/pm/UserInfo;
+
+    iget v2, v2, Landroid/content/pm/UserInfo;->id:I
+
+    invoke-interface {v1, v2}, Landroid/app/IActivityManager;->switchUser(I)Z
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 453
+    :goto_0
+    return-void
+
+    .line 450
+    :catch_0
+    move-exception v0
+
+    .line 451
+    .local v0, re:Landroid/os/RemoteException;
+    const-string v1, "GlobalActions"
+
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "Couldn\'t switch user "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v2
 
-    const/16 v3, 0x7d9
+    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
-    invoke-virtual {v2, v3}, Landroid/view/Window;->setType(I)V
+    move-result-object v2
 
-    .line 438
-    invoke-virtual {v1}, Landroid/app/AlertDialog;->show()V
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    .line 439
-    return-void
+    move-result-object v2
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_0
 .end method
 
 .method public showBeforeProvisioning()Z
     .locals 1
 
     .prologue
-    .line 450
+    .line 460
     const/4 v0, 0x0
 
     return v0
@@ -125,7 +109,7 @@
     .locals 1
 
     .prologue
-    .line 446
+    .line 456
     const/4 v0, 0x1
 
     return v0

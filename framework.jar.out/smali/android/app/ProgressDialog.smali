@@ -568,7 +568,7 @@
     iput-object v3, p0, Landroid/app/ProgressDialog;->mProgress:Landroid/widget/ProgressBar;
 
     .line 160
-    const v3, 0x1020262
+    const v3, 0x1020264
 
     invoke-virtual {v2, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -579,7 +579,7 @@
     iput-object v3, p0, Landroid/app/ProgressDialog;->mProgressNumber:Landroid/widget/TextView;
 
     .line 161
-    const v3, 0x1020261
+    const v3, 0x1020263
 
     invoke-virtual {v2, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -703,7 +703,7 @@
     :cond_8
     const/16 v3, 0xf
 
-    const v4, 0x10900ad
+    const v4, 0x10900b0
 
     invoke-virtual {v0, v3, v4}, Landroid/content/res/TypedArray;->getResourceId(II)I
 

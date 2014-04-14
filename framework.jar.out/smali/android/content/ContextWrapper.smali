@@ -92,7 +92,7 @@
     .parameter "permission"
 
     .prologue
-    .line 516
+    .line 510
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1}, Landroid/content/Context;->checkCallingOrSelfPermission(Ljava/lang/String;)I
@@ -108,7 +108,7 @@
     .parameter "modeFlags"
 
     .prologue
-    .line 558
+    .line 552
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2}, Landroid/content/Context;->checkCallingOrSelfUriPermission(Landroid/net/Uri;I)I
@@ -123,7 +123,7 @@
     .parameter "permission"
 
     .prologue
-    .line 511
+    .line 505
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1}, Landroid/content/Context;->checkCallingPermission(Ljava/lang/String;)I
@@ -139,7 +139,7 @@
     .parameter "modeFlags"
 
     .prologue
-    .line 553
+    .line 547
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2}, Landroid/content/Context;->checkCallingUriPermission(Landroid/net/Uri;I)I
@@ -156,7 +156,7 @@
     .parameter "uid"
 
     .prologue
-    .line 506
+    .line 500
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2, p3}, Landroid/content/Context;->checkPermission(Ljava/lang/String;II)I
@@ -174,7 +174,7 @@
     .parameter "modeFlags"
 
     .prologue
-    .line 548
+    .line 542
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2, p3, p4}, Landroid/content/Context;->checkUriPermission(Landroid/net/Uri;III)I
@@ -194,7 +194,7 @@
     .parameter "modeFlags"
 
     .prologue
-    .line 564
+    .line 558
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     move-object v1, p1
@@ -239,7 +239,7 @@
     .parameter "overrideConfiguration"
 
     .prologue
-    .line 610
+    .line 604
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1}, Landroid/content/Context;->createConfigurationContext(Landroid/content/res/Configuration;)Landroid/content/Context;
@@ -254,7 +254,7 @@
     .parameter "display"
 
     .prologue
-    .line 615
+    .line 609
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1}, Landroid/content/Context;->createDisplayContext(Landroid/view/Display;)Landroid/content/Context;
@@ -275,7 +275,7 @@
     .end annotation
 
     .prologue
-    .line 598
+    .line 592
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2}, Landroid/content/Context;->createPackageContext(Ljava/lang/String;I)Landroid/content/Context;
@@ -297,7 +297,7 @@
     .end annotation
 
     .prologue
-    .line 605
+    .line 599
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2, p3}, Landroid/content/Context;->createPackageContextAsUser(Ljava/lang/String;ILandroid/os/UserHandle;)Landroid/content/Context;
@@ -357,12 +357,12 @@
     .parameter "message"
 
     .prologue
-    .line 533
+    .line 527
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2}, Landroid/content/Context;->enforceCallingOrSelfPermission(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 534
+    .line 528
     return-void
 .end method
 
@@ -373,12 +373,12 @@
     .parameter "message"
 
     .prologue
-    .line 583
+    .line 577
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2, p3}, Landroid/content/Context;->enforceCallingOrSelfUriPermission(Landroid/net/Uri;ILjava/lang/String;)V
 
-    .line 584
+    .line 578
     return-void
 .end method
 
@@ -388,12 +388,12 @@
     .parameter "message"
 
     .prologue
-    .line 527
+    .line 521
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2}, Landroid/content/Context;->enforceCallingPermission(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 528
+    .line 522
     return-void
 .end method
 
@@ -404,12 +404,12 @@
     .parameter "message"
 
     .prologue
-    .line 577
+    .line 571
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2, p3}, Landroid/content/Context;->enforceCallingUriPermission(Landroid/net/Uri;ILjava/lang/String;)V
 
-    .line 578
+    .line 572
     return-void
 .end method
 
@@ -421,12 +421,12 @@
     .parameter "message"
 
     .prologue
-    .line 522
+    .line 516
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2, p3, p4}, Landroid/content/Context;->enforcePermission(Ljava/lang/String;IILjava/lang/String;)V
 
-    .line 523
+    .line 517
     return-void
 .end method
 
@@ -439,7 +439,7 @@
     .parameter "message"
 
     .prologue
-    .line 571
+    .line 565
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     move-object v1, p1
@@ -454,7 +454,7 @@
 
     invoke-virtual/range {v0 .. v5}, Landroid/content/Context;->enforceUriPermission(Landroid/net/Uri;IIILjava/lang/String;)V
 
-    .line 572
+    .line 566
     return-void
 .end method
 
@@ -469,7 +469,7 @@
     .parameter "message"
 
     .prologue
-    .line 590
+    .line 584
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     move-object v1, p1
@@ -488,7 +488,7 @@
 
     invoke-virtual/range {v0 .. v7}, Landroid/content/Context;->enforceUriPermission(Landroid/net/Uri;Ljava/lang/String;Ljava/lang/String;IIILjava/lang/String;)V
 
-    .line 593
+    .line 587
     return-void
 .end method
 
@@ -591,7 +591,7 @@
     .parameter "displayId"
 
     .prologue
-    .line 626
+    .line 620
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1}, Landroid/content/Context;->getCompatibilityInfo(I)Landroid/view/CompatibilityInfoHolder;
@@ -925,34 +925,20 @@
     .parameter "modeFlags"
 
     .prologue
-    .line 538
+    .line 532
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2, p3}, Landroid/content/Context;->grantUriPermission(Ljava/lang/String;Landroid/net/Uri;I)V
 
-    .line 539
+    .line 533
     return-void
-.end method
-
-.method public isPrivacyGuardEnabled()Z
-    .locals 1
-
-    .prologue
-    .line 501
-    iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
-
-    invoke-virtual {v0}, Landroid/content/Context;->isPrivacyGuardEnabled()Z
-
-    move-result v0
-
-    return v0
 .end method
 
 .method public isRestricted()Z
     .locals 1
 
     .prologue
-    .line 620
+    .line 614
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0}, Landroid/content/Context;->isRestricted()Z
@@ -1150,12 +1136,12 @@
     .parameter "modeFlags"
 
     .prologue
-    .line 543
+    .line 537
     iget-object v0, p0, Landroid/content/ContextWrapper;->mBase:Landroid/content/Context;
 
     invoke-virtual {v0, p1, p2}, Landroid/content/Context;->revokeUriPermission(Landroid/net/Uri;I)V
 
-    .line 544
+    .line 538
     return-void
 .end method
 

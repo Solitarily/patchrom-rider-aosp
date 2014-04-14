@@ -64,7 +64,7 @@
     .line 766
     .end local v0           #core:Landroid/webkit/WebViewCore;
     :sswitch_1
-    const/16 v2, 0xa
+    const/4 v2, 0x3
 
     invoke-static {v2}, Landroid/os/Process;->setThreadPriority(I)V
 
@@ -183,6 +183,8 @@
     goto :goto_0
 
     .line 758
+    nop
+
     :sswitch_data_0
     .sparse-switch
         0x0 -> :sswitch_0

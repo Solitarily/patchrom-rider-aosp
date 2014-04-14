@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/internal/policy/impl/PhoneWindowManager;->triggerVirtualKeypress(I)V
+    value = Lcom/android/internal/policy/impl/PhoneWindowManager;->showOrHideRecentAppsDialog(I)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -20,7 +20,7 @@
 # instance fields
 .field final synthetic this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
-.field final synthetic val$keyCode:I
+.field final synthetic val$behavior:I
 
 
 # direct methods
@@ -30,10 +30,10 @@
     .parameter
 
     .prologue
-    .line 971
+    .line 873
     iput-object p1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
-    iput p2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->val$keyCode:I
+    iput p2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->val$behavior:I
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -43,79 +43,133 @@
 
 # virtual methods
 .method public run()V
-    .locals 15
+    .locals 3
 
     .prologue
-    .line 973
-    invoke-static {}, Landroid/hardware/input/InputManager;->getInstance()Landroid/hardware/input/InputManager;
+    .line 876
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
-    move-result-object v13
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mRecentAppsDialog:Lcom/android/internal/policy/impl/RecentApplicationsDialog;
 
-    .line 974
-    .local v13, im:Landroid/hardware/input/InputManager;
-    invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
+    if-nez v0, :cond_0
 
-    move-result-wide v1
+    .line 877
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
-    .line 976
-    .local v1, now:J
-    new-instance v0, Landroid/view/KeyEvent;
+    new-instance v1, Lcom/android/internal/policy/impl/RecentApplicationsDialog;
 
-    const/4 v5, 0x0
+    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
-    iget v6, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->val$keyCode:I
+    iget-object v2, v2, Lcom/android/internal/policy/impl/PhoneWindowManager;->mContext:Landroid/content/Context;
 
-    const/4 v7, 0x0
+    invoke-direct {v1, v2}, Lcom/android/internal/policy/impl/RecentApplicationsDialog;-><init>(Landroid/content/Context;)V
 
-    const/4 v8, 0x0
+    iput-object v1, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mRecentAppsDialog:Lcom/android/internal/policy/impl/RecentApplicationsDialog;
 
-    const/4 v9, -0x1
+    .line 879
+    :cond_0
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
-    const/4 v10, 0x0
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mRecentAppsDialog:Lcom/android/internal/policy/impl/RecentApplicationsDialog;
 
-    const/16 v11, 0x8
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/RecentApplicationsDialog;->isShowing()Z
 
-    const/16 v12, 0x101
+    move-result v0
 
-    move-wide v3, v1
+    if-eqz v0, :cond_1
 
-    invoke-direct/range {v0 .. v12}, Landroid/view/KeyEvent;-><init>(JJIIIIIIII)V
+    .line 880
+    iget v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->val$behavior:I
 
-    .line 979
-    .local v0, downEvent:Landroid/view/KeyEvent;
-    const/4 v3, 0x1
+    packed-switch v0, :pswitch_data_0
 
-    invoke-static {v0, v3}, Landroid/view/KeyEvent;->changeAction(Landroid/view/KeyEvent;I)Landroid/view/KeyEvent;
-
-    move-result-object v14
-
-    .line 981
-    .local v14, upEvent:Landroid/view/KeyEvent;
-    iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
-
-    const/4 v4, 0x1
-
-    #setter for: Lcom/android/internal/policy/impl/PhoneWindowManager;->mIsVirtualKeypress:Z
-    invoke-static {v3, v4}, Lcom/android/internal/policy/impl/PhoneWindowManager;->access$402(Lcom/android/internal/policy/impl/PhoneWindowManager;Z)Z
-
-    .line 982
-    const/4 v3, 0x1
-
-    invoke-virtual {v13, v0, v3}, Landroid/hardware/input/InputManager;->injectInputEvent(Landroid/view/InputEvent;I)Z
-
-    .line 983
-    const/4 v3, 0x1
-
-    invoke-virtual {v13, v14, v3}, Landroid/hardware/input/InputManager;->injectInputEvent(Landroid/view/InputEvent;I)Z
-
-    .line 984
-    iget-object v3, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
-
-    const/4 v4, 0x0
-
-    #setter for: Lcom/android/internal/policy/impl/PhoneWindowManager;->mIsVirtualKeypress:Z
-    invoke-static {v3, v4}, Lcom/android/internal/policy/impl/PhoneWindowManager;->access$402(Lcom/android/internal/policy/impl/PhoneWindowManager;Z)Z
-
-    .line 985
+    .line 910
+    :goto_0
+    :pswitch_0
     return-void
+
+    .line 883
+    :pswitch_1
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
+
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mRecentAppsDialog:Lcom/android/internal/policy/impl/RecentApplicationsDialog;
+
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/RecentApplicationsDialog;->dismiss()V
+
+    goto :goto_0
+
+    .line 886
+    :pswitch_2
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
+
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mRecentAppsDialog:Lcom/android/internal/policy/impl/RecentApplicationsDialog;
+
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/RecentApplicationsDialog;->dismissAndSwitch()V
+
+    goto :goto_0
+
+    .line 893
+    :cond_1
+    iget v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->val$behavior:I
+
+    packed-switch v0, :pswitch_data_1
+
+    goto :goto_0
+
+    .line 895
+    :pswitch_3
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
+
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mRecentAppsDialog:Lcom/android/internal/policy/impl/RecentApplicationsDialog;
+
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/RecentApplicationsDialog;->show()V
+
+    goto :goto_0
+
+    .line 899
+    :pswitch_4
+    :try_start_0
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
+
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mWindowManager:Landroid/view/IWindowManager;
+
+    const/4 v1, 0x0
+
+    invoke-interface {v0, v1}, Landroid/view/IWindowManager;->setInTouchMode(Z)V
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 902
+    :goto_1
+    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$6;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
+
+    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mRecentAppsDialog:Lcom/android/internal/policy/impl/RecentApplicationsDialog;
+
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/RecentApplicationsDialog;->show()V
+
+    goto :goto_0
+
+    .line 900
+    :catch_0
+    move-exception v0
+
+    goto :goto_1
+
+    .line 880
+    nop
+
+    :pswitch_data_0
+    .packed-switch 0x0
+        :pswitch_1
+        :pswitch_0
+        :pswitch_1
+        :pswitch_2
+    .end packed-switch
+
+    .line 893
+    :pswitch_data_1
+    .packed-switch 0x0
+        :pswitch_3
+        :pswitch_4
+    .end packed-switch
 .end method

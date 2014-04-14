@@ -1,14 +1,11 @@
 .class Lcom/android/internal/policy/impl/PhoneWindowManager$21;
-.super Ljava/lang/Object;
+.super Landroid/os/IRemoteCallback$Stub;
 .source "PhoneWindowManager.java"
-
-# interfaces
-.implements Lcom/android/internal/policy/impl/KeyguardViewManager$ShowListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/internal/policy/impl/PhoneWindowManager;->waitForKeyguard(Landroid/view/WindowManagerPolicy$ScreenOnListener;)V
+    value = Lcom/android/internal/policy/impl/PhoneWindowManager;->waitForKeyguardWindowDrawn(Landroid/os/IBinder;Landroid/view/WindowManagerPolicy$ScreenOnListener;)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -30,31 +27,38 @@
     .parameter
 
     .prologue
-    .line 4417
+    .line 3998
     iput-object p1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$21;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
     iput-object p2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$21;->val$screenOnListener:Landroid/view/WindowManagerPolicy$ScreenOnListener;
 
-    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+    invoke-direct {p0}, Landroid/os/IRemoteCallback$Stub;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onShown(Landroid/os/IBinder;)V
+.method public sendResult(Landroid/os/Bundle;)V
     .locals 2
-    .parameter "windowToken"
+    .parameter "data"
 
     .prologue
-    .line 4420
+    .line 4001
+    const-string v0, "WindowManager"
+
+    const-string v1, "Lock screen displayed!"
+
+    invoke-static {v0, v1}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 4002
     iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$21;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$21;->val$screenOnListener:Landroid/view/WindowManagerPolicy$ScreenOnListener;
 
-    #calls: Lcom/android/internal/policy/impl/PhoneWindowManager;->waitForKeyguardWindowDrawn(Landroid/os/IBinder;Landroid/view/WindowManagerPolicy$ScreenOnListener;)V
-    invoke-static {v0, p1, v1}, Lcom/android/internal/policy/impl/PhoneWindowManager;->access$700(Lcom/android/internal/policy/impl/PhoneWindowManager;Landroid/os/IBinder;Landroid/view/WindowManagerPolicy$ScreenOnListener;)V
+    #calls: Lcom/android/internal/policy/impl/PhoneWindowManager;->finishScreenTurningOn(Landroid/view/WindowManagerPolicy$ScreenOnListener;)V
+    invoke-static {v0, v1}, Lcom/android/internal/policy/impl/PhoneWindowManager;->access$800(Lcom/android/internal/policy/impl/PhoneWindowManager;Landroid/view/WindowManagerPolicy$ScreenOnListener;)V
 
-    .line 4421
+    .line 4003
     return-void
 .end method

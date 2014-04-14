@@ -24,7 +24,7 @@
     .parameter
 
     .prologue
-    .line 1221
+    .line 1213
     iput-object p1, p0, Landroid/bluetooth/BluetoothAdapter$1;->this$0:Landroid/bluetooth/BluetoothAdapter;
 
     invoke-direct {p0}, Landroid/bluetooth/IBluetoothManagerCallback$Stub;-><init>()V
@@ -38,7 +38,7 @@
     .locals 6
 
     .prologue
-    .line 1240
+    .line 1232
     iget-object v3, p0, Landroid/bluetooth/BluetoothAdapter$1;->this$0:Landroid/bluetooth/BluetoothAdapter;
 
     #getter for: Landroid/bluetooth/BluetoothAdapter;->mManagerCallback:Landroid/bluetooth/IBluetoothManagerCallback;
@@ -48,7 +48,7 @@
 
     monitor-enter v4
 
-    .line 1241
+    .line 1233
     :try_start_0
     iget-object v3, p0, Landroid/bluetooth/BluetoothAdapter$1;->this$0:Landroid/bluetooth/BluetoothAdapter;
 
@@ -57,7 +57,7 @@
     #setter for: Landroid/bluetooth/BluetoothAdapter;->mService:Landroid/bluetooth/IBluetooth;
     invoke-static {v3, v5}, Landroid/bluetooth/BluetoothAdapter;->access$102(Landroid/bluetooth/BluetoothAdapter;Landroid/bluetooth/IBluetooth;)Landroid/bluetooth/IBluetooth;
 
-    .line 1242
+    .line 1234
     iget-object v3, p0, Landroid/bluetooth/BluetoothAdapter$1;->this$0:Landroid/bluetooth/BluetoothAdapter;
 
     #getter for: Landroid/bluetooth/BluetoothAdapter;->mProxyServiceStateCallbacks:Ljava/util/ArrayList;
@@ -85,11 +85,11 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 1244
+    .line 1236
     .local v0, cb:Landroid/bluetooth/IBluetoothManagerCallback;
     if-eqz v0, :cond_0
 
-    .line 1245
+    .line 1237
     :try_start_1
     invoke-interface {v0}, Landroid/bluetooth/IBluetoothManagerCallback;->onBluetoothServiceDown()V
     :try_end_1
@@ -98,7 +98,7 @@
 
     goto :goto_0
 
-    .line 1249
+    .line 1241
     :catch_0
     move-exception v1
 
@@ -112,7 +112,7 @@
 
     goto :goto_0
 
-    .line 1251
+    .line 1243
     .end local v0           #cb:Landroid/bluetooth/IBluetoothManagerCallback;
     .end local v1           #e:Ljava/lang/Exception;
     .end local v2           #i$:Ljava/util/Iterator;
@@ -125,7 +125,7 @@
 
     throw v3
 
-    .line 1247
+    .line 1239
     .restart local v0       #cb:Landroid/bluetooth/IBluetoothManagerCallback;
     .restart local v2       #i$:Ljava/util/Iterator;
     :cond_0
@@ -141,7 +141,7 @@
 
     goto :goto_0
 
-    .line 1251
+    .line 1243
     .end local v0           #cb:Landroid/bluetooth/IBluetoothManagerCallback;
     :cond_1
     :try_start_4
@@ -149,7 +149,7 @@
     :try_end_4
     .catchall {:try_start_4 .. :try_end_4} :catchall_0
 
-    .line 1252
+    .line 1244
     return-void
 .end method
 
@@ -158,7 +158,7 @@
     .parameter "bluetoothService"
 
     .prologue
-    .line 1224
+    .line 1216
     iget-object v3, p0, Landroid/bluetooth/BluetoothAdapter$1;->this$0:Landroid/bluetooth/BluetoothAdapter;
 
     #getter for: Landroid/bluetooth/BluetoothAdapter;->mManagerCallback:Landroid/bluetooth/IBluetoothManagerCallback;
@@ -168,14 +168,14 @@
 
     monitor-enter v4
 
-    .line 1225
+    .line 1217
     :try_start_0
     iget-object v3, p0, Landroid/bluetooth/BluetoothAdapter$1;->this$0:Landroid/bluetooth/BluetoothAdapter;
 
     #setter for: Landroid/bluetooth/BluetoothAdapter;->mService:Landroid/bluetooth/IBluetooth;
     invoke-static {v3, p1}, Landroid/bluetooth/BluetoothAdapter;->access$102(Landroid/bluetooth/BluetoothAdapter;Landroid/bluetooth/IBluetooth;)Landroid/bluetooth/IBluetooth;
 
-    .line 1226
+    .line 1218
     iget-object v3, p0, Landroid/bluetooth/BluetoothAdapter$1;->this$0:Landroid/bluetooth/BluetoothAdapter;
 
     #getter for: Landroid/bluetooth/BluetoothAdapter;->mProxyServiceStateCallbacks:Ljava/util/ArrayList;
@@ -203,11 +203,11 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 1228
+    .line 1220
     .local v0, cb:Landroid/bluetooth/IBluetoothManagerCallback;
     if-eqz v0, :cond_0
 
-    .line 1229
+    .line 1221
     :try_start_1
     invoke-interface {v0, p1}, Landroid/bluetooth/IBluetoothManagerCallback;->onBluetoothServiceUp(Landroid/bluetooth/IBluetooth;)V
     :try_end_1
@@ -216,7 +216,7 @@
 
     goto :goto_0
 
-    .line 1233
+    .line 1225
     :catch_0
     move-exception v1
 
@@ -230,7 +230,7 @@
 
     goto :goto_0
 
-    .line 1235
+    .line 1227
     .end local v0           #cb:Landroid/bluetooth/IBluetoothManagerCallback;
     .end local v1           #e:Ljava/lang/Exception;
     .end local v2           #i$:Ljava/util/Iterator;
@@ -243,7 +243,7 @@
 
     throw v3
 
-    .line 1231
+    .line 1223
     .restart local v0       #cb:Landroid/bluetooth/IBluetoothManagerCallback;
     .restart local v2       #i$:Ljava/util/Iterator;
     :cond_0
@@ -259,7 +259,7 @@
 
     goto :goto_0
 
-    .line 1235
+    .line 1227
     .end local v0           #cb:Landroid/bluetooth/IBluetoothManagerCallback;
     :cond_1
     :try_start_4
@@ -267,6 +267,6 @@
     :try_end_4
     .catchall {:try_start_4 .. :try_end_4} :catchall_0
 
-    .line 1236
+    .line 1228
     return-void
 .end method

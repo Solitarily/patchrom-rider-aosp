@@ -520,7 +520,7 @@
 
     if-nez v1, :cond_0
 
-    const v1, 0x111002d
+    const v1, 0x1110029
 
     invoke-virtual {v7, v1}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -702,7 +702,7 @@
     .line 160
     iget-object v1, p0, Lcom/android/internal/policy/impl/KeyguardViewManager;->mKeyguardView:Lcom/android/internal/policy/impl/KeyguardViewBase;
 
-    const v2, 0x1020241
+    const v2, 0x1020243
 
     invoke-virtual {v1, v2}, Lcom/android/internal/policy/impl/KeyguardViewBase;->setId(I)V
 

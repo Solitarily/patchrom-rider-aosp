@@ -193,7 +193,7 @@
     .parameter "permission"
 
     .prologue
-    .line 994
+    .line 988
     iget-object v0, p0, Lcom/android/server/WallpaperManagerService;->mContext:Landroid/content/Context;
 
     invoke-virtual {v0, p1}, Landroid/content/Context;->checkCallingOrSelfPermission(Ljava/lang/String;)I
@@ -202,7 +202,7 @@
 
     if-eqz v0, :cond_0
 
-    .line 995
+    .line 989
     new-instance v0, Ljava/lang/SecurityException;
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -241,7 +241,7 @@
 
     throw v0
 
-    .line 998
+    .line 992
     :cond_0
     return-void
 .end method
@@ -264,22 +264,22 @@
     .parameter "userId"
 
     .prologue
-    .line 1056
+    .line 1050
     invoke-static/range {p1 .. p1}, Lcom/android/server/WallpaperManagerService;->makeJournaledFile(I)Lcom/android/internal/util/JournaledFile;
 
     move-result-object v6
 
-    .line 1057
+    .line 1051
     .local v6, journal:Lcom/android/internal/util/JournaledFile;
     const/4 v8, 0x0
 
-    .line 1058
+    .line 1052
     .local v8, stream:Ljava/io/FileInputStream;
     invoke-virtual {v6}, Lcom/android/internal/util/JournaledFile;->chooseForRead()Ljava/io/File;
 
     move-result-object v5
 
-    .line 1059
+    .line 1053
     .local v5, file:Ljava/io/File;
     invoke-virtual {v5}, Ljava/io/File;->exists()Z
 
@@ -287,10 +287,10 @@
 
     if-nez v15, :cond_0
 
-    .line 1061
+    .line 1055
     invoke-direct/range {p0 .. p0}, Lcom/android/server/WallpaperManagerService;->migrateFromOld()V
 
-    .line 1063
+    .line 1057
     :cond_0
     move-object/from16 v0, p0
 
@@ -304,11 +304,11 @@
 
     check-cast v13, Lcom/android/server/WallpaperManagerService$WallpaperData;
 
-    .line 1064
+    .line 1058
     .local v13, wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     if-nez v13, :cond_1
 
-    .line 1065
+    .line 1059
     new-instance v13, Lcom/android/server/WallpaperManagerService$WallpaperData;
 
     .end local v13           #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
@@ -316,7 +316,7 @@
 
     invoke-direct {v13, v0}, Lcom/android/server/WallpaperManagerService$WallpaperData;-><init>(I)V
 
-    .line 1066
+    .line 1060
     .restart local v13       #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     move-object/from16 v0, p0
 
@@ -326,11 +326,11 @@
 
     invoke-virtual {v15, v0, v13}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
 
-    .line 1068
+    .line 1062
     :cond_1
     const/4 v10, 0x0
 
-    .line 1070
+    .line 1064
     .local v10, success:Z
     :try_start_0
     new-instance v9, Ljava/io/FileInputStream;
@@ -344,7 +344,7 @@
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_4
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_0 .. :try_end_0} :catch_5
 
-    .line 1071
+    .line 1065
     .end local v8           #stream:Ljava/io/FileInputStream;
     .local v9, stream:Ljava/io/FileInputStream;
     :try_start_1
@@ -352,30 +352,30 @@
 
     move-result-object v7
 
-    .line 1072
+    .line 1066
     .local v7, parser:Lorg/xmlpull/v1/XmlPullParser;
     const/4 v15, 0x0
 
     invoke-interface {v7, v9, v15}, Lorg/xmlpull/v1/XmlPullParser;->setInput(Ljava/io/InputStream;Ljava/lang/String;)V
 
-    .line 1076
+    .line 1070
     :cond_2
     invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->next()I
 
     move-result v12
 
-    .line 1077
+    .line 1071
     .local v12, type:I
     const/4 v15, 0x2
 
     if-ne v12, v15, :cond_4
 
-    .line 1078
+    .line 1072
     invoke-interface {v7}, Lorg/xmlpull/v1/XmlPullParser;->getName()Ljava/lang/String;
 
     move-result-object v11
 
-    .line 1079
+    .line 1073
     .local v11, tag:Ljava/lang/String;
     const-string v15, "wp"
 
@@ -385,7 +385,7 @@
 
     if-eqz v15, :cond_4
 
-    .line 1080
+    .line 1074
     const/4 v15, 0x0
 
     const-string v16, "width"
@@ -402,7 +402,7 @@
 
     iput v15, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->width:I
 
-    .line 1081
+    .line 1075
     const/4 v15, 0x0
 
     const-string v16, "height"
@@ -419,7 +419,7 @@
 
     iput v15, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->height:I
 
-    .line 1083
+    .line 1077
     const/4 v15, 0x0
 
     const-string v16, "name"
@@ -432,7 +432,7 @@
 
     iput-object v15, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->name:Ljava/lang/String;
 
-    .line 1084
+    .line 1078
     const/4 v15, 0x0
 
     const-string v16, "component"
@@ -443,7 +443,7 @@
 
     move-result-object v2
 
-    .line 1085
+    .line 1079
     .local v2, comp:Ljava/lang/String;
     if-eqz v2, :cond_9
 
@@ -454,7 +454,7 @@
     :goto_0
     iput-object v15, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->nextWallpaperComponent:Landroid/content/ComponentName;
 
-    .line 1088
+    .line 1082
     iget-object v15, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->nextWallpaperComponent:Landroid/content/ComponentName;
 
     if-eqz v15, :cond_3
@@ -475,7 +475,7 @@
 
     if-eqz v15, :cond_4
 
-    .line 1091
+    .line 1085
     :cond_3
     sget-object v15, Lcom/android/server/WallpaperManagerService;->IMAGE_WALLPAPER:Landroid/content/ComponentName;
 
@@ -488,7 +488,7 @@
     .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_8
     .catch Ljava/lang/IndexOutOfBoundsException; {:try_start_1 .. :try_end_1} :catch_7
 
-    .line 1103
+    .line 1097
     .end local v2           #comp:Ljava/lang/String;
     .end local v11           #tag:Ljava/lang/String;
     :cond_4
@@ -496,12 +496,12 @@
 
     if-ne v12, v15, :cond_2
 
-    .line 1104
+    .line 1098
     const/4 v10, 0x1
 
     move-object v8, v9
 
-    .line 1119
+    .line 1113
     .end local v7           #parser:Lorg/xmlpull/v1/XmlPullParser;
     .end local v9           #stream:Ljava/io/FileInputStream;
     .end local v12           #type:I
@@ -509,33 +509,33 @@
     :goto_1
     if-eqz v8, :cond_5
 
-    .line 1120
+    .line 1114
     :try_start_2
     invoke-virtual {v8}, Ljava/io/FileInputStream;->close()V
     :try_end_2
     .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_6
 
-    .line 1126
+    .line 1120
     :cond_5
     :goto_2
     if-nez v10, :cond_6
 
-    .line 1127
+    .line 1121
     const/4 v15, -0x1
 
     iput v15, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->width:I
 
-    .line 1128
+    .line 1122
     const/4 v15, -0x1
 
     iput v15, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->height:I
 
-    .line 1129
+    .line 1123
     const-string v15, ""
 
     iput-object v15, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->name:Ljava/lang/String;
 
-    .line 1133
+    .line 1127
     :cond_6
     move-object/from16 v0, p0
 
@@ -549,41 +549,41 @@
 
     check-cast v14, Landroid/view/WindowManager;
 
-    .line 1134
+    .line 1128
     .local v14, wm:Landroid/view/WindowManager;
     invoke-interface {v14}, Landroid/view/WindowManager;->getDefaultDisplay()Landroid/view/Display;
 
     move-result-object v3
 
-    .line 1135
+    .line 1129
     .local v3, d:Landroid/view/Display;
     invoke-virtual {v3}, Landroid/view/Display;->getMaximumSizeDimension()I
 
     move-result v1
 
-    .line 1136
+    .line 1130
     .local v1, baseSize:I
     iget v15, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->width:I
 
     if-ge v15, v1, :cond_7
 
-    .line 1137
+    .line 1131
     iput v1, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->width:I
 
-    .line 1139
+    .line 1133
     :cond_7
     iget v15, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->height:I
 
     if-ge v15, v1, :cond_8
 
-    .line 1140
+    .line 1134
     iput v1, v13, Lcom/android/server/WallpaperManagerService$WallpaperData;->height:I
 
-    .line 1142
+    .line 1136
     :cond_8
     return-void
 
-    .line 1085
+    .line 1079
     .end local v1           #baseSize:I
     .end local v3           #d:Landroid/view/Display;
     .end local v8           #stream:Ljava/io/FileInputStream;
@@ -598,7 +598,7 @@
 
     goto :goto_0
 
-    .line 1105
+    .line 1099
     .end local v2           #comp:Ljava/lang/String;
     .end local v7           #parser:Lorg/xmlpull/v1/XmlPullParser;
     .end local v9           #stream:Ljava/io/FileInputStream;
@@ -608,7 +608,7 @@
     :catch_0
     move-exception v4
 
-    .line 1106
+    .line 1100
     .local v4, e:Ljava/io/FileNotFoundException;
     :goto_3
     const-string v15, "WallpaperService"
@@ -619,12 +619,12 @@
 
     goto :goto_1
 
-    .line 1107
+    .line 1101
     .end local v4           #e:Ljava/io/FileNotFoundException;
     :catch_1
     move-exception v4
 
-    .line 1108
+    .line 1102
     .local v4, e:Ljava/lang/NullPointerException;
     :goto_4
     const-string v15, "WallpaperService"
@@ -665,12 +665,12 @@
 
     goto :goto_1
 
-    .line 1109
+    .line 1103
     .end local v4           #e:Ljava/lang/NullPointerException;
     :catch_2
     move-exception v4
 
-    .line 1110
+    .line 1104
     .local v4, e:Ljava/lang/NumberFormatException;
     :goto_5
     const-string v15, "WallpaperService"
@@ -711,12 +711,12 @@
 
     goto/16 :goto_1
 
-    .line 1111
+    .line 1105
     .end local v4           #e:Ljava/lang/NumberFormatException;
     :catch_3
     move-exception v4
 
-    .line 1112
+    .line 1106
     .local v4, e:Lorg/xmlpull/v1/XmlPullParserException;
     :goto_6
     const-string v15, "WallpaperService"
@@ -757,12 +757,12 @@
 
     goto/16 :goto_1
 
-    .line 1113
+    .line 1107
     .end local v4           #e:Lorg/xmlpull/v1/XmlPullParserException;
     :catch_4
     move-exception v4
 
-    .line 1114
+    .line 1108
     .local v4, e:Ljava/io/IOException;
     :goto_7
     const-string v15, "WallpaperService"
@@ -803,12 +803,12 @@
 
     goto/16 :goto_1
 
-    .line 1115
+    .line 1109
     .end local v4           #e:Ljava/io/IOException;
     :catch_5
     move-exception v4
 
-    .line 1116
+    .line 1110
     .local v4, e:Ljava/lang/IndexOutOfBoundsException;
     :goto_8
     const-string v15, "WallpaperService"
@@ -849,14 +849,14 @@
 
     goto/16 :goto_1
 
-    .line 1122
+    .line 1116
     .end local v4           #e:Ljava/lang/IndexOutOfBoundsException;
     :catch_6
     move-exception v15
 
     goto/16 :goto_2
 
-    .line 1115
+    .line 1109
     .end local v8           #stream:Ljava/io/FileInputStream;
     .restart local v9       #stream:Ljava/io/FileInputStream;
     :catch_7
@@ -868,7 +868,7 @@
     .restart local v8       #stream:Ljava/io/FileInputStream;
     goto :goto_8
 
-    .line 1113
+    .line 1107
     .end local v8           #stream:Ljava/io/FileInputStream;
     .restart local v9       #stream:Ljava/io/FileInputStream;
     :catch_8
@@ -880,7 +880,7 @@
     .restart local v8       #stream:Ljava/io/FileInputStream;
     goto :goto_7
 
-    .line 1111
+    .line 1105
     .end local v8           #stream:Ljava/io/FileInputStream;
     .restart local v9       #stream:Ljava/io/FileInputStream;
     :catch_9
@@ -892,7 +892,7 @@
     .restart local v8       #stream:Ljava/io/FileInputStream;
     goto/16 :goto_6
 
-    .line 1109
+    .line 1103
     .end local v8           #stream:Ljava/io/FileInputStream;
     .restart local v9       #stream:Ljava/io/FileInputStream;
     :catch_a
@@ -904,7 +904,7 @@
     .restart local v8       #stream:Ljava/io/FileInputStream;
     goto/16 :goto_5
 
-    .line 1107
+    .line 1101
     .end local v8           #stream:Ljava/io/FileInputStream;
     .restart local v9       #stream:Ljava/io/FileInputStream;
     :catch_b
@@ -916,7 +916,7 @@
     .restart local v8       #stream:Ljava/io/FileInputStream;
     goto/16 :goto_4
 
-    .line 1105
+    .line 1099
     .end local v8           #stream:Ljava/io/FileInputStream;
     .restart local v9       #stream:Ljava/io/FileInputStream;
     :catch_c
@@ -934,7 +934,7 @@
     .parameter "userId"
 
     .prologue
-    .line 1001
+    .line 995
     new-instance v1, Ljava/io/File;
 
     invoke-static {p0}, Lcom/android/server/WallpaperManagerService;->getWallpaperDir(I)Ljava/io/File;
@@ -949,7 +949,7 @@
 
     move-result-object v0
 
-    .line 1002
+    .line 996
     .local v0, base:Ljava/lang/String;
     new-instance v1, Lcom/android/internal/util/JournaledFile;
 
@@ -990,14 +990,14 @@
     .prologue
     const/4 v6, 0x0
 
-    .line 1041
+    .line 1035
     new-instance v3, Ljava/io/File;
 
     const-string v4, "/data/data/com.android.settings/files/wallpaper"
 
     invoke-direct {v3, v4}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 1042
+    .line 1036
     .local v3, oldWallpaper:Ljava/io/File;
     new-instance v2, Ljava/io/File;
 
@@ -1005,7 +1005,7 @@
 
     invoke-direct {v2, v4}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 1043
+    .line 1037
     .local v2, oldInfo:Ljava/io/File;
     invoke-virtual {v3}, Ljava/io/File;->exists()Z
 
@@ -1013,7 +1013,7 @@
 
     if-eqz v4, :cond_0
 
-    .line 1044
+    .line 1038
     new-instance v1, Ljava/io/File;
 
     invoke-static {v6}, Lcom/android/server/WallpaperManagerService;->getWallpaperDir(I)Ljava/io/File;
@@ -1024,11 +1024,11 @@
 
     invoke-direct {v1, v4, v5}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
 
-    .line 1045
+    .line 1039
     .local v1, newWallpaper:Ljava/io/File;
     invoke-virtual {v3, v1}, Ljava/io/File;->renameTo(Ljava/io/File;)Z
 
-    .line 1047
+    .line 1041
     .end local v1           #newWallpaper:Ljava/io/File;
     :cond_0
     invoke-virtual {v2}, Ljava/io/File;->exists()Z
@@ -1037,7 +1037,7 @@
 
     if-eqz v4, :cond_1
 
-    .line 1048
+    .line 1042
     new-instance v0, Ljava/io/File;
 
     invoke-static {v6}, Lcom/android/server/WallpaperManagerService;->getWallpaperDir(I)Ljava/io/File;
@@ -1048,11 +1048,11 @@
 
     invoke-direct {v0, v4, v5}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
 
-    .line 1049
+    .line 1043
     .local v0, newInfo:Ljava/io/File;
     invoke-virtual {v2, v0}, Ljava/io/File;->renameTo(Ljava/io/File;)Z
 
-    .line 1051
+    .line 1045
     .end local v0           #newInfo:Ljava/io/File;
     :cond_1
     return-void
@@ -1063,7 +1063,7 @@
     .parameter "wallpaper"
 
     .prologue
-    .line 978
+    .line 972
     #getter for: Lcom/android/server/WallpaperManagerService$WallpaperData;->callbacks:Landroid/os/RemoteCallbackList;
     invoke-static {p1}, Lcom/android/server/WallpaperManagerService$WallpaperData;->access$300(Lcom/android/server/WallpaperManagerService$WallpaperData;)Landroid/os/RemoteCallbackList;
 
@@ -1073,7 +1073,7 @@
 
     move-result v2
 
-    .line 979
+    .line 973
     .local v2, n:I
     const/4 v0, 0x0
 
@@ -1081,7 +1081,7 @@
     :goto_0
     if-ge v0, v2, :cond_0
 
-    .line 981
+    .line 975
     :try_start_0
     #getter for: Lcom/android/server/WallpaperManagerService$WallpaperData;->callbacks:Landroid/os/RemoteCallbackList;
     invoke-static {p1}, Lcom/android/server/WallpaperManagerService$WallpaperData;->access$300(Lcom/android/server/WallpaperManagerService$WallpaperData;)Landroid/os/RemoteCallbackList;
@@ -1098,13 +1098,13 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 979
+    .line 973
     :goto_1
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    .line 988
+    .line 982
     :cond_0
     #getter for: Lcom/android/server/WallpaperManagerService$WallpaperData;->callbacks:Landroid/os/RemoteCallbackList;
     invoke-static {p1}, Lcom/android/server/WallpaperManagerService$WallpaperData;->access$300(Lcom/android/server/WallpaperManagerService$WallpaperData;)Landroid/os/RemoteCallbackList;
@@ -1113,14 +1113,14 @@
 
     invoke-virtual {v3}, Landroid/os/RemoteCallbackList;->finishBroadcast()V
 
-    .line 989
+    .line 983
     new-instance v1, Landroid/content/Intent;
 
     const-string v3, "android.intent.action.WALLPAPER_CHANGED"
 
     invoke-direct {v1, v3}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
-    .line 990
+    .line 984
     .local v1, intent:Landroid/content/Intent;
     iget-object v3, p0, Lcom/android/server/WallpaperManagerService;->mContext:Landroid/content/Context;
 
@@ -1132,10 +1132,10 @@
 
     invoke-virtual {v3, v1, v4}, Landroid/content/Context;->sendBroadcastAsUser(Landroid/content/Intent;Landroid/os/UserHandle;)V
 
-    .line 991
+    .line 985
     return-void
 
-    .line 982
+    .line 976
     .end local v1           #intent:Landroid/content/Intent;
     :catch_0
     move-exception v3
@@ -1148,18 +1148,18 @@
     .parameter "wallpaper"
 
     .prologue
-    .line 1006
+    .line 1000
     iget v5, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->userId:I
 
     invoke-static {v5}, Lcom/android/server/WallpaperManagerService;->makeJournaledFile(I)Lcom/android/internal/util/JournaledFile;
 
     move-result-object v1
 
-    .line 1007
+    .line 1001
     .local v1, journal:Lcom/android/internal/util/JournaledFile;
     const/4 v3, 0x0
 
-    .line 1009
+    .line 1003
     .local v3, stream:Ljava/io/FileOutputStream;
     :try_start_0
     new-instance v4, Ljava/io/FileOutputStream;
@@ -1174,7 +1174,7 @@
     :try_end_0
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 1010
+    .line 1004
     .end local v3           #stream:Ljava/io/FileOutputStream;
     .local v4, stream:Ljava/io/FileOutputStream;
     :try_start_1
@@ -1182,13 +1182,13 @@
 
     invoke-direct {v2}, Lcom/android/internal/util/FastXmlSerializer;-><init>()V
 
-    .line 1011
+    .line 1005
     .local v2, out:Lorg/xmlpull/v1/XmlSerializer;
     const-string v5, "utf-8"
 
     invoke-interface {v2, v4, v5}, Lorg/xmlpull/v1/XmlSerializer;->setOutput(Ljava/io/OutputStream;Ljava/lang/String;)V
 
-    .line 1012
+    .line 1006
     const/4 v5, 0x0
 
     const/4 v6, 0x1
@@ -1199,14 +1199,14 @@
 
     invoke-interface {v2, v5, v6}, Lorg/xmlpull/v1/XmlSerializer;->startDocument(Ljava/lang/String;Ljava/lang/Boolean;)V
 
-    .line 1014
+    .line 1008
     const/4 v5, 0x0
 
     const-string v6, "wp"
 
     invoke-interface {v2, v5, v6}, Lorg/xmlpull/v1/XmlSerializer;->startTag(Ljava/lang/String;Ljava/lang/String;)Lorg/xmlpull/v1/XmlSerializer;
 
-    .line 1015
+    .line 1009
     const/4 v5, 0x0
 
     const-string v6, "width"
@@ -1219,7 +1219,7 @@
 
     invoke-interface {v2, v5, v6, v7}, Lorg/xmlpull/v1/XmlSerializer;->attribute(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/xmlpull/v1/XmlSerializer;
 
-    .line 1016
+    .line 1010
     const/4 v5, 0x0
 
     const-string v6, "height"
@@ -1232,7 +1232,7 @@
 
     invoke-interface {v2, v5, v6, v7}, Lorg/xmlpull/v1/XmlSerializer;->attribute(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/xmlpull/v1/XmlSerializer;
 
-    .line 1017
+    .line 1011
     const/4 v5, 0x0
 
     const-string v6, "name"
@@ -1241,7 +1241,7 @@
 
     invoke-interface {v2, v5, v6, v7}, Lorg/xmlpull/v1/XmlSerializer;->attribute(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/xmlpull/v1/XmlSerializer;
 
-    .line 1018
+    .line 1012
     iget-object v5, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->wallpaperComponent:Landroid/content/ComponentName;
 
     if-eqz v5, :cond_0
@@ -1256,7 +1256,7 @@
 
     if-nez v5, :cond_0
 
-    .line 1020
+    .line 1014
     const/4 v5, 0x0
 
     const-string v6, "component"
@@ -1269,7 +1269,7 @@
 
     invoke-interface {v2, v5, v6, v7}, Lorg/xmlpull/v1/XmlSerializer;->attribute(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lorg/xmlpull/v1/XmlSerializer;
 
-    .line 1023
+    .line 1017
     :cond_0
     const/4 v5, 0x0
 
@@ -1277,55 +1277,55 @@
 
     invoke-interface {v2, v5, v6}, Lorg/xmlpull/v1/XmlSerializer;->endTag(Ljava/lang/String;Ljava/lang/String;)Lorg/xmlpull/v1/XmlSerializer;
 
-    .line 1025
+    .line 1019
     invoke-interface {v2}, Lorg/xmlpull/v1/XmlSerializer;->endDocument()V
 
-    .line 1026
+    .line 1020
     invoke-virtual {v4}, Ljava/io/FileOutputStream;->close()V
 
-    .line 1027
+    .line 1021
     invoke-virtual {v1}, Lcom/android/internal/util/JournaledFile;->commit()V
     :try_end_1
     .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_2
 
     move-object v3, v4
 
-    .line 1038
+    .line 1032
     .end local v2           #out:Lorg/xmlpull/v1/XmlSerializer;
     .end local v4           #stream:Ljava/io/FileOutputStream;
     .restart local v3       #stream:Ljava/io/FileOutputStream;
     :goto_0
     return-void
 
-    .line 1028
+    .line 1022
     :catch_0
     move-exception v0
 
-    .line 1030
+    .line 1024
     .local v0, e:Ljava/io/IOException;
     :goto_1
     if-eqz v3, :cond_1
 
-    .line 1031
+    .line 1025
     :try_start_2
     invoke-virtual {v3}, Ljava/io/FileOutputStream;->close()V
     :try_end_2
     .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_1
 
-    .line 1036
+    .line 1030
     :cond_1
     :goto_2
     invoke-virtual {v1}, Lcom/android/internal/util/JournaledFile;->rollback()V
 
     goto :goto_0
 
-    .line 1033
+    .line 1027
     :catch_1
     move-exception v5
 
     goto :goto_2
 
-    .line 1028
+    .line 1022
     .end local v0           #e:Ljava/io/IOException;
     .end local v3           #stream:Ljava/io/FileOutputStream;
     .restart local v4       #stream:Ljava/io/FileOutputStream;
@@ -1351,7 +1351,7 @@
 
     const/4 v8, 0x0
 
-    .line 966
+    .line 960
     :try_start_0
     iget-object v0, p1, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mService:Landroid/service/wallpaper/IWallpaperService;
 
@@ -1371,16 +1371,16 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 975
+    .line 969
     :cond_0
     :goto_0
     return-void
 
-    .line 969
+    .line 963
     :catch_0
     move-exception v7
 
-    .line 970
+    .line 964
     .local v7, e:Landroid/os/RemoteException;
     const-string v0, "WallpaperService"
 
@@ -1388,7 +1388,7 @@
 
     invoke-static {v0, v1, v7}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 971
+    .line 965
     iget-boolean v0, p2, Lcom/android/server/WallpaperManagerService$WallpaperData;->wallpaperUpdating:Z
 
     if-nez v0, :cond_0
@@ -1405,7 +1405,7 @@
 
     move-object v5, v9
 
-    .line 972
+    .line 966
     invoke-virtual/range {v0 .. v5}, Lcom/android/server/WallpaperManagerService;->bindWallpaperComponentLocked(Landroid/content/ComponentName;ZZLcom/android/server/WallpaperManagerService$WallpaperData;Landroid/os/IRemoteCallback;)Z
 
     goto :goto_0
@@ -1420,34 +1420,34 @@
     .parameter "reply"
 
     .prologue
-    .line 794
+    .line 788
     if-nez p2, :cond_1
 
-    .line 795
+    .line 789
     move-object/from16 v0, p4
 
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
     if-eqz v3, :cond_1
 
-    .line 796
+    .line 790
     move-object/from16 v0, p4
 
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService$WallpaperData;->wallpaperComponent:Landroid/content/ComponentName;
 
     if-nez v3, :cond_0
 
-    .line 797
+    .line 791
     if-nez p1, :cond_1
 
-    .line 800
+    .line 794
     const/4 v3, 0x1
 
-    .line 928
+    .line 922
     :goto_0
     return v3
 
-    .line 802
+    .line 796
     :cond_0
     move-object/from16 v0, p4
 
@@ -1461,44 +1461,44 @@
 
     if-eqz v3, :cond_1
 
-    .line 805
+    .line 799
     const/4 v3, 0x1
 
     goto :goto_0
 
-    .line 811
+    .line 805
     :cond_1
     if-nez p1, :cond_3
 
-    .line 812
+    .line 806
     :try_start_0
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService;->mContext:Landroid/content/Context;
 
-    const v4, 0x1040086
+    const v4, 0x104001d
 
     invoke-virtual {v3, v4}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
     move-result-object v9
 
-    .line 814
+    .line 808
     .local v9, defaultComponent:Ljava/lang/String;
     if-eqz v9, :cond_2
 
-    .line 816
+    .line 810
     invoke-static {v9}, Landroid/content/ComponentName;->unflattenFromString(Ljava/lang/String;)Landroid/content/ComponentName;
 
     move-result-object p1
 
-    .line 819
+    .line 813
     :cond_2
     if-nez p1, :cond_3
 
-    .line 821
+    .line 815
     sget-object p1, Lcom/android/server/WallpaperManagerService;->IMAGE_WALLPAPER:Landroid/content/ComponentName;
 
-    .line 827
+    .line 821
     .end local v9           #defaultComponent:Ljava/lang/String;
     :cond_3
     move-object/from16 v0, p4
@@ -1507,7 +1507,7 @@
 
     move/from16 v17, v0
 
-    .line 828
+    .line 822
     .local v17, serviceUserId:I
     move-object/from16 v0, p0
 
@@ -1523,7 +1523,7 @@
 
     move-result-object v18
 
-    .line 830
+    .line 824
     .local v18, si:Landroid/content/pm/ServiceInfo;
     const-string v3, "android.permission.BIND_WALLPAPER"
 
@@ -1537,7 +1537,7 @@
 
     if-nez v3, :cond_5
 
-    .line 831
+    .line 825
     new-instance v3, Ljava/lang/StringBuilder;
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
@@ -1558,11 +1558,11 @@
 
     move-result-object v13
 
-    .line 834
+    .line 828
     .local v13, msg:Ljava/lang/String;
     if-eqz p3, :cond_4
 
-    .line 835
+    .line 829
     new-instance v3, Ljava/lang/SecurityException;
 
     invoke-direct {v3, v13}, Ljava/lang/SecurityException;-><init>(Ljava/lang/String;)V
@@ -1571,14 +1571,14 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 920
+    .line 914
     .end local v13           #msg:Ljava/lang/String;
     .end local v17           #serviceUserId:I
     .end local v18           #si:Landroid/content/pm/ServiceInfo;
     :catch_0
     move-exception v10
 
-    .line 921
+    .line 915
     .local v10, e:Landroid/os/RemoteException;
     new-instance v3, Ljava/lang/StringBuilder;
 
@@ -1610,18 +1610,18 @@
 
     move-result-object v13
 
-    .line 922
+    .line 916
     .restart local v13       #msg:Ljava/lang/String;
     if-eqz p3, :cond_10
 
-    .line 923
+    .line 917
     new-instance v3, Ljava/lang/IllegalArgumentException;
 
     invoke-direct {v3, v13}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
 
     throw v3
 
-    .line 837
+    .line 831
     .end local v10           #e:Landroid/os/RemoteException;
     .restart local v17       #serviceUserId:I
     .restart local v18       #si:Landroid/content/pm/ServiceInfo;
@@ -1631,17 +1631,17 @@
 
     invoke-static {v3, v13}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 838
+    .line 832
     const/4 v3, 0x0
 
     goto/16 :goto_0
 
-    .line 841
+    .line 835
     .end local v13           #msg:Ljava/lang/String;
     :cond_5
     const/16 v19, 0x0
 
-    .line 843
+    .line 837
     .local v19, wi:Landroid/app/WallpaperInfo;
     new-instance v12, Landroid/content/Intent;
 
@@ -1649,7 +1649,7 @@
 
     invoke-direct {v12, v3}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
-    .line 844
+    .line 838
     .local v12, intent:Landroid/content/Intent;
     if-eqz p1, :cond_b
 
@@ -1663,7 +1663,7 @@
 
     if-nez v3, :cond_b
 
-    .line 846
+    .line 840
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService;->mIPackageManager:Landroid/content/pm/IPackageManager;
@@ -1688,7 +1688,7 @@
 
     move-result-object v15
 
-    .line 850
+    .line 844
     .local v15, ris:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ResolveInfo;>;"
     const/4 v11, 0x0
 
@@ -1700,7 +1700,7 @@
 
     if-ge v11, v3, :cond_6
 
-    .line 851
+    .line 845
     invoke-interface {v15, v11}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object v3
@@ -1711,7 +1711,7 @@
 
     move-object/from16 v16, v0
 
-    .line 852
+    .line 846
     .local v16, rsi:Landroid/content/pm/ServiceInfo;
     move-object/from16 v0, v16
 
@@ -1743,7 +1743,7 @@
 
     if-eqz v3, :cond_9
 
-    .line 855
+    .line 849
     :try_start_2
     new-instance v19, Landroid/app/WallpaperInfo;
 
@@ -1766,13 +1766,13 @@
     .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_2
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_0
 
-    .line 872
+    .line 866
     .end local v16           #rsi:Landroid/content/pm/ServiceInfo;
     .restart local v19       #wi:Landroid/app/WallpaperInfo;
     :cond_6
     if-nez v19, :cond_b
 
-    .line 873
+    .line 867
     :try_start_3
     new-instance v3, Ljava/lang/StringBuilder;
 
@@ -1794,27 +1794,54 @@
 
     move-result-object v13
 
-    .line 875
+    .line 869
     .restart local v13       #msg:Ljava/lang/String;
     if-eqz p3, :cond_a
 
-    .line 876
+    .line 870
     new-instance v3, Ljava/lang/SecurityException;
 
     invoke-direct {v3, v13}, Ljava/lang/SecurityException;-><init>(Ljava/lang/String;)V
 
     throw v3
 
-    .line 856
+    .line 850
     .end local v13           #msg:Ljava/lang/String;
     .end local v19           #wi:Landroid/app/WallpaperInfo;
     .restart local v16       #rsi:Landroid/content/pm/ServiceInfo;
     :catch_1
     move-exception v10
 
-    .line 857
+    .line 851
     .local v10, e:Lorg/xmlpull/v1/XmlPullParserException;
     if-eqz p3, :cond_7
+
+    .line 852
+    new-instance v3, Ljava/lang/IllegalArgumentException;
+
+    invoke-direct {v3, v10}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/Throwable;)V
+
+    throw v3
+
+    .line 854
+    :cond_7
+    const-string v3, "WallpaperService"
+
+    invoke-static {v3, v10}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/Throwable;)I
+
+    .line 855
+    const/4 v3, 0x0
+
+    goto/16 :goto_0
+
+    .line 856
+    .end local v10           #e:Lorg/xmlpull/v1/XmlPullParserException;
+    :catch_2
+    move-exception v10
+
+    .line 857
+    .local v10, e:Ljava/io/IOException;
+    if-eqz p3, :cond_8
 
     .line 858
     new-instance v3, Ljava/lang/IllegalArgumentException;
@@ -1824,7 +1851,7 @@
     throw v3
 
     .line 860
-    :cond_7
+    :cond_8
     const-string v3, "WallpaperService"
 
     invoke-static {v3, v10}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/Throwable;)I
@@ -1834,34 +1861,7 @@
 
     goto/16 :goto_0
 
-    .line 862
-    .end local v10           #e:Lorg/xmlpull/v1/XmlPullParserException;
-    :catch_2
-    move-exception v10
-
-    .line 863
-    .local v10, e:Ljava/io/IOException;
-    if-eqz p3, :cond_8
-
-    .line 864
-    new-instance v3, Ljava/lang/IllegalArgumentException;
-
-    invoke-direct {v3, v10}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/Throwable;)V
-
-    throw v3
-
-    .line 866
-    :cond_8
-    const-string v3, "WallpaperService"
-
-    invoke-static {v3, v10}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/Throwable;)I
-
-    .line 867
-    const/4 v3, 0x0
-
-    goto/16 :goto_0
-
-    .line 850
+    .line 844
     .end local v10           #e:Ljava/io/IOException;
     .restart local v19       #wi:Landroid/app/WallpaperInfo;
     :cond_9
@@ -1869,7 +1869,7 @@
 
     goto :goto_1
 
-    .line 878
+    .line 872
     .end local v16           #rsi:Landroid/content/pm/ServiceInfo;
     .restart local v13       #msg:Ljava/lang/String;
     :cond_a
@@ -1877,12 +1877,12 @@
 
     invoke-static {v3, v13}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 879
+    .line 873
     const/4 v3, 0x0
 
     goto/16 :goto_0
 
-    .line 885
+    .line 879
     .end local v11           #i:I
     .end local v13           #msg:Ljava/lang/String;
     .end local v15           #ris:Ljava/util/List;,"Ljava/util/List<Landroid/content/pm/ResolveInfo;>;"
@@ -1897,20 +1897,20 @@
 
     invoke-direct {v14, v0, v1, v2}, Lcom/android/server/WallpaperManagerService$WallpaperConnection;-><init>(Lcom/android/server/WallpaperManagerService;Landroid/app/WallpaperInfo;Lcom/android/server/WallpaperManagerService$WallpaperData;)V
 
-    .line 886
+    .line 880
     .local v14, newConn:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
     move-object/from16 v0, p1
 
     invoke-virtual {v12, v0}, Landroid/content/Intent;->setComponent(Landroid/content/ComponentName;)Landroid/content/Intent;
 
-    .line 887
+    .line 881
     const-string v3, "android.intent.extra.client_label"
 
-    const v4, 0x10404f3
+    const v4, 0x1040495
 
     invoke-virtual {v12, v3, v4}, Landroid/content/Intent;->putExtra(Ljava/lang/String;I)Landroid/content/Intent;
 
-    .line 889
+    .line 883
     const-string v20, "android.intent.extra.client_intent"
 
     move-object/from16 v0, p0
@@ -1929,7 +1929,7 @@
 
     iget-object v6, v0, Lcom/android/server/WallpaperManagerService;->mContext:Landroid/content/Context;
 
-    const v7, 0x10404f4
+    const v7, 0x1040496
 
     invoke-virtual {v6, v7}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -1957,7 +1957,7 @@
 
     invoke-virtual {v12, v0, v3}, Landroid/content/Intent;->putExtra(Ljava/lang/String;Landroid/os/Parcelable;)Landroid/content/Intent;
 
-    .line 894
+    .line 888
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService;->mContext:Landroid/content/Context;
@@ -1972,7 +1972,7 @@
 
     if-nez v3, :cond_d
 
-    .line 895
+    .line 889
     new-instance v3, Ljava/lang/StringBuilder;
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
@@ -1993,29 +1993,29 @@
 
     move-result-object v13
 
-    .line 897
+    .line 891
     .restart local v13       #msg:Ljava/lang/String;
     if-eqz p3, :cond_c
 
-    .line 898
+    .line 892
     new-instance v3, Ljava/lang/IllegalArgumentException;
 
     invoke-direct {v3, v13}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
 
     throw v3
 
-    .line 900
+    .line 894
     :cond_c
     const-string v3, "WallpaperService"
 
     invoke-static {v3, v13}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 901
+    .line 895
     const/4 v3, 0x0
 
     goto/16 :goto_0
 
-    .line 903
+    .line 897
     .end local v13           #msg:Ljava/lang/String;
     :cond_d
     move-object/from16 v0, p4
@@ -2034,7 +2034,7 @@
 
     if-eqz v3, :cond_e
 
-    .line 904
+    .line 898
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService;->mLastWallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
@@ -2043,7 +2043,7 @@
 
     invoke-virtual {v0, v3}, Lcom/android/server/WallpaperManagerService;->detachWallpaperLocked(Lcom/android/server/WallpaperManagerService$WallpaperData;)V
 
-    .line 906
+    .line 900
     :cond_e
     move-object/from16 v0, p1
 
@@ -2051,12 +2051,12 @@
 
     iput-object v0, v1, Lcom/android/server/WallpaperManagerService$WallpaperData;->wallpaperComponent:Landroid/content/ComponentName;
 
-    .line 907
+    .line 901
     move-object/from16 v0, p4
 
     iput-object v14, v0, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
-    .line 908
+    .line 902
     invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
 
     move-result-wide v3
@@ -2065,14 +2065,14 @@
 
     iput-wide v3, v0, Lcom/android/server/WallpaperManagerService$WallpaperData;->lastDiedTime:J
 
-    .line 909
+    .line 903
     move-object/from16 v0, p5
 
     iput-object v0, v14, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mReply:Landroid/os/IRemoteCallback;
     :try_end_3
     .catch Landroid/os/RemoteException; {:try_start_3 .. :try_end_3} :catch_0
 
-    .line 911
+    .line 905
     :try_start_4
     move-object/from16 v0, p4
 
@@ -2084,7 +2084,7 @@
 
     if-ne v3, v4, :cond_f
 
-    .line 914
+    .line 908
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService;->mIWindowManager:Landroid/view/IWindowManager;
@@ -2095,7 +2095,7 @@
 
     invoke-interface {v3, v4, v5}, Landroid/view/IWindowManager;->addWindowToken(Landroid/os/IBinder;I)V
 
-    .line 916
+    .line 910
     move-object/from16 v0, p4
 
     move-object/from16 v1, p0
@@ -2104,14 +2104,14 @@
     :try_end_4
     .catch Landroid/os/RemoteException; {:try_start_4 .. :try_end_4} :catch_3
 
-    .line 928
+    .line 922
     :cond_f
     :goto_2
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 925
+    .line 919
     .end local v12           #intent:Landroid/content/Intent;
     .end local v14           #newConn:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
     .end local v17           #serviceUserId:I
@@ -2124,12 +2124,12 @@
 
     invoke-static {v3, v13}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 926
+    .line 920
     const/4 v3, 0x0
 
     goto/16 :goto_0
 
-    .line 918
+    .line 912
     .end local v10           #e:Landroid/os/RemoteException;
     .end local v13           #msg:Ljava/lang/String;
     .restart local v12       #intent:Landroid/content/Intent;
@@ -2186,15 +2186,15 @@
     .parameter "wallpaper"
 
     .prologue
-    .line 960
+    .line 954
     const/4 v0, 0x0
 
     iput-object v0, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->wallpaperComponent:Landroid/content/ComponentName;
 
-    .line 961
+    .line 955
     invoke-virtual {p0, p1}, Lcom/android/server/WallpaperManagerService;->detachWallpaperLocked(Lcom/android/server/WallpaperManagerService$WallpaperData;)V
 
-    .line 962
+    .line 956
     return-void
 .end method
 
@@ -2358,19 +2358,19 @@
     .prologue
     const/4 v2, 0x0
 
-    .line 932
+    .line 926
     iget-object v0, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
     if-eqz v0, :cond_2
 
-    .line 933
+    .line 927
     iget-object v0, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
     iget-object v0, v0, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mReply:Landroid/os/IRemoteCallback;
 
     if-eqz v0, :cond_0
 
-    .line 935
+    .line 929
     :try_start_0
     iget-object v0, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
@@ -2382,13 +2382,13 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_2
 
-    .line 938
+    .line 932
     :goto_0
     iget-object v0, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
     iput-object v2, v0, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mReply:Landroid/os/IRemoteCallback;
 
-    .line 940
+    .line 934
     :cond_0
     iget-object v0, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
@@ -2396,7 +2396,7 @@
 
     if-eqz v0, :cond_1
 
-    .line 942
+    .line 936
     :try_start_1
     iget-object v0, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
@@ -2406,7 +2406,7 @@
     :try_end_1
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_1
 
-    .line 946
+    .line 940
     :cond_1
     :goto_1
     iget-object v0, p0, Lcom/android/server/WallpaperManagerService;->mContext:Landroid/content/Context;
@@ -2415,7 +2415,7 @@
 
     invoke-virtual {v0, v1}, Landroid/content/Context;->unbindService(Landroid/content/ServiceConnection;)V
 
-    .line 950
+    .line 944
     :try_start_2
     iget-object v0, p0, Lcom/android/server/WallpaperManagerService;->mIWindowManager:Landroid/view/IWindowManager;
 
@@ -2427,37 +2427,37 @@
     :try_end_2
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_0
 
-    .line 953
+    .line 947
     :goto_2
     iget-object v0, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
     iput-object v2, v0, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mService:Landroid/service/wallpaper/IWallpaperService;
 
-    .line 954
+    .line 948
     iget-object v0, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
     iput-object v2, v0, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mEngine:Landroid/service/wallpaper/IWallpaperEngine;
 
-    .line 955
+    .line 949
     iput-object v2, p1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
-    .line 957
+    .line 951
     :cond_2
     return-void
 
-    .line 951
+    .line 945
     :catch_0
     move-exception v0
 
     goto :goto_2
 
-    .line 943
+    .line 937
     :catch_1
     move-exception v0
 
     goto :goto_1
 
-    .line 936
+    .line 930
     :catch_2
     move-exception v0
 
@@ -2471,7 +2471,7 @@
     .parameter "args"
 
     .prologue
-    .line 1269
+    .line 1263
     iget-object v3, p0, Lcom/android/server/WallpaperManagerService;->mContext:Landroid/content/Context;
 
     const-string v4, "android.permission.DUMP"
@@ -2482,7 +2482,7 @@
 
     if-eqz v3, :cond_0
 
-    .line 1272
+    .line 1266
     new-instance v3, Ljava/lang/StringBuilder;
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
@@ -2521,23 +2521,23 @@
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 1311
+    .line 1305
     :goto_0
     return-void
 
-    .line 1278
+    .line 1272
     :cond_0
     iget-object v4, p0, Lcom/android/server/WallpaperManagerService;->mLock:Ljava/lang/Object;
 
     monitor-enter v4
 
-    .line 1279
+    .line 1273
     :try_start_0
     const-string v3, "Current Wallpaper Service state:"
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 1280
+    .line 1274
     const/4 v1, 0x0
 
     .local v1, i:I
@@ -2550,7 +2550,7 @@
 
     if-ge v1, v3, :cond_3
 
-    .line 1281
+    .line 1275
     iget-object v3, p0, Lcom/android/server/WallpaperManagerService;->mWallpaperMap:Landroid/util/SparseArray;
 
     invoke-virtual {v3, v1}, Landroid/util/SparseArray;->valueAt(I)Ljava/lang/Object;
@@ -2559,7 +2559,7 @@
 
     check-cast v2, Lcom/android/server/WallpaperManagerService$WallpaperData;
 
-    .line 1282
+    .line 1276
     .local v2, wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     new-instance v3, Ljava/lang/StringBuilder;
 
@@ -2589,79 +2589,79 @@
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 1283
+    .line 1277
     const-string v3, "  mWidth="
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 1284
+    .line 1278
     iget v3, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->width:I
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 1285
+    .line 1279
     const-string v3, " mHeight="
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 1286
+    .line 1280
     iget v3, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->height:I
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->println(I)V
 
-    .line 1287
+    .line 1281
     const-string v3, "  mName="
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 1288
+    .line 1282
     iget-object v3, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->name:Ljava/lang/String;
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 1289
+    .line 1283
     const-string v3, "  mWallpaperComponent="
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 1290
+    .line 1284
     iget-object v3, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->wallpaperComponent:Landroid/content/ComponentName;
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 1291
+    .line 1285
     iget-object v3, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
     if-eqz v3, :cond_2
 
-    .line 1292
+    .line 1286
     iget-object v0, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
-    .line 1293
+    .line 1287
     .local v0, conn:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
     const-string v3, "  Wallpaper connection "
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 1294
+    .line 1288
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 1295
+    .line 1289
     const-string v3, ":"
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 1296
+    .line 1290
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mInfo:Landroid/app/WallpaperInfo;
 
     if-eqz v3, :cond_1
 
-    .line 1297
+    .line 1291
     const-string v3, "    mInfo.component="
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 1298
+    .line 1292
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mInfo:Landroid/app/WallpaperInfo;
 
     invoke-virtual {v3}, Landroid/app/WallpaperInfo;->getComponent()Landroid/content/ComponentName;
@@ -2670,43 +2670,43 @@
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 1300
+    .line 1294
     :cond_1
     const-string v3, "    mToken="
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 1301
+    .line 1295
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mToken:Landroid/os/Binder;
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 1302
+    .line 1296
     const-string v3, "    mService="
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 1303
+    .line 1297
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mService:Landroid/service/wallpaper/IWallpaperService;
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 1304
+    .line 1298
     const-string v3, "    mEngine="
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 1305
+    .line 1299
     iget-object v3, v0, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mEngine:Landroid/service/wallpaper/IWallpaperEngine;
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 1306
+    .line 1300
     const-string v3, "    mLastDiedTime="
 
     invoke-virtual {p2, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 1307
+    .line 1301
     iget-wide v5, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->lastDiedTime:J
 
     invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
@@ -2717,14 +2717,14 @@
 
     invoke-virtual {p2, v5, v6}, Ljava/io/PrintWriter;->println(J)V
 
-    .line 1280
+    .line 1274
     .end local v0           #conn:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
     :cond_2
     add-int/lit8 v1, v1, 0x1
 
     goto/16 :goto_1
 
-    .line 1310
+    .line 1304
     .end local v2           #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     :cond_3
     monitor-exit v4
@@ -2802,12 +2802,12 @@
     .end annotation
 
     .prologue
-    .line 675
+    .line 669
     iget-object v2, p0, Lcom/android/server/WallpaperManagerService;->mLock:Ljava/lang/Object;
 
     monitor-enter v2
 
-    .line 676
+    .line 670
     :try_start_0
     iget-object v1, p0, Lcom/android/server/WallpaperManagerService;->mWallpaperMap:Landroid/util/SparseArray;
 
@@ -2821,7 +2821,7 @@
 
     check-cast v0, Lcom/android/server/WallpaperManagerService$WallpaperData;
 
-    .line 677
+    .line 671
     .local v0, wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     iget v1, v0, Lcom/android/server/WallpaperManagerService$WallpaperData;->height:I
 
@@ -2829,7 +2829,7 @@
 
     return v1
 
-    .line 678
+    .line 672
     .end local v0           #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     :catchall_0
     move-exception v1
@@ -2887,31 +2887,31 @@
     .prologue
     const/4 v5, 0x0
 
-    .line 683
+    .line 677
     iget-object v6, p0, Lcom/android/server/WallpaperManagerService;->mLock:Ljava/lang/Object;
 
     monitor-enter v6
 
-    .line 686
+    .line 680
     :try_start_0
     invoke-static {}, Landroid/os/Binder;->getCallingUid()I
 
     move-result v0
 
-    .line 687
+    .line 681
     .local v0, callingUid:I
     const/4 v4, 0x0
 
-    .line 688
+    .line 682
     .local v4, wallpaperUserId:I
     const/16 v7, 0x3e8
 
     if-ne v0, v7, :cond_1
 
-    .line 689
+    .line 683
     iget v4, p0, Lcom/android/server/WallpaperManagerService;->mCurrentUserId:I
 
-    .line 693
+    .line 687
     :goto_0
     iget-object v7, p0, Lcom/android/server/WallpaperManagerService;->mWallpaperMap:Landroid/util/SparseArray;
 
@@ -2923,11 +2923,11 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 695
+    .line 689
     .local v3, wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     if-eqz p2, :cond_0
 
-    .line 696
+    .line 690
     :try_start_1
     const-string v7, "width"
 
@@ -2935,14 +2935,14 @@
 
     invoke-virtual {p2, v7, v8}, Landroid/os/Bundle;->putInt(Ljava/lang/String;I)V
 
-    .line 697
+    .line 691
     const-string v7, "height"
 
     iget v8, v3, Lcom/android/server/WallpaperManagerService$WallpaperData;->height:I
 
     invoke-virtual {p2, v7, v8}, Landroid/os/Bundle;->putInt(Ljava/lang/String;I)V
 
-    .line 699
+    .line 693
     :cond_0
     #getter for: Lcom/android/server/WallpaperManagerService$WallpaperData;->callbacks:Landroid/os/RemoteCallbackList;
     invoke-static {v3}, Lcom/android/server/WallpaperManagerService$WallpaperData;->access$300(Lcom/android/server/WallpaperManagerService$WallpaperData;)Landroid/os/RemoteCallbackList;
@@ -2951,7 +2951,7 @@
 
     invoke-virtual {v7, p1}, Landroid/os/RemoteCallbackList;->register(Landroid/os/IInterface;)Z
 
-    .line 700
+    .line 694
     new-instance v2, Ljava/io/File;
 
     invoke-static {v4}, Lcom/android/server/WallpaperManagerService;->getWallpaperDir(I)Ljava/io/File;
@@ -2962,7 +2962,7 @@
 
     invoke-direct {v2, v7, v8}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
 
-    .line 701
+    .line 695
     .local v2, f:Ljava/io/File;
     invoke-virtual {v2}, Ljava/io/File;->exists()Z
     :try_end_1
@@ -2973,16 +2973,16 @@
 
     if-nez v7, :cond_2
 
-    .line 702
+    .line 696
     :try_start_2
     monitor-exit v6
 
-    .line 709
+    .line 703
     .end local v2           #f:Ljava/io/File;
     :goto_1
     return-object v5
 
-    .line 691
+    .line 685
     .end local v3           #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     :cond_1
     invoke-static {v0}, Landroid/os/UserHandle;->getUserId(I)I
@@ -2993,7 +2993,7 @@
 
     goto :goto_0
 
-    .line 704
+    .line 698
     .restart local v2       #f:Ljava/io/File;
     .restart local v3       #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     :cond_2
@@ -3012,7 +3012,7 @@
 
     goto :goto_1
 
-    .line 710
+    .line 704
     .end local v0           #callingUid:I
     .end local v2           #f:Ljava/io/File;
     .end local v3           #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
@@ -3026,14 +3026,14 @@
 
     throw v5
 
-    .line 705
+    .line 699
     .restart local v0       #callingUid:I
     .restart local v3       #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     .restart local v4       #wallpaperUserId:I
     :catch_0
     move-exception v1
 
-    .line 707
+    .line 701
     .local v1, e:Ljava/io/FileNotFoundException;
     :try_start_5
     const-string v7, "WallpaperService"
@@ -3042,7 +3042,7 @@
 
     invoke-static {v7, v8, v1}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 709
+    .line 703
     monitor-exit v6
     :try_end_5
     .catchall {:try_start_5 .. :try_end_5} :catchall_0
@@ -3054,18 +3054,18 @@
     .locals 4
 
     .prologue
-    .line 714
+    .line 708
     invoke-static {}, Landroid/os/UserHandle;->getCallingUserId()I
 
     move-result v0
 
-    .line 715
+    .line 709
     .local v0, userId:I
     iget-object v3, p0, Lcom/android/server/WallpaperManagerService;->mLock:Ljava/lang/Object;
 
     monitor-enter v3
 
-    .line 716
+    .line 710
     :try_start_0
     iget-object v2, p0, Lcom/android/server/WallpaperManagerService;->mWallpaperMap:Landroid/util/SparseArray;
 
@@ -3075,20 +3075,20 @@
 
     check-cast v1, Lcom/android/server/WallpaperManagerService$WallpaperData;
 
-    .line 717
+    .line 711
     .local v1, wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     iget-object v2, v1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
     if-eqz v2, :cond_0
 
-    .line 718
+    .line 712
     iget-object v2, v1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
     iget-object v2, v2, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mInfo:Landroid/app/WallpaperInfo;
 
     monitor-exit v3
 
-    .line 720
+    .line 714
     :goto_0
     return-object v2
 
@@ -3099,7 +3099,7 @@
 
     goto :goto_0
 
-    .line 721
+    .line 715
     .end local v1           #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     :catchall_0
     move-exception v2
@@ -3120,12 +3120,12 @@
     .end annotation
 
     .prologue
-    .line 668
+    .line 662
     iget-object v2, p0, Lcom/android/server/WallpaperManagerService;->mLock:Ljava/lang/Object;
 
     monitor-enter v2
 
-    .line 669
+    .line 663
     :try_start_0
     iget-object v1, p0, Lcom/android/server/WallpaperManagerService;->mWallpaperMap:Landroid/util/SparseArray;
 
@@ -3139,7 +3139,7 @@
 
     check-cast v0, Lcom/android/server/WallpaperManagerService$WallpaperData;
 
-    .line 670
+    .line 664
     .local v0, wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     iget v1, v0, Lcom/android/server/WallpaperManagerService$WallpaperData;->width:I
 
@@ -3147,7 +3147,7 @@
 
     return v1
 
-    .line 671
+    .line 665
     .end local v0           #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     :catchall_0
     move-exception v1
@@ -3461,7 +3461,7 @@
     .parameter "wallpaper"
 
     .prologue
-    .line 1194
+    .line 1188
     move-object/from16 v0, p1
 
     iget-object v0, v0, Lcom/android/server/WallpaperManagerService$WallpaperData;->name:Ljava/lang/String;
@@ -3502,7 +3502,7 @@
 
     if-eqz v17, :cond_8
 
-    .line 1195
+    .line 1189
     move-object/from16 v0, p1
 
     iget-object v0, v0, Lcom/android/server/WallpaperManagerService$WallpaperData;->name:Ljava/lang/String;
@@ -3515,11 +3515,11 @@
 
     move-result-object v14
 
-    .line 1197
+    .line 1191
     .local v14, resName:Ljava/lang/String;
     const/4 v10, 0x0
 
-    .line 1198
+    .line 1192
     .local v10, pkg:Ljava/lang/String;
     const/16 v17, 0x3a
 
@@ -3529,11 +3529,11 @@
 
     move-result v5
 
-    .line 1199
+    .line 1193
     .local v5, colon:I
     if-lez v5, :cond_0
 
-    .line 1200
+    .line 1194
     const/16 v17, 0x0
 
     move/from16 v0, v17
@@ -3542,11 +3542,11 @@
 
     move-result-object v10
 
-    .line 1203
+    .line 1197
     :cond_0
     const/4 v9, 0x0
 
-    .line 1204
+    .line 1198
     .local v9, ident:Ljava/lang/String;
     const/16 v17, 0x2f
 
@@ -3556,11 +3556,11 @@
 
     move-result v15
 
-    .line 1205
+    .line 1199
     .local v15, slash:I
     if-lez v15, :cond_1
 
-    .line 1206
+    .line 1200
     add-int/lit8 v17, v15, 0x1
 
     move/from16 v0, v17
@@ -3569,11 +3569,11 @@
 
     move-result-object v9
 
-    .line 1209
+    .line 1203
     :cond_1
     const/16 v16, 0x0
 
-    .line 1210
+    .line 1204
     .local v16, type:Ljava/lang/String;
     if-lez v5, :cond_2
 
@@ -3589,7 +3589,7 @@
 
     if-le v0, v1, :cond_2
 
-    .line 1211
+    .line 1205
     add-int/lit8 v17, v5, 0x1
 
     move/from16 v0, v17
@@ -3598,7 +3598,7 @@
 
     move-result-object v16
 
-    .line 1214
+    .line 1208
     :cond_2
     if-eqz v10, :cond_8
 
@@ -3606,18 +3606,18 @@
 
     if-eqz v16, :cond_8
 
-    .line 1215
+    .line 1209
     const/4 v13, -0x1
 
-    .line 1216
+    .line 1210
     .local v13, resId:I
     const/4 v12, 0x0
 
-    .line 1217
+    .line 1211
     .local v12, res:Ljava/io/InputStream;
     const/4 v7, 0x0
 
-    .line 1219
+    .line 1213
     .local v7, fos:Ljava/io/FileOutputStream;
     :try_start_0
     move-object/from16 v0, p0
@@ -3636,13 +3636,13 @@
 
     move-result-object v4
 
-    .line 1220
+    .line 1214
     .local v4, c:Landroid/content/Context;
     invoke-virtual {v4}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
     move-result-object v11
 
-    .line 1221
+    .line 1215
     .local v11, r:Landroid/content/res/Resources;
     const/16 v17, 0x0
 
@@ -3656,10 +3656,10 @@
 
     move-result v13
 
-    .line 1222
+    .line 1216
     if-nez v13, :cond_5
 
-    .line 1223
+    .line 1217
     const-string v17, "WallpaperService"
 
     new-instance v18, Ljava/lang/StringBuilder;
@@ -3715,33 +3715,33 @@
     .catch Landroid/content/res/Resources$NotFoundException; {:try_start_0 .. :try_end_0} :catch_2
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_4
 
-    .line 1225
+    .line 1219
     const/16 v17, 0x0
 
-    .line 1250
+    .line 1244
     if-eqz v12, :cond_3
 
-    .line 1252
+    .line 1246
     :try_start_1
     invoke-virtual {v12}, Ljava/io/InputStream;->close()V
     :try_end_1
     .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_a
 
-    .line 1255
+    .line 1249
     :cond_3
     :goto_0
     if-eqz v7, :cond_4
 
-    .line 1256
+    .line 1250
     invoke-static {v7}, Landroid/os/FileUtils;->sync(Ljava/io/FileOutputStream;)Z
 
-    .line 1258
+    .line 1252
     :try_start_2
     invoke-virtual {v7}, Ljava/io/FileOutputStream;->close()V
     :try_end_2
     .catch Ljava/io/IOException; {:try_start_2 .. :try_end_2} :catch_1
 
-    .line 1264
+    .line 1258
     .end local v4           #c:Landroid/content/Context;
     .end local v5           #colon:I
     .end local v7           #fos:Ljava/io/FileOutputStream;
@@ -3757,7 +3757,7 @@
     :goto_1
     return v17
 
-    .line 1228
+    .line 1222
     .restart local v4       #c:Landroid/content/Context;
     .restart local v5       #colon:I
     .restart local v7       #fos:Ljava/io/FileOutputStream;
@@ -3775,7 +3775,7 @@
 
     move-result-object v12
 
-    .line 1229
+    .line 1223
     move-object/from16 v0, p1
 
     iget-object v0, v0, Lcom/android/server/WallpaperManagerService$WallpaperData;->wallpaperFile:Ljava/io/File;
@@ -3788,7 +3788,7 @@
 
     if-eqz v17, :cond_6
 
-    .line 1230
+    .line 1224
     move-object/from16 v0, p1
 
     iget-object v0, v0, Lcom/android/server/WallpaperManagerService$WallpaperData;->wallpaperFile:Ljava/io/File;
@@ -3797,7 +3797,7 @@
 
     invoke-virtual/range {v17 .. v17}, Ljava/io/File;->delete()Z
 
-    .line 1232
+    .line 1226
     :cond_6
     new-instance v8, Ljava/io/FileOutputStream;
 
@@ -3816,7 +3816,7 @@
     .catch Landroid/content/res/Resources$NotFoundException; {:try_start_3 .. :try_end_3} :catch_2
     .catch Ljava/io/IOException; {:try_start_3 .. :try_end_3} :catch_4
 
-    .line 1234
+    .line 1228
     .end local v7           #fos:Ljava/io/FileOutputStream;
     .local v8, fos:Ljava/io/FileOutputStream;
     const v17, 0x8000
@@ -3826,7 +3826,7 @@
 
     new-array v3, v0, [B
 
-    .line 1236
+    .line 1230
     .local v3, buffer:[B
     :goto_2
     invoke-virtual {v12, v3}, Ljava/io/InputStream;->read([B)I
@@ -3836,7 +3836,7 @@
     .local v2, amt:I
     if-lez v2, :cond_9
 
-    .line 1237
+    .line 1231
     const/16 v17, 0x0
 
     move/from16 v0, v17
@@ -3850,7 +3850,7 @@
 
     goto :goto_2
 
-    .line 1243
+    .line 1237
     .end local v2           #amt:I
     .end local v3           #buffer:[B
     :catch_0
@@ -3858,7 +3858,7 @@
 
     move-object v7, v8
 
-    .line 1244
+    .line 1238
     .end local v4           #c:Landroid/content/Context;
     .end local v8           #fos:Ljava/io/FileOutputStream;
     .end local v11           #r:Landroid/content/res/Resources;
@@ -3898,30 +3898,30 @@
     :try_end_5
     .catchall {:try_start_5 .. :try_end_5} :catchall_0
 
-    .line 1250
+    .line 1244
     if-eqz v12, :cond_7
 
-    .line 1252
+    .line 1246
     :try_start_6
     invoke-virtual {v12}, Ljava/io/InputStream;->close()V
     :try_end_6
     .catch Ljava/io/IOException; {:try_start_6 .. :try_end_6} :catch_7
 
-    .line 1255
+    .line 1249
     :cond_7
     :goto_4
     if-eqz v7, :cond_8
 
-    .line 1256
+    .line 1250
     invoke-static {v7}, Landroid/os/FileUtils;->sync(Ljava/io/FileOutputStream;)Z
 
-    .line 1258
+    .line 1252
     :try_start_7
     invoke-virtual {v7}, Ljava/io/FileOutputStream;->close()V
     :try_end_7
     .catch Ljava/io/IOException; {:try_start_7 .. :try_end_7} :catch_3
 
-    .line 1264
+    .line 1258
     .end local v5           #colon:I
     .end local v6           #e:Landroid/content/pm/PackageManager$NameNotFoundException;
     .end local v7           #fos:Ljava/io/FileOutputStream;
@@ -3938,7 +3938,7 @@
 
     goto :goto_1
 
-    .line 1241
+    .line 1235
     .restart local v2       #amt:I
     .restart local v3       #buffer:[B
     .restart local v4       #c:Landroid/content/Context;
@@ -3983,27 +3983,27 @@
     .catch Landroid/content/res/Resources$NotFoundException; {:try_start_8 .. :try_end_8} :catch_d
     .catch Ljava/io/IOException; {:try_start_8 .. :try_end_8} :catch_c
 
-    .line 1242
+    .line 1236
     const/16 v17, 0x1
 
-    .line 1250
+    .line 1244
     if-eqz v12, :cond_a
 
-    .line 1252
+    .line 1246
     :try_start_9
     invoke-virtual {v12}, Ljava/io/InputStream;->close()V
     :try_end_9
     .catch Ljava/io/IOException; {:try_start_9 .. :try_end_9} :catch_b
 
-    .line 1255
+    .line 1249
     :cond_a
     :goto_6
     if-eqz v8, :cond_4
 
-    .line 1256
+    .line 1250
     invoke-static {v8}, Landroid/os/FileUtils;->sync(Ljava/io/FileOutputStream;)Z
 
-    .line 1258
+    .line 1252
     :try_start_a
     invoke-virtual {v8}, Ljava/io/FileOutputStream;->close()V
     :try_end_a
@@ -4011,7 +4011,7 @@
 
     goto/16 :goto_1
 
-    .line 1259
+    .line 1253
     .end local v2           #amt:I
     .end local v3           #buffer:[B
     .end local v8           #fos:Ljava/io/FileOutputStream;
@@ -4020,14 +4020,14 @@
 
     goto/16 :goto_1
 
-    .line 1245
+    .line 1239
     .end local v4           #c:Landroid/content/Context;
     .end local v11           #r:Landroid/content/res/Resources;
     .restart local v7       #fos:Ljava/io/FileOutputStream;
     :catch_2
     move-exception v6
 
-    .line 1246
+    .line 1240
     .local v6, e:Landroid/content/res/Resources$NotFoundException;
     :goto_7
     :try_start_b
@@ -4057,24 +4057,24 @@
     :try_end_b
     .catchall {:try_start_b .. :try_end_b} :catchall_0
 
-    .line 1250
+    .line 1244
     if-eqz v12, :cond_b
 
-    .line 1252
+    .line 1246
     :try_start_c
     invoke-virtual {v12}, Ljava/io/InputStream;->close()V
     :try_end_c
     .catch Ljava/io/IOException; {:try_start_c .. :try_end_c} :catch_8
 
-    .line 1255
+    .line 1249
     :cond_b
     :goto_8
     if-eqz v7, :cond_8
 
-    .line 1256
+    .line 1250
     invoke-static {v7}, Landroid/os/FileUtils;->sync(Ljava/io/FileOutputStream;)Z
 
-    .line 1258
+    .line 1252
     :try_start_d
     invoke-virtual {v7}, Ljava/io/FileOutputStream;->close()V
     :try_end_d
@@ -4082,18 +4082,18 @@
 
     goto :goto_5
 
-    .line 1259
+    .line 1253
     .end local v6           #e:Landroid/content/res/Resources$NotFoundException;
     :catch_3
     move-exception v17
 
     goto :goto_5
 
-    .line 1247
+    .line 1241
     :catch_4
     move-exception v6
 
-    .line 1248
+    .line 1242
     .local v6, e:Ljava/io/IOException;
     :goto_9
     :try_start_e
@@ -4109,24 +4109,24 @@
     :try_end_e
     .catchall {:try_start_e .. :try_end_e} :catchall_0
 
-    .line 1250
+    .line 1244
     if-eqz v12, :cond_c
 
-    .line 1252
+    .line 1246
     :try_start_f
     invoke-virtual {v12}, Ljava/io/InputStream;->close()V
     :try_end_f
     .catch Ljava/io/IOException; {:try_start_f .. :try_end_f} :catch_9
 
-    .line 1255
+    .line 1249
     :cond_c
     :goto_a
     if-eqz v7, :cond_8
 
-    .line 1256
+    .line 1250
     invoke-static {v7}, Landroid/os/FileUtils;->sync(Ljava/io/FileOutputStream;)Z
 
-    .line 1258
+    .line 1252
     :try_start_10
     invoke-virtual {v7}, Ljava/io/FileOutputStream;->close()V
     :try_end_10
@@ -4134,7 +4134,7 @@
 
     goto :goto_5
 
-    .line 1250
+    .line 1244
     .end local v6           #e:Ljava/io/IOException;
     :catchall_0
     move-exception v17
@@ -4142,44 +4142,44 @@
     :goto_b
     if-eqz v12, :cond_d
 
-    .line 1252
+    .line 1246
     :try_start_11
     invoke-virtual {v12}, Ljava/io/InputStream;->close()V
     :try_end_11
     .catch Ljava/io/IOException; {:try_start_11 .. :try_end_11} :catch_5
 
-    .line 1255
+    .line 1249
     :cond_d
     :goto_c
     if-eqz v7, :cond_e
 
-    .line 1256
+    .line 1250
     invoke-static {v7}, Landroid/os/FileUtils;->sync(Ljava/io/FileOutputStream;)Z
 
-    .line 1258
+    .line 1252
     :try_start_12
     invoke-virtual {v7}, Ljava/io/FileOutputStream;->close()V
     :try_end_12
     .catch Ljava/io/IOException; {:try_start_12 .. :try_end_12} :catch_6
 
-    .line 1250
+    .line 1244
     :cond_e
     :goto_d
     throw v17
 
-    .line 1253
+    .line 1247
     :catch_5
     move-exception v18
 
     goto :goto_c
 
-    .line 1259
+    .line 1253
     :catch_6
     move-exception v18
 
     goto :goto_d
 
-    .line 1253
+    .line 1247
     .local v6, e:Landroid/content/pm/PackageManager$NameNotFoundException;
     :catch_7
     move-exception v17
@@ -4215,7 +4215,7 @@
 
     goto :goto_6
 
-    .line 1250
+    .line 1244
     .end local v2           #amt:I
     .end local v3           #buffer:[B
     :catchall_1
@@ -4227,7 +4227,7 @@
     .restart local v7       #fos:Ljava/io/FileOutputStream;
     goto :goto_b
 
-    .line 1247
+    .line 1241
     .end local v7           #fos:Ljava/io/FileOutputStream;
     .restart local v8       #fos:Ljava/io/FileOutputStream;
     :catch_c
@@ -4239,7 +4239,7 @@
     .restart local v7       #fos:Ljava/io/FileOutputStream;
     goto :goto_9
 
-    .line 1245
+    .line 1239
     .end local v7           #fos:Ljava/io/FileOutputStream;
     .restart local v8       #fos:Ljava/io/FileOutputStream;
     :catch_d
@@ -4251,7 +4251,7 @@
     .restart local v7       #fos:Ljava/io/FileOutputStream;
     goto :goto_7
 
-    .line 1243
+    .line 1237
     .end local v4           #c:Landroid/content/Context;
     .end local v11           #r:Landroid/content/res/Resources;
     :catch_e
@@ -4261,7 +4261,7 @@
 .end method
 
 .method public setDimensionHints(II)V
-    .locals 7
+    .locals 6
     .parameter "width"
     .parameter "height"
     .annotation system Ldalvik/annotation/Throws;
@@ -4272,75 +4272,75 @@
 
     .prologue
     .line 631
-    const-string v3, "android.permission.SET_WALLPAPER_HINTS"
+    const-string v2, "android.permission.SET_WALLPAPER_HINTS"
 
-    invoke-direct {p0, v3}, Lcom/android/server/WallpaperManagerService;->checkPermission(Ljava/lang/String;)V
+    invoke-direct {p0, v2}, Lcom/android/server/WallpaperManagerService;->checkPermission(Ljava/lang/String;)V
 
     .line 632
-    iget-object v4, p0, Lcom/android/server/WallpaperManagerService;->mLock:Ljava/lang/Object;
+    iget-object v3, p0, Lcom/android/server/WallpaperManagerService;->mLock:Ljava/lang/Object;
 
-    monitor-enter v4
+    monitor-enter v3
 
     .line 633
     :try_start_0
     invoke-static {}, Landroid/os/UserHandle;->getCallingUserId()I
 
-    move-result v1
+    move-result v0
 
     .line 634
-    .local v1, userId:I
-    iget-object v3, p0, Lcom/android/server/WallpaperManagerService;->mWallpaperMap:Landroid/util/SparseArray;
+    .local v0, userId:I
+    iget-object v2, p0, Lcom/android/server/WallpaperManagerService;->mWallpaperMap:Landroid/util/SparseArray;
 
-    invoke-virtual {v3, v1}, Landroid/util/SparseArray;->get(I)Ljava/lang/Object;
+    invoke-virtual {v2, v0}, Landroid/util/SparseArray;->get(I)Ljava/lang/Object;
 
-    move-result-object v2
+    move-result-object v1
 
-    check-cast v2, Lcom/android/server/WallpaperManagerService$WallpaperData;
+    check-cast v1, Lcom/android/server/WallpaperManagerService$WallpaperData;
 
     .line 635
-    .local v2, wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
-    if-nez v2, :cond_0
+    .local v1, wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
+    if-nez v1, :cond_0
 
     .line 636
-    new-instance v3, Ljava/lang/IllegalStateException;
+    new-instance v2, Ljava/lang/IllegalStateException;
 
-    new-instance v5, Ljava/lang/StringBuilder;
+    new-instance v4, Ljava/lang/StringBuilder;
 
-    invoke-direct {v5}, Ljava/lang/StringBuilder;-><init>()V
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v6, "Wallpaper not yet initialized for user "
+    const-string v5, "Wallpaper not yet initialized for user "
 
-    invoke-virtual {v5, v6}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
-    move-result-object v5
+    move-result-object v4
 
-    invoke-virtual {v5, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v4, v0}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 
-    move-result-object v5
+    move-result-object v4
 
-    invoke-virtual {v5}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
-    move-result-object v5
+    move-result-object v4
 
-    invoke-direct {v3, v5}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v2, v4}, Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V
 
-    throw v3
+    throw v2
 
-    .line 664
-    .end local v1           #userId:I
-    .end local v2           #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
+    .line 658
+    .end local v0           #userId:I
+    .end local v1           #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     :catchall_0
-    move-exception v3
+    move-exception v2
 
-    monitor-exit v4
+    monitor-exit v3
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    throw v3
+    throw v2
 
     .line 638
-    .restart local v1       #userId:I
-    .restart local v2       #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
+    .restart local v0       #userId:I
+    .restart local v1       #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     :cond_0
     if-lez p1, :cond_1
 
@@ -4349,112 +4349,87 @@
     .line 639
     :cond_1
     :try_start_1
-    new-instance v3, Ljava/lang/IllegalArgumentException;
+    new-instance v2, Ljava/lang/IllegalArgumentException;
 
-    const-string v5, "width and height must be > 0"
+    const-string v4, "width and height must be > 0"
 
-    invoke-direct {v3, v5}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
+    invoke-direct {v2, v4}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
 
-    throw v3
+    throw v2
 
     .line 642
     :cond_2
-    iget-object v3, p0, Lcom/android/server/WallpaperManagerService;->mContext:Landroid/content/Context;
+    iget v2, v1, Lcom/android/server/WallpaperManagerService$WallpaperData;->width:I
 
-    invoke-virtual {v3}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+    if-ne p1, v2, :cond_3
 
-    move-result-object v3
+    iget v2, v1, Lcom/android/server/WallpaperManagerService$WallpaperData;->height:I
 
-    const v5, 0x10e003c
+    if-eq p2, v2, :cond_5
 
-    invoke-virtual {v3, v5}, Landroid/content/res/Resources;->getInteger(I)I
-
-    move-result v0
+    .line 643
+    :cond_3
+    iput p1, v1, Lcom/android/server/WallpaperManagerService$WallpaperData;->width:I
 
     .line 644
-    .local v0, maxWidth:I
-    const/4 v3, -0x1
-
-    if-eq v0, v3, :cond_3
-
-    if-le p1, v0, :cond_3
+    iput p2, v1, Lcom/android/server/WallpaperManagerService$WallpaperData;->height:I
 
     .line 645
-    move p1, v0
+    invoke-direct {p0, v1}, Lcom/android/server/WallpaperManagerService;->saveSettingsLocked(Lcom/android/server/WallpaperManagerService$WallpaperData;)V
 
-    .line 648
-    :cond_3
-    iget v3, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->width:I
+    .line 646
+    iget v2, p0, Lcom/android/server/WallpaperManagerService;->mCurrentUserId:I
 
-    if-ne p1, v3, :cond_4
+    if-eq v2, v0, :cond_4
 
-    iget v3, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->height:I
+    monitor-exit v3
 
-    if-eq p2, v3, :cond_6
-
-    .line 649
-    :cond_4
-    iput p1, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->width:I
-
-    .line 650
-    iput p2, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->height:I
-
-    .line 651
-    invoke-direct {p0, v2}, Lcom/android/server/WallpaperManagerService;->saveSettingsLocked(Lcom/android/server/WallpaperManagerService$WallpaperData;)V
-
-    .line 652
-    iget v3, p0, Lcom/android/server/WallpaperManagerService;->mCurrentUserId:I
-
-    if-eq v3, v1, :cond_5
-
-    monitor-exit v4
-
-    .line 665
+    .line 659
     :goto_0
     return-void
 
-    .line 653
-    :cond_5
-    iget-object v3, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
+    .line 647
+    :cond_4
+    iget-object v2, v1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
-    if-eqz v3, :cond_6
+    if-eqz v2, :cond_5
 
-    .line 654
-    iget-object v3, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
+    .line 648
+    iget-object v2, v1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
-    iget-object v3, v3, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mEngine:Landroid/service/wallpaper/IWallpaperEngine;
+    iget-object v2, v2, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mEngine:Landroid/service/wallpaper/IWallpaperEngine;
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    if-eqz v3, :cond_6
+    if-eqz v2, :cond_5
 
-    .line 656
+    .line 650
     :try_start_2
-    iget-object v3, v2, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
+    iget-object v2, v1, Lcom/android/server/WallpaperManagerService$WallpaperData;->connection:Lcom/android/server/WallpaperManagerService$WallpaperConnection;
 
-    iget-object v3, v3, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mEngine:Landroid/service/wallpaper/IWallpaperEngine;
+    iget-object v2, v2, Lcom/android/server/WallpaperManagerService$WallpaperConnection;->mEngine:Landroid/service/wallpaper/IWallpaperEngine;
 
-    invoke-interface {v3, p1, p2}, Landroid/service/wallpaper/IWallpaperEngine;->setDesiredSize(II)V
+    invoke-interface {v2, p1, p2}, Landroid/service/wallpaper/IWallpaperEngine;->setDesiredSize(II)V
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_0
 
-    .line 660
+    .line 654
     :goto_1
     :try_start_3
-    invoke-direct {p0, v2}, Lcom/android/server/WallpaperManagerService;->notifyCallbacksLocked(Lcom/android/server/WallpaperManagerService$WallpaperData;)V
+    invoke-direct {p0, v1}, Lcom/android/server/WallpaperManagerService;->notifyCallbacksLocked(Lcom/android/server/WallpaperManagerService$WallpaperData;)V
 
-    .line 664
-    :cond_6
-    monitor-exit v4
+    .line 658
+    :cond_5
+    monitor-exit v3
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_0
 
     goto :goto_0
 
-    .line 658
+    .line 652
     :catch_0
-    move-exception v3
+    move-exception v2
 
     goto :goto_1
 .end method
@@ -4464,23 +4439,23 @@
     .parameter "name"
 
     .prologue
-    .line 725
+    .line 719
     const-string v5, "android.permission.SET_WALLPAPER"
 
     invoke-direct {p0, v5}, Lcom/android/server/WallpaperManagerService;->checkPermission(Ljava/lang/String;)V
 
-    .line 726
+    .line 720
     iget-object v6, p0, Lcom/android/server/WallpaperManagerService;->mLock:Ljava/lang/Object;
 
     monitor-enter v6
 
-    .line 728
+    .line 722
     :try_start_0
     invoke-static {}, Landroid/os/UserHandle;->getCallingUserId()I
 
     move-result v3
 
-    .line 729
+    .line 723
     .local v3, userId:I
     iget-object v5, p0, Lcom/android/server/WallpaperManagerService;->mWallpaperMap:Landroid/util/SparseArray;
 
@@ -4490,11 +4465,11 @@
 
     check-cast v4, Lcom/android/server/WallpaperManagerService$WallpaperData;
 
-    .line 730
+    .line 724
     .local v4, wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     if-nez v4, :cond_0
 
-    .line 731
+    .line 725
     new-instance v5, Ljava/lang/IllegalStateException;
 
     new-instance v7, Ljava/lang/StringBuilder;
@@ -4519,7 +4494,7 @@
 
     throw v5
 
-    .line 743
+    .line 737
     .end local v3           #userId:I
     .end local v4           #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     :catchall_0
@@ -4531,7 +4506,7 @@
 
     throw v5
 
-    .line 733
+    .line 727
     .restart local v3       #userId:I
     .restart local v4       #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     :cond_0
@@ -4542,35 +4517,35 @@
 
     move-result-wide v0
 
-    .line 735
+    .line 729
     .local v0, ident:J
     :try_start_2
     invoke-virtual {p0, p1, v4}, Lcom/android/server/WallpaperManagerService;->updateWallpaperBitmapLocked(Ljava/lang/String;Lcom/android/server/WallpaperManagerService$WallpaperData;)Landroid/os/ParcelFileDescriptor;
 
     move-result-object v2
 
-    .line 736
+    .line 730
     .local v2, pfd:Landroid/os/ParcelFileDescriptor;
     if-eqz v2, :cond_1
 
-    .line 737
+    .line 731
     const/4 v5, 0x1
 
     iput-boolean v5, v4, Lcom/android/server/WallpaperManagerService$WallpaperData;->imageWallpaperPending:Z
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_1
 
-    .line 741
+    .line 735
     :cond_1
     :try_start_3
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 739
+    .line 733
     monitor-exit v6
 
     return-object v2
 
-    .line 741
+    .line 735
     .end local v2           #pfd:Landroid/os/ParcelFileDescriptor;
     :catchall_1
     move-exception v5
@@ -4587,23 +4562,23 @@
     .parameter "name"
 
     .prologue
-    .line 772
+    .line 766
     const-string v0, "android.permission.SET_WALLPAPER_COMPONENT"
 
     invoke-direct {p0, v0}, Lcom/android/server/WallpaperManagerService;->checkPermission(Ljava/lang/String;)V
 
-    .line 773
+    .line 767
     iget-object v9, p0, Lcom/android/server/WallpaperManagerService;->mLock:Ljava/lang/Object;
 
     monitor-enter v9
 
-    .line 775
+    .line 769
     :try_start_0
     invoke-static {}, Landroid/os/UserHandle;->getCallingUserId()I
 
     move-result v8
 
-    .line 776
+    .line 770
     .local v8, userId:I
     iget-object v0, p0, Lcom/android/server/WallpaperManagerService;->mWallpaperMap:Landroid/util/SparseArray;
 
@@ -4613,11 +4588,11 @@
 
     check-cast v4, Lcom/android/server/WallpaperManagerService$WallpaperData;
 
-    .line 777
+    .line 771
     .local v4, wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     if-nez v4, :cond_0
 
-    .line 778
+    .line 772
     new-instance v0, Ljava/lang/IllegalStateException;
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -4642,7 +4617,7 @@
 
     throw v0
 
-    .line 787
+    .line 781
     .end local v4           #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     .end local v8           #userId:I
     :catchall_0
@@ -4654,7 +4629,7 @@
 
     throw v0
 
-    .line 780
+    .line 774
     .restart local v4       #wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     .restart local v8       #userId:I
     :cond_0
@@ -4665,14 +4640,14 @@
 
     move-result-wide v6
 
-    .line 782
+    .line 776
     .local v6, ident:J
     const/4 v0, 0x0
 
     :try_start_2
     iput-boolean v0, v4, Lcom/android/server/WallpaperManagerService$WallpaperData;->imageWallpaperPending:Z
 
-    .line 783
+    .line 777
     const/4 v2, 0x0
 
     const/4 v3, 0x1
@@ -4687,17 +4662,17 @@
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_1
 
-    .line 785
+    .line 779
     :try_start_3
     invoke-static {v6, v7}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 787
+    .line 781
     monitor-exit v9
 
-    .line 788
+    .line 782
     return-void
 
-    .line 785
+    .line 779
     :catchall_1
     move-exception v0
 
@@ -4714,26 +4689,26 @@
     .prologue
     const/4 v9, 0x0
 
-    .line 1149
+    .line 1143
     const/4 v5, 0x0
 
-    .line 1150
+    .line 1144
     .local v5, wallpaper:Lcom/android/server/WallpaperManagerService$WallpaperData;
     const/4 v7, 0x0
 
-    .line 1151
+    .line 1145
     .local v7, success:Z
     iget-object v8, p0, Lcom/android/server/WallpaperManagerService;->mLock:Ljava/lang/Object;
 
     monitor-enter v8
 
-    .line 1152
+    .line 1146
     const/4 v1, 0x0
 
     :try_start_0
     invoke-direct {p0, v1}, Lcom/android/server/WallpaperManagerService;->loadSettingsLocked(I)V
 
-    .line 1153
+    .line 1147
     iget-object v1, p0, Lcom/android/server/WallpaperManagerService;->mWallpaperMap:Landroid/util/SparseArray;
 
     const/4 v2, 0x0
@@ -4748,7 +4723,7 @@
 
     move-object v5, v0
 
-    .line 1154
+    .line 1148
     iget-object v1, v5, Lcom/android/server/WallpaperManagerService$WallpaperData;->nextWallpaperComponent:Landroid/content/ComponentName;
 
     if-eqz v1, :cond_3
@@ -4763,7 +4738,7 @@
 
     if-nez v1, :cond_3
 
-    .line 1156
+    .line 1150
     iget-object v2, v5, Lcom/android/server/WallpaperManagerService$WallpaperData;->nextWallpaperComponent:Landroid/content/ComponentName;
 
     const/4 v3, 0x0
@@ -4780,7 +4755,7 @@
 
     if-nez v1, :cond_0
 
-    .line 1161
+    .line 1155
     const/4 v2, 0x0
 
     const/4 v3, 0x0
@@ -4793,21 +4768,21 @@
 
     invoke-virtual/range {v1 .. v6}, Lcom/android/server/WallpaperManagerService;->bindWallpaperComponentLocked(Landroid/content/ComponentName;ZZLcom/android/server/WallpaperManagerService$WallpaperData;Landroid/os/IRemoteCallback;)Z
 
-    .line 1163
+    .line 1157
     :cond_0
     const/4 v7, 0x1
 
-    .line 1180
+    .line 1174
     :cond_1
     :goto_0
     monitor-exit v8
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 1182
+    .line 1176
     if-nez v7, :cond_2
 
-    .line 1183
+    .line 1177
     const-string v1, "WallpaperService"
 
     new-instance v2, Ljava/lang/StringBuilder;
@@ -4838,37 +4813,37 @@
 
     invoke-static {v1, v2}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 1184
+    .line 1178
     const-string v1, ""
 
     iput-object v1, v5, Lcom/android/server/WallpaperManagerService$WallpaperData;->name:Ljava/lang/String;
 
-    .line 1185
+    .line 1179
     invoke-static {v9}, Lcom/android/server/WallpaperManagerService;->getWallpaperDir(I)Ljava/io/File;
 
     move-result-object v1
 
     invoke-virtual {v1}, Ljava/io/File;->delete()Z
 
-    .line 1188
+    .line 1182
     :cond_2
     iget-object v2, p0, Lcom/android/server/WallpaperManagerService;->mLock:Ljava/lang/Object;
 
     monitor-enter v2
 
-    .line 1189
+    .line 1183
     :try_start_1
     invoke-direct {p0, v5}, Lcom/android/server/WallpaperManagerService;->saveSettingsLocked(Lcom/android/server/WallpaperManagerService$WallpaperData;)V
 
-    .line 1190
+    .line 1184
     monitor-exit v2
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_1
 
-    .line 1191
+    .line 1185
     return-void
 
-    .line 1167
+    .line 1161
     :cond_3
     :try_start_2
     const-string v1, ""
@@ -4881,14 +4856,14 @@
 
     if-eqz v1, :cond_4
 
-    .line 1169
+    .line 1163
     const/4 v7, 0x1
 
-    .line 1175
+    .line 1169
     :goto_1
     if-eqz v7, :cond_1
 
-    .line 1176
+    .line 1170
     iget-object v2, v5, Lcom/android/server/WallpaperManagerService$WallpaperData;->nextWallpaperComponent:Landroid/content/ComponentName;
 
     const/4 v3, 0x0
@@ -4903,7 +4878,7 @@
 
     goto :goto_0
 
-    .line 1180
+    .line 1174
     :catchall_0
     move-exception v1
 
@@ -4913,7 +4888,7 @@
 
     throw v1
 
-    .line 1172
+    .line 1166
     :cond_4
     :try_start_3
     invoke-virtual {p0, v5}, Lcom/android/server/WallpaperManagerService;->restoreNamedResourceLocked(Lcom/android/server/WallpaperManagerService$WallpaperData;)Z
@@ -4924,7 +4899,7 @@
 
     goto :goto_1
 
-    .line 1190
+    .line 1184
     :catchall_1
     move-exception v1
 
@@ -5220,12 +5195,12 @@
     .prologue
     const/4 v4, 0x0
 
-    .line 747
+    .line 741
     if-nez p1, :cond_0
 
     const-string p1, ""
 
-    .line 749
+    .line 743
     :cond_0
     :try_start_0
     iget v5, p2, Lcom/android/server/WallpaperManagerService$WallpaperData;->userId:I
@@ -5234,7 +5209,7 @@
 
     move-result-object v0
 
-    .line 750
+    .line 744
     .local v0, dir:Ljava/io/File;
     invoke-virtual {v0}, Ljava/io/File;->exists()Z
 
@@ -5242,10 +5217,10 @@
 
     if-nez v5, :cond_1
 
-    .line 751
+    .line 745
     invoke-virtual {v0}, Ljava/io/File;->mkdir()Z
 
-    .line 752
+    .line 746
     invoke-virtual {v0}, Ljava/io/File;->getPath()Ljava/lang/String;
 
     move-result-object v5
@@ -5258,7 +5233,7 @@
 
     invoke-static {v5, v6, v7, v8}, Landroid/os/FileUtils;->setPermissions(Ljava/lang/String;III)I
 
-    .line 757
+    .line 751
     :cond_1
     new-instance v3, Ljava/io/File;
 
@@ -5266,7 +5241,7 @@
 
     invoke-direct {v3, v0, v5}, Ljava/io/File;-><init>(Ljava/io/File;Ljava/lang/String;)V
 
-    .line 758
+    .line 752
     .local v3, file:Ljava/io/File;
     const/high16 v5, 0x3800
 
@@ -5274,7 +5249,7 @@
 
     move-result-object v2
 
-    .line 760
+    .line 754
     .local v2, fd:Landroid/os/ParcelFileDescriptor;
     invoke-static {v3}, Landroid/os/SELinux;->restorecon(Ljava/io/File;)Z
 
@@ -5284,14 +5259,14 @@
 
     move-object v2, v4
 
-    .line 768
+    .line 762
     .end local v0           #dir:Ljava/io/File;
     .end local v2           #fd:Landroid/os/ParcelFileDescriptor;
     .end local v3           #file:Ljava/io/File;
     :goto_0
     return-object v2
 
-    .line 763
+    .line 757
     .restart local v0       #dir:Ljava/io/File;
     .restart local v2       #fd:Landroid/os/ParcelFileDescriptor;
     .restart local v3       #file:Ljava/io/File;
@@ -5302,14 +5277,14 @@
 
     goto :goto_0
 
-    .line 765
+    .line 759
     .end local v0           #dir:Ljava/io/File;
     .end local v2           #fd:Landroid/os/ParcelFileDescriptor;
     .end local v3           #file:Ljava/io/File;
     :catch_0
     move-exception v1
 
-    .line 766
+    .line 760
     .local v1, e:Ljava/io/FileNotFoundException;
     const-string v5, "WallpaperService"
 
@@ -5319,6 +5294,6 @@
 
     move-object v2, v4
 
-    .line 768
+    .line 762
     goto :goto_0
 .end method

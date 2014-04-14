@@ -25,84 +25,142 @@
     .parameter "handler"
 
     .prologue
-    .line 103
+    .line 81
     iput-object p1, p0, Lcom/android/server/wm/KeyguardDisableHandler$KeyguardTokenWatcher;->this$0:Lcom/android/server/wm/KeyguardDisableHandler;
 
-    .line 104
+    .line 82
     const-string v0, "KeyguardDisableHandler"
 
     invoke-direct {p0, p2, v0}, Landroid/os/TokenWatcher;-><init>(Landroid/os/Handler;Ljava/lang/String;)V
 
-    .line 105
+    .line 83
     return-void
 .end method
 
 
 # virtual methods
 .method public acquired()V
-    .locals 2
+    .locals 6
 
     .prologue
-    .line 111
-    iget-object v0, p0, Lcom/android/server/wm/KeyguardDisableHandler$KeyguardTokenWatcher;->this$0:Lcom/android/server/wm/KeyguardDisableHandler;
+    const/4 v2, 0x1
+
+    const/4 v3, 0x0
+
+    .line 89
+    iget-object v1, p0, Lcom/android/server/wm/KeyguardDisableHandler$KeyguardTokenWatcher;->this$0:Lcom/android/server/wm/KeyguardDisableHandler;
 
     #getter for: Lcom/android/server/wm/KeyguardDisableHandler;->mAllowDisableKeyguard:I
-    invoke-static {v0}, Lcom/android/server/wm/KeyguardDisableHandler;->access$000(Lcom/android/server/wm/KeyguardDisableHandler;)I
+    invoke-static {v1}, Lcom/android/server/wm/KeyguardDisableHandler;->access$000(Lcom/android/server/wm/KeyguardDisableHandler;)I
 
-    move-result v0
+    move-result v1
 
-    const/4 v1, -0x1
+    const/4 v4, -0x1
 
-    if-ne v0, v1, :cond_0
+    if-ne v1, v4, :cond_0
 
-    .line 112
-    iget-object v0, p0, Lcom/android/server/wm/KeyguardDisableHandler$KeyguardTokenWatcher;->this$0:Lcom/android/server/wm/KeyguardDisableHandler;
+    .line 90
+    iget-object v1, p0, Lcom/android/server/wm/KeyguardDisableHandler$KeyguardTokenWatcher;->this$0:Lcom/android/server/wm/KeyguardDisableHandler;
 
-    #calls: Lcom/android/server/wm/KeyguardDisableHandler;->updateAllowDisableState()V
-    invoke-static {v0}, Lcom/android/server/wm/KeyguardDisableHandler;->access$100(Lcom/android/server/wm/KeyguardDisableHandler;)V
+    iget-object v1, v1, Lcom/android/server/wm/KeyguardDisableHandler;->mContext:Landroid/content/Context;
 
-    .line 114
-    :cond_0
-    iget-object v0, p0, Lcom/android/server/wm/KeyguardDisableHandler$KeyguardTokenWatcher;->this$0:Lcom/android/server/wm/KeyguardDisableHandler;
+    const-string v4, "device_policy"
 
-    #getter for: Lcom/android/server/wm/KeyguardDisableHandler;->mAllowDisableKeyguard:I
-    invoke-static {v0}, Lcom/android/server/wm/KeyguardDisableHandler;->access$000(Lcom/android/server/wm/KeyguardDisableHandler;)I
+    invoke-virtual {v1, v4}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
 
-    move-result v0
+    move-result-object v0
 
-    const/4 v1, 0x1
+    check-cast v0, Landroid/app/admin/DevicePolicyManager;
 
-    if-ne v0, v1, :cond_1
+    .line 92
+    .local v0, dpm:Landroid/app/admin/DevicePolicyManager;
+    if-eqz v0, :cond_0
 
-    .line 115
-    iget-object v0, p0, Lcom/android/server/wm/KeyguardDisableHandler$KeyguardTokenWatcher;->this$0:Lcom/android/server/wm/KeyguardDisableHandler;
-
-    iget-object v0, v0, Lcom/android/server/wm/KeyguardDisableHandler;->mPolicy:Landroid/view/WindowManagerPolicy;
+    .line 94
+    :try_start_0
+    iget-object v4, p0, Lcom/android/server/wm/KeyguardDisableHandler$KeyguardTokenWatcher;->this$0:Lcom/android/server/wm/KeyguardDisableHandler;
 
     const/4 v1, 0x0
 
-    invoke-interface {v0, v1}, Landroid/view/WindowManagerPolicy;->enableKeyguard(Z)V
+    invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
 
-    .line 119
+    move-result-object v5
+
+    invoke-interface {v5}, Landroid/app/IActivityManager;->getCurrentUser()Landroid/content/pm/UserInfo;
+
+    move-result-object v5
+
+    iget v5, v5, Landroid/content/pm/UserInfo;->id:I
+
+    invoke-virtual {v0, v1, v5}, Landroid/app/admin/DevicePolicyManager;->getPasswordQuality(Landroid/content/ComponentName;I)I
+
+    move-result v1
+
+    if-nez v1, :cond_1
+
+    move v1, v2
+
     :goto_0
+    #setter for: Lcom/android/server/wm/KeyguardDisableHandler;->mAllowDisableKeyguard:I
+    invoke-static {v4, v1}, Lcom/android/server/wm/KeyguardDisableHandler;->access$002(Lcom/android/server/wm/KeyguardDisableHandler;I)I
+    :try_end_0
+    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 103
+    .end local v0           #dpm:Landroid/app/admin/DevicePolicyManager;
+    :cond_0
+    :goto_1
+    iget-object v1, p0, Lcom/android/server/wm/KeyguardDisableHandler$KeyguardTokenWatcher;->this$0:Lcom/android/server/wm/KeyguardDisableHandler;
+
+    #getter for: Lcom/android/server/wm/KeyguardDisableHandler;->mAllowDisableKeyguard:I
+    invoke-static {v1}, Lcom/android/server/wm/KeyguardDisableHandler;->access$000(Lcom/android/server/wm/KeyguardDisableHandler;)I
+
+    move-result v1
+
+    if-ne v1, v2, :cond_2
+
+    .line 104
+    iget-object v1, p0, Lcom/android/server/wm/KeyguardDisableHandler$KeyguardTokenWatcher;->this$0:Lcom/android/server/wm/KeyguardDisableHandler;
+
+    iget-object v1, v1, Lcom/android/server/wm/KeyguardDisableHandler;->mPolicy:Landroid/view/WindowManagerPolicy;
+
+    invoke-interface {v1, v3}, Landroid/view/WindowManagerPolicy;->enableKeyguard(Z)V
+
+    .line 108
+    :goto_2
     return-void
 
-    .line 117
+    .restart local v0       #dpm:Landroid/app/admin/DevicePolicyManager;
     :cond_1
-    const-string v0, "KeyguardDisableHandler"
+    move v1, v3
 
-    const-string v1, "Not disabling keyguard since device policy is enforced"
-
-    invoke-static {v0, v1}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
-
+    .line 94
     goto :goto_0
+
+    .line 106
+    .end local v0           #dpm:Landroid/app/admin/DevicePolicyManager;
+    :cond_2
+    const-string v1, "KeyguardDisableHandler"
+
+    const-string v2, "Not disabling keyguard since device policy is enforced"
+
+    invoke-static {v1, v2}, Landroid/util/Log;->v(Ljava/lang/String;Ljava/lang/String;)I
+
+    goto :goto_2
+
+    .line 98
+    .restart local v0       #dpm:Landroid/app/admin/DevicePolicyManager;
+    :catch_0
+    move-exception v1
+
+    goto :goto_1
 .end method
 
 .method public released()V
     .locals 2
 
     .prologue
-    .line 123
+    .line 112
     iget-object v0, p0, Lcom/android/server/wm/KeyguardDisableHandler$KeyguardTokenWatcher;->this$0:Lcom/android/server/wm/KeyguardDisableHandler;
 
     iget-object v0, v0, Lcom/android/server/wm/KeyguardDisableHandler;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -111,6 +169,6 @@
 
     invoke-interface {v0, v1}, Landroid/view/WindowManagerPolicy;->enableKeyguard(Z)V
 
-    .line 124
+    .line 113
     return-void
 .end method

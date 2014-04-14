@@ -132,7 +132,7 @@
     invoke-virtual {p2, v1}, Landroid/view/accessibility/AccessibilityNodeInfo;->setText(Ljava/lang/CharSequence;)V
 
     .line 80
-    const v1, 0x1040550
+    const v1, 0x10404f2
 
     invoke-virtual {v0, v1}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -182,7 +182,7 @@
 
     move-result-object v0
 
-    const v1, 0x1040550
+    const v1, 0x10404f2
 
     invoke-virtual {v0, v1}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -229,7 +229,7 @@
 
     move-result-object v0
 
-    const v1, 0x104054f
+    const v1, 0x10404f1
 
     invoke-virtual {v0, v1}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 

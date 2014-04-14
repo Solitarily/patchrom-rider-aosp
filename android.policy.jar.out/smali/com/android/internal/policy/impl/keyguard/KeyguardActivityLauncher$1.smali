@@ -64,7 +64,8 @@
     .line 191
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher$1;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;
 
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->dismissKeyguardOnNextActivity()V
+    #calls: Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->dismissKeyguardOnNextActivity()V
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->access$000(Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;)V
 
     .line 192
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher$1;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;
@@ -78,7 +79,7 @@
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher$1;->val$onStarted:Ljava/lang/Runnable;
 
     #calls: Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->startActivityForCurrentUser(Landroid/content/Intent;Landroid/os/Bundle;Landroid/os/Handler;Ljava/lang/Runnable;)V
-    invoke-static {v0, v1, v2, v3, v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->access$000(Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;Landroid/content/Intent;Landroid/os/Bundle;Landroid/os/Handler;Ljava/lang/Runnable;)V
+    invoke-static {v0, v1, v2, v3, v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->access$100(Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;Landroid/content/Intent;Landroid/os/Bundle;Landroid/os/Handler;Ljava/lang/Runnable;)V
 
     .line 193
     const/4 v0, 0x1

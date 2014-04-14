@@ -1,5 +1,3 @@
-system/bin/su|system/xbin/su
-system/bin/lolcat|system/bin/logcat
 system/bin/sh|system/bin/mksh
 system/bin/cat|system/bin/toolbox
 system/bin/chmod|system/bin/toolbox
@@ -40,7 +38,6 @@ system/bin/ps|system/bin/toolbox
 system/bin/r|system/bin/toolbox
 system/bin/reboot|system/bin/toolbox
 system/bin/renice|system/bin/toolbox
-system/bin/restart|system/bin/toolbox
 system/bin/rm|system/bin/toolbox
 system/bin/rmdir|system/bin/toolbox
 system/bin/rmmod|system/bin/toolbox
@@ -270,7 +267,6 @@ system/xbin/uuencode|system/xbin/busybox
 system/xbin/vi|system/xbin/busybox
 system/xbin/watch|system/xbin/busybox
 system/xbin/wc|system/xbin/busybox
-system/xbin/wget|system/xbin/busybox
 system/xbin/which|system/xbin/busybox
 system/xbin/whoami|system/xbin/busybox
 system/xbin/xargs|system/xbin/busybox

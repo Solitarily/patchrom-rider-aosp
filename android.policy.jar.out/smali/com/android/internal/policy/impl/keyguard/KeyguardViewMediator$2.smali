@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 423
+    .line 417
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -42,14 +42,14 @@
     .parameter "authenticated"
 
     .prologue
-    .line 437
+    .line 431
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
 
     const/4 v1, 0x1
 
     invoke-virtual {v0, p1, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->keyguardDone(ZZ)V
 
-    .line 438
+    .line 432
     return-void
 .end method
 
@@ -57,7 +57,7 @@
     .locals 2
 
     .prologue
-    .line 441
+    .line 435
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
 
     #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->mHandler:Landroid/os/Handler;
@@ -69,7 +69,7 @@
 
     invoke-virtual {v0, v1}, Landroid/os/Handler;->sendEmptyMessage(I)Z
 
-    .line 442
+    .line 436
     return-void
 .end method
 
@@ -77,7 +77,7 @@
     .locals 2
 
     .prologue
-    .line 456
+    .line 450
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
 
     const/4 v1, 0x1
@@ -85,7 +85,7 @@
     #setter for: Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->mKeyguardDonePending:Z
     invoke-static {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->access$1102(Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;Z)Z
 
-    .line 457
+    .line 451
     return-void
 .end method
 
@@ -93,7 +93,7 @@
     .locals 1
 
     .prologue
-    .line 451
+    .line 445
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
 
     #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->mKeyguardViewManager:Lcom/android/internal/policy/impl/keyguard/KeyguardViewManager;
@@ -103,7 +103,7 @@
 
     invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewManager;->updateUserActivityTimeout()V
 
-    .line 452
+    .line 446
     return-void
 .end method
 
@@ -112,7 +112,7 @@
     .parameter "needsInput"
 
     .prologue
-    .line 446
+    .line 440
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
 
     #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->mKeyguardViewManager:Lcom/android/internal/policy/impl/keyguard/KeyguardViewManager;
@@ -122,7 +122,7 @@
 
     invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewManager;->setNeedsInput(Z)V
 
-    .line 447
+    .line 441
     return-void
 .end method
 
@@ -130,12 +130,12 @@
     .locals 1
 
     .prologue
-    .line 429
+    .line 423
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
 
     invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->userActivity()V
 
-    .line 430
+    .line 424
     return-void
 .end method
 
@@ -144,12 +144,12 @@
     .parameter "holdMs"
 
     .prologue
-    .line 433
+    .line 427
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
 
     invoke-virtual {v0, p1, p2}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->userActivity(J)V
 
-    .line 434
+    .line 428
     return-void
 .end method
 
@@ -157,11 +157,11 @@
     .locals 1
 
     .prologue
-    .line 425
+    .line 419
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;
 
     invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardViewMediator;->wakeUp()V
 
-    .line 426
+    .line 420
     return-void
 .end method

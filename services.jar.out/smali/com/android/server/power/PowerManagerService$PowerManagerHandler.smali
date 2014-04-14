@@ -25,17 +25,17 @@
     .parameter "looper"
 
     .prologue
-    .line 2486
+    .line 2433
     iput-object p1, p0, Lcom/android/server/power/PowerManagerService$PowerManagerHandler;->this$0:Lcom/android/server/power/PowerManagerService;
 
-    .line 2487
+    .line 2434
     const/4 v0, 0x0
 
     const/4 v1, 0x1
 
     invoke-direct {p0, p2, v0, v1}, Landroid/os/Handler;-><init>(Landroid/os/Looper;Landroid/os/Handler$Callback;Z)V
 
-    .line 2488
+    .line 2435
     return-void
 .end method
 
@@ -46,16 +46,16 @@
     .parameter "msg"
 
     .prologue
-    .line 2492
+    .line 2439
     iget v0, p1, Landroid/os/Message;->what:I
 
     packed-switch v0, :pswitch_data_0
 
-    .line 2506
+    .line 2453
     :goto_0
     return-void
 
-    .line 2494
+    .line 2441
     :pswitch_0
     iget-object v0, p0, Lcom/android/server/power/PowerManagerService$PowerManagerHandler;->this$0:Lcom/android/server/power/PowerManagerService;
 
@@ -64,7 +64,7 @@
 
     goto :goto_0
 
-    .line 2497
+    .line 2444
     :pswitch_1
     iget-object v0, p0, Lcom/android/server/power/PowerManagerService$PowerManagerHandler;->this$0:Lcom/android/server/power/PowerManagerService;
 
@@ -73,7 +73,7 @@
 
     goto :goto_0
 
-    .line 2500
+    .line 2447
     :pswitch_2
     iget-object v0, p0, Lcom/android/server/power/PowerManagerService$PowerManagerHandler;->this$0:Lcom/android/server/power/PowerManagerService;
 
@@ -82,7 +82,7 @@
 
     goto :goto_0
 
-    .line 2503
+    .line 2450
     :pswitch_3
     iget-object v0, p0, Lcom/android/server/power/PowerManagerService$PowerManagerHandler;->this$0:Lcom/android/server/power/PowerManagerService;
 
@@ -91,7 +91,7 @@
 
     goto :goto_0
 
-    .line 2492
+    .line 2439
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_0

@@ -1,6 +1,9 @@
 .class Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$3;
-.super Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;
+.super Ljava/lang/Object;
 .source "KeyguardSelectorView.java"
+
+# interfaces
+.implements Lcom/android/internal/widget/RotarySelector$OnDialTriggerListener;
 
 
 # annotations
@@ -24,22 +27,44 @@
     .parameter
 
     .prologue
-    .line 170
+    .line 151
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
 
-    invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;-><init>()V
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method protected dismissKeyguardOnNextActivity()V
-    .locals 2
+.method public onDialTrigger(Landroid/view/View;I)V
+    .locals 3
+    .parameter "v"
+    .parameter "whichHandle"
 
     .prologue
-    .line 184
-    invoke-virtual {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$3;->getCallback()Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
+    const-wide/16 v1, 0x0
+
+    .line 155
+    const/4 v0, 0x1
+
+    if-ne p2, v0, :cond_1
+
+    .line 156
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
+
+    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->access$400(Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;)Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
+
+    move-result-object v0
+
+    invoke-interface {v0, v1, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;->userActivity(J)V
+
+    .line 157
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
+
+    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->access$400(Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;)Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
 
     move-result-object v0
 
@@ -47,51 +72,47 @@
 
     invoke-interface {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;->dismiss(Z)V
 
-    .line 185
+    .line 163
+    :cond_0
+    :goto_0
     return-void
-.end method
 
-.method getCallback()Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
-    .locals 1
+    .line 158
+    :cond_1
+    const/4 v0, 0x2
 
-    .prologue
-    .line 174
+    if-ne p2, v0, :cond_0
+
+    .line 159
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
+
+    #calls: Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->toggleRingMode()V
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->access$700(Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;)V
+
+    .line 160
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
+
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->updateResources()V
+
+    .line 161
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
 
     #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->access$500(Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;)Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->access$400(Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;)Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
 
     move-result-object v0
 
-    return-object v0
+    invoke-interface {v0, v1, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;->userActivity(J)V
+
+    goto :goto_0
 .end method
 
-.method getContext()Landroid/content/Context;
-    .locals 1
+.method public onGrabbedStateChange(Landroid/view/View;I)V
+    .locals 0
+    .parameter "v"
+    .parameter "grabbedState"
 
     .prologue
-    .line 189
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
-
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mContext:Landroid/content/Context;
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->access$1300(Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;)Landroid/content/Context;
-
-    move-result-object v0
-
-    return-object v0
-.end method
-
-.method getLockPatternUtils()Lcom/android/internal/widget/LockPatternUtils;
-    .locals 1
-
-    .prologue
-    .line 179
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView$3;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;
-
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;->access$1200(Lcom/android/internal/policy/impl/keyguard/KeyguardSelectorView;)Lcom/android/internal/widget/LockPatternUtils;
-
-    move-result-object v0
-
-    return-object v0
+    .line 166
+    return-void
 .end method

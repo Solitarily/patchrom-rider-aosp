@@ -283,7 +283,7 @@
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSimPukView;->mContext:Landroid/content/Context;
 
-    const v2, 0x104059e
+    const v2, 0x1040540
 
     invoke-virtual {v1, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -398,7 +398,7 @@
 
     .prologue
     .line 113
-    const v0, 0x10202c3
+    const v0, 0x10202c6
 
     return v0
 .end method
@@ -413,7 +413,7 @@
     invoke-super {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardAbsKeyInputView;->onFinishInflate()V
 
     .line 120
-    const v2, 0x10202cf
+    const v2, 0x10202d2
 
     invoke-virtual {p0, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardSimPukView;->findViewById(I)Landroid/view/View;
 
@@ -432,7 +432,7 @@
 
     .line 133
     :cond_0
-    const v2, 0x10202c4
+    const v2, 0x10202c7
 
     invoke-virtual {p0, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardSimPukView;->findViewById(I)Landroid/view/View;
 

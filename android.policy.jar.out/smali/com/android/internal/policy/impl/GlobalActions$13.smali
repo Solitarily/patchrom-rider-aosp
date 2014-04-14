@@ -24,7 +24,7 @@
     .parameter
 
     .prologue
-    .line 1124
+    .line 1015
     iput-object p1, p0, Lcom/android/internal/policy/impl/GlobalActions$13;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
 
     invoke-direct {p0}, Landroid/content/BroadcastReceiver;-><init>()V
@@ -35,111 +35,37 @@
 
 # virtual methods
 .method public onReceive(Landroid/content/Context;Landroid/content/Intent;)V
-    .locals 4
+    .locals 2
     .parameter "context"
     .parameter "intent"
 
     .prologue
-    const/4 v3, 0x0
-
-    .line 1126
+    .line 1018
     invoke-virtual {p2}, Landroid/content/Intent;->getAction()Ljava/lang/String;
 
     move-result-object v0
 
-    .line 1127
-    .local v0, action:Ljava/lang/String;
-    const-string v2, "android.intent.action.CLOSE_SYSTEM_DIALOGS"
+    const-string v1, "android.media.RINGER_MODE_CHANGED"
 
-    invoke-virtual {v2, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result v2
+    move-result v0
 
-    if-nez v2, :cond_0
+    if-eqz v0, :cond_0
 
-    const-string v2, "android.intent.action.SCREEN_OFF"
-
-    invoke-virtual {v2, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_2
-
-    .line 1129
-    :cond_0
-    const-string v2, "reason"
-
-    invoke-virtual {p2, v2}, Landroid/content/Intent;->getStringExtra(Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v1
-
-    .line 1130
-    .local v1, reason:Ljava/lang/String;
-    const-string v2, "globalactions"
-
-    invoke-virtual {v2, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-nez v2, :cond_1
-
-    .line 1131
-    iget-object v2, p0, Lcom/android/internal/policy/impl/GlobalActions$13;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
+    .line 1019
+    iget-object v0, p0, Lcom/android/internal/policy/impl/GlobalActions$13;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
 
     #getter for: Lcom/android/internal/policy/impl/GlobalActions;->mHandler:Landroid/os/Handler;
-    invoke-static {v2}, Lcom/android/internal/policy/impl/GlobalActions;->access$1000(Lcom/android/internal/policy/impl/GlobalActions;)Landroid/os/Handler;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/GlobalActions;->access$700(Lcom/android/internal/policy/impl/GlobalActions;)Landroid/os/Handler;
 
-    move-result-object v2
+    move-result-object v0
 
-    invoke-virtual {v2, v3}, Landroid/os/Handler;->sendEmptyMessage(I)Z
+    const/4 v1, 0x1
 
-    .line 1142
-    .end local v1           #reason:Ljava/lang/String;
-    :cond_1
-    :goto_0
+    invoke-virtual {v0, v1}, Landroid/os/Handler;->sendEmptyMessage(I)Z
+
+    .line 1021
+    :cond_0
     return-void
-
-    .line 1133
-    :cond_2
-    const-string v2, "android.intent.action.EMERGENCY_CALLBACK_MODE_CHANGED"
-
-    invoke-virtual {v2, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_1
-
-    .line 1136
-    const-string v2, "PHONE_IN_ECM_STATE"
-
-    invoke-virtual {p2, v2, v3}, Landroid/content/Intent;->getBooleanExtra(Ljava/lang/String;Z)Z
-
-    move-result v2
-
-    if-nez v2, :cond_1
-
-    iget-object v2, p0, Lcom/android/internal/policy/impl/GlobalActions$13;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
-
-    #getter for: Lcom/android/internal/policy/impl/GlobalActions;->mIsWaitingForEcmExit:Z
-    invoke-static {v2}, Lcom/android/internal/policy/impl/GlobalActions;->access$200(Lcom/android/internal/policy/impl/GlobalActions;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_1
-
-    .line 1138
-    iget-object v2, p0, Lcom/android/internal/policy/impl/GlobalActions$13;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
-
-    #setter for: Lcom/android/internal/policy/impl/GlobalActions;->mIsWaitingForEcmExit:Z
-    invoke-static {v2, v3}, Lcom/android/internal/policy/impl/GlobalActions;->access$202(Lcom/android/internal/policy/impl/GlobalActions;Z)Z
-
-    .line 1139
-    iget-object v2, p0, Lcom/android/internal/policy/impl/GlobalActions$13;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
-
-    const/4 v3, 0x1
-
-    #calls: Lcom/android/internal/policy/impl/GlobalActions;->changeAirplaneModeSystemSetting(Z)V
-    invoke-static {v2, v3}, Lcom/android/internal/policy/impl/GlobalActions;->access$400(Lcom/android/internal/policy/impl/GlobalActions;Z)V
-
-    goto :goto_0
 .end method

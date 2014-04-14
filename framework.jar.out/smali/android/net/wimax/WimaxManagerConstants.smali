@@ -8,13 +8,23 @@
 
 .field public static final EXTRA_4G_STATE:Ljava/lang/String; = "4g_state"
 
+.field public static final EXTRA_NETWORK_INFO:Ljava/lang/String; = "networkInfo"
+
+.field public static final EXTRA_NEW_RSSI_LEVEL:Ljava/lang/String; = "newRssiLevel"
+
 .field public static final EXTRA_NEW_SIGNAL_LEVEL:Ljava/lang/String; = "newSignalLevel"
+
+.field public static final EXTRA_NEW_STATE:Ljava/lang/String; = "newState"
 
 .field public static final EXTRA_WIMAX_STATE:Ljava/lang/String; = "WimaxState"
 
 .field public static final EXTRA_WIMAX_STATE_DETAIL:Ljava/lang/String; = "WimaxStateDetail"
 
 .field public static final EXTRA_WIMAX_STATE_INT:Ljava/lang/String; = "WimaxStateInt"
+
+.field public static final EXTRA_WIMAX_STATUS:Ljava/lang/String; = "wimax_status"
+
+.field public static final NETWORK_STATE_CHANGED_ACTION:Ljava/lang/String; = "com.htc.net.wimax.STATE_CHANGE"
 
 .field public static final NET_4G_STATE_CHANGED_ACTION:Ljava/lang/String; = "android.net.fourG.NET_4G_STATE_CHANGED"
 
@@ -28,11 +38,27 @@
 
 .field public static final NET_4G_STATE_UNKNOWN:I = 0x4
 
+.field public static final PREVIOUS_WIMAX_ENABLED_STATE:Ljava/lang/String; = "preWimaxEnabledState"
+
+.field public static final RSSI_CHANGED_ACTION:Ljava/lang/String; = "com.htc.net.wimax.RSSI_CHANGED"
+
+.field public static final SCAN_RESULTS_AVAILABLE_ACTION:Ljava/lang/String; = "com.htc.net.wimax.SCAN_RESULTS_AVAILABLE"
+
 .field public static final SIGNAL_LEVEL_CHANGED_ACTION:Ljava/lang/String; = "android.net.wimax.SIGNAL_LEVEL_CHANGED"
 
 .field public static final WIMAX_DEREGISTRATION:I = 0x8
 
 .field public static final WIMAX_ENABLED_CHANGED_ACTION:Ljava/lang/String; = "com.htc.net.wimax.WIMAX_ENABLED_CHANGED"
+
+.field public static final WIMAX_ENABLED_STATE_DISABLED:I = 0x1
+
+.field public static final WIMAX_ENABLED_STATE_DISABLING:I = 0x0
+
+.field public static final WIMAX_ENABLED_STATE_ENABLED:I = 0x3
+
+.field public static final WIMAX_ENABLED_STATE_ENABLING:I = 0x2
+
+.field public static final WIMAX_ENABLED_STATE_UNKNOWN:I = 0x4
 
 .field public static final WIMAX_IDLE:I = 0x6
 
@@ -52,7 +78,7 @@
     .locals 0
 
     .prologue
-    .line 6
+    .line 23
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

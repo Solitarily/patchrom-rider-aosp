@@ -631,6 +631,7 @@
 
     invoke-direct {p0, v0}, Landroid/graphics/drawable/AnimationDrawable;->nextFrame(Z)V
 
+    .line 151
     return-void
 .end method
 

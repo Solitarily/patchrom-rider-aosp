@@ -6,7 +6,6 @@ local-phone-apps = ApplicationsProvider \
                    CertInstaller \
                    DefaultContainerService \
                    DrmProvider \
-                   DSPManager \
                    Galaxy4 \
                    GooglePinyinIME \
                    HoloSpiralWallpaper \

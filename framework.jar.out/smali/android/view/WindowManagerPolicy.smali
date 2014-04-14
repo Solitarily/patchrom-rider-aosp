@@ -219,9 +219,6 @@
 .method public abstract getSystemDecorRectLw(Landroid/graphics/Rect;)I
 .end method
 
-.method public abstract hasMenuKeyEnabled()Z
-.end method
-
 .method public abstract hasNavigationBar()Z
 .end method
 

@@ -134,7 +134,7 @@
 
     .line 481
     .local v8, loadingView:Landroid/view/View;
-    const v9, 0x1020245
+    const v9, 0x1020247
 
     new-instance v10, Ljava/lang/Integer;
 
@@ -220,7 +220,7 @@
     .end local v5           #firstView:Landroid/view/View;
     :cond_1
     :goto_1
-    const v9, 0x10900b1
+    const v9, 0x10900b4
 
     const/4 v10, 0x0
 

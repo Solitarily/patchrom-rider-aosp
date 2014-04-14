@@ -134,13 +134,13 @@
     if-ne v0, v5, :cond_0
 
     .line 84
-    const v0, 0x1090068
+    const v0, 0x109006a
 
     invoke-virtual {v6, v0, p0, v5}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;Z)Landroid/view/View;
 
     .line 92
     :goto_0
-    const v0, 0x10202eb
+    const v0, 0x10202ef
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -151,7 +151,7 @@
     iput-object v0, p0, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->mHeaderText:Landroid/widget/TextView;
 
     .line 94
-    const v0, 0x10202f4
+    const v0, 0x10202f8
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -162,7 +162,7 @@
     iput-object v0, p0, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->mPukText:Landroid/widget/TextView;
 
     .line 95
-    const v0, 0x10202ed
+    const v0, 0x10202f1
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -173,7 +173,7 @@
     iput-object v0, p0, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->mPinText:Landroid/widget/TextView;
 
     .line 96
-    const v0, 0x10202f5
+    const v0, 0x10202f9
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -182,7 +182,7 @@
     iput-object v0, p0, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->mDelPukButton:Landroid/view/View;
 
     .line 97
-    const v0, 0x10202e7
+    const v0, 0x10202eb
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -191,7 +191,7 @@
     iput-object v0, p0, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->mDelPinButton:Landroid/view/View;
 
     .line 98
-    const v0, 0x10202a4
+    const v0, 0x10202a6
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->findViewById(I)Landroid/view/View;
 
@@ -217,7 +217,7 @@
     .line 104
     iget-object v0, p0, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->mHeaderText:Landroid/widget/TextView;
 
-    const v1, 0x104034c
+    const v1, 0x10402ee
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(I)V
 
@@ -266,7 +266,7 @@
 
     .line 87
     :cond_0
-    const v0, 0x1090069
+    const v0, 0x109006b
 
     invoke-virtual {v6, v0, p0, v5}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;Z)Landroid/view/View;
 
@@ -378,7 +378,7 @@
     .line 228
     iget-object v0, p0, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->mHeaderText:Landroid/widget/TextView;
 
-    const v1, 0x10400f1
+    const v1, 0x1040083
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(I)V
 
@@ -425,7 +425,7 @@
     :cond_1
     iget-object v0, p0, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->mHeaderText:Landroid/widget/TextView;
 
-    const v1, 0x10400f0
+    const v1, 0x1040082
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(I)V
 
@@ -499,7 +499,7 @@
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->mContext:Landroid/content/Context;
 
-    const v2, 0x1040374
+    const v2, 0x1040316
 
     invoke-virtual {v1, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -887,7 +887,7 @@
     .line 130
     iget-object v0, p0, Lcom/android/internal/policy/impl/SimPukUnlockScreen;->mHeaderText:Landroid/widget/TextView;
 
-    const v1, 0x104034c
+    const v1, 0x10402ee
 
     invoke-virtual {v0, v1}, Landroid/widget/TextView;->setText(I)V
 

@@ -24,7 +24,7 @@
     .parameter
 
     .prologue
-    .line 803
+    .line 801
     iput-object p1, p0, Lcom/android/internal/policy/impl/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     invoke-direct {p0}, Landroid/content/BroadcastReceiver;-><init>()V
@@ -40,7 +40,7 @@
     .parameter "intent"
 
     .prologue
-    .line 806
+    .line 804
     const-string v1, "com.android.internal.policy.impl.PhoneWindowManager.DELAYED_KEYGUARD"
 
     invoke-virtual {p2}, Landroid/content/Intent;->getAction()Ljava/lang/String;
@@ -53,7 +53,7 @@
 
     if-eqz v1, :cond_1
 
-    .line 807
+    .line 805
     const-string v1, "seq"
 
     const/4 v2, 0x0
@@ -62,13 +62,13 @@
 
     move-result v0
 
-    .line 810
+    .line 808
     .local v0, sequence:I
     iget-object v2, p0, Lcom/android/internal/policy/impl/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     monitor-enter v2
 
-    .line 811
+    .line 809
     :try_start_0
     iget-object v1, p0, Lcom/android/internal/policy/impl/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
@@ -79,7 +79,7 @@
 
     if-ne v1, v0, :cond_0
 
-    .line 813
+    .line 811
     iget-object v1, p0, Lcom/android/internal/policy/impl/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     const/4 v3, 0x1
@@ -87,22 +87,22 @@
     #setter for: Lcom/android/internal/policy/impl/KeyguardViewMediator;->mSuppressNextLockSound:Z
     invoke-static {v1, v3}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->access$1002(Lcom/android/internal/policy/impl/KeyguardViewMediator;Z)Z
 
-    .line 814
+    .line 812
     iget-object v1, p0, Lcom/android/internal/policy/impl/KeyguardViewMediator$2;->this$0:Lcom/android/internal/policy/impl/KeyguardViewMediator;
 
     #calls: Lcom/android/internal/policy/impl/KeyguardViewMediator;->doKeyguardLocked()V
     invoke-static {v1}, Lcom/android/internal/policy/impl/KeyguardViewMediator;->access$400(Lcom/android/internal/policy/impl/KeyguardViewMediator;)V
 
-    .line 816
+    .line 814
     :cond_0
     monitor-exit v2
 
-    .line 818
+    .line 816
     .end local v0           #sequence:I
     :cond_1
     return-void
 
-    .line 816
+    .line 814
     .restart local v0       #sequence:I
     :catchall_0
     move-exception v1

@@ -155,7 +155,7 @@
 
     .prologue
     .line 131
-    const v0, 0x10202ab
+    const v0, 0x10202ae
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardFaceUnlockView;->findViewById(I)Landroid/view/View;
 
@@ -178,7 +178,7 @@
     iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardFaceUnlockView;->mBiometricUnlock:Lcom/android/internal/policy/impl/keyguard/BiometricSensorUnlock;
 
     .line 135
-    const v0, 0x10202ad
+    const v0, 0x10202b0
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardFaceUnlockView;->findViewById(I)Landroid/view/View;
 
@@ -434,7 +434,7 @@
     iput-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardFaceUnlockView;->mSecurityMessageDisplay:Lcom/android/internal/policy/impl/keyguard/SecurityMessageDisplay;
 
     .line 63
-    const v1, 0x10202ae
+    const v1, 0x10202b1
 
     invoke-virtual {p0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardFaceUnlockView;->findViewById(I)Landroid/view/View;
 
@@ -443,7 +443,7 @@
     iput-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardFaceUnlockView;->mEcaView:Landroid/view/View;
 
     .line 64
-    const v1, 0x10202aa
+    const v1, 0x10202ad
 
     invoke-virtual {p0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardFaceUnlockView;->findViewById(I)Landroid/view/View;
 

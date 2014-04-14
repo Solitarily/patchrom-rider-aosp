@@ -1160,7 +1160,7 @@
 
     and-int/lit16 v2, v2, 0x4000
 
-    if-eqz v2, :cond_11
+    if-eqz v2, :cond_12
 
     .line 391
     move-object/from16 v0, p0
@@ -1169,7 +1169,7 @@
 
     iget v2, v2, Landroid/view/WindowManager$LayoutParams;->width:I
 
-    if-gez v2, :cond_d
+    if-gez v2, :cond_e
 
     .line 392
     move/from16 v3, v16
@@ -1183,7 +1183,7 @@
 
     iget v2, v2, Landroid/view/WindowManager$LayoutParams;->height:I
 
-    if-gez v2, :cond_f
+    if-gez v2, :cond_10
 
     .line 399
     move v4, v15
@@ -1317,7 +1317,7 @@
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowState;->mEnforceSizeCompat:Z
 
-    if-eqz v2, :cond_16
+    if-eqz v2, :cond_17
 
     .line 449
     move-object/from16 v0, p0
@@ -1665,9 +1665,22 @@
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowState;->mIsWallpaper:Z
 
-    if-eqz v2, :cond_c
+    if-eqz v2, :cond_d
+
+    invoke-virtual {v8}, Landroid/graphics/Rect;->width()I
+
+    move-result v2
+
+    if-ne v14, v2, :cond_c
+
+    invoke-virtual {v8}, Landroid/graphics/Rect;->height()I
+
+    move-result v2
+
+    if-eq v13, v2, :cond_d
 
     .line 502
+    :cond_c
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
@@ -1696,7 +1709,7 @@
 
     .line 518
     .end local v12           #displayInfo:Landroid/view/DisplayInfo;
-    :cond_c
+    :cond_d
     return-void
 
     .line 393
@@ -1711,12 +1724,12 @@
     .end local v18           #visibleInsets:Landroid/graphics/Rect;
     .end local v19           #x:F
     .end local v20           #y:F
-    :cond_d
+    :cond_e
     move-object/from16 v0, p0
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowState;->mEnforceSizeCompat:Z
 
-    if-eqz v2, :cond_e
+    if-eqz v2, :cond_f
 
     .line 394
     move-object/from16 v0, p0
@@ -1744,7 +1757,7 @@
 
     .line 396
     .end local v3           #w:I
-    :cond_e
+    :cond_f
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
@@ -1755,12 +1768,12 @@
     goto/16 :goto_0
 
     .line 400
-    :cond_f
+    :cond_10
     move-object/from16 v0, p0
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowState;->mEnforceSizeCompat:Z
 
-    if-eqz v2, :cond_10
+    if-eqz v2, :cond_11
 
     .line 401
     move-object/from16 v0, p0
@@ -1788,7 +1801,7 @@
 
     .line 403
     .end local v4           #h:I
-    :cond_10
+    :cond_11
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
@@ -1801,7 +1814,7 @@
     .line 406
     .end local v3           #w:I
     .end local v4           #h:I
-    :cond_11
+    :cond_12
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
@@ -1810,7 +1823,7 @@
 
     const/4 v6, -0x1
 
-    if-ne v2, v6, :cond_12
+    if-ne v2, v6, :cond_13
 
     .line 407
     move/from16 v3, v16
@@ -1826,7 +1839,7 @@
 
     const/4 v6, -0x1
 
-    if-ne v2, v6, :cond_14
+    if-ne v2, v6, :cond_15
 
     .line 414
     move v4, v15
@@ -1837,12 +1850,12 @@
     .line 408
     .end local v3           #w:I
     .end local v4           #h:I
-    :cond_12
+    :cond_13
     move-object/from16 v0, p0
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowState;->mEnforceSizeCompat:Z
 
-    if-eqz v2, :cond_13
+    if-eqz v2, :cond_14
 
     .line 409
     move-object/from16 v0, p0
@@ -1868,7 +1881,7 @@
 
     .line 411
     .end local v3           #w:I
-    :cond_13
+    :cond_14
     move-object/from16 v0, p0
 
     iget v3, v0, Lcom/android/server/wm/WindowState;->mRequestedWidth:I
@@ -1877,12 +1890,12 @@
     goto :goto_3
 
     .line 415
-    :cond_14
+    :cond_15
     move-object/from16 v0, p0
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowState;->mEnforceSizeCompat:Z
 
-    if-eqz v2, :cond_15
+    if-eqz v2, :cond_16
 
     .line 416
     move-object/from16 v0, p0
@@ -1908,7 +1921,7 @@
 
     .line 418
     .end local v4           #h:I
-    :cond_15
+    :cond_16
     move-object/from16 v0, p0
 
     iget v4, v0, Lcom/android/server/wm/WindowState;->mRequestedHeight:I
@@ -1922,7 +1935,7 @@
     .restart local v13       #fh:I
     .restart local v14       #fw:I
     .restart local v17       #visible:Landroid/graphics/Rect;
-    :cond_16
+    :cond_17
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;

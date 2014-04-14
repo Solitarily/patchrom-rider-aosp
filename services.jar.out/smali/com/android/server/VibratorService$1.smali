@@ -25,7 +25,7 @@
     .parameter "x0"
 
     .prologue
-    .line 147
+    .line 146
     iput-object p1, p0, Lcom/android/server/VibratorService$1;->this$0:Lcom/android/server/VibratorService;
 
     invoke-direct {p0, p2}, Landroid/database/ContentObserver;-><init>(Landroid/os/Handler;)V
@@ -40,12 +40,12 @@
     .parameter "selfChange"
 
     .prologue
-    .line 150
+    .line 149
     iget-object v0, p0, Lcom/android/server/VibratorService$1;->this$0:Lcom/android/server/VibratorService;
 
     #calls: Lcom/android/server/VibratorService;->updateInputDeviceVibrators()V
     invoke-static {v0}, Lcom/android/server/VibratorService;->access$400(Lcom/android/server/VibratorService;)V
 
-    .line 151
+    .line 150
     return-void
 .end method

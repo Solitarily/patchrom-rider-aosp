@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest android:sharedUserId="android.uid.system" android:versionCode="17" android:versionName="4.2.2-6640f1864e" android:sharedUserLabel="@string/android_system_label" package="android" coreApp="true"
+<manifest android:sharedUserId="android.uid.system" android:versionCode="17" android:versionName="4.2.2-eng.root.20140414.195911" android:sharedUserLabel="@string/android_system_label" package="android" coreApp="true"
   xmlns:android="http://schemas.android.com/apk/res/android" xmlns:pluto="http://www.w3.org/2001/pluto.html">
     <eat-comment />
     <protected-broadcast android:name="android.intent.action.SCREEN_OFF" />
@@ -99,7 +99,6 @@
     <protected-broadcast android:name="android.intent.action.CLEAR_DNS_CACHE" />
     <protected-broadcast android:name="android.intent.action.PROXY_CHANGE" />
     <protected-broadcast android:name="android.os.UpdateLock.UPDATE_LOCK_CHANGED" />
-    <protected-broadcast android:name="android.intent.action.NAVBAR_EDIT" />
     <protected-broadcast android:name="android.intent.action.DREAMING_STARTED" />
     <protected-broadcast android:name="android.intent.action.DREAMING_STOPPED" />
     <protected-broadcast android:name="android.intent.action.ANY_DATA_STATE" />
@@ -222,8 +221,6 @@
     <permission android:label="@string/permlab_changeWifiMulticastState" android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" android:protectionLevel="dangerous" android:permissionGroup="android.permission-group.AFFECTS_BATTERY" android:description="@string/permdesc_changeWifiMulticastState" />
     <permission android:label="@string/permlab_preventpower" android:name="android.permission.PREVENT_POWER_KEY" android:protectionLevel="signatureOrSystem" android:permissionGroup="android.permission-group.HARDWARE_CONTROLS" android:description="@string/permdesc_preventpower" />
     <permission android:label="@string/permlab_vibrate" android:name="android.permission.VIBRATE" android:protectionLevel="normal" android:permissionGroup="android.permission-group.AFFECTS_BATTERY" android:description="@string/permdesc_vibrate" />
-    <permission android:label="@string/permlab_fm_radio_receiver" android:name="com.stericsson.permission.FM_RADIO_RECEIVER" android:protectionLevel="normal" android:permissionGroup="android.permission-group.HARDWARE_CONTROLS" android:description="@string/permdesc_fm_radio_receiver" />
-    <permission android:label="@string/permlab_fm_radio_transmitter" android:name="com.stericsson.permission.FM_RADIO_TRANSMITTER" android:protectionLevel="dangerous" android:permissionGroup="android.permission-group.HARDWARE_CONTROLS" android:description="@string/permdesc_fm_radio_transmitter" />
     <permission android:label="@string/permlab_flashlight" android:name="android.permission.FLASHLIGHT" android:protectionLevel="normal" android:permissionGroup="android.permission-group.AFFECTS_BATTERY" android:description="@string/permdesc_flashlight" />
     <permission android:label="@string/permlab_wakeLock" android:name="android.permission.WAKE_LOCK" android:protectionLevel="normal" android:permissionGroup="android.permission-group.AFFECTS_BATTERY" android:description="@string/permdesc_wakeLock" />
     <permission-group android:label="@string/permgrouplab_audioSettings" android:icon="@drawable/perm_group_audio_settings" android:name="android.permission-group.AUDIO_SETTINGS" android:priority="130" android:description="@string/permgroupdesc_audioSettings" />
@@ -357,7 +354,6 @@
     <permission android:label="@string/permlab_deleteCacheFiles" android:name="android.permission.DELETE_CACHE_FILES" android:protectionLevel="system|signature" android:description="@string/permdesc_deleteCacheFiles" />
     <permission android:label="@string/permlab_deletePackages" android:name="android.permission.DELETE_PACKAGES" android:protectionLevel="system|signature" android:description="@string/permdesc_deletePackages" />
     <permission android:label="@string/permlab_movePackage" android:name="android.permission.MOVE_PACKAGE" android:protectionLevel="system|signature" android:description="@string/permdesc_movePackage" />
-    <permission android:label="@string/permlab_changePrivacyGuardState" android:name="android.permission.CHANGE_PRIVACY_GUARD_STATE" android:protectionLevel="signature" android:description="@string/permdesc_changePrivacyGuardState" />
     <permission android:label="@string/permlab_changeComponentState" android:name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" android:protectionLevel="system|signature" android:description="@string/permdesc_changeComponentState" />
     <permission android:label="@string/permlab_grantRevokePermissions" android:name="android.permission.GRANT_REVOKE_PERMISSIONS" android:protectionLevel="signature" android:description="@string/permdesc_grantRevokePermissions" />
     <permission android:label="@string/permlab_accessSurfaceFlinger" android:name="android.permission.ACCESS_SURFACE_FLINGER" android:protectionLevel="signature" android:description="@string/permdesc_accessSurfaceFlinger" />
@@ -370,8 +366,6 @@
     <permission android:name="android.permission.NET_TUNNELING" android:protectionLevel="signature" android:permissionGroup="android.permission-group.SYSTEM_TOOLS" />
     <permission android:label="@string/permlab_factoryTest" android:name="android.permission.FACTORY_TEST" android:protectionLevel="signature" android:description="@string/permdesc_factoryTest" />
     <permission android:label="@string/permlab_broadcastPackageRemoved" android:name="android.permission.BROADCAST_PACKAGE_REMOVED" android:protectionLevel="signature" android:permissionGroup="android.permission-group.SYSTEM_TOOLS" android:description="@string/permdesc_broadcastPackageRemoved" />
-    <permission android:label="@string/permlab_cancelNotifications" android:name="android.permission.CANCEL_NOTIFICATIONS" android:protectionLevel="system|signature" android:permissionGroup="android.permission-group.SYSTEM_TOOLS" android:description="@string/permdesc_cancelNotifications" />
-    <permission android:label="@string/permlab_interceptSmsSent" android:name="android.permission.INTERCEPT_SMS" android:protectionLevel="signature" android:permissionGroup="android.permission-group.MESSAGES" android:description="@string/permdesc_interceptSmsSent" />
     <permission android:label="@string/permlab_broadcastSmsReceived" android:name="android.permission.BROADCAST_SMS" android:protectionLevel="signature" android:permissionGroup="android.permission-group.MESSAGES" android:description="@string/permdesc_broadcastSmsReceived" />
     <permission android:label="@string/permlab_broadcastWapPush" android:name="android.permission.BROADCAST_WAP_PUSH" android:protectionLevel="signature" android:permissionGroup="android.permission-group.MESSAGES" android:description="@string/permdesc_broadcastWapPush" />
     <permission android:label="@string/permlab_masterClear" android:name="android.permission.MASTER_CLEAR" android:protectionLevel="system|signature" android:description="@string/permdesc_masterClear" />

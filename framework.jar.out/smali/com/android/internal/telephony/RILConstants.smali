@@ -328,13 +328,15 @@
 
 .field public static final RIL_UNSOL_CALL_RING:I = 0x3fa
 
+.field public static final RIL_UNSOL_CDMA_3G_INDICATOR:I = 0xbc1
+
 .field public static final RIL_UNSOL_CDMA_CALL_WAITING:I = 0x401
+
+.field public static final RIL_UNSOL_CDMA_ENHANCE_ROAMING_INDICATOR:I = 0xbc4
 
 .field public static final RIL_UNSOL_CDMA_INFO_REC:I = 0x403
 
 .field public static final RIL_UNSOL_CDMA_OTA_PROVISION_STATUS:I = 0x402
-
-.field public static final RIL_UNSOL_CDMA_PRL_CHANGED:I = 0x408
 
 .field public static final RIL_UNSOL_CDMA_RUIM_SMS_STORAGE_FULL:I = 0x3fe
 
@@ -343,6 +345,8 @@
 .field public static final RIL_UNSOL_DATA_CALL_LIST_CHANGED:I = 0x3f2
 
 .field public static final RIL_UNSOL_ENTER_EMERGENCY_CALLBACK_MODE:I = 0x400
+
+.field public static final RIL_UNSOL_ENTER_LPM:I = 0x5f3
 
 .field public static final RIL_UNSOL_EXIT_EMERGENCY_CALLBACK_MODE:I = 0x409
 
@@ -362,6 +366,10 @@
 
 .field public static final RIL_UNSOL_RESPONSE_CDMA_NEW_SMS:I = 0x3fc
 
+.field public static final RIL_UNSOL_RESPONSE_DATA_NETWORK_STATE_CHANGED:I = 0x520f
+
+.field public static final RIL_UNSOL_RESPONSE_IMS_NETWORK_STATE_CHANGED:I = 0x520d
+
 .field public static final RIL_UNSOL_RESPONSE_NEW_BROADCAST_SMS:I = 0x3fd
 
 .field public static final RIL_UNSOL_RESPONSE_NEW_SMS:I = 0x3eb
@@ -370,11 +378,15 @@
 
 .field public static final RIL_UNSOL_RESPONSE_NEW_SMS_STATUS_REPORT:I = 0x3ec
 
+.field public static final RIL_UNSOL_RESPONSE_PHONE_MODE_CHANGE:I = 0x1772
+
 .field public static final RIL_UNSOL_RESPONSE_RADIO_STATE_CHANGED:I = 0x3e8
 
 .field public static final RIL_UNSOL_RESPONSE_SIM_STATUS_CHANGED:I = 0x3fb
 
 .field public static final RIL_UNSOL_RESPONSE_VOICE_NETWORK_STATE_CHANGED:I = 0x3ea
+
+.field public static final RIL_UNSOL_RESPONSE_VOICE_RADIO_TECH_CHANGED:I = 0x520c
 
 .field public static final RIL_UNSOL_RESTRICTED_STATE_CHANGED:I = 0x3ff
 
@@ -401,6 +413,8 @@
 .field public static final RIL_UNSOL_SUPP_SVC_NOTIFICATION:I = 0x3f3
 
 .field public static final RIL_UNSOL_VOICE_RADIO_TECH_CHANGED:I = 0x40b
+
+.field public static final RIL_UNSOl_CDMA_PRL_CHANGED:I = 0x408
 
 .field public static final SETUP_DATA_AUTH_CHAP:I = 0x2
 

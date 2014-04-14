@@ -152,7 +152,7 @@
     iput v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMultiUserAvatar;->mTextColor:I
 
     .line 95
-    const v1, 0x1050074
+    const v1, 0x1050075
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDimension(I)F
 
@@ -161,7 +161,7 @@
     iput v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMultiUserAvatar;->mIconSize:F
 
     .line 96
-    const v1, 0x1050072
+    const v1, 0x1050073
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDimension(I)F
 
@@ -170,7 +170,7 @@
     iput v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMultiUserAvatar;->mStroke:F
 
     .line 97
-    const v1, 0x1050073
+    const v1, 0x1050074
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDimension(I)F
 
@@ -327,7 +327,7 @@
     iput-object p2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMultiUserAvatar;->mUserSelector:Lcom/android/internal/policy/impl/keyguard/KeyguardMultiUserSelectorView;
 
     .line 123
-    const v0, 0x10202b8
+    const v0, 0x10202ba
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardMultiUserAvatar;->findViewById(I)Landroid/view/View;
 
@@ -338,7 +338,7 @@
     iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMultiUserAvatar;->mUserImage:Landroid/widget/ImageView;
 
     .line 124
-    const v0, 0x10202b9
+    const v0, 0x10202bb
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardMultiUserAvatar;->findViewById(I)Landroid/view/View;
 
@@ -378,7 +378,7 @@
 
     move-result-object v0
 
-    const v2, 0x10802c2
+    const v2, 0x10802bf
 
     invoke-static {v0, v2}, Landroid/graphics/BitmapFactory;->decodeResource(Landroid/content/res/Resources;I)Landroid/graphics/Bitmap;
 
@@ -566,7 +566,7 @@
 
     iget-object v2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMultiUserAvatar;->mContext:Landroid/content/Context;
 
-    const v3, 0x10405b8
+    const v3, 0x104055a
 
     const/4 v4, 0x1
 

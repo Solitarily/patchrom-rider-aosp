@@ -40,7 +40,7 @@
     .line 125
     invoke-direct {p0, v1}, Landroid/content/ContextWrapper;-><init>(Landroid/content/Context;)V
 
-    .line 477
+    .line 467
     new-instance v0, Landroid/app/backup/BackupAgent$BackupServiceBinder;
 
     invoke-direct {v0, p0, v1}, Landroid/app/backup/BackupAgent$BackupServiceBinder;-><init>(Landroid/app/backup/BackupAgent;Landroid/app/backup/BackupAgent$1;)V
@@ -62,10 +62,10 @@
     .parameter "context"
 
     .prologue
-    .line 481
+    .line 471
     invoke-virtual {p0, p1}, Landroid/app/backup/BackupAgent;->attachBaseContext(Landroid/content/Context;)V
 
-    .line 482
+    .line 472
     return-void
 .end method
 
@@ -718,7 +718,7 @@
     .locals 1
 
     .prologue
-    .line 474
+    .line 464
     iget-object v0, p0, Landroid/app/backup/BackupAgent;->mBinder:Landroid/os/IBinder;
 
     return-object v0
@@ -974,7 +974,7 @@
 .end method
 
 .method protected onRestoreFile(Landroid/os/ParcelFileDescriptor;JILjava/lang/String;Ljava/lang/String;JJ)V
-    .locals 18
+    .locals 17
     .parameter "data"
     .parameter "size"
     .parameter "type"
@@ -1100,9 +1100,9 @@
 
     .line 447
     :goto_0
-    if-eqz v16, :cond_6
+    if-eqz v16, :cond_5
 
-    .line 449
+    .line 448
     new-instance v6, Ljava/io/File;
 
     move-object/from16 v0, v16
@@ -1111,43 +1111,8 @@
 
     invoke-direct {v6, v0, v1}, Ljava/io/File;-><init>(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 450
+    .line 449
     .local v6, outFile:Ljava/io/File;
-    invoke-virtual {v6}, Ljava/io/File;->getCanonicalPath()Ljava/lang/String;
-
-    move-result-object v17
-
-    .line 451
-    .local v17, outPath:Ljava/lang/String;
-    new-instance v2, Ljava/lang/StringBuilder;
-
-    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
-
-    move-object/from16 v0, v16
-
-    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    sget-char v3, Ljava/io/File;->separatorChar:C
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;
-
-    move-result-object v2
-
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v2
-
-    move-object/from16 v0, v17
-
-    invoke-virtual {v0, v2}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
-
-    move-result v2
-
-    if-eqz v2, :cond_5
-
-    .line 452
     const-string v2, "BackupAgent"
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -1184,9 +1149,11 @@
 
     move-result-object v3
 
-    move-object/from16 v0, v17
+    invoke-virtual {v6}, Ljava/io/File;->getPath()Ljava/lang/String;
 
-    invoke-virtual {v3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    move-result-object v4
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v3
 
@@ -1208,12 +1175,11 @@
 
     move-wide/from16 v10, p9
 
-    .line 453
+    .line 450
     invoke-virtual/range {v2 .. v11}, Landroid/app/backup/BackupAgent;->onRestoreFile(Landroid/os/ParcelFileDescriptor;JLjava/io/File;IJJ)V
 
-    .line 468
+    .line 458
     .end local v6           #outFile:Ljava/io/File;
-    .end local v17           #outPath:Ljava/lang/String;
     :goto_1
     return-void
 
@@ -1246,7 +1212,7 @@
 
     move-result-object v16
 
-    goto/16 :goto_0
+    goto :goto_0
 
     .line 435
     :cond_1
@@ -1339,7 +1305,7 @@
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v4, "Unrecognized domain "
+    const-string v4, "Data restored from non-app domain "
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -1351,6 +1317,12 @@
 
     move-result-object v3
 
+    const-string v4, ", ignoring"
+
+    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
     invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 
     move-result-object v3
@@ -1359,9 +1331,7 @@
 
     goto/16 :goto_0
 
-    .line 458
-    .restart local v6       #outFile:Ljava/io/File;
-    .restart local v17       #outPath:Ljava/lang/String;
+    .line 455
     :cond_5
     const-string v2, "BackupAgent"
 
@@ -1369,41 +1339,13 @@
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
 
-    const-string v4, "Cross-domain restore attempt: "
+    const-string v4, "[ skipping data from unsupported domain "
 
     invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
     move-result-object v3
 
-    move-object/from16 v0, v17
-
-    invoke-virtual {v3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
-
-    move-result-object v3
-
-    invoke-static {v2, v3}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
-
-    .line 466
-    .end local v6           #outFile:Ljava/io/File;
-    .end local v17           #outPath:Ljava/lang/String;
-    :cond_6
-    const-string v2, "BackupAgent"
-
-    new-instance v3, Ljava/lang/StringBuilder;
-
-    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
-
-    const-string v4, "[ skipping file "
-
-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
-
-    move-result-object v3
-
-    move-object/from16 v0, p6
+    move-object/from16 v0, p5
 
     invoke-virtual {v3, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 
@@ -1421,7 +1363,7 @@
 
     invoke-static {v2, v3}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 467
+    .line 456
     const/4 v15, 0x0
 
     move-object/from16 v7, p1

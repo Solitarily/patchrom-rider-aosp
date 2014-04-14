@@ -76,7 +76,7 @@
 
     .line 57
     .local v4, resolver:Landroid/content/ContentResolver;
-    const v9, 0x104008f
+    const v9, 0x1040026
 
     invoke-virtual {v3, v9}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 

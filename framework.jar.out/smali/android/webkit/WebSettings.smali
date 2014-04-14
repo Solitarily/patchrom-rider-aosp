@@ -47,7 +47,7 @@
     .parameter "context"
 
     .prologue
-    .line 1287
+    .line 1267
     invoke-static {}, Landroid/webkit/WebViewFactory;->getProvider()Landroid/webkit/WebViewFactoryProvider;
 
     move-result-object v0
@@ -113,7 +113,7 @@
     .locals 1
 
     .prologue
-    .line 1331
+    .line 888
     monitor-enter p0
 
     :try_start_0
@@ -137,7 +137,7 @@
     .locals 1
 
     .prologue
-    .line 888
+    .line 920
     monitor-enter p0
 
     :try_start_0
@@ -161,7 +161,6 @@
     .locals 1
 
     .prologue
-    .line 920
     monitor-enter p0
 
     :try_start_0
@@ -197,7 +196,7 @@
     .locals 1
 
     .prologue
-    .line 1335
+    .line 1315
     new-instance v0, Landroid/webkit/MustOverrideException;
 
     invoke-direct {v0}, Landroid/webkit/MustOverrideException;-><init>()V
@@ -233,7 +232,7 @@
     .locals 1
 
     .prologue
-    .line 1130
+    .line 1120
     monitor-enter p0
 
     :try_start_0
@@ -257,7 +256,7 @@
     .locals 1
 
     .prologue
-    .line 1120
+    .line 1110
     monitor-enter p0
 
     :try_start_0
@@ -329,7 +328,7 @@
     .locals 1
 
     .prologue
-    .line 1258
+    .line 1238
     monitor-enter p0
 
     :try_start_0
@@ -377,7 +376,7 @@
     .locals 1
 
     .prologue
-    .line 1111
+    .line 1101
     monitor-enter p0
 
     :try_start_0
@@ -449,7 +448,7 @@
     .locals 1
 
     .prologue
-    .line 1239
+    .line 1219
     monitor-enter p0
 
     :try_start_0
@@ -473,7 +472,7 @@
     .locals 1
 
     .prologue
-    .line 1161
+    .line 1141
     monitor-enter p0
 
     :try_start_0
@@ -643,7 +642,7 @@
     .locals 1
 
     .prologue
-    .line 1204
+    .line 1184
     monitor-enter p0
 
     :try_start_0
@@ -669,7 +668,7 @@
     .end annotation
 
     .prologue
-    .line 1194
+    .line 1174
     monitor-enter p0
 
     :try_start_0
@@ -695,7 +694,7 @@
     .end annotation
 
     .prologue
-    .line 1218
+    .line 1198
     monitor-enter p0
 
     :try_start_0
@@ -1031,11 +1030,11 @@
     throw v0
 .end method
 
-.method public declared-synchronized getUserAgentString()Ljava/lang/String;
+.method public declared-synchronized setBlockFloatPopupWindows(Z)V
     .locals 1
+    .parameter "flag"
 
     .prologue
-    .line 1276
     monitor-enter p0
 
     :try_start_0
@@ -1055,11 +1054,11 @@
     throw v0
 .end method
 
-.method public declared-synchronized getWebSocketsEnabled()Z
+.method public declared-synchronized getUserAgentString()Ljava/lang/String;
     .locals 1
 
     .prologue
-    .line 1140
+    .line 1256
     monitor-enter p0
 
     :try_start_0
@@ -1186,31 +1185,6 @@
     throw v0
 .end method
 
-.method public declared-synchronized setBlockFloatPopupWindows(Z)V
-    .locals 1
-    .parameter "flag"
-
-    .prologue
-    .line 1323
-    monitor-enter p0
-
-    :try_start_0
-    new-instance v0, Landroid/webkit/MustOverrideException;
-
-    invoke-direct {v0}, Landroid/webkit/MustOverrideException;-><init>()V
-
-    throw v0
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    :catchall_0
-    move-exception v0
-
-    monitor-exit p0
-
-    throw v0
-.end method
-
 .method public declared-synchronized setBlockNetworkImage(Z)V
     .locals 1
     .parameter "flag"
@@ -1279,7 +1253,7 @@
     .parameter "mode"
 
     .prologue
-    .line 1325
+    .line 1305
     new-instance v0, Landroid/webkit/MustOverrideException;
 
     invoke-direct {v0}, Landroid/webkit/MustOverrideException;-><init>()V
@@ -1417,7 +1391,7 @@
     .parameter "encoding"
 
     .prologue
-    .line 1248
+    .line 1228
     monitor-enter p0
 
     :try_start_0
@@ -1468,7 +1442,7 @@
     .parameter "flag"
 
     .prologue
-    .line 1101
+    .line 1091
     monitor-enter p0
 
     :try_start_0
@@ -1583,7 +1557,7 @@
     .parameter "flag"
 
     .prologue
-    .line 1151
+    .line 1131
     monitor-enter p0
 
     :try_start_0
@@ -1608,7 +1582,7 @@
     .parameter "flag"
 
     .prologue
-    .line 1228
+    .line 1208
     monitor-enter p0
 
     :try_start_0
@@ -1812,7 +1786,7 @@
     .parameter "flag"
 
     .prologue
-    .line 1298
+    .line 1278
     new-instance v0, Landroid/webkit/MustOverrideException;
 
     invoke-direct {v0}, Landroid/webkit/MustOverrideException;-><init>()V
@@ -1892,7 +1866,7 @@
     .parameter "priority"
 
     .prologue
-    .line 1309
+    .line 1289
     monitor-enter p0
 
     :try_start_0
@@ -2192,32 +2166,7 @@
     .parameter "ua"
 
     .prologue
-    .line 1266
-    monitor-enter p0
-
-    :try_start_0
-    new-instance v0, Landroid/webkit/MustOverrideException;
-
-    invoke-direct {v0}, Landroid/webkit/MustOverrideException;-><init>()V
-
-    throw v0
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    :catchall_0
-    move-exception v0
-
-    monitor-exit p0
-
-    throw v0
-.end method
-
-.method public declared-synchronized setWebSocketsEnabled(Z)V
-    .locals 1
-    .parameter "flag"
-
-    .prologue
-    .line 1092
+    .line 1246
     monitor-enter p0
 
     :try_start_0

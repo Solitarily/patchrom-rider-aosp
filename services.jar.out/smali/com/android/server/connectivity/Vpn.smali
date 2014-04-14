@@ -449,7 +449,7 @@
     if-eqz v0, :cond_0
 
     .line 437
-    const v1, 0x1080667
+    const v1, 0x1080612
 
     sget-object v2, Landroid/os/UserHandle;->ALL:Landroid/os/UserHandle;
 
@@ -486,7 +486,7 @@
     .parameter "icon"
 
     .prologue
-    const v10, 0x1080667
+    const v10, 0x1080612
 
     const/4 v9, 0x1
 
@@ -532,7 +532,7 @@
 
     iget-object v4, p0, Lcom/android/server/connectivity/Vpn;->mContext:Landroid/content/Context;
 
-    const v5, 0x10404f6
+    const v5, 0x1040498
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -547,7 +547,7 @@
 
     iget-object v4, p0, Lcom/android/server/connectivity/Vpn;->mContext:Landroid/content/Context;
 
-    const v5, 0x10404f8
+    const v5, 0x104049a
 
     invoke-virtual {v4, v5}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -620,7 +620,7 @@
     :cond_2
     iget-object v4, p0, Lcom/android/server/connectivity/Vpn;->mContext:Landroid/content/Context;
 
-    const v5, 0x10404f7
+    const v5, 0x1040499
 
     new-array v6, v9, [Ljava/lang/Object;
 
@@ -637,7 +637,7 @@
     :cond_3
     iget-object v4, p0, Lcom/android/server/connectivity/Vpn;->mContext:Landroid/content/Context;
 
-    const v5, 0x10404f9
+    const v5, 0x104049b
 
     new-array v6, v9, [Ljava/lang/Object;
 

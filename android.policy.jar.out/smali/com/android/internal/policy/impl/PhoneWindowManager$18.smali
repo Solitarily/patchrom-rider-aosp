@@ -24,7 +24,7 @@
     .parameter
 
     .prologue
-    .line 4339
+    .line 3919
     iput-object p1, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$18;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
     invoke-direct {p0}, Landroid/content/BroadcastReceiver;-><init>()V
@@ -35,68 +35,63 @@
 
 # virtual methods
 .method public onReceive(Landroid/content/Context;Landroid/content/Intent;)V
-    .locals 3
+    .locals 5
     .parameter "context"
     .parameter "intent"
 
     .prologue
-    const/4 v2, 0x0
+    const/4 v4, 0x0
 
-    .line 4342
-    const-string v0, "android.intent.action.USER_SWITCHED"
+    const/4 v3, 0x1
 
+    .line 3921
     invoke-virtual {p2}, Landroid/content/Intent;->getAction()Ljava/lang/String;
 
-    move-result-object v1
+    move-result-object v0
 
-    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    .line 3922
+    .local v0, action:Ljava/lang/String;
+    const-string v2, "qualcomm.intent.action.WIFI_DISPLAY_VIDEO"
 
-    move-result v0
+    invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    if-eqz v0, :cond_0
+    move-result v2
 
-    .line 4347
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$18;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
+    if-eqz v2, :cond_0
 
-    iget-object v0, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mSettingsObserver:Lcom/android/internal/policy/impl/PhoneWindowManager$SettingsObserver;
+    .line 3923
+    const-string v2, "state"
 
-    invoke-virtual {v0, v2}, Lcom/android/internal/policy/impl/PhoneWindowManager$SettingsObserver;->onChange(Z)V
+    invoke-virtual {p2, v2, v4}, Landroid/content/Intent;->getIntExtra(Ljava/lang/String;I)I
 
-    .line 4352
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$18;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
+    move-result v1
 
-    iget-object v1, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mLock:Ljava/lang/Object;
+    .line 3924
+    .local v1, state:I
+    if-ne v1, v3, :cond_1
 
-    monitor-enter v1
+    .line 3925
+    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$18;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
-    .line 4353
-    :try_start_0
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$18;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
+    iput-boolean v3, v2, Lcom/android/internal/policy/impl/PhoneWindowManager;->mWifiDisplayConnected:Z
 
-    const/4 v2, 0x0
+    .line 3929
+    :goto_0
+    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$18;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
-    iput v2, v0, Lcom/android/internal/policy/impl/PhoneWindowManager;->mLastSystemUiFlags:I
+    invoke-virtual {v2, v3}, Lcom/android/internal/policy/impl/PhoneWindowManager;->updateRotation(Z)V
 
-    .line 4354
-    iget-object v0, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$18;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
-
-    #calls: Lcom/android/internal/policy/impl/PhoneWindowManager;->updateSystemUiVisibilityLw()I
-    invoke-static {v0}, Lcom/android/internal/policy/impl/PhoneWindowManager;->access$600(Lcom/android/internal/policy/impl/PhoneWindowManager;)I
-
-    .line 4355
-    monitor-exit v1
-
-    .line 4357
+    .line 3931
+    .end local v1           #state:I
     :cond_0
     return-void
 
-    .line 4355
-    :catchall_0
-    move-exception v0
+    .line 3927
+    .restart local v1       #state:I
+    :cond_1
+    iget-object v2, p0, Lcom/android/internal/policy/impl/PhoneWindowManager$18;->this$0:Lcom/android/internal/policy/impl/PhoneWindowManager;
 
-    monitor-exit v1
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+    iput-boolean v4, v2, Lcom/android/internal/policy/impl/PhoneWindowManager;->mWifiDisplayConnected:Z
 
-    throw v0
+    goto :goto_0
 .end method

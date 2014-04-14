@@ -3,7 +3,7 @@
 .source "KeyguardHostView.java"
 
 # interfaces
-.implements Landroid/view/View$OnLongClickListener;
+.implements Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager$Callbacks;
 
 
 # annotations
@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 324
+    .line 393
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -37,41 +37,132 @@
 
 
 # virtual methods
-.method public onLongClick(Landroid/view/View;)Z
+.method public onAddView(Landroid/view/View;)V
     .locals 2
     .parameter "v"
 
     .prologue
-    const/4 v1, 0x0
-
-    .line 327
+    .line 406
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
 
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$300(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/widget/LockPatternUtils;
+    #calls: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->shouldEnableAddWidget()Z
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$300(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Z
+
+    move-result v0
+
+    if-nez v0, :cond_0
+
+    .line 407
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+
+    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mAppWidgetContainer:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$400(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
 
     move-result-object v0
 
-    invoke-virtual {v0}, Lcom/android/internal/widget/LockPatternUtils;->isTactileFeedbackEnabled()Z
+    const/4 v1, 0x0
+
+    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->setAddWidgetEnabled(Z)V
+
+    .line 409
+    :cond_0
+    return-void
+.end method
+
+.method public onRemoveView(Landroid/view/View;Z)V
+    .locals 2
+    .parameter "v"
+    .parameter "deletePermanently"
+
+    .prologue
+    .line 413
+    if-eqz p2, :cond_0
+
+    .line 414
+    check-cast p1, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetFrame;
+
+    .end local p1
+    invoke-virtual {p1}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetFrame;->getContentAppWidgetId()I
+
+    move-result v0
+
+    .line 415
+    .local v0, appWidgetId:I
+    if-eqz v0, :cond_0
+
+    const/4 v1, -0x2
+
+    if-eq v0, v1, :cond_0
+
+    .line 417
+    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+
+    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mAppWidgetHost:Landroid/appwidget/AppWidgetHost;
+    invoke-static {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$500(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Landroid/appwidget/AppWidgetHost;
+
+    move-result-object v1
+
+    invoke-virtual {v1, v0}, Landroid/appwidget/AppWidgetHost;->deleteAppWidgetId(I)V
+
+    .line 420
+    .end local v0           #appWidgetId:I
+    :cond_0
+    return-void
+.end method
+
+.method public onRemoveViewAnimationCompleted()V
+    .locals 2
+
+    .prologue
+    .line 424
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+
+    #calls: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->shouldEnableAddWidget()Z
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$300(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    .line 328
-    const/4 v0, 0x2
-
-    invoke-virtual {p1, v1, v0}, Landroid/view/View;->performHapticFeedback(II)Z
-
-    .line 331
-    :cond_0
+    .line 425
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
 
-    #calls: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->showNextSecurityScreenOrFinish(Z)V
-    invoke-static {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$400(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;Z)V
+    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mAppWidgetContainer:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$400(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
 
-    .line 332
-    const/4 v0, 0x1
+    move-result-object v0
 
-    return v0
+    const/4 v1, 0x1
+
+    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->setAddWidgetEnabled(Z)V
+
+    .line 427
+    :cond_0
+    return-void
+.end method
+
+.method public onUserActivityTimeoutChanged()V
+    .locals 1
+
+    .prologue
+    .line 401
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->onUserActivityTimeoutChanged()V
+
+    .line 402
+    return-void
+.end method
+
+.method public userActivity()V
+    .locals 1
+
+    .prologue
+    .line 396
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$2;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+
+    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->userActivity()V
+
+    .line 397
+    return-void
 .end method

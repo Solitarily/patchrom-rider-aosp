@@ -25,13 +25,13 @@
     .parameter "context"
 
     .prologue
-    .line 113
+    .line 138
     iput-object p1, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
 
-    .line 114
+    .line 139
     invoke-direct {p0}, Landroid/widget/BaseAdapter;-><init>()V
 
-    .line 115
+    .line 140
     return-void
 .end method
 
@@ -41,7 +41,16 @@
     .locals 1
 
     .prologue
-    .line 126
+    .line 155
+    iget-object v0, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
+
+    #getter for: Landroid/text/method/CharacterPickerDialog;->mOptions:Ljava/lang/String;
+    invoke-static {v0}, Landroid/text/method/CharacterPickerDialog;->access$100(Landroid/text/method/CharacterPickerDialog;)Ljava/lang/String;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_0
+
     iget-object v0, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
 
     #getter for: Landroid/text/method/CharacterPickerDialog;->mOptions:Ljava/lang/String;
@@ -53,31 +62,76 @@
 
     move-result v0
 
+    :goto_0
     return v0
+
+    :cond_0
+    iget-object v0, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
+
+    #getter for: Landroid/text/method/CharacterPickerDialog;->mOptionsArray:[Ljava/lang/String;
+    invoke-static {v0}, Landroid/text/method/CharacterPickerDialog;->access$200(Landroid/text/method/CharacterPickerDialog;)[Ljava/lang/String;
+
+    move-result-object v0
+
+    array-length v0, v0
+
+    goto :goto_0
 .end method
 
 .method public final getItem(I)Ljava/lang/Object;
-    .locals 1
+    .locals 2
     .parameter "position"
 
     .prologue
-    .line 130
-    iget-object v0, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
+    .line 160
+    iget-object v1, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
 
     #getter for: Landroid/text/method/CharacterPickerDialog;->mOptions:Ljava/lang/String;
-    invoke-static {v0}, Landroid/text/method/CharacterPickerDialog;->access$100(Landroid/text/method/CharacterPickerDialog;)Ljava/lang/String;
+    invoke-static {v1}, Landroid/text/method/CharacterPickerDialog;->access$100(Landroid/text/method/CharacterPickerDialog;)Ljava/lang/String;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_0
+
+    .line 161
+    iget-object v1, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
+
+    #getter for: Landroid/text/method/CharacterPickerDialog;->mOptions:Ljava/lang/String;
+    invoke-static {v1}, Landroid/text/method/CharacterPickerDialog;->access$100(Landroid/text/method/CharacterPickerDialog;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v1, p1}, Ljava/lang/String;->charAt(I)C
+
+    move-result v1
+
+    invoke-static {v1}, Ljava/lang/String;->valueOf(C)Ljava/lang/String;
 
     move-result-object v0
 
-    invoke-virtual {v0, p1}, Ljava/lang/String;->charAt(I)C
-
-    move-result v0
-
-    invoke-static {v0}, Ljava/lang/String;->valueOf(C)Ljava/lang/String;
-
-    move-result-object v0
-
+    .line 165
+    .local v0, item:Ljava/lang/String;
+    :goto_0
     return-object v0
+
+    .line 163
+    .end local v0           #item:Ljava/lang/String;
+    :cond_0
+    iget-object v1, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
+
+    #getter for: Landroid/text/method/CharacterPickerDialog;->mOptionsArray:[Ljava/lang/String;
+    invoke-static {v1}, Landroid/text/method/CharacterPickerDialog;->access$200(Landroid/text/method/CharacterPickerDialog;)[Ljava/lang/String;
+
+    move-result-object v1
+
+    aget-object v1, v1, p1
+
+    invoke-static {v1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v0
+
+    .restart local v0       #item:Ljava/lang/String;
+    goto :goto_0
 .end method
 
 .method public final getItemId(I)J
@@ -85,7 +139,7 @@
     .parameter "position"
 
     .prologue
-    .line 134
+    .line 169
     int-to-long v0, p1
 
     return-wide v0
@@ -98,7 +152,7 @@
     .parameter "parent"
 
     .prologue
-    .line 118
+    .line 143
     iget-object v1, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
 
     #getter for: Landroid/text/method/CharacterPickerDialog;->mInflater:Landroid/view/LayoutInflater;
@@ -116,8 +170,18 @@
 
     check-cast v0, Landroid/widget/Button;
 
-    .line 120
+    .line 145
     .local v0, b:Landroid/widget/Button;
+    iget-object v1, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
+
+    #getter for: Landroid/text/method/CharacterPickerDialog;->mOptions:Ljava/lang/String;
+    invoke-static {v1}, Landroid/text/method/CharacterPickerDialog;->access$100(Landroid/text/method/CharacterPickerDialog;)Ljava/lang/String;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_0
+
+    .line 146
     iget-object v1, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
 
     #getter for: Landroid/text/method/CharacterPickerDialog;->mOptions:Ljava/lang/String;
@@ -135,11 +199,31 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
 
-    .line 121
+    .line 150
+    :goto_0
     iget-object v1, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
 
     invoke-virtual {v0, v1}, Landroid/widget/Button;->setOnClickListener(Landroid/view/View$OnClickListener;)V
 
-    .line 122
+    .line 151
     return-object v0
+
+    .line 148
+    :cond_0
+    iget-object v1, p0, Landroid/text/method/CharacterPickerDialog$OptionsAdapter;->this$0:Landroid/text/method/CharacterPickerDialog;
+
+    #getter for: Landroid/text/method/CharacterPickerDialog;->mOptionsArray:[Ljava/lang/String;
+    invoke-static {v1}, Landroid/text/method/CharacterPickerDialog;->access$200(Landroid/text/method/CharacterPickerDialog;)[Ljava/lang/String;
+
+    move-result-object v1
+
+    aget-object v1, v1, p1
+
+    invoke-static {v1}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Landroid/widget/Button;->setText(Ljava/lang/CharSequence;)V
+
+    goto :goto_0
 .end method

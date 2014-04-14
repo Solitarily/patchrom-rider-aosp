@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 77
+    .line 73
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea$1;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -41,28 +41,28 @@
     .locals 3
 
     .prologue
-    .line 80
+    .line 76
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea$1;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;
 
     const/4 v1, 0x0
 
     iput-object v1, v0, Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;->mMessage:Ljava/lang/CharSequence;
 
-    .line 81
+    .line 77
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea$1;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;
 
     const/4 v1, 0x0
 
     iput-boolean v1, v0, Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;->mShowingMessage:Z
 
-    .line 82
+    .line 78
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea$1;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;
 
     iget-boolean v0, v0, Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;->mShowingBouncer:Z
 
     if-eqz v0, :cond_0
 
-    .line 83
+    .line 79
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea$1;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;
 
     const/16 v1, 0x2ee
@@ -72,11 +72,11 @@
     #calls: Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;->hideMessage(IZ)V
     invoke-static {v0, v1, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;->access$000(Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;IZ)V
 
-    .line 87
+    .line 83
     :goto_0
     return-void
 
-    .line 85
+    .line 81
     :cond_0
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea$1;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardMessageArea;
 

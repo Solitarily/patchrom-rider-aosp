@@ -1,11 +1,14 @@
 .class Lcom/android/internal/policy/impl/GlobalActions$9;
-.super Lcom/android/internal/policy/impl/GlobalActions$SinglePressAction;
+.super Ljava/lang/Object;
 .source "GlobalActions.java"
+
+# interfaces
+.implements Landroid/content/ServiceConnection;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Lcom/android/internal/policy/impl/GlobalActions;->addUsersToMenu(Ljava/util/ArrayList;)V
+    value = Lcom/android/internal/policy/impl/GlobalActions;->takeScreenshot()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -17,100 +20,173 @@
 # instance fields
 .field final synthetic this$0:Lcom/android/internal/policy/impl/GlobalActions;
 
-.field final synthetic val$user:Landroid/content/pm/UserInfo;
-
 
 # direct methods
-.method constructor <init>(Lcom/android/internal/policy/impl/GlobalActions;ILandroid/graphics/drawable/Drawable;Ljava/lang/CharSequence;Landroid/content/pm/UserInfo;)V
+.method constructor <init>(Lcom/android/internal/policy/impl/GlobalActions;)V
     .locals 0
-    .parameter
-    .parameter "x0"
-    .parameter "x1"
-    .parameter "x2"
     .parameter
 
     .prologue
-    .line 515
+    .line 495
     iput-object p1, p0, Lcom/android/internal/policy/impl/GlobalActions$9;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
 
-    iput-object p5, p0, Lcom/android/internal/policy/impl/GlobalActions$9;->val$user:Landroid/content/pm/UserInfo;
-
-    invoke-direct {p0, p2, p3, p4}, Lcom/android/internal/policy/impl/GlobalActions$SinglePressAction;-><init>(ILandroid/graphics/drawable/Drawable;Ljava/lang/CharSequence;)V
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onPress()V
-    .locals 4
+.method public onServiceConnected(Landroid/content/ComponentName;Landroid/os/IBinder;)V
+    .locals 8
+    .parameter "name"
+    .parameter "service"
 
     .prologue
-    .line 518
+    .line 498
+    iget-object v4, p0, Lcom/android/internal/policy/impl/GlobalActions$9;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
+
+    iget-object v5, v4, Lcom/android/internal/policy/impl/GlobalActions;->mScreenshotLock:Ljava/lang/Object;
+
+    monitor-enter v5
+
+    .line 499
     :try_start_0
-    invoke-static {}, Landroid/app/ActivityManagerNative;->getDefault()Landroid/app/IActivityManager;
+    iget-object v4, p0, Lcom/android/internal/policy/impl/GlobalActions$9;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
 
-    move-result-object v1
+    iget-object v4, v4, Lcom/android/internal/policy/impl/GlobalActions;->mScreenshotConnection:Landroid/content/ServiceConnection;
 
-    iget-object v2, p0, Lcom/android/internal/policy/impl/GlobalActions$9;->val$user:Landroid/content/pm/UserInfo;
+    if-eq v4, p0, :cond_0
 
-    iget v2, v2, Landroid/content/pm/UserInfo;->id:I
+    .line 500
+    monitor-exit v5
 
-    invoke-interface {v1, v2}, Landroid/app/IActivityManager;->switchUser(I)Z
-    :try_end_0
-    .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
-
-    .line 522
+    .line 539
     :goto_0
     return-void
 
-    .line 519
-    :catch_0
-    move-exception v0
+    .line 502
+    :cond_0
+    new-instance v1, Landroid/os/Messenger;
 
-    .line 520
-    .local v0, re:Landroid/os/RemoteException;
-    const-string v1, "GlobalActions"
+    invoke-direct {v1, p2}, Landroid/os/Messenger;-><init>(Landroid/os/IBinder;)V
 
-    new-instance v2, Ljava/lang/StringBuilder;
+    .line 503
+    .local v1, messenger:Landroid/os/Messenger;
+    const/4 v4, 0x0
 
-    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+    const/4 v6, 0x1
 
-    const-string v3, "Couldn\'t switch user "
-
-    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+    invoke-static {v4, v6}, Landroid/os/Message;->obtain(Landroid/os/Handler;I)Landroid/os/Message;
 
     move-result-object v2
 
-    invoke-virtual {v2, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+    .line 504
+    .local v2, msg:Landroid/os/Message;
+    move-object v3, p0
 
-    move-result-object v2
+    .line 505
+    .local v3, myConn:Landroid/content/ServiceConnection;
+    new-instance v0, Lcom/android/internal/policy/impl/GlobalActions$9$1;
 
-    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+    iget-object v4, p0, Lcom/android/internal/policy/impl/GlobalActions$9;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
 
-    move-result-object v2
+    #getter for: Lcom/android/internal/policy/impl/GlobalActions;->mHandler:Landroid/os/Handler;
+    invoke-static {v4}, Lcom/android/internal/policy/impl/GlobalActions;->access$700(Lcom/android/internal/policy/impl/GlobalActions;)Landroid/os/Handler;
 
-    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+    move-result-object v4
+
+    invoke-virtual {v4}, Landroid/os/Handler;->getLooper()Landroid/os/Looper;
+
+    move-result-object v4
+
+    invoke-direct {v0, p0, v4, v3}, Lcom/android/internal/policy/impl/GlobalActions$9$1;-><init>(Lcom/android/internal/policy/impl/GlobalActions$9;Landroid/os/Looper;Landroid/content/ServiceConnection;)V
+
+    .line 517
+    .local v0, h:Landroid/os/Handler;
+    new-instance v4, Landroid/os/Messenger;
+
+    invoke-direct {v4, v0}, Landroid/os/Messenger;-><init>(Landroid/os/Handler;)V
+
+    iput-object v4, v2, Landroid/os/Message;->replyTo:Landroid/os/Messenger;
+
+    .line 518
+    const/4 v4, 0x0
+
+    iput v4, v2, Landroid/os/Message;->arg2:I
+
+    iput v4, v2, Landroid/os/Message;->arg1:I
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    .line 529
+    :try_start_1
+    iget-object v4, p0, Lcom/android/internal/policy/impl/GlobalActions$9;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
+
+    #getter for: Lcom/android/internal/policy/impl/GlobalActions;->mScreenshotDelay:I
+    invoke-static {v4}, Lcom/android/internal/policy/impl/GlobalActions;->access$1000(Lcom/android/internal/policy/impl/GlobalActions;)I
+
+    move-result v4
+
+    mul-int/lit16 v4, v4, 0x3e8
+
+    int-to-long v6, v4
+
+    invoke-static {v6, v7}, Ljava/lang/Thread;->sleep(J)V
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
+    .catch Ljava/lang/InterruptedException; {:try_start_1 .. :try_end_1} :catch_1
+
+    .line 535
+    :goto_1
+    :try_start_2
+    invoke-virtual {v1, v2}, Landroid/os/Messenger;->send(Landroid/os/Message;)V
+    :try_end_2
+    .catchall {:try_start_2 .. :try_end_2} :catchall_0
+    .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_0
+
+    .line 538
+    :goto_2
+    :try_start_3
+    monitor-exit v5
 
     goto :goto_0
+
+    .end local v0           #h:Landroid/os/Handler;
+    .end local v1           #messenger:Landroid/os/Messenger;
+    .end local v2           #msg:Landroid/os/Message;
+    .end local v3           #myConn:Landroid/content/ServiceConnection;
+    :catchall_0
+    move-exception v4
+
+    monitor-exit v5
+    :try_end_3
+    .catchall {:try_start_3 .. :try_end_3} :catchall_0
+
+    throw v4
+
+    .line 536
+    .restart local v0       #h:Landroid/os/Handler;
+    .restart local v1       #messenger:Landroid/os/Messenger;
+    .restart local v2       #msg:Landroid/os/Message;
+    .restart local v3       #myConn:Landroid/content/ServiceConnection;
+    :catch_0
+    move-exception v4
+
+    goto :goto_2
+
+    .line 530
+    :catch_1
+    move-exception v4
+
+    goto :goto_1
 .end method
 
-.method public showBeforeProvisioning()Z
-    .locals 1
+.method public onServiceDisconnected(Landroid/content/ComponentName;)V
+    .locals 0
+    .parameter "name"
 
     .prologue
-    .line 529
-    const/4 v0, 0x0
-
-    return v0
-.end method
-
-.method public showDuringKeyguard()Z
-    .locals 1
-
-    .prologue
-    .line 525
-    const/4 v0, 0x1
-
-    return v0
+    .line 541
+    return-void
 .end method

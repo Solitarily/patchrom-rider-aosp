@@ -35,6 +35,8 @@
     <dimen name="glowpadview_glow_radius">75.0dip</dimen>
     <dimen name="glowpadview_snap_margin">40.0dip</dimen>
     <dimen name="glowpadview_inner_radius">15.0dip</dimen>
+    <dimen name="multiwaveview_target_placement_radius">135.0dip</dimen>
+    <dimen name="multiwaveview_snap_margin">20.0dip</dimen>
     <dimen name="preference_screen_side_margin">0.0dip</dimen>
     <dimen name="preference_screen_side_margin_negative">0.0dip</dimen>
     <dimen name="preference_screen_top_margin">0.0dip</dimen>
@@ -88,7 +90,6 @@
     <dimen name="notification_text_size">14.0dip</dimen>
     <dimen name="notification_title_text_size">18.0dip</dimen>
     <dimen name="notification_subtext_size">12.0dip</dimen>
-    <dimen name="lockscreen_target_inset">30.0dip</dimen>
     <dimen name="kg_security_panel_height">600.0dip</dimen>
     <dimen name="kg_security_view_height">480.0dip</dimen>
     <dimen name="kg_widget_view_width">0.0dip</dimen>
@@ -122,8 +123,5 @@
     <dimen name="kg_squashed_layout_threshold">600.0dip</dimen>
     <dimen name="kg_small_widget_height">160.0dip</dimen>
     <dimen name="kg_num_pad_key_padding_left">10.0dip</dimen>
-    <dimen name="pie_trigger_distance">12.0dip</dimen>
-    <dimen name="pie_perpendicular_distance">15.0dip</dimen>
-    <dimen name="pie_trigger_thickness">12.0dip</dimen>
-    <item type="dimen" name="APKTOOL_DUMMY_007e">false</item>
+    <item type="dimen" name="APKTOOL_DUMMY_007c">false</item>
 </resources>

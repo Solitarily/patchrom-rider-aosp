@@ -164,7 +164,7 @@
     .line 194
     const/16 v1, 0xb
 
-    const v2, 0x10900c3
+    const v2, 0x10900c6
 
     invoke-virtual {v0, v1, v2}, Landroid/content/res/TypedArray;->getResourceId(II)I
 
@@ -483,7 +483,7 @@
     .line 589
     iget-object v3, p0, Lcom/android/internal/app/AlertController;->mWindow:Landroid/view/Window;
 
-    const v4, 0x102025b
+    const v4, 0x102025d
 
     invoke-virtual {v3, v4}, Landroid/view/Window;->findViewById(I)Landroid/view/View;
 
@@ -500,7 +500,7 @@
     :cond_0
     iget-object v3, p0, Lcom/android/internal/app/AlertController;->mWindow:Landroid/view/Window;
 
-    const v4, 0x102025c
+    const v4, 0x102025e
 
     invoke-virtual {v3, v4}, Landroid/view/Window;->findViewById(I)Landroid/view/View;
 
@@ -532,7 +532,7 @@
     .line 604
     const/16 v19, 0x0
 
-    const v20, 0x10804c9
+    const v20, 0x1080475
 
     move-object/from16 v0, p5
 
@@ -548,7 +548,7 @@
     .local v9, fullDark:I
     const/16 v19, 0x1
 
-    const v20, 0x10804d1
+    const v20, 0x108047d
 
     move-object/from16 v0, p5
 
@@ -564,7 +564,7 @@
     .local v16, topDark:I
     const/16 v19, 0x2
 
-    const v20, 0x10804c6
+    const v20, 0x1080472
 
     move-object/from16 v0, p5
 
@@ -580,7 +580,7 @@
     .local v7, centerDark:I
     const/16 v19, 0x3
 
-    const v20, 0x10804c3
+    const v20, 0x108046f
 
     move-object/from16 v0, p5
 
@@ -596,7 +596,7 @@
     .local v4, bottomDark:I
     const/16 v19, 0x4
 
-    const v20, 0x10804c8
+    const v20, 0x1080474
 
     move-object/from16 v0, p5
 
@@ -612,7 +612,7 @@
     .local v8, fullBright:I
     const/16 v19, 0x5
 
-    const v20, 0x10804d0
+    const v20, 0x108047c
 
     move-object/from16 v0, p5
 
@@ -628,7 +628,7 @@
     .local v15, topBright:I
     const/16 v19, 0x6
 
-    const v20, 0x10804c5
+    const v20, 0x1080471
 
     move-object/from16 v0, p5
 
@@ -644,7 +644,7 @@
     .local v6, centerBright:I
     const/16 v19, 0x7
 
-    const v20, 0x10804c2
+    const v20, 0x108046e
 
     move-object/from16 v0, p5
 
@@ -660,7 +660,7 @@
     .local v3, bottomBright:I
     const/16 v19, 0x8
 
-    const v20, 0x10804c4
+    const v20, 0x1080470
 
     move-object/from16 v0, p5
 
@@ -1257,7 +1257,7 @@
     .parameter "contentPanel"
 
     .prologue
-    const v5, 0x102025e
+    const v5, 0x1020260
 
     const/16 v4, 0x8
 
@@ -1377,7 +1377,7 @@
     .parameter "topPanel"
 
     .prologue
-    const v6, 0x1020257
+    const v6, 0x1020259
 
     const/4 v0, 0x0
 
@@ -1458,7 +1458,7 @@
     .line 464
     iget-object v4, p0, Lcom/android/internal/app/AlertController;->mWindow:Landroid/view/Window;
 
-    const v5, 0x1020258
+    const v5, 0x102025a
 
     invoke-virtual {v4, v5}, Landroid/view/Window;->findViewById(I)Landroid/view/View;
 
@@ -1579,7 +1579,7 @@
     .line 394
     iget-object v0, p0, Lcom/android/internal/app/AlertController;->mWindow:Landroid/view/Window;
 
-    const v10, 0x102025d
+    const v10, 0x102025f
 
     invoke-virtual {v0, v10}, Landroid/view/Window;->findViewById(I)Landroid/view/View;
 
@@ -1600,7 +1600,7 @@
     .local v4, hasButtons:Z
     iget-object v0, p0, Lcom/android/internal/app/AlertController;->mWindow:Landroid/view/Window;
 
-    const v10, 0x1020256
+    const v10, 0x1020258
 
     invoke-virtual {v0, v10}, Landroid/view/Window;->findViewById(I)Landroid/view/View;
 
@@ -1634,7 +1634,7 @@
     .local v6, hasTitle:Z
     iget-object v0, p0, Lcom/android/internal/app/AlertController;->mWindow:Landroid/view/Window;
 
-    const v10, 0x102025a
+    const v10, 0x102025c
 
     invoke-virtual {v0, v10}, Landroid/view/Window;->findViewById(I)Landroid/view/View;
 
@@ -1669,7 +1669,7 @@
     .line 411
     iget-object v0, p0, Lcom/android/internal/app/AlertController;->mWindow:Landroid/view/Window;
 
-    const v10, 0x102025f
+    const v10, 0x1020261
 
     invoke-virtual {v0, v10}, Landroid/view/Window;->findViewById(I)Landroid/view/View;
 
@@ -1764,7 +1764,7 @@
     :cond_3
     iget-object v0, p0, Lcom/android/internal/app/AlertController;->mWindow:Landroid/view/Window;
 
-    const v10, 0x1020259
+    const v10, 0x102025b
 
     invoke-virtual {v0, v10}, Landroid/view/Window;->findViewById(I)Landroid/view/View;
 
@@ -1796,7 +1796,7 @@
     :cond_5
     iget-object v0, p0, Lcom/android/internal/app/AlertController;->mWindow:Landroid/view/Window;
 
-    const v10, 0x102025f
+    const v10, 0x1020261
 
     invoke-virtual {v0, v10}, Landroid/view/Window;->findViewById(I)Landroid/view/View;
 
@@ -1813,7 +1813,7 @@
     :cond_6
     iget-object v0, p0, Lcom/android/internal/app/AlertController;->mWindow:Landroid/view/Window;
 
-    const v10, 0x1020260
+    const v10, 0x1020262
 
     invoke-virtual {v0, v10}, Landroid/view/Window;->findViewById(I)Landroid/view/View;
 

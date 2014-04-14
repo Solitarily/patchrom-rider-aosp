@@ -783,7 +783,7 @@
     .line 846
     new-instance v2, Lcom/android/internal/os/ZygoteSecurityException;
 
-    const-string v3, "This UID may not specify SELinux info."
+    const-string v3, "This UID may not specify SEAndroid info."
 
     invoke-direct {v2, v3}, Lcom/android/internal/os/ZygoteSecurityException;-><init>(Ljava/lang/String;)V
 
@@ -806,7 +806,7 @@
     .line 855
     new-instance v2, Lcom/android/internal/os/ZygoteSecurityException;
 
-    const-string v3, "Peer may not specify SELinux info"
+    const-string v3, "Peer may not specify SEAndroid info"
 
     invoke-direct {v2, v3}, Lcom/android/internal/os/ZygoteSecurityException;-><init>(Ljava/lang/String;)V
 

@@ -498,7 +498,7 @@
 
     .prologue
     .line 162
-    const v0, 0x10900a8
+    const v0, 0x10900ab
 
     const/4 v1, 0x0
 

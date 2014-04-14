@@ -536,7 +536,7 @@
     const/16 v3, 0x8
 
     .line 244
-    const v1, 0x1020315
+    const v1, 0x102031a
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -565,7 +565,7 @@
 
     .line 250
     :cond_0
-    const v1, 0x1020316
+    const v1, 0x102031b
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -606,7 +606,7 @@
 
     .line 258
     :cond_1
-    const v1, 0x1020314
+    const v1, 0x1020319
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -645,7 +645,7 @@
 
     .line 267
     :cond_2
-    const v1, 0x1020317
+    const v1, 0x102031c
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -675,7 +675,7 @@
 
     .line 271
     :cond_3
-    const v1, 0x1020313
+    const v1, 0x1020318
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -705,7 +705,7 @@
 
     .line 276
     :cond_4
-    const v1, 0x1020319
+    const v1, 0x102031e
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -760,7 +760,7 @@
     iput-object v1, p0, Landroid/widget/MediaController;->mEndTime:Landroid/widget/TextView;
 
     .line 286
-    const v1, 0x1020318
+    const v1, 0x102031d
 
     invoke-virtual {p1, v1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1655,7 +1655,7 @@
 
     .line 236
     .local v0, inflate:Landroid/view/LayoutInflater;
-    const v1, 0x1090083
+    const v1, 0x1090086
 
     const/4 v2, 0x0
 

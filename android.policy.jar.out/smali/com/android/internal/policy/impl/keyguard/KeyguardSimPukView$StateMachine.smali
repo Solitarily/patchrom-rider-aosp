@@ -110,7 +110,7 @@
     iput v3, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSimPukView$StateMachine;->state:I
 
     .line 61
-    const v0, 0x104059c
+    const v0, 0x104053e
 
     .line 83
     :cond_0
@@ -139,7 +139,7 @@
 
     .line 63
     :cond_2
-    const v0, 0x10405a1
+    const v0, 0x1040543
 
     goto :goto_0
 
@@ -163,13 +163,13 @@
     iput v2, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSimPukView$StateMachine;->state:I
 
     .line 68
-    const v0, 0x104059d
+    const v0, 0x104053f
 
     goto :goto_0
 
     .line 70
     :cond_4
-    const v0, 0x10405a0
+    const v0, 0x1040542
 
     goto :goto_0
 
@@ -194,7 +194,7 @@
     iput v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSimPukView$StateMachine;->state:I
 
     .line 75
-    const v0, 0x1040374
+    const v0, 0x1040316
 
     .line 77
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSimPukView$StateMachine;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardSimPukView;
@@ -209,7 +209,7 @@
     iput v3, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSimPukView$StateMachine;->state:I
 
     .line 80
-    const v0, 0x10405a3
+    const v0, 0x1040545
 
     goto :goto_0
 .end method
@@ -244,7 +244,7 @@
 
     iget-object v0, v0, Lcom/android/internal/policy/impl/keyguard/KeyguardSimPukView;->mSecurityMessageDisplay:Lcom/android/internal/policy/impl/keyguard/SecurityMessageDisplay;
 
-    const v1, 0x104059b
+    const v1, 0x104053d
 
     const/4 v2, 0x1
 

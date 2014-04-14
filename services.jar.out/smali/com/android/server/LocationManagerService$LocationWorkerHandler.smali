@@ -24,7 +24,7 @@
     .parameter
 
     .prologue
-    .line 1718
+    .line 1717
     iput-object p1, p0, Lcom/android/server/LocationManagerService$LocationWorkerHandler;->this$0:Lcom/android/server/LocationManagerService;
 
     invoke-direct {p0}, Landroid/os/Handler;-><init>()V
@@ -38,7 +38,7 @@
     .parameter "x1"
 
     .prologue
-    .line 1718
+    .line 1717
     invoke-direct {p0, p1}, Lcom/android/server/LocationManagerService$LocationWorkerHandler;-><init>(Lcom/android/server/LocationManagerService;)V
 
     return-void
@@ -53,16 +53,16 @@
     .prologue
     const/4 v1, 0x1
 
-    .line 1721
+    .line 1720
     iget v0, p1, Landroid/os/Message;->what:I
 
     packed-switch v0, :pswitch_data_0
 
-    .line 1726
+    .line 1725
     :goto_0
     return-void
 
-    .line 1723
+    .line 1722
     :pswitch_0
     iget-object v2, p0, Lcom/android/server/LocationManagerService$LocationWorkerHandler;->this$0:Lcom/android/server/LocationManagerService;
 
@@ -85,7 +85,7 @@
 
     goto :goto_1
 
-    .line 1721
+    .line 1720
     nop
 
     :pswitch_data_0

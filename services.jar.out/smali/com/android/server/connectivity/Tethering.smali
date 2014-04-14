@@ -383,7 +383,7 @@
 
     move-result-object v1
 
-    const v2, 0x1070020
+    const v2, 0x107001f
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
 
@@ -1320,7 +1320,7 @@
 
     .line 438
     :cond_8
-    const v13, 0x10805bf
+    const v13, 0x108056a
 
     move-object/from16 v0, p0
 
@@ -1330,7 +1330,7 @@
 
     .line 440
     :cond_9
-    const v13, 0x10805c0
+    const v13, 0x108056b
 
     move-object/from16 v0, p0
 
@@ -1346,7 +1346,7 @@
     if-eqz v3, :cond_b
 
     .line 444
-    const v13, 0x10805bf
+    const v13, 0x108056a
 
     move-object/from16 v0, p0
 
@@ -1356,7 +1356,7 @@
 
     .line 446
     :cond_b
-    const v13, 0x10805c1
+    const v13, 0x108056c
 
     move-object/from16 v0, p0
 
@@ -1369,7 +1369,7 @@
     if-eqz v3, :cond_d
 
     .line 449
-    const v13, 0x10805be
+    const v13, 0x1080569
 
     move-object/from16 v0, p0
 
@@ -1468,7 +1468,7 @@
 
     .line 478
     .local v9, r:Landroid/content/res/Resources;
-    const v0, 0x1040504
+    const v0, 0x10404a6
 
     invoke-virtual {v9, v0}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -1476,7 +1476,7 @@
 
     .line 479
     .local v10, title:Ljava/lang/CharSequence;
-    const v0, 0x1040505
+    const v0, 0x10404a7
 
     invoke-virtual {v9, v0}, Landroid/content/res/Resources;->getText(I)Ljava/lang/CharSequence;
 
@@ -3728,7 +3728,7 @@
 
     move-result-object v9
 
-    const v10, 0x107001c
+    const v10, 0x107001b
 
     invoke-virtual {v9, v10}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
 
@@ -3742,7 +3742,7 @@
 
     move-result-object v9
 
-    const v10, 0x107001d
+    const v10, 0x107001c
 
     invoke-virtual {v9, v10}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
 
@@ -3756,7 +3756,7 @@
 
     move-result-object v9
 
-    const v10, 0x107001f
+    const v10, 0x107001e
 
     invoke-virtual {v9, v10}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
 
@@ -3770,7 +3770,7 @@
 
     move-result-object v9
 
-    const v10, 0x1070022
+    const v10, 0x1070021
 
     invoke-virtual {v9, v10}, Landroid/content/res/Resources;->getIntArray(I)[I
 

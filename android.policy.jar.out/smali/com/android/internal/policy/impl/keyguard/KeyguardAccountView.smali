@@ -485,7 +485,7 @@
 
     iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardAccountView;->mContext:Landroid/content/Context;
 
-    const v2, 0x10405ab
+    const v2, 0x104054d
 
     invoke-virtual {v1, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -707,7 +707,7 @@
     invoke-super {p0}, Landroid/widget/LinearLayout;->onFinishInflate()V
 
     .line 88
-    const v0, 0x10202a2
+    const v0, 0x10202a4
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardAccountView;->findViewById(I)Landroid/view/View;
 
@@ -740,7 +740,7 @@
     invoke-virtual {v0, p0}, Landroid/widget/EditText;->addTextChangedListener(Landroid/text/TextWatcher;)V
 
     .line 92
-    const v0, 0x10202a3
+    const v0, 0x10202a5
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardAccountView;->findViewById(I)Landroid/view/View;
 
@@ -756,7 +756,7 @@
     invoke-virtual {v0, p0}, Landroid/widget/EditText;->addTextChangedListener(Landroid/text/TextWatcher;)V
 
     .line 95
-    const v0, 0x10202a4
+    const v0, 0x10202a6
 
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardAccountView;->findViewById(I)Landroid/view/View;
 
@@ -882,7 +882,7 @@
 
     if-eqz v0, :cond_0
 
-    const v1, 0x10405a4
+    const v1, 0x1040546
 
     move v2, v1
 
@@ -899,7 +899,7 @@
 
     .line 144
     :cond_0
-    const v1, 0x10405a5
+    const v1, 0x1040547
 
     move v2, v1
 

@@ -1055,7 +1055,7 @@
     if-ge v5, v11, :cond_3
 
     .line 178
-    const/16 v11, 0x35
+    const v11, 0x800035
 
     aget v12, v6, v10
 

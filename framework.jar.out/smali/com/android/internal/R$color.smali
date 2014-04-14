@@ -53,6 +53,10 @@
 
 .field public static final keyguard_avatar_nick_color:I = 0x1060069
 
+.field public static final keyguard_text_color_soundoff:I = 0x106003f
+
+.field public static final keyguard_text_color_soundon:I = 0x1060040
+
 .field public static final kg_multi_user_text_active:I = 0x1060046
 
 .field public static final kg_multi_user_text_inactive:I = 0x1060047
@@ -95,7 +99,7 @@
     .locals 0
 
     .prologue
-    .line 11438
+    .line 11380
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

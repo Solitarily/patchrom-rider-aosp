@@ -247,7 +247,7 @@
     invoke-virtual {p0, v0}, Lcom/android/internal/policy/impl/keyguard/CameraWidgetFrame;->addView(Landroid/view/View;)V
 
     .line 157
-    const v1, 0x1040394
+    const v1, 0x1040336
 
     invoke-virtual {p1, v1}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -704,7 +704,7 @@
 
     .line 207
     .local v0, iv:Landroid/widget/ImageView;
-    const v1, 0x10802f2
+    const v1, 0x10802e2
 
     invoke-virtual {v0, v1}, Landroid/widget/ImageView;->setImageResource(I)V
 

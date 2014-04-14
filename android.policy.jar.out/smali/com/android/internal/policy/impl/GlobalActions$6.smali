@@ -1,6 +1,9 @@
 .class Lcom/android/internal/policy/impl/GlobalActions$6;
-.super Lcom/android/internal/policy/impl/GlobalActions$SinglePressAction;
+.super Ljava/lang/Object;
 .source "GlobalActions.java"
+
+# interfaces
+.implements Landroid/widget/AdapterView$OnItemLongClickListener;
 
 
 # annotations
@@ -19,53 +22,54 @@
 
 
 # direct methods
-.method constructor <init>(Lcom/android/internal/policy/impl/GlobalActions;II)V
+.method constructor <init>(Lcom/android/internal/policy/impl/GlobalActions;)V
     .locals 0
     .parameter
-    .parameter "x0"
-    .parameter "x1"
 
     .prologue
-    .line 371
+    .line 414
     iput-object p1, p0, Lcom/android/internal/policy/impl/GlobalActions$6;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
 
-    invoke-direct {p0, p2, p3}, Lcom/android/internal/policy/impl/GlobalActions$SinglePressAction;-><init>(II)V
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onPress()V
+.method public onItemLongClick(Landroid/widget/AdapterView;Landroid/view/View;IJ)Z
     .locals 1
+    .parameter
+    .parameter "view"
+    .parameter "position"
+    .parameter "id"
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Landroid/widget/AdapterView",
+            "<*>;",
+            "Landroid/view/View;",
+            "IJ)Z"
+        }
+    .end annotation
 
     .prologue
-    .line 373
+    .line 418
+    .local p1, parent:Landroid/widget/AdapterView;,"Landroid/widget/AdapterView<*>;"
     iget-object v0, p0, Lcom/android/internal/policy/impl/GlobalActions$6;->this$0:Lcom/android/internal/policy/impl/GlobalActions;
 
-    #calls: Lcom/android/internal/policy/impl/GlobalActions;->takeScreenshot()V
-    invoke-static {v0}, Lcom/android/internal/policy/impl/GlobalActions;->access$800(Lcom/android/internal/policy/impl/GlobalActions;)V
+    #getter for: Lcom/android/internal/policy/impl/GlobalActions;->mAdapter:Lcom/android/internal/policy/impl/GlobalActions$MyAdapter;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/GlobalActions;->access$900(Lcom/android/internal/policy/impl/GlobalActions;)Lcom/android/internal/policy/impl/GlobalActions$MyAdapter;
 
-    .line 374
-    return-void
-.end method
+    move-result-object v0
 
-.method public showBeforeProvisioning()Z
-    .locals 1
+    invoke-virtual {v0, p3}, Lcom/android/internal/policy/impl/GlobalActions$MyAdapter;->getItem(I)Lcom/android/internal/policy/impl/GlobalActions$Action;
 
-    .prologue
-    .line 381
-    const/4 v0, 0x1
+    move-result-object v0
 
-    return v0
-.end method
+    invoke-interface {v0}, Lcom/android/internal/policy/impl/GlobalActions$Action;->onLongPress()Z
 
-.method public showDuringKeyguard()Z
-    .locals 1
-
-    .prologue
-    .line 377
-    const/4 v0, 0x1
+    move-result v0
 
     return v0
 .end method

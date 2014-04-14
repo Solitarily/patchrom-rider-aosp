@@ -193,14 +193,6 @@
     .end annotation
 .end method
 
-.method public abstract hasMenuKeyEnabled()Z
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
 .method public abstract hasNavigationBar()Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -614,14 +606,6 @@
 .end method
 
 .method public abstract thawRotation()V
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
-.method public abstract updateDisplayMetrics()V
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

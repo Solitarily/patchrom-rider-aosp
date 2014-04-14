@@ -3514,9 +3514,7 @@
     if-eqz v2, :cond_1
 
     .line 1172
-    const/4 v2, 0x0
-
-    invoke-virtual {p0, p1, p2, v2, p3}, Landroid/app/FragmentManagerImpl;->loadAnimator(Landroid/app/Fragment;IZI)Landroid/animation/Animator;
+    invoke-virtual {p0, p1, p2, v5, p3}, Landroid/app/FragmentManagerImpl;->loadAnimator(Landroid/app/Fragment;IZI)Landroid/animation/Animator;
 
     move-result-object v0
 

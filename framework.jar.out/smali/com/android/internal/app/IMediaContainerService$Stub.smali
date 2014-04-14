@@ -28,27 +28,23 @@
 
 .field static final TRANSACTION_calculateDirectorySize:I = 0x7
 
-.field static final TRANSACTION_calculateInstalledSize:I = 0xc
+.field static final TRANSACTION_calculateInstalledSize:I = 0xa
 
 .field static final TRANSACTION_checkExternalFreeStorage:I = 0x5
 
 .field static final TRANSACTION_checkInternalFreeStorage:I = 0x4
 
-.field static final TRANSACTION_clearDirectory:I = 0xa
+.field static final TRANSACTION_clearDirectory:I = 0x9
 
 .field static final TRANSACTION_copyResource:I = 0x2
 
 .field static final TRANSACTION_copyResourceToContainer:I = 0x1
 
-.field static final TRANSACTION_deleteFile:I = 0xb
-
-.field static final TRANSACTION_getFileSystemStats:I = 0x9
+.field static final TRANSACTION_getFileSystemStats:I = 0x8
 
 .field static final TRANSACTION_getMinimalPackageInfo:I = 0x3
 
 .field static final TRANSACTION_getObbInfo:I = 0x6
-
-.field static final TRANSACTION_listDirectory:I = 0x8
 
 
 # direct methods
@@ -140,7 +136,7 @@
     .line 38
     sparse-switch p1, :sswitch_data_0
 
-    .line 234
+    .line 215
     invoke-super/range {p0 .. p4}, Landroid/os/Binder;->onTransact(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z
 
     move-result v0
@@ -726,16 +722,16 @@
 
     .line 188
     .restart local v1       #_arg0:Ljava/lang/String;
-    invoke-virtual {p0, v1}, Lcom/android/internal/app/IMediaContainerService$Stub;->listDirectory(Ljava/lang/String;)[B
+    invoke-virtual {p0, v1}, Lcom/android/internal/app/IMediaContainerService$Stub;->getFileSystemStats(Ljava/lang/String;)[J
 
     move-result-object v10
 
     .line 189
-    .local v10, _result:[B
+    .local v10, _result:[J
     invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
 
     .line 190
-    invoke-virtual {p3, v10}, Landroid/os/Parcel;->writeByteArray([B)V
+    invoke-virtual {p3, v10}, Landroid/os/Parcel;->writeLongArray([J)V
 
     .line 191
     const/4 v0, 0x1
@@ -744,7 +740,7 @@
 
     .line 195
     .end local v1           #_arg0:Ljava/lang/String;
-    .end local v10           #_result:[B
+    .end local v10           #_result:[J
     :sswitch_9
     const-string v0, "com.android.internal.app.IMediaContainerService"
 
@@ -757,84 +753,29 @@
 
     .line 198
     .restart local v1       #_arg0:Ljava/lang/String;
-    invoke-virtual {p0, v1}, Lcom/android/internal/app/IMediaContainerService$Stub;->getFileSystemStats(Ljava/lang/String;)[J
-
-    move-result-object v10
+    invoke-virtual {p0, v1}, Lcom/android/internal/app/IMediaContainerService$Stub;->clearDirectory(Ljava/lang/String;)V
 
     .line 199
-    .local v10, _result:[J
     invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
 
     .line 200
-    invoke-virtual {p3, v10}, Landroid/os/Parcel;->writeLongArray([J)V
-
-    .line 201
     const/4 v0, 0x1
 
     goto/16 :goto_0
 
-    .line 205
+    .line 204
     .end local v1           #_arg0:Ljava/lang/String;
-    .end local v10           #_result:[J
     :sswitch_a
     const-string v0, "com.android.internal.app.IMediaContainerService"
 
     invoke-virtual {p2, v0}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
 
-    .line 207
+    .line 206
     invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
 
     move-result-object v1
 
     .line 208
-    .restart local v1       #_arg0:Ljava/lang/String;
-    invoke-virtual {p0, v1}, Lcom/android/internal/app/IMediaContainerService$Stub;->clearDirectory(Ljava/lang/String;)V
-
-    .line 209
-    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 210
-    const/4 v0, 0x1
-
-    goto/16 :goto_0
-
-    .line 214
-    .end local v1           #_arg0:Ljava/lang/String;
-    :sswitch_b
-    const-string v0, "com.android.internal.app.IMediaContainerService"
-
-    invoke-virtual {p2, v0}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 216
-    invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v1
-
-    .line 217
-    .restart local v1       #_arg0:Ljava/lang/String;
-    invoke-virtual {p0, v1}, Lcom/android/internal/app/IMediaContainerService$Stub;->deleteFile(Ljava/lang/String;)V
-
-    .line 218
-    invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 219
-    const/4 v0, 0x1
-
-    goto/16 :goto_0
-
-    .line 223
-    .end local v1           #_arg0:Ljava/lang/String;
-    :sswitch_c
-    const-string v0, "com.android.internal.app.IMediaContainerService"
-
-    invoke-virtual {p2, v0}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 225
-    invoke-virtual {p2}, Landroid/os/Parcel;->readString()Ljava/lang/String;
-
-    move-result-object v1
-
-    .line 227
     .restart local v1       #_arg0:Ljava/lang/String;
     invoke-virtual {p2}, Landroid/os/Parcel;->readInt()I
 
@@ -844,26 +785,26 @@
 
     const/4 v2, 0x1
 
-    .line 228
+    .line 209
     .restart local v2       #_arg1:Z
     :goto_f
     invoke-virtual {p0, v1, v2}, Lcom/android/internal/app/IMediaContainerService$Stub;->calculateInstalledSize(Ljava/lang/String;Z)J
 
     move-result-wide v10
 
-    .line 229
+    .line 210
     .local v10, _result:J
     invoke-virtual {p3}, Landroid/os/Parcel;->writeNoException()V
 
-    .line 230
+    .line 211
     invoke-virtual {p3, v10, v11}, Landroid/os/Parcel;->writeLong(J)V
 
-    .line 231
+    .line 212
     const/4 v0, 0x1
 
     goto/16 :goto_0
 
-    .line 227
+    .line 208
     .end local v2           #_arg1:Z
     .end local v10           #_result:J
     :cond_e
@@ -884,8 +825,6 @@
         0x8 -> :sswitch_8
         0x9 -> :sswitch_9
         0xa -> :sswitch_a
-        0xb -> :sswitch_b
-        0xc -> :sswitch_c
         0x5f4e5446 -> :sswitch_0
     .end sparse-switch
 .end method

@@ -35,13 +35,11 @@
 
 .field public static final power_profile:I = 0x10f000b
 
-.field public static final profile_default:I = 0x10f000d
+.field public static final sms_short_codes:I = 0x10f000d
 
-.field public static final sms_short_codes:I = 0x10f000e
+.field public static final storage_list:I = 0x10f000e
 
-.field public static final storage_list:I = 0x10f000f
-
-.field public static final time_zones_by_country:I = 0x10f0010
+.field public static final time_zones_by_country:I = 0x10f000f
 
 
 # direct methods
@@ -49,7 +47,7 @@
     .locals 0
 
     .prologue
-    .line 16645
+    .line 16356
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

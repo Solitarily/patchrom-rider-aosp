@@ -86,7 +86,7 @@
 
     .line 66
     .local v2, res:Landroid/content/res/Resources;
-    const v3, 0x1110044
+    const v3, 0x1110040
 
     invoke-virtual {v2, v3}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -557,7 +557,7 @@
 
     move-result-object v0
 
-    const v1, 0x1110044
+    const v1, 0x1110040
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -669,7 +669,7 @@
     if-ge v4, v10, :cond_1
 
     .line 243
-    const/16 v10, 0x35
+    const v10, 0x800035
 
     aget v8, v5, v8
 

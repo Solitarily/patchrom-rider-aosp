@@ -121,14 +121,6 @@
     .end annotation
 .end method
 
-.method public abstract getCountryCode()Ljava/lang/String;
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
 .method public abstract getDhcpInfo()Landroid/net/DhcpInfo;
     .annotation system Ldalvik/annotation/Throws;
         value = {
@@ -152,24 +144,6 @@
             "Ljava/util/List",
             "<",
             "Landroid/net/wifi/ScanResult;",
-            ">;"
-        }
-    .end annotation
-
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
-.method public abstract getSupportedChannels()Ljava/util/List;
-    .annotation system Ldalvik/annotation/Signature;
-        value = {
-            "()",
-            "Ljava/util/List",
-            "<",
-            "Landroid/net/wifi/WifiChannel;",
             ">;"
         }
     .end annotation
@@ -230,14 +204,6 @@
 .end method
 
 .method public abstract isDualBandSupported()Z
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
-.method public abstract isIbssSupported()Z
     .annotation system Ldalvik/annotation/Throws;
         value = {
             Landroid/os/RemoteException;

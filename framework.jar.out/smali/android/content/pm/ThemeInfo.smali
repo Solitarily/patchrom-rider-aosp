@@ -56,7 +56,7 @@
 
     const/4 v3, 0x0
 
-    .line 67
+    .line 69
     const/4 v1, 0x5
 
     new-array v1, v1, [Ljava/lang/String;
@@ -83,8 +83,8 @@
 
     sput-object v1, Landroid/content/pm/ThemeInfo;->compulsoryAttributes:[Ljava/lang/String;
 
-    .line 75
-    const/16 v1, 0x8
+    .line 77
+    const/16 v1, 0xa
 
     new-array v1, v1, [Ljava/lang/String;
 
@@ -126,16 +126,28 @@
 
     aput-object v3, v1, v2
 
+    const/16 v2, 0x8
+
+    const-string v3, "hasModdedBattery"
+
+    aput-object v3, v1, v2
+
+    const/16 v2, 0x9
+
+    const-string v3, "hasModdedSignal"
+
+    aput-object v3, v1, v2
+
     sput-object v1, Landroid/content/pm/ThemeInfo;->optionalAttributes:[Ljava/lang/String;
 
-    .line 89
+    .line 93
     new-instance v1, Ljava/util/HashMap;
 
     invoke-direct {v1}, Ljava/util/HashMap;-><init>()V
 
     sput-object v1, Landroid/content/pm/ThemeInfo;->sAttributesLookupTable:Ljava/util/Map;
 
-    .line 90
+    .line 94
     const/4 v0, 0x0
 
     .local v0, i:I
@@ -146,7 +158,7 @@
 
     if-ge v0, v1, :cond_0
 
-    .line 91
+    .line 95
     sget-object v1, Landroid/content/pm/ThemeInfo;->sAttributesLookupTable:Ljava/util/Map;
 
     sget-object v2, Landroid/content/pm/ThemeInfo;->compulsoryAttributes:[Ljava/lang/String;
@@ -159,12 +171,12 @@
 
     invoke-interface {v1, v2, v3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 90
+    .line 94
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    .line 94
+    .line 98
     :cond_0
     const/4 v0, 0x0
 
@@ -175,7 +187,7 @@
 
     if-ge v0, v1, :cond_1
 
-    .line 95
+    .line 99
     sget-object v1, Landroid/content/pm/ThemeInfo;->sAttributesLookupTable:Ljava/util/Map;
 
     sget-object v2, Landroid/content/pm/ThemeInfo;->optionalAttributes:[Ljava/lang/String;
@@ -194,12 +206,12 @@
 
     invoke-interface {v1, v2, v3}, Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 94
+    .line 98
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_1
 
-    .line 191
+    .line 203
     :cond_1
     new-instance v1, Landroid/content/pm/ThemeInfo$1;
 
@@ -215,10 +227,10 @@
     .parameter "source"
 
     .prologue
-    .line 203
+    .line 215
     invoke-direct {p0, p1}, Landroid/content/pm/BaseThemeInfo;-><init>(Landroid/os/Parcel;)V
 
-    .line 204
+    .line 216
     return-void
 .end method
 
@@ -248,21 +260,21 @@
     .prologue
     const/4 v7, 0x0
 
-    .line 101
+    .line 105
     invoke-direct {p0}, Landroid/content/pm/BaseThemeInfo;-><init>()V
 
-    .line 103
+    .line 107
     new-instance v4, Ljava/util/HashMap;
 
     sget-object v5, Landroid/content/pm/ThemeInfo;->sAttributesLookupTable:Ljava/util/Map;
 
     invoke-direct {v4, v5}, Ljava/util/HashMap;-><init>(Ljava/util/Map;)V
 
-    .line 105
+    .line 109
     .local v4, tempMap:Ljava/util/Map;,"Ljava/util/Map<Ljava/lang/String;Landroid/content/pm/ThemeInfo$AttributeIndex;>;"
     const/4 v3, 0x0
 
-    .line 106
+    .line 110
     .local v3, numberOfCompulsoryAttributes:I
     const/4 v0, 0x0
 
@@ -274,7 +286,7 @@
 
     if-ge v0, v5, :cond_3
 
-    .line 107
+    .line 111
     invoke-interface {p1, v0}, Lorg/xmlpull/v1/XmlPullParser;->getAttributeNamespace(I)Ljava/lang/String;
 
     move-result-object v5
@@ -285,20 +297,20 @@
 
     if-nez v5, :cond_1
 
-    .line 106
+    .line 110
     :cond_0
     :goto_1
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    .line 110
+    .line 114
     :cond_1
     invoke-interface {p3, v0}, Landroid/util/AttributeSet;->getAttributeName(I)Ljava/lang/String;
 
     move-result-object v2
 
-    .line 111
+    .line 115
     .local v2, key:Ljava/lang/String;
     invoke-interface {v4, v2}, Ljava/util/Map;->containsKey(Ljava/lang/Object;)Z
 
@@ -306,18 +318,18 @@
 
     if-eqz v5, :cond_0
 
-    .line 112
+    .line 116
     invoke-interface {v4, v2}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
 
     move-result-object v1
 
     check-cast v1, Landroid/content/pm/ThemeInfo$AttributeIndex;
 
-    .line 113
+    .line 117
     .local v1, index:Landroid/content/pm/ThemeInfo$AttributeIndex;
     invoke-interface {v4, v2}, Ljava/util/Map;->remove(Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 115
+    .line 119
     invoke-virtual {v1}, Landroid/content/pm/ThemeInfo$AttributeIndex;->ordinal()I
 
     move-result v5
@@ -328,10 +340,10 @@
 
     if-ge v5, v6, :cond_2
 
-    .line 116
+    .line 120
     add-int/lit8 v3, v3, 0x1
 
-    .line 118
+    .line 122
     :cond_2
     sget-object v5, Landroid/content/pm/ThemeInfo$2;->$SwitchMap$android$content$pm$ThemeInfo$AttributeIndex:[I
 
@@ -345,7 +357,7 @@
 
     goto :goto_1
 
-    .line 121
+    .line 125
     :pswitch_0
     invoke-virtual {p0, p2, p3, v0}, Landroid/content/pm/ThemeInfo;->getResolvedString(Landroid/content/res/Resources;Landroid/util/AttributeSet;I)Ljava/lang/String;
 
@@ -355,7 +367,7 @@
 
     goto :goto_1
 
-    .line 126
+    .line 130
     :pswitch_1
     invoke-interface {p3, v0, v7}, Landroid/util/AttributeSet;->getAttributeResourceValue(II)I
 
@@ -365,7 +377,7 @@
 
     goto :goto_1
 
-    .line 131
+    .line 135
     :pswitch_2
     invoke-virtual {p0, p2, p3, v0}, Landroid/content/pm/ThemeInfo;->getResolvedString(Landroid/content/res/Resources;Landroid/util/AttributeSet;I)Ljava/lang/String;
 
@@ -375,7 +387,7 @@
 
     goto :goto_1
 
-    .line 136
+    .line 140
     :pswitch_3
     invoke-interface {p3, v0}, Landroid/util/AttributeSet;->getAttributeValue(I)Ljava/lang/String;
 
@@ -385,7 +397,7 @@
 
     goto :goto_1
 
-    .line 140
+    .line 144
     :pswitch_4
     invoke-virtual {p0, p2, p3, v0}, Landroid/content/pm/ThemeInfo;->getResolvedString(Landroid/content/res/Resources;Landroid/util/AttributeSet;I)Ljava/lang/String;
 
@@ -395,7 +407,7 @@
 
     goto :goto_1
 
-    .line 145
+    .line 149
     :pswitch_5
     invoke-interface {p3, v0}, Landroid/util/AttributeSet;->getAttributeValue(I)Ljava/lang/String;
 
@@ -403,14 +415,14 @@
 
     iput-object v5, p0, Landroid/content/pm/ThemeInfo;->ringtoneFileName:Ljava/lang/String;
 
-    .line 146
+    .line 150
     iget-object v5, p0, Landroid/content/pm/ThemeInfo;->ringtoneFileName:Ljava/lang/String;
 
     invoke-virtual {p0, v5}, Landroid/content/pm/ThemeInfo;->changeDrmFlagIfNeeded(Ljava/lang/String;)V
 
     goto :goto_1
 
-    .line 151
+    .line 155
     :pswitch_6
     invoke-interface {p3, v0}, Landroid/util/AttributeSet;->getAttributeValue(I)Ljava/lang/String;
 
@@ -418,14 +430,14 @@
 
     iput-object v5, p0, Landroid/content/pm/ThemeInfo;->notificationRingtoneFileName:Ljava/lang/String;
 
-    .line 152
+    .line 156
     iget-object v5, p0, Landroid/content/pm/ThemeInfo;->notificationRingtoneFileName:Ljava/lang/String;
 
     invoke-virtual {p0, v5}, Landroid/content/pm/ThemeInfo;->changeDrmFlagIfNeeded(Ljava/lang/String;)V
 
     goto :goto_1
 
-    .line 157
+    .line 161
     :pswitch_7
     invoke-interface {p3, v0, v7}, Landroid/util/AttributeSet;->getAttributeResourceValue(II)I
 
@@ -435,7 +447,7 @@
 
     goto :goto_1
 
-    .line 162
+    .line 166
     :pswitch_8
     invoke-virtual {p0, p2, p3, v0}, Landroid/content/pm/ThemeInfo;->getResolvedString(Landroid/content/res/Resources;Landroid/util/AttributeSet;I)Ljava/lang/String;
 
@@ -445,7 +457,7 @@
 
     goto :goto_1
 
-    .line 167
+    .line 171
     :pswitch_9
     invoke-interface {p3, v0}, Landroid/util/AttributeSet;->getAttributeValue(I)Ljava/lang/String;
 
@@ -455,7 +467,7 @@
 
     goto :goto_1
 
-    .line 172
+    .line 176
     :pswitch_a
     invoke-interface {p3, v0}, Landroid/util/AttributeSet;->getAttributeValue(I)Ljava/lang/String;
 
@@ -465,7 +477,7 @@
 
     goto/16 :goto_1
 
-    .line 176
+    .line 180
     :pswitch_b
     invoke-interface {p3, v0, v7}, Landroid/util/AttributeSet;->getAttributeResourceValue(II)I
 
@@ -475,7 +487,7 @@
 
     goto/16 :goto_1
 
-    .line 181
+    .line 185
     :pswitch_c
     invoke-interface {p3, v0, v7}, Landroid/util/AttributeSet;->getAttributeResourceValue(II)I
 
@@ -485,7 +497,27 @@
 
     goto/16 :goto_1
 
-    .line 186
+    .line 189
+    :pswitch_d
+    invoke-interface {p3, v0}, Landroid/util/AttributeSet;->getAttributeValue(I)Ljava/lang/String;
+
+    move-result-object v5
+
+    iput-object v5, p0, Landroid/content/pm/ThemeInfo;->hasModdedBattery:Ljava/lang/String;
+
+    goto/16 :goto_1
+
+    .line 193
+    :pswitch_e
+    invoke-interface {p3, v0}, Landroid/util/AttributeSet;->getAttributeValue(I)Ljava/lang/String;
+
+    move-result-object v5
+
+    iput-object v5, p0, Landroid/content/pm/ThemeInfo;->hasModdedSignal:Ljava/lang/String;
+
+    goto/16 :goto_1
+
+    .line 198
     .end local v1           #index:Landroid/content/pm/ThemeInfo$AttributeIndex;
     .end local v2           #key:Ljava/lang/String;
     :cond_3
@@ -495,7 +527,7 @@
 
     if-ge v3, v5, :cond_4
 
-    .line 187
+    .line 199
     new-instance v5, Lorg/xmlpull/v1/XmlPullParserException;
 
     const-string v6, "Not all compulsory attributes are specified in <theme>"
@@ -504,11 +536,11 @@
 
     throw v5
 
-    .line 189
+    .line 201
     :cond_4
     return-void
 
-    .line 118
+    .line 122
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_0
@@ -524,5 +556,7 @@
         :pswitch_a
         :pswitch_b
         :pswitch_c
+        :pswitch_d
+        :pswitch_e
     .end packed-switch
 .end method

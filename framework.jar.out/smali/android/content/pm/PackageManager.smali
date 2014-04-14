@@ -88,10 +88,6 @@
 
 .field public static final FEATURE_NFC:Ljava/lang/String; = "android.hardware.nfc"
 
-.field public static final FEATURE_RADIO_FM_RECEIVER:Ljava/lang/String; = "com.stericsson.hardware.fm.receiver"
-
-.field public static final FEATURE_RADIO_FM_TRANSMITTER:Ljava/lang/String; = "com.stericsson.hardware.fm.transmitter"
-
 .field public static final FEATURE_SCREEN_LANDSCAPE:Ljava/lang/String; = "android.hardware.screen.landscape"
 
 .field public static final FEATURE_SCREEN_PORTRAIT:Ljava/lang/String; = "android.hardware.screen.portrait"
@@ -218,8 +214,6 @@
 
 .field public static final INSTALL_FAILED_PACKAGE_CHANGED:I = -0x17
 
-.field public static final INSTALL_FAILED_POLICY_REJECTED_PERMISSION:I = -0x6f
-
 .field public static final INSTALL_FAILED_REPLACE_COULDNT_DELETE:I = -0xa
 
 .field public static final INSTALL_FAILED_SHARED_USER_INCOMPATIBLE:I = -0x8
@@ -333,7 +327,7 @@
     .parameter "packageName"
 
     .prologue
-    .line 3009
+    .line 2969
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -404,7 +398,7 @@
     .parameter "userId"
 
     .prologue
-    .line 2816
+    .line 2792
     new-instance v0, Ljava/lang/RuntimeException;
 
     const-string v1, "Not implemented. Must override in a subclass."
@@ -624,50 +618,50 @@
 
     const/4 v1, 0x0
 
-    .line 2415
+    .line 2391
     new-instance v10, Landroid/content/pm/PackageParser;
 
     invoke-direct {v10, p1}, Landroid/content/pm/PackageParser;-><init>(Ljava/lang/String;)V
 
-    .line 2416
+    .line 2392
     .local v10, packageParser:Landroid/content/pm/PackageParser;
     new-instance v9, Landroid/util/DisplayMetrics;
 
     invoke-direct {v9}, Landroid/util/DisplayMetrics;-><init>()V
 
-    .line 2417
+    .line 2393
     .local v9, metrics:Landroid/util/DisplayMetrics;
     invoke-virtual {v9}, Landroid/util/DisplayMetrics;->setToDefaults()V
 
-    .line 2418
+    .line 2394
     new-instance v11, Ljava/io/File;
 
     invoke-direct {v11, p1}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 2419
+    .line 2395
     .local v11, sourceFile:Ljava/io/File;
     invoke-virtual {v10, v11, p1, v9, v5}, Landroid/content/pm/PackageParser;->parsePackage(Ljava/io/File;Ljava/lang/String;Landroid/util/DisplayMetrics;I)Landroid/content/pm/PackageParser$Package;
 
     move-result-object v0
 
-    .line 2421
+    .line 2397
     .local v0, pkg:Landroid/content/pm/PackageParser$Package;
     if-nez v0, :cond_0
 
-    .line 2428
+    .line 2404
     :goto_0
     return-object v1
 
-    .line 2424
+    .line 2400
     :cond_0
     and-int/lit8 v2, p2, 0x40
 
     if-eqz v2, :cond_1
 
-    .line 2425
+    .line 2401
     invoke-virtual {v10, v0, v5}, Landroid/content/pm/PackageParser;->collectCertificates(Landroid/content/pm/PackageParser$Package;I)Z
 
-    .line 2427
+    .line 2403
     :cond_1
     new-instance v8, Landroid/content/pm/PackageUserState;
 
@@ -680,7 +674,7 @@
 
     move-object v7, v1
 
-    .line 2428
+    .line 2404
     invoke-static/range {v0 .. v8}, Landroid/content/pm/PackageParser;->generatePackageInfo(Landroid/content/pm/PackageParser$Package;[IIJJLjava/util/HashSet;Landroid/content/pm/PackageUserState;)Landroid/content/pm/PackageInfo;
 
     move-result-object v1
@@ -713,14 +707,14 @@
     .parameter "observer"
 
     .prologue
-    .line 2735
+    .line 2711
     invoke-static {}, Landroid/os/UserHandle;->myUserId()I
 
     move-result v0
 
     invoke-virtual {p0, p1, v0, p2}, Landroid/content/pm/PackageManager;->getPackageSizeInfo(Ljava/lang/String;ILandroid/content/pm/IPackageStatsObserver;)V
 
-    .line 2736
+    .line 2712
     return-void
 .end method
 
@@ -771,9 +765,6 @@
             ">;"
         }
     .end annotation
-.end method
-
-.method public abstract getPrivacyGuardSetting(Ljava/lang/String;)Z
 .end method
 
 .method public abstract getProviderInfo(Landroid/content/ComponentName;I)Landroid/content/pm/ProviderInfo;
@@ -1086,9 +1077,6 @@
 .end method
 
 .method public abstract setInstallerPackageName(Ljava/lang/String;Ljava/lang/String;)V
-.end method
-
-.method public abstract setPrivacyGuardSetting(Ljava/lang/String;Z)V
 .end method
 
 .method public abstract verifyPendingInstall(II)V

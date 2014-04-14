@@ -331,7 +331,7 @@
 
     move-result-object v1
 
-    const v2, 0x1110035
+    const v2, 0x1110031
 
     invoke-virtual {v1, v2}, Landroid/content/res/Resources;->getBoolean(I)Z
 
@@ -769,7 +769,7 @@
 
     move-result-object v9
 
-    const v10, 0x107003e
+    const v10, 0x107003a
 
     invoke-virtual {v9, v10}, Landroid/content/res/Resources;->getTextArray(I)[Ljava/lang/CharSequence;
 

@@ -51,9 +51,9 @@
 
     .prologue
     .line 88
-    const v0, 0x1090082
+    const v0, 0x1090085
 
-    const v1, 0x1020176
+    const v1, 0x1020178
 
     invoke-static {p0, v0, v1}, Lcom/android/internal/app/LocalePicker;->constructAdapter(Landroid/content/Context;II)Landroid/widget/ArrayAdapter;
 
@@ -101,14 +101,6 @@
 
     .line 95
     .local v18, locales:[Ljava/lang/String;
-    move-object/from16 v0, v21
-
-    move-object/from16 v1, v18
-
-    invoke-static {v0, v1}, Lmiui/util/ExtraLocalePicker;->filterLocale(Landroid/content/res/Resources;[Ljava/lang/String;)[Ljava/lang/String;
-
-    move-result-object v18
-
     const v2, 0x1070007
 
     move-object/from16 v0, v21

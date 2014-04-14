@@ -1267,7 +1267,7 @@
 
     .prologue
     .line 387
-    const v0, 0x1040354
+    const v0, 0x10402f6
 
     invoke-virtual {p1, v0}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -1276,7 +1276,7 @@
     iput-object v0, p0, Lcom/android/internal/telephony/CallerInfo;->phoneNumber:Ljava/lang/String;
 
     .line 389
-    const v0, 0x10804b7
+    const v0, 0x1080463
 
     iput v0, p0, Lcom/android/internal/telephony/CallerInfo;->photoResource:I
 

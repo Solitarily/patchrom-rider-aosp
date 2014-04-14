@@ -32,7 +32,7 @@
     .parameter
 
     .prologue
-    .line 311
+    .line 263
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -45,8 +45,8 @@
     .parameter "x0"
 
     .prologue
-    .line 311
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->artist:Ljava/lang/String;
+    .line 263
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->trackTitle:Ljava/lang/String;
 
     return-object v0
 .end method
@@ -57,8 +57,8 @@
     .parameter "x1"
 
     .prologue
-    .line 311
-    iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->artist:Ljava/lang/String;
+    .line 263
+    iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->trackTitle:Ljava/lang/String;
 
     return-object p1
 .end method
@@ -68,8 +68,8 @@
     .parameter "x0"
 
     .prologue
-    .line 311
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->trackTitle:Ljava/lang/String;
+    .line 263
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->albumTitle:Ljava/lang/String;
 
     return-object v0
 .end method
@@ -80,30 +80,7 @@
     .parameter "x1"
 
     .prologue
-    .line 311
-    iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->trackTitle:Ljava/lang/String;
-
-    return-object p1
-.end method
-
-.method static synthetic access$1200(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
-    .locals 1
-    .parameter "x0"
-
-    .prologue
-    .line 311
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->albumTitle:Ljava/lang/String;
-
-    return-object v0
-.end method
-
-.method static synthetic access$1202(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;Ljava/lang/String;)Ljava/lang/String;
-    .locals 0
-    .parameter "x0"
-    .parameter "x1"
-
-    .prologue
-    .line 311
+    .line 263
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->albumTitle:Ljava/lang/String;
 
     return-object p1
@@ -114,7 +91,7 @@
     .parameter "x0"
 
     .prologue
-    .line 311
+    .line 263
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->bitmap:Landroid/graphics/Bitmap;
 
     return-object v0
@@ -126,8 +103,31 @@
     .parameter "x1"
 
     .prologue
-    .line 311
+    .line 263
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->bitmap:Landroid/graphics/Bitmap;
+
+    return-object p1
+.end method
+
+.method static synthetic access$900(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;)Ljava/lang/String;
+    .locals 1
+    .parameter "x0"
+
+    .prologue
+    .line 263
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->artist:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method static synthetic access$902(Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;Ljava/lang/String;)Ljava/lang/String;
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
+
+    .prologue
+    .line 263
+    iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardTransportControlView$Metadata;->artist:Ljava/lang/String;
 
     return-object p1
 .end method
@@ -138,7 +138,7 @@
     .locals 2
 
     .prologue
-    .line 318
+    .line 270
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V

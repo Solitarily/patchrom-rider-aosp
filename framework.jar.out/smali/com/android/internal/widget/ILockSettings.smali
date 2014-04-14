@@ -39,14 +39,6 @@
     .end annotation
 .end method
 
-.method public abstract getLockPatternSize(I)B
-    .annotation system Ldalvik/annotation/Throws;
-        value = {
-            Landroid/os/RemoteException;
-        }
-    .end annotation
-.end method
-
 .method public abstract getLong(Ljava/lang/String;JI)J
     .annotation system Ldalvik/annotation/Throws;
         value = {

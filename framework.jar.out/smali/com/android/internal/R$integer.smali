@@ -17,8 +17,6 @@
 # static fields
 .field public static final config_MaxConcurrentDownloadsAllowed:I = 0x10e0032
 
-.field public static final config_backKillTimeout:I = 0x10e003a
-
 .field public static final config_carDockKeepsScreenOn:I = 0x10e0014
 
 .field public static final config_carDockRotation:I = 0x10e0011
@@ -44,8 +42,6 @@
 .field public static final config_deskDockKeepsScreenOn:I = 0x10e0013
 
 .field public static final config_deskDockRotation:I = 0x10e0010
-
-.field public static final config_deviceHardwareKeys:I = 0x10e003b
 
 .field public static final config_downloadDataDirLowSpaceThreshold:I = 0x10e0033
 
@@ -95,8 +91,6 @@
 
 .field public static final config_ntpTimeout:I = 0x10e0035
 
-.field public static final config_panelAutoBrightnessValue:I = 0x10e003d
-
 .field public static final config_radioScanningTimeout:I = 0x10e0008
 
 .field public static final config_safe_media_volume_index:I = 0x10e0039
@@ -117,8 +111,6 @@
 
 .field public static final config_virtualKeyQuietTimeMillis:I = 0x10e0029
 
-.field public static final config_wallpaperMaxWidth:I = 0x10e003c
-
 .field public static final config_wifi_driver_stop_delay:I = 0x10e000e
 
 .field public static final config_wifi_framework_scan_interval:I = 0x10e000d
@@ -133,11 +125,11 @@
 
 .field public static final db_wal_autocheckpoint:I = 0x10e0030
 
-.field public static final kg_carousel_angle:I = 0x10e0043
+.field public static final kg_carousel_angle:I = 0x10e003f
 
-.field public static final kg_security_flip_duration:I = 0x10e0044
+.field public static final kg_security_flip_duration:I = 0x10e0040
 
-.field public static final max_action_buttons:I = 0x10e003e
+.field public static final max_action_buttons:I = 0x10e003a
 
 .field public static final status_bar_notification_info_maxnum:I = 0x10e0003
 
@@ -147,7 +139,7 @@
     .locals 0
 
     .prologue
-    .line 12580
+    .line 12443
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void

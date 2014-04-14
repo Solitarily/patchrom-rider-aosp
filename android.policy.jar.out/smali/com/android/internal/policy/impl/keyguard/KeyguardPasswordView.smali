@@ -223,7 +223,7 @@
 
     .prologue
     .line 68
-    const v0, 0x10202be
+    const v0, 0x10202c1
 
     return v0
 .end method
@@ -233,7 +233,7 @@
 
     .prologue
     .line 206
-    const v0, 0x1040594
+    const v0, 0x1040536
 
     return v0
 .end method
@@ -316,7 +316,7 @@
     invoke-virtual {v4}, Landroid/widget/TextView;->requestFocus()Z
 
     .line 128
-    const v4, 0x10202bf
+    const v4, 0x10202c2
 
     invoke-virtual {p0, v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardPasswordView;->findViewById(I)Landroid/view/View;
 
@@ -449,7 +449,7 @@
     .line 62
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardPasswordView;->mSecurityMessageDisplay:Lcom/android/internal/policy/impl/keyguard/SecurityMessageDisplay;
 
-    const v1, 0x104059a
+    const v1, 0x104053c
 
     const/4 v2, 0x0
 

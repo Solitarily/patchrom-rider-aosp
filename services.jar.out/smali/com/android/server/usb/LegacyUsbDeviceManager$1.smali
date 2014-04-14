@@ -24,7 +24,7 @@
     .parameter
 
     .prologue
-    .line 128
+    .line 126
     iput-object p1, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$1;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
 
     invoke-direct {p0}, Landroid/os/UEventObserver;-><init>()V
@@ -39,14 +39,14 @@
     .parameter "event"
 
     .prologue
-    .line 133
+    .line 131
     const-string v2, "SWITCH_NAME"
 
     invoke-virtual {p1, v2}, Landroid/os/UEventObserver$UEvent;->get(Ljava/lang/String;)Ljava/lang/String;
 
     move-result-object v0
 
-    .line 134
+    .line 132
     .local v0, name:Ljava/lang/String;
     const-string v2, "SWITCH_STATE"
 
@@ -54,13 +54,13 @@
 
     move-result-object v1
 
-    .line 136
+    .line 134
     .local v1, state:Ljava/lang/String;
     if-eqz v0, :cond_1
 
     if-eqz v1, :cond_1
 
-    .line 137
+    .line 135
     iget-object v2, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$1;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
 
     #getter for: Lcom/android/server/usb/LegacyUsbDeviceManager;->mLegacy:Z
@@ -70,7 +70,7 @@
 
     if-eqz v2, :cond_2
 
-    .line 138
+    .line 136
     const-string v2, "usb_mass_storage"
 
     invoke-virtual {v2, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -79,7 +79,7 @@
 
     if-eqz v2, :cond_0
 
-    .line 139
+    .line 137
     iget-object v2, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$1;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
 
     const-string v3, "online"
@@ -91,7 +91,7 @@
     #setter for: Lcom/android/server/usb/LegacyUsbDeviceManager;->mConnected:Z
     invoke-static {v2, v3}, Lcom/android/server/usb/LegacyUsbDeviceManager;->access$302(Lcom/android/server/usb/LegacyUsbDeviceManager;Z)Z
 
-    .line 140
+    .line 138
     iget-object v2, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$1;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
 
     const-string v3, "online"
@@ -103,7 +103,7 @@
     #setter for: Lcom/android/server/usb/LegacyUsbDeviceManager;->mConfigured:Z
     invoke-static {v2, v3}, Lcom/android/server/usb/LegacyUsbDeviceManager;->access$402(Lcom/android/server/usb/LegacyUsbDeviceManager;Z)Z
 
-    .line 149
+    .line 147
     :cond_0
     :goto_0
     iget-object v2, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$1;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
@@ -135,12 +135,12 @@
 
     invoke-virtual {v2, v3}, Lcom/android/server/usb/LegacyUsbDeviceManager$LegacyUsbHandler;->updateState(Ljava/lang/String;)V
 
-    .line 154
+    .line 152
     :cond_1
     :goto_1
     return-void
 
-    .line 143
+    .line 141
     :cond_2
     const-string v2, "usb_connected"
 
@@ -150,7 +150,7 @@
 
     if-eqz v2, :cond_3
 
-    .line 144
+    .line 142
     iget-object v2, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$1;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
 
     const-string v3, "1"
@@ -164,7 +164,7 @@
 
     goto :goto_0
 
-    .line 145
+    .line 143
     :cond_3
     const-string v2, "usb_configuration"
 
@@ -174,7 +174,7 @@
 
     if-eqz v2, :cond_0
 
-    .line 146
+    .line 144
     iget-object v2, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$1;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
 
     const-string v3, "1"
@@ -188,7 +188,7 @@
 
     goto :goto_0
 
-    .line 150
+    .line 148
     :cond_4
     iget-object v2, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$1;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
 
@@ -221,7 +221,7 @@
 
     goto :goto_1
 
-    .line 151
+    .line 149
     :cond_5
     iget-object v2, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$1;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
 
@@ -254,7 +254,7 @@
 
     goto :goto_1
 
-    .line 152
+    .line 150
     :cond_6
     iget-object v2, p0, Lcom/android/server/usb/LegacyUsbDeviceManager$1;->this$0:Lcom/android/server/usb/LegacyUsbDeviceManager;
 

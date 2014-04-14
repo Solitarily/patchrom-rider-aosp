@@ -24,6 +24,10 @@
 
 .field public dns2:I
 
+.field public dns3:I
+
+.field public dns4:I
+
 .field public gateway:I
 
 .field public ipAddress:I
@@ -40,7 +44,7 @@
     .locals 1
 
     .prologue
-    .line 89
+    .line 99
     new-instance v0, Landroid/net/DhcpInfo$1;
 
     invoke-direct {v0}, Landroid/net/DhcpInfo$1;-><init>()V
@@ -54,10 +58,10 @@
     .locals 0
 
     .prologue
-    .line 38
+    .line 42
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 39
+    .line 43
     return-void
 .end method
 
@@ -66,48 +70,58 @@
     .parameter "source"
 
     .prologue
-    .line 42
+    .line 46
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 43
+    .line 47
     if-eqz p1, :cond_0
 
-    .line 44
+    .line 48
     iget v0, p1, Landroid/net/DhcpInfo;->ipAddress:I
 
     iput v0, p0, Landroid/net/DhcpInfo;->ipAddress:I
 
-    .line 45
+    .line 49
     iget v0, p1, Landroid/net/DhcpInfo;->gateway:I
 
     iput v0, p0, Landroid/net/DhcpInfo;->gateway:I
 
-    .line 46
+    .line 50
     iget v0, p1, Landroid/net/DhcpInfo;->netmask:I
 
     iput v0, p0, Landroid/net/DhcpInfo;->netmask:I
 
-    .line 47
+    .line 51
     iget v0, p1, Landroid/net/DhcpInfo;->dns1:I
 
     iput v0, p0, Landroid/net/DhcpInfo;->dns1:I
 
-    .line 48
+    .line 52
     iget v0, p1, Landroid/net/DhcpInfo;->dns2:I
 
     iput v0, p0, Landroid/net/DhcpInfo;->dns2:I
 
-    .line 49
+    .line 53
+    iget v0, p1, Landroid/net/DhcpInfo;->dns3:I
+
+    iput v0, p0, Landroid/net/DhcpInfo;->dns3:I
+
+    .line 54
+    iget v0, p1, Landroid/net/DhcpInfo;->dns4:I
+
+    iput v0, p0, Landroid/net/DhcpInfo;->dns4:I
+
+    .line 55
     iget v0, p1, Landroid/net/DhcpInfo;->serverAddress:I
 
     iput v0, p0, Landroid/net/DhcpInfo;->serverAddress:I
 
-    .line 50
+    .line 56
     iget v0, p1, Landroid/net/DhcpInfo;->leaseDuration:I
 
     iput v0, p0, Landroid/net/DhcpInfo;->leaseDuration:I
 
-    .line 52
+    .line 58
     :cond_0
     return-void
 .end method
@@ -118,7 +132,7 @@
     .parameter "addr"
 
     .prologue
-    .line 69
+    .line 77
     invoke-static {p1}, Landroid/net/NetworkUtils;->intToInetAddress(I)Ljava/net/InetAddress;
 
     move-result-object v0
@@ -129,7 +143,7 @@
 
     invoke-virtual {p0, v0}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
 
-    .line 70
+    .line 78
     return-void
 .end method
 
@@ -139,7 +153,7 @@
     .locals 1
 
     .prologue
-    .line 74
+    .line 82
     const/4 v0, 0x0
 
     return v0
@@ -149,12 +163,12 @@
     .locals 3
 
     .prologue
-    .line 55
+    .line 61
     new-instance v0, Ljava/lang/StringBuffer;
 
     invoke-direct {v0}, Ljava/lang/StringBuffer;-><init>()V
 
-    .line 57
+    .line 63
     .local v0, str:Ljava/lang/StringBuffer;
     const-string v1, "ipaddr "
 
@@ -164,7 +178,7 @@
 
     invoke-static {v0, v1}, Landroid/net/DhcpInfo;->putAddress(Ljava/lang/StringBuffer;I)V
 
-    .line 58
+    .line 64
     const-string v1, " gateway "
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
@@ -173,7 +187,7 @@
 
     invoke-static {v0, v1}, Landroid/net/DhcpInfo;->putAddress(Ljava/lang/StringBuffer;I)V
 
-    .line 59
+    .line 65
     const-string v1, " netmask "
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
@@ -182,7 +196,7 @@
 
     invoke-static {v0, v1}, Landroid/net/DhcpInfo;->putAddress(Ljava/lang/StringBuffer;I)V
 
-    .line 60
+    .line 66
     const-string v1, " dns1 "
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
@@ -191,7 +205,7 @@
 
     invoke-static {v0, v1}, Landroid/net/DhcpInfo;->putAddress(Ljava/lang/StringBuffer;I)V
 
-    .line 61
+    .line 67
     const-string v1, " dns2 "
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
@@ -200,7 +214,25 @@
 
     invoke-static {v0, v1}, Landroid/net/DhcpInfo;->putAddress(Ljava/lang/StringBuffer;I)V
 
-    .line 62
+    .line 68
+    const-string v1, " dns3 "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
+    iget v1, p0, Landroid/net/DhcpInfo;->dns3:I
+
+    invoke-static {v0, v1}, Landroid/net/DhcpInfo;->putAddress(Ljava/lang/StringBuffer;I)V
+
+    .line 69
+    const-string v1, " dns4 "
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
+
+    iget v1, p0, Landroid/net/DhcpInfo;->dns4:I
+
+    invoke-static {v0, v1}, Landroid/net/DhcpInfo;->putAddress(Ljava/lang/StringBuffer;I)V
+
+    .line 70
     const-string v1, " DHCP server "
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
@@ -209,7 +241,7 @@
 
     invoke-static {v0, v1}, Landroid/net/DhcpInfo;->putAddress(Ljava/lang/StringBuffer;I)V
 
-    .line 63
+    .line 71
     const-string v1, " lease "
 
     invoke-virtual {v0, v1}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
@@ -226,7 +258,7 @@
 
     invoke-virtual {v1, v2}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
 
-    .line 65
+    .line 73
     invoke-virtual {v0}, Ljava/lang/StringBuffer;->toString()Ljava/lang/String;
 
     move-result-object v1
@@ -240,41 +272,51 @@
     .parameter "flags"
 
     .prologue
-    .line 79
+    .line 87
     iget v0, p0, Landroid/net/DhcpInfo;->ipAddress:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 80
+    .line 88
     iget v0, p0, Landroid/net/DhcpInfo;->gateway:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 81
+    .line 89
     iget v0, p0, Landroid/net/DhcpInfo;->netmask:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 82
+    .line 90
     iget v0, p0, Landroid/net/DhcpInfo;->dns1:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 83
+    .line 91
     iget v0, p0, Landroid/net/DhcpInfo;->dns2:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 84
+    .line 92
+    iget v0, p0, Landroid/net/DhcpInfo;->dns3:I
+
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
+
+    .line 93
+    iget v0, p0, Landroid/net/DhcpInfo;->dns4:I
+
+    invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
+
+    .line 94
     iget v0, p0, Landroid/net/DhcpInfo;->serverAddress:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 85
+    .line 95
     iget v0, p0, Landroid/net/DhcpInfo;->leaseDuration:I
 
     invoke-virtual {p1, v0}, Landroid/os/Parcel;->writeInt(I)V
 
-    .line 86
+    .line 96
     return-void
 .end method

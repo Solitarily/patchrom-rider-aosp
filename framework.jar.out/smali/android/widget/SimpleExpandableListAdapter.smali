@@ -48,6 +48,8 @@
 
 .field private mInflater:Landroid/view/LayoutInflater;
 
+.field private mIsGroupExpanded:[Z
+
 .field private mLastChildLayout:I
 
 
@@ -91,42 +93,51 @@
     .end annotation
 
     .prologue
-    .line 197
+    .line 199
     .local p2, groupData:Ljava/util/List;,"Ljava/util/List<+Ljava/util/Map<Ljava/lang/String;*>;>;"
     .local p7, childData:Ljava/util/List;,"Ljava/util/List<+Ljava/util/List<+Ljava/util/Map<Ljava/lang/String;*>;>;>;"
     invoke-direct {p0}, Landroid/widget/BaseExpandableListAdapter;-><init>()V
 
-    .line 198
+    .line 200
     iput-object p2, p0, Landroid/widget/SimpleExpandableListAdapter;->mGroupData:Ljava/util/List;
 
-    .line 199
+    .line 202
+    invoke-interface {p2}, Ljava/util/List;->size()I
+
+    move-result v0
+
+    new-array v0, v0, [Z
+
+    iput-object v0, p0, Landroid/widget/SimpleExpandableListAdapter;->mIsGroupExpanded:[Z
+
+    .line 203
     iput p3, p0, Landroid/widget/SimpleExpandableListAdapter;->mExpandedGroupLayout:I
 
-    .line 200
+    .line 204
     iput p4, p0, Landroid/widget/SimpleExpandableListAdapter;->mCollapsedGroupLayout:I
 
-    .line 201
+    .line 205
     iput-object p5, p0, Landroid/widget/SimpleExpandableListAdapter;->mGroupFrom:[Ljava/lang/String;
 
-    .line 202
+    .line 206
     iput-object p6, p0, Landroid/widget/SimpleExpandableListAdapter;->mGroupTo:[I
 
-    .line 204
+    .line 208
     iput-object p7, p0, Landroid/widget/SimpleExpandableListAdapter;->mChildData:Ljava/util/List;
 
-    .line 205
+    .line 209
     iput p8, p0, Landroid/widget/SimpleExpandableListAdapter;->mChildLayout:I
 
-    .line 206
+    .line 210
     iput p9, p0, Landroid/widget/SimpleExpandableListAdapter;->mLastChildLayout:I
 
-    .line 207
+    .line 211
     iput-object p10, p0, Landroid/widget/SimpleExpandableListAdapter;->mChildFrom:[Ljava/lang/String;
 
-    .line 208
+    .line 212
     iput-object p11, p0, Landroid/widget/SimpleExpandableListAdapter;->mChildTo:[I
 
-    .line 210
+    .line 214
     const-string v0, "layout_inflater"
 
     invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
@@ -137,7 +148,7 @@
 
     iput-object v0, p0, Landroid/widget/SimpleExpandableListAdapter;->mInflater:Landroid/view/LayoutInflater;
 
-    .line 211
+    .line 215
     return-void
 .end method
 
@@ -179,7 +190,7 @@
     .end annotation
 
     .prologue
-    .line 143
+    .line 145
     .local p2, groupData:Ljava/util/List;,"Ljava/util/List<+Ljava/util/Map<Ljava/lang/String;*>;>;"
     .local p7, childData:Ljava/util/List;,"Ljava/util/List<+Ljava/util/List<+Ljava/util/Map<Ljava/lang/String;*>;>;>;"
     move-object v0, p0
@@ -208,7 +219,7 @@
 
     invoke-direct/range {v0 .. v11}, Landroid/widget/SimpleExpandableListAdapter;-><init>(Landroid/content/Context;Ljava/util/List;II[Ljava/lang/String;[ILjava/util/List;II[Ljava/lang/String;[I)V
 
-    .line 146
+    .line 148
     return-void
 .end method
 
@@ -249,7 +260,7 @@
     .end annotation
 
     .prologue
-    .line 95
+    .line 97
     .local p2, groupData:Ljava/util/List;,"Ljava/util/List<+Ljava/util/Map<Ljava/lang/String;*>;>;"
     .local p6, childData:Ljava/util/List;,"Ljava/util/List<+Ljava/util/List<+Ljava/util/Map<Ljava/lang/String;*>;>;>;"
     move-object v0, p0
@@ -278,7 +289,7 @@
 
     invoke-direct/range {v0 .. v11}, Landroid/widget/SimpleExpandableListAdapter;-><init>(Landroid/content/Context;Ljava/util/List;II[Ljava/lang/String;[ILjava/util/List;II[Ljava/lang/String;[I)V
 
-    .line 97
+    .line 99
     return-void
 .end method
 
@@ -302,11 +313,11 @@
     .end annotation
 
     .prologue
-    .line 244
+    .line 248
     .local p2, data:Ljava/util/Map;,"Ljava/util/Map<Ljava/lang/String;*>;"
     array-length v1, p4
 
-    .line 246
+    .line 250
     .local v1, len:I
     const/4 v0, 0x0
 
@@ -314,7 +325,7 @@
     :goto_0
     if-ge v0, v1, :cond_1
 
-    .line 247
+    .line 251
     aget v3, p4, v0
 
     invoke-virtual {p1, v3}, Landroid/view/View;->findViewById(I)Landroid/view/View;
@@ -323,11 +334,11 @@
 
     check-cast v2, Landroid/widget/TextView;
 
-    .line 248
+    .line 252
     .local v2, v:Landroid/widget/TextView;
     if-eqz v2, :cond_0
 
-    .line 249
+    .line 253
     aget-object v3, p3, v0
 
     invoke-interface {p2, v3}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
@@ -338,13 +349,13 @@
 
     invoke-virtual {v2, v3}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
 
-    .line 246
+    .line 250
     :cond_0
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    .line 252
+    .line 256
     .end local v2           #v:Landroid/widget/TextView;
     :cond_1
     return-void
@@ -358,7 +369,7 @@
     .parameter "childPosition"
 
     .prologue
-    .line 214
+    .line 218
     iget-object v0, p0, Landroid/widget/SimpleExpandableListAdapter;->mChildData:Ljava/util/List;
 
     invoke-interface {v0, p1}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -380,10 +391,48 @@
     .parameter "childPosition"
 
     .prologue
-    .line 218
+    .line 222
     int-to-long v0, p2
 
     return-wide v0
+.end method
+
+.method public getChildType(II)I
+    .locals 2
+    .parameter "groupPosition"
+    .parameter "childPosition"
+
+    .prologue
+    .line 311
+    invoke-virtual {p0, p1}, Landroid/widget/SimpleExpandableListAdapter;->getChildrenCount(I)I
+
+    move-result v0
+
+    .line 312
+    .local v0, childrenInGroup:I
+    add-int/lit8 v1, v0, -0x1
+
+    if-ne p2, v1, :cond_0
+
+    const/4 v1, 0x1
+
+    :goto_0
+    return v1
+
+    :cond_0
+    const/4 v1, 0x0
+
+    goto :goto_0
+.end method
+
+.method public getChildTypeCount()I
+    .locals 1
+
+    .prologue
+    .line 321
+    const/4 v0, 0x2
+
+    return v0
 .end method
 
 .method public getChildView(IIZLandroid/view/View;Landroid/view/ViewGroup;)Landroid/view/View;
@@ -395,15 +444,15 @@
     .parameter "parent"
 
     .prologue
-    .line 224
+    .line 228
     if-nez p4, :cond_0
 
-    .line 225
+    .line 229
     invoke-virtual {p0, p3, p5}, Landroid/widget/SimpleExpandableListAdapter;->newChildView(ZLandroid/view/ViewGroup;)Landroid/view/View;
 
     move-result-object v0
 
-    .line 229
+    .line 233
     .local v0, v:Landroid/view/View;
     :goto_0
     iget-object v1, p0, Landroid/widget/SimpleExpandableListAdapter;->mChildData:Ljava/util/List;
@@ -426,10 +475,10 @@
 
     invoke-direct {p0, v0, v1, v2, v3}, Landroid/widget/SimpleExpandableListAdapter;->bindView(Landroid/view/View;Ljava/util/Map;[Ljava/lang/String;[I)V
 
-    .line 230
+    .line 234
     return-object v0
 
-    .line 227
+    .line 231
     .end local v0           #v:Landroid/view/View;
     :cond_0
     move-object v0, p4
@@ -443,7 +492,7 @@
     .parameter "groupPosition"
 
     .prologue
-    .line 255
+    .line 259
     iget-object v0, p0, Landroid/widget/SimpleExpandableListAdapter;->mChildData:Ljava/util/List;
 
     invoke-interface {v0, p1}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -464,7 +513,7 @@
     .parameter "groupPosition"
 
     .prologue
-    .line 259
+    .line 263
     iget-object v0, p0, Landroid/widget/SimpleExpandableListAdapter;->mGroupData:Ljava/util/List;
 
     invoke-interface {v0, p1}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -478,7 +527,7 @@
     .locals 1
 
     .prologue
-    .line 263
+    .line 267
     iget-object v0, p0, Landroid/widget/SimpleExpandableListAdapter;->mGroupData:Ljava/util/List;
 
     invoke-interface {v0}, Ljava/util/List;->size()I
@@ -493,10 +542,43 @@
     .parameter "groupPosition"
 
     .prologue
-    .line 267
+    .line 271
     int-to-long v0, p1
 
     return-wide v0
+.end method
+
+.method public getGroupType(I)I
+    .locals 1
+    .parameter "groupPosition"
+
+    .prologue
+    .line 330
+    iget-object v0, p0, Landroid/widget/SimpleExpandableListAdapter;->mIsGroupExpanded:[Z
+
+    aget-boolean v0, v0, p1
+
+    if-eqz v0, :cond_0
+
+    const/4 v0, 0x1
+
+    :goto_0
+    return v0
+
+    :cond_0
+    const/4 v0, 0x0
+
+    goto :goto_0
+.end method
+
+.method public getGroupTypeCount()I
+    .locals 1
+
+    .prologue
+    .line 339
+    const/4 v0, 0x2
+
+    return v0
 .end method
 
 .method public getGroupView(IZLandroid/view/View;Landroid/view/ViewGroup;)Landroid/view/View;
@@ -507,15 +589,15 @@
     .parameter "parent"
 
     .prologue
-    .line 273
+    .line 277
     if-nez p3, :cond_0
 
-    .line 274
+    .line 278
     invoke-virtual {p0, p2, p4}, Landroid/widget/SimpleExpandableListAdapter;->newGroupView(ZLandroid/view/ViewGroup;)Landroid/view/View;
 
     move-result-object v0
 
-    .line 278
+    .line 282
     .local v0, v:Landroid/view/View;
     :goto_0
     iget-object v1, p0, Landroid/widget/SimpleExpandableListAdapter;->mGroupData:Ljava/util/List;
@@ -532,10 +614,10 @@
 
     invoke-direct {p0, v0, v1, v2, v3}, Landroid/widget/SimpleExpandableListAdapter;->bindView(Landroid/view/View;Ljava/util/Map;[Ljava/lang/String;[I)V
 
-    .line 279
+    .line 283
     return-object v0
 
-    .line 276
+    .line 280
     .end local v0           #v:Landroid/view/View;
     :cond_0
     move-object v0, p3
@@ -548,7 +630,7 @@
     .locals 1
 
     .prologue
-    .line 298
+    .line 302
     const/4 v0, 0x1
 
     return v0
@@ -560,7 +642,7 @@
     .parameter "childPosition"
 
     .prologue
-    .line 294
+    .line 298
     const/4 v0, 0x1
 
     return v0
@@ -572,7 +654,7 @@
     .parameter "parent"
 
     .prologue
-    .line 240
+    .line 244
     iget-object v1, p0, Landroid/widget/SimpleExpandableListAdapter;->mInflater:Landroid/view/LayoutInflater;
 
     if-eqz p1, :cond_0
@@ -600,7 +682,7 @@
     .parameter "parent"
 
     .prologue
-    .line 289
+    .line 293
     iget-object v1, p0, Landroid/widget/SimpleExpandableListAdapter;->mInflater:Landroid/view/LayoutInflater;
 
     if-eqz p1, :cond_0
@@ -620,4 +702,36 @@
     iget v0, p0, Landroid/widget/SimpleExpandableListAdapter;->mCollapsedGroupLayout:I
 
     goto :goto_0
+.end method
+
+.method public onGroupCollapsed(I)V
+    .locals 2
+    .parameter "groupPosition"
+
+    .prologue
+    .line 345
+    iget-object v0, p0, Landroid/widget/SimpleExpandableListAdapter;->mIsGroupExpanded:[Z
+
+    const/4 v1, 0x0
+
+    aput-boolean v1, v0, p1
+
+    .line 346
+    return-void
+.end method
+
+.method public onGroupExpanded(I)V
+    .locals 2
+    .parameter "groupPosition"
+
+    .prologue
+    .line 351
+    iget-object v0, p0, Landroid/widget/SimpleExpandableListAdapter;->mIsGroupExpanded:[Z
+
+    const/4 v1, 0x1
+
+    aput-boolean v1, v0, p1
+
+    .line 352
+    return-void
 .end method

@@ -1381,7 +1381,7 @@
 
     if-eqz p3, :cond_0
 
-    const v0, 0x10802b2
+    const v0, 0x10802af
 
     :goto_0
     invoke-virtual {v2, v0}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
@@ -1407,7 +1407,7 @@
     .line 329
     .end local v5           #icon:Landroid/graphics/drawable/Drawable;
     :cond_0
-    const v0, 0x10803b9
+    const v0, 0x1080365
 
     goto :goto_0
 .end method
@@ -1504,7 +1504,7 @@
 
     .line 542
     .local v3, permView:Landroid/view/View;
-    const v4, 0x102026c
+    const v4, 0x102026e
 
     invoke-virtual {v3, v4}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1514,7 +1514,7 @@
 
     .line 543
     .local v2, permGrpView:Landroid/widget/TextView;
-    const v4, 0x102026d
+    const v4, 0x102026f
 
     invoke-virtual {v3, v4}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1524,7 +1524,7 @@
 
     .line 545
     .local v1, permDescView:Landroid/widget/TextView;
-    const v4, 0x1020268
+    const v4, 0x102026a
 
     invoke-virtual {v3, v4}, Landroid/view/View;->findViewById(I)Landroid/view/View;
 
@@ -1747,7 +1747,7 @@
     .line 315
     iget-object v0, p0, Landroid/widget/AppSecurityPermissions;->mContext:Landroid/content/Context;
 
-    const v1, 0x10404a2
+    const v1, 0x1040444
 
     invoke-virtual {v0, v1}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -1762,7 +1762,7 @@
 
     move-result-object v0
 
-    const v1, 0x10803b9
+    const v1, 0x1080365
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 
@@ -1777,7 +1777,7 @@
 
     move-result-object v0
 
-    const v1, 0x10802b2
+    const v1, 0x10802af
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 
@@ -2140,7 +2140,7 @@
 
     .line 477
     .local v2, permsView:Landroid/widget/LinearLayout;
-    const v3, 0x102026f
+    const v3, 0x1020271
 
     invoke-virtual {v2, v3}, Landroid/widget/LinearLayout;->findViewById(I)Landroid/view/View;
 
@@ -2150,7 +2150,7 @@
 
     .line 478
     .local v0, displayList:Landroid/widget/LinearLayout;
-    const v3, 0x102026e
+    const v3, 0x1020270
 
     invoke-virtual {v2, v3}, Landroid/widget/LinearLayout;->findViewById(I)Landroid/view/View;
 

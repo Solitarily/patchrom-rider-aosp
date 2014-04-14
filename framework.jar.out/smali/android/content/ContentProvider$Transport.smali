@@ -972,7 +972,7 @@
 .end method
 
 .method public openAssetFile(Landroid/net/Uri;Ljava/lang/String;)Landroid/content/res/AssetFileDescriptor;
-    .locals 2
+    .locals 1
     .parameter "uri"
     .parameter "mode"
     .annotation system Ldalvik/annotation/Throws;
@@ -985,15 +985,13 @@
     .line 249
     if-eqz p2, :cond_0
 
-    const/16 v0, 0x77
+    const-string/jumbo v0, "rw"
 
-    invoke-virtual {p2, v0}, Ljava/lang/String;->indexOf(I)I
+    invoke-virtual {p2, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
 
     move-result v0
 
-    const/4 v1, -0x1
-
-    if-eq v0, v1, :cond_0
+    if-eqz v0, :cond_0
 
     invoke-direct {p0, p1}, Landroid/content/ContentProvider$Transport;->enforceWritePermission(Landroid/net/Uri;)V
 
@@ -1015,7 +1013,7 @@
 .end method
 
 .method public openFile(Landroid/net/Uri;Ljava/lang/String;)Landroid/os/ParcelFileDescriptor;
-    .locals 2
+    .locals 1
     .parameter "uri"
     .parameter "mode"
     .annotation system Ldalvik/annotation/Throws;
@@ -1028,15 +1026,13 @@
     .line 241
     if-eqz p2, :cond_0
 
-    const/16 v0, 0x77
+    const-string/jumbo v0, "rw"
 
-    invoke-virtual {p2, v0}, Ljava/lang/String;->indexOf(I)I
+    invoke-virtual {p2, v0}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
 
     move-result v0
 
-    const/4 v1, -0x1
-
-    if-eq v0, v1, :cond_0
+    if-eqz v0, :cond_0
 
     invoke-direct {p0, p1}, Landroid/content/ContentProvider$Transport;->enforceWritePermission(Landroid/net/Uri;)V
 

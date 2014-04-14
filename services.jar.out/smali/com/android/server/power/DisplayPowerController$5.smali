@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 1261
+    .line 1151
     iput-object p1, p0, Lcom/android/server/power/DisplayPowerController$5;->this$0:Lcom/android/server/power/DisplayPowerController;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -41,16 +41,16 @@
     .locals 1
 
     .prologue
-    .line 1264
+    .line 1154
     iget-object v0, p0, Lcom/android/server/power/DisplayPowerController$5;->this$0:Lcom/android/server/power/DisplayPowerController;
 
     #getter for: Lcom/android/server/power/DisplayPowerController;->mCallbacks:Lcom/android/server/power/DisplayPowerController$Callbacks;
-    invoke-static {v0}, Lcom/android/server/power/DisplayPowerController;->access$200(Lcom/android/server/power/DisplayPowerController;)Lcom/android/server/power/DisplayPowerController$Callbacks;
+    invoke-static {v0}, Lcom/android/server/power/DisplayPowerController;->access$100(Lcom/android/server/power/DisplayPowerController;)Lcom/android/server/power/DisplayPowerController$Callbacks;
 
     move-result-object v0
 
-    invoke-interface {v0}, Lcom/android/server/power/DisplayPowerController$Callbacks;->onProximityPositive()V
+    invoke-interface {v0}, Lcom/android/server/power/DisplayPowerController$Callbacks;->onProximityNegative()V
 
-    .line 1265
+    .line 1155
     return-void
 .end method

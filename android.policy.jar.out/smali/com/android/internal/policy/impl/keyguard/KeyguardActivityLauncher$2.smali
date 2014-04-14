@@ -113,13 +113,13 @@
 
     .line 232
     .local v13, result:Landroid/app/IActivityManager$WaitResult;
-    invoke-static {}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->access$100()Z
+    invoke-static {}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->access$200()Z
 
     move-result v0
 
     if-eqz v0, :cond_0
 
-    invoke-static {}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->access$200()Ljava/lang/String;
+    invoke-static {}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->access$300()Ljava/lang/String;
 
     move-result-object v0
 
@@ -205,7 +205,7 @@
 
     .line 236
     .local v12, e:Landroid/os/RemoteException;
-    invoke-static {}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->access$200()Ljava/lang/String;
+    invoke-static {}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->access$300()Ljava/lang/String;
 
     move-result-object v0
 
@@ -223,7 +223,7 @@
 
     .line 242
     .local v14, t:Ljava/lang/Throwable;
-    invoke-static {}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->access$200()Ljava/lang/String;
+    invoke-static {}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;->access$300()Ljava/lang/String;
 
     move-result-object v0
 

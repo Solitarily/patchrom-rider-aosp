@@ -31,7 +31,7 @@
 
     sput-boolean v0, Landroid/app/ActivityManagerNative;->sSystemReady:Z
 
-    .line 1838
+    .line 1830
     new-instance v0, Landroid/app/ActivityManagerNative$1;
 
     invoke-direct {v0}, Landroid/app/ActivityManagerNative$1;-><init>()V
@@ -225,7 +225,7 @@
     .locals 0
 
     .prologue
-    .line 1835
+    .line 1827
     return-object p0
 .end method
 
@@ -245,7 +245,7 @@
     .line 114
     packed-switch p1, :pswitch_data_0
 
-    .line 1831
+    .line 1823
     :pswitch_0
     invoke-super/range {p0 .. p4}, Landroid/os/Binder;->onTransact(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z
 
@@ -9285,58 +9285,7 @@
 
     goto :goto_5c
 
-    .line 1822
-    .end local v159           #pid:I
-    :pswitch_9c
-    const-string v5, "android.app.IActivityManager"
-
-    move-object/from16 v0, p2
-
-    invoke-virtual {v0, v5}, Landroid/os/Parcel;->enforceInterface(Ljava/lang/String;)V
-
-    .line 1823
-    invoke-virtual/range {p2 .. p2}, Landroid/os/Parcel;->readInt()I
-
-    move-result v159
-
-    .line 1824
-    .restart local v159       #pid:I
-    move-object/from16 v0, p0
-
-    move/from16 v1, v159
-
-    invoke-virtual {v0, v1}, Landroid/app/ActivityManagerNative;->isPrivacyGuardEnabledForProcess(I)Z
-
-    move-result v172
-
-    .line 1825
-    .local v172, res:Z
-    invoke-virtual/range {p3 .. p3}, Landroid/os/Parcel;->writeNoException()V
-
-    .line 1826
-    if-eqz v172, :cond_66
-
-    const/4 v5, 0x1
-
-    :goto_5d
-    move-object/from16 v0, p3
-
-    invoke-virtual {v0, v5}, Landroid/os/Parcel;->writeInt(I)V
-
-    .line 1827
-    const/4 v5, 0x1
-
-    goto/16 :goto_0
-
-    .line 1826
-    :cond_66
-    const/4 v5, 0x0
-
-    goto :goto_5d
-
     .line 114
-    nop
-
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_5b
@@ -9500,6 +9449,5 @@
         :pswitch_9b
         :pswitch_0
         :pswitch_90
-        :pswitch_9c
     .end packed-switch
 .end method

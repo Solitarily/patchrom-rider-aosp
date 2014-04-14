@@ -1,11 +1,14 @@
 .class Landroid/view/VolumePanel$5;
-.super Landroid/content/BroadcastReceiver;
+.super Ljava/lang/Object;
 .source "VolumePanel.java"
+
+# interfaces
+.implements Landroid/content/DialogInterface$OnClickListener;
 
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Landroid/view/VolumePanel;->listenToRingerMode()V
+    value = Landroid/view/VolumePanel;->onDisplaySafeVolumeWarning()V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -24,56 +27,29 @@
     .parameter
 
     .prologue
-    .line 365
+    .line 850
     iput-object p1, p0, Landroid/view/VolumePanel$5;->this$0:Landroid/view/VolumePanel;
 
-    invoke-direct {p0}, Landroid/content/BroadcastReceiver;-><init>()V
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
     return-void
 .end method
 
 
 # virtual methods
-.method public onReceive(Landroid/content/Context;Landroid/content/Intent;)V
-    .locals 4
-    .parameter "context"
-    .parameter "intent"
+.method public onClick(Landroid/content/DialogInterface;I)V
+    .locals 1
+    .parameter "dialog"
+    .parameter "which"
 
     .prologue
-    const/4 v3, 0x6
+    .line 852
+    iget-object v0, p0, Landroid/view/VolumePanel$5;->this$0:Landroid/view/VolumePanel;
 
-    .line 368
-    invoke-virtual {p2}, Landroid/content/Intent;->getAction()Ljava/lang/String;
+    iget-object v0, v0, Landroid/view/VolumePanel;->mAudioService:Landroid/media/AudioService;
 
-    move-result-object v0
+    invoke-virtual {v0}, Landroid/media/AudioService;->disableSafeMediaVolume()V
 
-    .line 370
-    .local v0, action:Ljava/lang/String;
-    const-string v1, "android.media.RINGER_MODE_CHANGED"
-
-    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v1
-
-    if-eqz v1, :cond_0
-
-    .line 371
-    iget-object v1, p0, Landroid/view/VolumePanel$5;->this$0:Landroid/view/VolumePanel;
-
-    invoke-virtual {v1, v3}, Landroid/view/VolumePanel;->removeMessages(I)V
-
-    .line 372
-    iget-object v1, p0, Landroid/view/VolumePanel$5;->this$0:Landroid/view/VolumePanel;
-
-    iget-object v2, p0, Landroid/view/VolumePanel$5;->this$0:Landroid/view/VolumePanel;
-
-    invoke-virtual {v2, v3}, Landroid/view/VolumePanel;->obtainMessage(I)Landroid/os/Message;
-
-    move-result-object v2
-
-    invoke-virtual {v1, v2}, Landroid/view/VolumePanel;->sendMessage(Landroid/os/Message;)Z
-
-    .line 374
-    :cond_0
+    .line 853
     return-void
 .end method

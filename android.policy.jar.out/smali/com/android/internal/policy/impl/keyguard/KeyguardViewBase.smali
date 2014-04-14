@@ -4,7 +4,7 @@
 
 
 # static fields
-.field protected static final BACKGROUND_COLOR:I = 0x70000000
+.field private static final BACKGROUND_COLOR:I = 0x70000000
 
 .field private static final KEYGUARD_MANAGES_VOLUME:Z = true
 

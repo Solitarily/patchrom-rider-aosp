@@ -8,8 +8,6 @@
 
 .field public static final PROP_VALUE_MAX:I = 0x5b
 
-.field public static final QCOM_HARDWARE:Z
-
 .field private static final sChangeCallbacks:Ljava/util/ArrayList;
     .annotation system Ldalvik/annotation/Signature;
         value = {
@@ -24,21 +22,10 @@
 
 # direct methods
 .method static constructor <clinit>()V
-    .locals 2
+    .locals 1
 
     .prologue
     .line 36
-    const-string v0, "com.qc.hardware"
-
-    const/4 v1, 0x0
-
-    invoke-static {v0, v1}, Landroid/os/SystemProperties;->native_get_boolean(Ljava/lang/String;Z)Z
-
-    move-result v0
-
-    sput-boolean v0, Landroid/os/SystemProperties;->QCOM_HARDWARE:Z
-
-    .line 38
     new-instance v0, Ljava/util/ArrayList;
 
     invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
@@ -63,12 +50,12 @@
     .parameter "callback"
 
     .prologue
-    .line 139
+    .line 137
     sget-object v1, Landroid/os/SystemProperties;->sChangeCallbacks:Ljava/util/ArrayList;
 
     monitor-enter v1
 
-    .line 140
+    .line 138
     :try_start_0
     sget-object v0, Landroid/os/SystemProperties;->sChangeCallbacks:Ljava/util/ArrayList;
 
@@ -78,22 +65,22 @@
 
     if-nez v0, :cond_0
 
-    .line 141
+    .line 139
     invoke-static {}, Landroid/os/SystemProperties;->native_add_change_callback()V
 
-    .line 143
+    .line 141
     :cond_0
     sget-object v0, Landroid/os/SystemProperties;->sChangeCallbacks:Ljava/util/ArrayList;
 
     invoke-virtual {v0, p0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 144
+    .line 142
     monitor-exit v1
 
-    .line 145
+    .line 143
     return-void
 
-    .line 144
+    .line 142
     :catchall_0
     move-exception v0
 
@@ -108,12 +95,12 @@
     .locals 4
 
     .prologue
-    .line 148
+    .line 146
     sget-object v3, Landroid/os/SystemProperties;->sChangeCallbacks:Ljava/util/ArrayList;
 
     monitor-enter v3
 
-    .line 150
+    .line 148
     :try_start_0
     sget-object v2, Landroid/os/SystemProperties;->sChangeCallbacks:Ljava/util/ArrayList;
 
@@ -123,16 +110,16 @@
 
     if-nez v2, :cond_0
 
-    .line 151
+    .line 149
     monitor-exit v3
 
-    .line 158
+    .line 156
     .local v0, callbacks:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Ljava/lang/Runnable;>;"
     .local v1, i:I
     :goto_0
     return-void
 
-    .line 153
+    .line 151
     .end local v0           #callbacks:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Ljava/lang/Runnable;>;"
     .end local v1           #i:I
     :cond_0
@@ -142,7 +129,7 @@
 
     invoke-direct {v0, v2}, Ljava/util/ArrayList;-><init>(Ljava/util/Collection;)V
 
-    .line 154
+    .line 152
     .restart local v0       #callbacks:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Ljava/lang/Runnable;>;"
     const/4 v1, 0x0
 
@@ -154,7 +141,7 @@
 
     if-ge v1, v2, :cond_1
 
-    .line 155
+    .line 153
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
     move-result-object v2
@@ -163,12 +150,12 @@
 
     invoke-interface {v2}, Ljava/lang/Runnable;->run()V
 
-    .line 154
+    .line 152
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_1
 
-    .line 157
+    .line 155
     :cond_1
     monitor-exit v3
 
@@ -189,7 +176,7 @@
     .parameter "key"
 
     .prologue
-    .line 54
+    .line 52
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v0
@@ -198,7 +185,7 @@
 
     if-le v0, v1, :cond_0
 
-    .line 55
+    .line 53
     new-instance v0, Ljava/lang/IllegalArgumentException;
 
     const-string v1, "key.length > 31"
@@ -207,7 +194,7 @@
 
     throw v0
 
-    .line 57
+    .line 55
     :cond_0
     invoke-static {p0}, Landroid/os/SystemProperties;->native_get(Ljava/lang/String;)Ljava/lang/String;
 
@@ -222,7 +209,7 @@
     .parameter "def"
 
     .prologue
-    .line 66
+    .line 64
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v0
@@ -231,7 +218,7 @@
 
     if-le v0, v1, :cond_0
 
-    .line 67
+    .line 65
     new-instance v0, Ljava/lang/IllegalArgumentException;
 
     const-string v1, "key.length > 31"
@@ -240,7 +227,7 @@
 
     throw v0
 
-    .line 69
+    .line 67
     :cond_0
     invoke-static {p0, p1}, Landroid/os/SystemProperties;->native_get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
 
@@ -255,7 +242,7 @@
     .parameter "def"
 
     .prologue
-    .line 116
+    .line 114
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v0
@@ -264,7 +251,7 @@
 
     if-le v0, v1, :cond_0
 
-    .line 117
+    .line 115
     new-instance v0, Ljava/lang/IllegalArgumentException;
 
     const-string v1, "key.length > 31"
@@ -273,7 +260,7 @@
 
     throw v0
 
-    .line 119
+    .line 117
     :cond_0
     invoke-static {p0, p1}, Landroid/os/SystemProperties;->native_get_boolean(Ljava/lang/String;Z)Z
 
@@ -288,7 +275,7 @@
     .parameter "def"
 
     .prologue
-    .line 81
+    .line 79
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v0
@@ -297,7 +284,7 @@
 
     if-le v0, v1, :cond_0
 
-    .line 82
+    .line 80
     new-instance v0, Ljava/lang/IllegalArgumentException;
 
     const-string v1, "key.length > 31"
@@ -306,7 +293,7 @@
 
     throw v0
 
-    .line 84
+    .line 82
     :cond_0
     invoke-static {p0, p1}, Landroid/os/SystemProperties;->native_get_int(Ljava/lang/String;I)I
 
@@ -321,7 +308,7 @@
     .parameter "def"
 
     .prologue
-    .line 96
+    .line 94
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v0
@@ -330,7 +317,7 @@
 
     if-le v0, v1, :cond_0
 
-    .line 97
+    .line 95
     new-instance v0, Ljava/lang/IllegalArgumentException;
 
     const-string v1, "key.length > 31"
@@ -339,7 +326,7 @@
 
     throw v0
 
-    .line 99
+    .line 97
     :cond_0
     invoke-static {p0, p1, p2}, Landroid/os/SystemProperties;->native_get_long(Ljava/lang/String;J)J
 
@@ -354,7 +341,7 @@
     .parameter "def"
 
     .prologue
-    .line 165
+    .line 163
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v3
@@ -365,7 +352,7 @@
 
     if-le v3, v4, :cond_0
 
-    .line 166
+    .line 164
     new-instance v3, Ljava/lang/IllegalArgumentException;
 
     const-string v4, "key.length > 31"
@@ -374,7 +361,7 @@
 
     throw v3
 
-    .line 168
+    .line 166
     :cond_0
     new-instance v3, Ljava/lang/StringBuilder;
 
@@ -400,23 +387,23 @@
 
     move-result v0
 
-    .line 169
+    .line 167
     .local v0, chunks:I
     if-nez v0, :cond_1
 
-    .line 176
+    .line 174
     .end local p1
     :goto_0
     return-object p1
 
-    .line 172
+    .line 170
     .restart local p1
     :cond_1
     new-instance v2, Ljava/lang/StringBuffer;
 
     invoke-direct {v2}, Ljava/lang/StringBuffer;-><init>()V
 
-    .line 173
+    .line 171
     .local v2, sb:Ljava/lang/StringBuffer;
     const/4 v1, 0x1
 
@@ -424,7 +411,7 @@
     :goto_1
     if-gt v1, v0, :cond_2
 
-    .line 174
+    .line 172
     new-instance v3, Ljava/lang/StringBuilder;
 
     invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
@@ -451,12 +438,12 @@
 
     invoke-virtual {v2, v3}, Ljava/lang/StringBuffer;->append(Ljava/lang/String;)Ljava/lang/StringBuffer;
 
-    .line 173
+    .line 171
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_1
 
-    .line 176
+    .line 174
     :cond_2
     invoke-virtual {v2}, Ljava/lang/StringBuffer;->toString()Ljava/lang/String;
 
@@ -492,7 +479,7 @@
     .parameter "val"
 
     .prologue
-    .line 128
+    .line 126
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v0
@@ -501,7 +488,7 @@
 
     if-le v0, v1, :cond_0
 
-    .line 129
+    .line 127
     new-instance v0, Ljava/lang/IllegalArgumentException;
 
     const-string v1, "key.length > 31"
@@ -510,7 +497,7 @@
 
     throw v0
 
-    .line 131
+    .line 129
     :cond_0
     if-eqz p1, :cond_1
 
@@ -522,7 +509,7 @@
 
     if-le v0, v1, :cond_1
 
-    .line 132
+    .line 130
     new-instance v0, Ljava/lang/IllegalArgumentException;
 
     const-string/jumbo v1, "val.length > 91"
@@ -531,11 +518,11 @@
 
     throw v0
 
-    .line 135
+    .line 133
     :cond_1
     invoke-static {p0, p1}, Landroid/os/SystemProperties;->native_set(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 136
+    .line 134
     return-void
 .end method
 
@@ -545,7 +532,7 @@
     .parameter "val"
 
     .prologue
-    .line 184
+    .line 182
     invoke-virtual {p0}, Ljava/lang/String;->length()I
 
     move-result v4
@@ -556,7 +543,7 @@
 
     if-le v4, v5, :cond_0
 
-    .line 185
+    .line 183
     new-instance v4, Ljava/lang/IllegalArgumentException;
 
     const-string v5, "key.length > 31"
@@ -565,11 +552,11 @@
 
     throw v4
 
-    .line 187
+    .line 185
     :cond_0
     const/4 v0, 0x0
 
-    .line 188
+    .line 186
     .local v0, chunks:I
     if-eqz p1, :cond_1
 
@@ -579,7 +566,7 @@
 
     if-lez v4, :cond_1
 
-    .line 189
+    .line 187
     invoke-virtual {p1}, Ljava/lang/String;->length()I
 
     move-result v4
@@ -588,7 +575,7 @@
 
     add-int/lit8 v0, v4, 0x1
 
-    .line 191
+    .line 189
     :cond_1
     new-instance v4, Ljava/lang/StringBuilder;
 
@@ -614,10 +601,10 @@
 
     invoke-static {v4, v5}, Landroid/os/SystemProperties;->native_set(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 192
+    .line 190
     if-lez v0, :cond_3
 
-    .line 193
+    .line 191
     const/4 v2, 0x1
 
     .local v2, i:I
@@ -627,10 +614,10 @@
     :goto_0
     if-gt v2, v0, :cond_3
 
-    .line 194
+    .line 192
     add-int/lit8 v1, v3, 0x5b
 
-    .line 195
+    .line 193
     .local v1, end:I
     invoke-virtual {p1}, Ljava/lang/String;->length()I
 
@@ -638,12 +625,12 @@
 
     if-le v1, v4, :cond_2
 
-    .line 196
+    .line 194
     invoke-virtual {p1}, Ljava/lang/String;->length()I
 
     move-result v1
 
-    .line 198
+    .line 196
     :cond_2
     new-instance v4, Ljava/lang/StringBuilder;
 
@@ -671,15 +658,15 @@
 
     invoke-static {v4, v5}, Landroid/os/SystemProperties;->native_set(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 199
+    .line 197
     move v3, v1
 
-    .line 193
+    .line 191
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 202
+    .line 200
     .end local v1           #end:I
     .end local v2           #i:I
     .end local v3           #start:I

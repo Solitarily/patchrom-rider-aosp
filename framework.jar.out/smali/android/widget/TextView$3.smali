@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 7855
+    .line 7860
     iput-object p1, p0, Landroid/widget/TextView$3;->this$0:Landroid/widget/TextView;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -41,7 +41,7 @@
     .locals 2
 
     .prologue
-    .line 7858
+    .line 7863
     iget-object v0, p0, Landroid/widget/TextView$3;->this$0:Landroid/widget/TextView;
 
     #getter for: Landroid/widget/TextView;->mCurrentTextServicesLocaleLock:Ljava/util/concurrent/locks/ReentrantLock;
@@ -55,7 +55,7 @@
 
     if-eqz v0, :cond_0
 
-    .line 7860
+    .line 7865
     :try_start_0
     iget-object v0, p0, Landroid/widget/TextView$3;->this$0:Landroid/widget/TextView;
 
@@ -64,7 +64,7 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 7862
+    .line 7867
     iget-object v0, p0, Landroid/widget/TextView$3;->this$0:Landroid/widget/TextView;
 
     #getter for: Landroid/widget/TextView;->mCurrentTextServicesLocaleLock:Ljava/util/concurrent/locks/ReentrantLock;
@@ -74,11 +74,11 @@
 
     invoke-virtual {v0}, Ljava/util/concurrent/locks/ReentrantLock;->unlock()V
 
-    .line 7865
+    .line 7870
     :cond_0
     return-void
 
-    .line 7862
+    .line 7867
     :catchall_0
     move-exception v0
 

@@ -238,7 +238,7 @@
     iput v3, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetFrame;->mFrameStrokeAdjustment:I
 
     .line 116
-    const v3, 0x1050078
+    const v3, 0x1050079
 
     invoke-virtual {v2, v3}, Landroid/content/res/Resources;->getDimensionPixelSize(I)I
 
@@ -247,7 +247,7 @@
     iput v3, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetFrame;->mSmallWidgetHeight:I
 
     .line 118
-    const v3, 0x108041e
+    const v3, 0x10803ca
 
     invoke-virtual {v2, v3}, Landroid/content/res/Resources;->getDrawable(I)Landroid/graphics/drawable/Drawable;
 

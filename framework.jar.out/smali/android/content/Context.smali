@@ -104,8 +104,6 @@
 
 .field public static final POWER_SERVICE:Ljava/lang/String; = "power"
 
-.field public static final PROFILE_SERVICE:Ljava/lang/String; = "profile"
-
 .field public static final SCHEDULING_POLICY_SERVICE:Ljava/lang/String; = "scheduling_policy"
 
 .field public static final SEARCH_SERVICE:Ljava/lang/String; = "search"
@@ -418,14 +416,11 @@
 .method public abstract grantUriPermission(Ljava/lang/String;Landroid/net/Uri;I)V
 .end method
 
-.method public abstract isPrivacyGuardEnabled()Z
-.end method
-
 .method public isRestricted()Z
     .locals 1
 
     .prologue
-    .line 2748
+    .line 2726
     const/4 v0, 0x0
 
     return v0

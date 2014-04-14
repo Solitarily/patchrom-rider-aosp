@@ -1,9 +1,6 @@
 .class Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;
-.super Ljava/lang/Object;
+.super Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;
 .source "KeyguardHostView.java"
-
-# interfaces
-.implements Lcom/android/internal/policy/impl/keyguard/CameraWidgetFrame$Callbacks;
 
 
 # annotations
@@ -27,122 +24,57 @@
     .parameter
 
     .prologue
-    .line 1090
+    .line 1075
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
 
-    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+    invoke-direct {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardActivityLauncher;-><init>()V
 
-    return-void
-.end method
-
-.method private setSliderHandleAlpha(F)V
-    .locals 3
-    .parameter "alpha"
-
-    .prologue
-    .line 1111
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
-
-    const v2, 0x10202b6
-
-    invoke-virtual {v1, v2}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->findViewById(I)Landroid/view/View;
-
-    move-result-object v0
-
-    check-cast v0, Lcom/android/internal/policy/impl/keyguard/SlidingChallengeLayout;
-
-    .line 1113
-    .local v0, slider:Lcom/android/internal/policy/impl/keyguard/SlidingChallengeLayout;
-    if-eqz v0, :cond_0
-
-    .line 1114
-    invoke-virtual {v0, p1}, Lcom/android/internal/policy/impl/keyguard/SlidingChallengeLayout;->setHandleAlpha(F)V
-
-    .line 1116
-    :cond_0
     return-void
 .end method
 
 
 # virtual methods
-.method public onCameraLaunchedSuccessfully()V
-    .locals 2
-
-    .prologue
-    .line 1098
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
-
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mAppWidgetContainer:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$600(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
-
-    move-result-object v0
-
-    iget-object v1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
-
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mAppWidgetContainer:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
-    invoke-static {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$600(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
-
-    move-result-object v1
-
-    invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->getCurrentPage()I
-
-    move-result v1
-
-    invoke-virtual {v0, v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->isCameraPage(I)Z
-
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    .line 1099
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
-
-    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mAppWidgetContainer:Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
-    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$600(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;
-
-    move-result-object v0
-
-    invoke-virtual {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardWidgetPager;->scrollLeft()V
-
-    .line 1101
-    :cond_0
-    const/high16 v0, 0x3f80
-
-    invoke-direct {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->setSliderHandleAlpha(F)V
-
-    .line 1102
-    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
-
-    const/4 v1, 0x1
-
-    iput-boolean v1, v0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mShowSecurityWhenReturn:Z
-
-    .line 1103
-    return-void
-.end method
-
-.method public onCameraLaunchedUnsuccessfully()V
+.method getCallback()Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
     .locals 1
 
     .prologue
-    .line 1107
-    const/high16 v0, 0x3f80
+    .line 1083
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
 
-    invoke-direct {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->setSliderHandleAlpha(F)V
+    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mCallback:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$1600(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityCallback;
 
-    .line 1108
-    return-void
+    move-result-object v0
+
+    return-object v0
 .end method
 
-.method public onLaunchingCamera()V
+.method getContext()Landroid/content/Context;
     .locals 1
 
     .prologue
-    .line 1093
-    const/4 v0, 0x0
+    .line 1078
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
 
-    invoke-direct {p0, v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->setSliderHandleAlpha(F)V
+    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mContext:Landroid/content/Context;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$1700(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Landroid/content/Context;
 
-    .line 1094
-    return-void
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method getLockPatternUtils()Lcom/android/internal/widget/LockPatternUtils;
+    .locals 1
+
+    .prologue
+    .line 1088
+    iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView$7;->this$0:Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;
+
+    #getter for: Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
+    invoke-static {v0}, Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;->access$900(Lcom/android/internal/policy/impl/keyguard/KeyguardHostView;)Lcom/android/internal/widget/LockPatternUtils;
+
+    move-result-object v0
+
+    return-object v0
 .end method

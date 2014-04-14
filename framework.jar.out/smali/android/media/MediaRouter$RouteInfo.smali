@@ -679,28 +679,28 @@
     .line 1024
     .restart local v0       #resId:I
     :pswitch_0
-    const v0, 0x1040586
+    const v0, 0x1040528
 
     .line 1025
     goto :goto_0
 
     .line 1027
     :pswitch_1
-    const v0, 0x1040587
+    const v0, 0x1040529
 
     .line 1028
     goto :goto_0
 
     .line 1030
     :pswitch_2
-    const v0, 0x1040588
+    const v0, 0x104052a
 
     .line 1031
     goto :goto_0
 
     .line 1033
     :pswitch_3
-    const v0, 0x1040589
+    const v0, 0x104052b
 
     goto :goto_0
 

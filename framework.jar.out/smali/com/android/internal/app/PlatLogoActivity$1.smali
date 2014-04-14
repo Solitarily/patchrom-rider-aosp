@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 109
+    .line 101
     iput-object p1, p0, Lcom/android/internal/app/PlatLogoActivity$1;->this$0:Lcom/android/internal/app/PlatLogoActivity;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -42,38 +42,22 @@
     .parameter "v"
 
     .prologue
-    .line 112
+    .line 104
     iget-object v0, p0, Lcom/android/internal/app/PlatLogoActivity$1;->this$0:Lcom/android/internal/app/PlatLogoActivity;
 
     iget-object v0, v0, Lcom/android/internal/app/PlatLogoActivity;->mToast:Landroid/widget/Toast;
 
     invoke-virtual {v0}, Landroid/widget/Toast;->show()V
 
-    .line 113
+    .line 105
     iget-object v0, p0, Lcom/android/internal/app/PlatLogoActivity$1;->this$0:Lcom/android/internal/app/PlatLogoActivity;
 
-    iget-object v1, v0, Lcom/android/internal/app/PlatLogoActivity;->mContent:Landroid/widget/ImageView;
+    iget-object v0, v0, Lcom/android/internal/app/PlatLogoActivity;->mContent:Landroid/widget/ImageView;
 
-    iget-object v0, p0, Lcom/android/internal/app/PlatLogoActivity$1;->this$0:Lcom/android/internal/app/PlatLogoActivity;
+    const v1, 0x1080464
 
-    #getter for: Lcom/android/internal/app/PlatLogoActivity;->mIsCid:Z
-    invoke-static {v0}, Lcom/android/internal/app/PlatLogoActivity;->access$000(Lcom/android/internal/app/PlatLogoActivity;)Z
+    invoke-virtual {v0, v1}, Landroid/widget/ImageView;->setImageResource(I)V
 
-    move-result v0
-
-    if-eqz v0, :cond_0
-
-    const v0, 0x1080212
-
-    :goto_0
-    invoke-virtual {v1, v0}, Landroid/widget/ImageView;->setImageResource(I)V
-
-    .line 115
+    .line 106
     return-void
-
-    .line 113
-    :cond_0
-    const v0, 0x10804b8
-
-    goto :goto_0
 .end method

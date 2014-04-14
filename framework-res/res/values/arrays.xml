@@ -420,20 +420,17 @@
         <item>recovery</item>
         <item>bootloader</item>
     </string-array>
-    <string-array name="notification_light_package_mapping">
-        <item>com.google.android.gsf|com.google.android.talk</item>
-    </string-array>
     <string-array name="config_statusBarIcons">
-        <item>headset</item>
-        <item>call_record</item>
+        <item>bluetooth_handsfree_battery</item>
+        <item>location</item>
         <item>privacy_mode</item>
+        <item>call_record</item>
+        <item>headset</item>
         <item>ime</item>
         <item>sync_failing</item>
         <item>sync_active</item>
         <item>gps</item>
         <item>bluetooth</item>
-        <item>bluetooth_handsfree_battery</item>
-        <item>location</item>
         <item>nfc</item>
         <item>tty</item>
         <item>speakerphone</item>
@@ -591,10 +588,11 @@
     </integer-array>
     <string-array name="config_locationProviderPackageNames">
         <item>com.android.location.fused</item>
+        <item>com.google.android.location</item>
         <item>com.baidu.map.location</item>
+        <item>com.amap.android.location</item>
     </string-array>
     <array name="config_twoDigitNumberPattern" />
-    <array name="config_telephony_set_audioparameters" />
     <array name="config_sms_enabled_single_shift_tables" />
     <array name="config_sms_enabled_locking_shift_tables" />
     <array name="config_oemUsbModeOverride" />
@@ -610,13 +608,6 @@
         <item>150</item>
         <item>100</item>
     </integer-array>
-    <integer-array name="config_notificationNoAlertsVibePattern">
-        <item>0</item>
-        <item>50</item>
-        <item>100</item>
-        <item>50</item>
-    </integer-array>
-    <array name="config_disabledComponents" />
     <integer-array name="maps_starting_lat_lng">
         <item>36149777</item>
         <item>-95993398</item>

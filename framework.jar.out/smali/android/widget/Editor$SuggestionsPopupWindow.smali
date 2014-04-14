@@ -897,7 +897,7 @@
 
     move-result-object v33
 
-    const v34, 0x1040433
+    const v34, 0x10403d5
 
     invoke-virtual/range {v33 .. v34}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 
@@ -1013,7 +1013,7 @@
 
     move-result-object v33
 
-    const v34, 0x1040434
+    const v34, 0x10403d6
 
     invoke-virtual/range {v33 .. v34}, Landroid/content/Context;->getString(I)Ljava/lang/String;
 

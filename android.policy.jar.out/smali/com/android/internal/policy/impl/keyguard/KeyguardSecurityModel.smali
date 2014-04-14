@@ -17,8 +17,6 @@
 
 .field private mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
-.field private mProfileManager:Landroid/app/ProfileManager;
-
 
 # direct methods
 .method constructor <init>(Landroid/content/Context;)V
@@ -26,31 +24,20 @@
     .parameter "context"
 
     .prologue
-    .line 50
+    .line 45
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
-    .line 51
+    .line 46
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mContext:Landroid/content/Context;
 
-    .line 52
+    .line 47
     new-instance v0, Lcom/android/internal/widget/LockPatternUtils;
 
     invoke-direct {v0, p1}, Lcom/android/internal/widget/LockPatternUtils;-><init>(Landroid/content/Context;)V
 
     iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
-    .line 53
-    const-string v0, "profile"
-
-    invoke-virtual {p1, v0}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
-
-    move-result-object v0
-
-    check-cast v0, Landroid/app/ProfileManager;
-
-    iput-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mProfileManager:Landroid/app/ProfileManager;
-
-    .line 54
+    .line 48
     return-void
 .end method
 
@@ -62,14 +49,14 @@
 
     const/4 v3, 0x0
 
-    .line 74
+    .line 68
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mContext:Landroid/content/Context;
 
     invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;->getInstance(Landroid/content/Context;)Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;
 
     move-result-object v1
 
-    .line 75
+    .line 69
     .local v1, monitor:Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;
     invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;->getFailedUnlockAttempts()I
 
@@ -81,7 +68,7 @@
 
     move v0, v2
 
-    .line 77
+    .line 71
     .local v0, backupIsTimedOut:Z
     :goto_0
     invoke-virtual {v1}, Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;->getMaxBiometricUnlockAttemptsReached()Z
@@ -114,7 +101,7 @@
     :cond_2
     move v0, v3
 
-    .line 75
+    .line 69
     goto :goto_0
 .end method
 
@@ -125,7 +112,7 @@
     .parameter "mode"
 
     .prologue
-    .line 132
+    .line 123
     invoke-virtual {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->isBiometricUnlockEnabled()Z
 
     move-result v0
@@ -150,11 +137,11 @@
 
     if-ne p1, v0, :cond_1
 
-    .line 136
+    .line 127
     :cond_0
     sget-object p1, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->Biometric:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
 
-    .line 138
+    .line 129
     .end local p1
     :cond_1
     return-object p1
@@ -165,7 +152,7 @@
     .parameter "mode"
 
     .prologue
-    .line 148
+    .line 139
     sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$1;->$SwitchMap$com$android$internal$policy$impl$keyguard$KeyguardSecurityModel$SecurityMode:[I
 
     invoke-virtual {p1}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->ordinal()I
@@ -176,12 +163,12 @@
 
     packed-switch v0, :pswitch_data_0
 
-    .line 154
+    .line 145
     .end local p1
     :goto_0
     return-object p1
 
-    .line 150
+    .line 141
     .restart local p1
     :pswitch_0
     invoke-virtual {p0}, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->getSecurityMode()Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
@@ -190,13 +177,13 @@
 
     goto :goto_0
 
-    .line 152
+    .line 143
     :pswitch_1
     sget-object p1, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->Account:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
 
     goto :goto_0
 
-    .line 148
+    .line 139
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_0
@@ -208,38 +195,38 @@
     .locals 7
 
     .prologue
-    .line 83
+    .line 77
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mContext:Landroid/content/Context;
 
     invoke-static {v4}, Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;->getInstance(Landroid/content/Context;)Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;
 
     move-result-object v3
 
-    .line 84
+    .line 78
     .local v3, updateMonitor:Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;
     invoke-virtual {v3}, Lcom/android/internal/policy/impl/keyguard/KeyguardUpdateMonitor;->getSimState()Lcom/android/internal/telephony/IccCardConstants$State;
 
     move-result-object v2
 
-    .line 85
+    .line 79
     .local v2, simState:Lcom/android/internal/telephony/IccCardConstants$State;
     sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->None:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
 
-    .line 86
+    .line 80
     .local v0, mode:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
     sget-object v4, Lcom/android/internal/telephony/IccCardConstants$State;->PIN_REQUIRED:Lcom/android/internal/telephony/IccCardConstants$State;
 
     if-ne v2, v4, :cond_1
 
-    .line 87
+    .line 81
     sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->SimPin:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
 
-    .line 120
+    .line 111
     :cond_0
     :goto_0
     return-object v0
 
-    .line 88
+    .line 82
     :cond_1
     sget-object v4, Lcom/android/internal/telephony/IccCardConstants$State;->PUK_REQUIRED:Lcom/android/internal/telephony/IccCardConstants$State;
 
@@ -253,41 +240,24 @@
 
     if-eqz v4, :cond_2
 
-    .line 90
+    .line 84
     sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->SimPuk:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
 
     goto :goto_0
 
-    .line 91
+    .line 86
     :cond_2
-    iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mProfileManager:Landroid/app/ProfileManager;
-
-    invoke-virtual {v4}, Landroid/app/ProfileManager;->getActiveProfile()Landroid/app/Profile;
-
-    move-result-object v4
-
-    iget-object v5, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mContext:Landroid/content/Context;
-
-    invoke-virtual {v4, v5}, Landroid/app/Profile;->getScreenLockModeWithDPM(Landroid/content/Context;)I
-
-    move-result v4
-
-    const/4 v5, 0x1
-
-    if-eq v4, v5, :cond_0
-
-    .line 92
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
     invoke-virtual {v4}, Lcom/android/internal/widget/LockPatternUtils;->getKeyguardStoredPasswordQuality()I
 
     move-result v1
 
-    .line 93
+    .line 87
     .local v1, security:I
     sparse-switch v1, :sswitch_data_0
 
-    .line 117
+    .line 108
     new-instance v4, Ljava/lang/IllegalStateException;
 
     new-instance v5, Ljava/lang/StringBuilder;
@@ -300,7 +270,7 @@
 
     move-result-object v5
 
-    invoke-virtual {v5, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+    invoke-virtual {v5, v0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
 
     move-result-object v5
 
@@ -312,7 +282,7 @@
 
     throw v4
 
-    .line 95
+    .line 89
     :sswitch_0
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
@@ -320,14 +290,21 @@
 
     move-result v4
 
-    if-eqz v4, :cond_0
+    if-eqz v4, :cond_3
 
-    .line 96
     sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->PIN:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
 
+    .line 91
+    :goto_1
     goto :goto_0
 
-    .line 103
+    .line 89
+    :cond_3
+    sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->None:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
+
+    goto :goto_1
+
+    .line 95
     :sswitch_1
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
@@ -335,14 +312,21 @@
 
     move-result v4
 
-    if-eqz v4, :cond_0
+    if-eqz v4, :cond_4
 
-    .line 104
     sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->Password:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
 
+    .line 97
+    :goto_2
     goto :goto_0
 
-    .line 110
+    .line 95
+    :cond_4
+    sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->None:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
+
+    goto :goto_2
+
+    .line 101
     :sswitch_2
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
@@ -352,28 +336,26 @@
 
     if-eqz v4, :cond_0
 
-    .line 111
+    .line 102
     iget-object v4, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
     invoke-virtual {v4}, Lcom/android/internal/widget/LockPatternUtils;->isPermanentlyLocked()Z
 
     move-result v4
 
-    if-eqz v4, :cond_3
+    if-eqz v4, :cond_5
 
     sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->Account:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
 
-    :goto_1
+    :goto_3
     goto :goto_0
 
-    :cond_3
+    :cond_5
     sget-object v0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;->Pattern:Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel$SecurityMode;
 
-    goto :goto_1
+    goto :goto_3
 
-    .line 93
-    nop
-
+    .line 87
     :sswitch_data_0
     .sparse-switch
         0x0 -> :sswitch_2
@@ -389,7 +371,7 @@
     .locals 1
 
     .prologue
-    .line 65
+    .line 59
     iget-object v0, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
     invoke-virtual {v0}, Lcom/android/internal/widget/LockPatternUtils;->usingBiometricWeak()Z
@@ -422,9 +404,9 @@
     .parameter "utils"
 
     .prologue
-    .line 57
+    .line 51
     iput-object p1, p0, Lcom/android/internal/policy/impl/keyguard/KeyguardSecurityModel;->mLockPatternUtils:Lcom/android/internal/widget/LockPatternUtils;
 
-    .line 58
+    .line 52
     return-void
 .end method

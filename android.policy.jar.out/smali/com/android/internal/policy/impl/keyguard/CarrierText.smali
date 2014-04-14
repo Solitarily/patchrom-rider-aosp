@@ -208,28 +208,28 @@
 
     .line 235
     :pswitch_0
-    const v0, 0x1040358
+    const v0, 0x10402fa
 
     .line 236
     goto :goto_0
 
     .line 239
     :pswitch_1
-    const v0, 0x1040367
+    const v0, 0x1040309
 
     .line 240
     goto :goto_0
 
     .line 243
     :pswitch_2
-    const v0, 0x1040369
+    const v0, 0x104030b
 
     .line 244
     goto :goto_0
 
     .line 247
     :pswitch_3
-    const v0, 0x1040366
+    const v0, 0x1040308
 
     .line 248
     goto :goto_0
@@ -253,7 +253,7 @@
     .parameter "spn"
 
     .prologue
-    const v4, 0x1040364
+    const v4, 0x1040306
 
     .line 114
     const/4 v0, 0x0
@@ -300,7 +300,7 @@
     :pswitch_2
     iget-object v2, p0, Lcom/android/internal/policy/impl/keyguard/CarrierText;->mContext:Landroid/content/Context;
 
-    const v3, 0x1040370
+    const v3, 0x1040312
 
     invoke-virtual {v2, v3}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -336,7 +336,7 @@
 
     move-result-object v2
 
-    const v3, 0x1040368
+    const v3, 0x104030a
 
     invoke-virtual {v2, v3}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -368,7 +368,7 @@
 
     move-result-object v2
 
-    const v3, 0x1040373
+    const v3, 0x1040315
 
     invoke-virtual {v2, v3}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -387,7 +387,7 @@
 
     move-result-object v2
 
-    const v3, 0x1040371
+    const v3, 0x1040313
 
     invoke-virtual {v2, v3}, Landroid/content/Context;->getText(I)Ljava/lang/CharSequence;
 
@@ -633,7 +633,7 @@
 
     move-result-object v0
 
-    const v1, 0x10405b2
+    const v1, 0x1040554
 
     invoke-virtual {v0, v1}, Landroid/content/res/Resources;->getString(I)Ljava/lang/String;
 

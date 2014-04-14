@@ -27,16 +27,16 @@
     .parameter "imms"
 
     .prologue
-    .line 568
+    .line 561
     invoke-direct {p0}, Lcom/android/internal/view/IInputMethodCallback$Stub;-><init>()V
 
-    .line 569
+    .line 562
     iput-object p1, p0, Lcom/android/server/InputMethodManagerService$MethodCallback;->mMethod:Lcom/android/internal/view/IInputMethod;
 
-    .line 570
+    .line 563
     iput-object p2, p0, Lcom/android/server/InputMethodManagerService$MethodCallback;->mParentIMMS:Lcom/android/server/InputMethodManagerService;
 
-    .line 571
+    .line 564
     return-void
 .end method
 
@@ -53,7 +53,7 @@
     .end annotation
 
     .prologue
-    .line 575
+    .line 568
     return-void
 .end method
 
@@ -67,13 +67,13 @@
     .end annotation
 
     .prologue
-    .line 579
+    .line 572
     iget-object v0, p0, Lcom/android/server/InputMethodManagerService$MethodCallback;->mParentIMMS:Lcom/android/server/InputMethodManagerService;
 
     iget-object v1, p0, Lcom/android/server/InputMethodManagerService$MethodCallback;->mMethod:Lcom/android/internal/view/IInputMethod;
 
     invoke-virtual {v0, v1, p1}, Lcom/android/server/InputMethodManagerService;->onSessionCreated(Lcom/android/internal/view/IInputMethod;Lcom/android/internal/view/IInputMethodSession;)V
 
-    .line 580
+    .line 573
     return-void
 .end method

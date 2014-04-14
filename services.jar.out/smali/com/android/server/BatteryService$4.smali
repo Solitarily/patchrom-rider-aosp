@@ -27,7 +27,7 @@
     .parameter
 
     .prologue
-    .line 468
+    .line 410
     iput-object p1, p0, Lcom/android/server/BatteryService$4;->this$0:Lcom/android/server/BatteryService;
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
@@ -41,20 +41,20 @@
     .locals 3
 
     .prologue
-    .line 471
+    .line 413
     new-instance v0, Landroid/content/Intent;
 
     const-string v1, "android.intent.action.ACTION_POWER_DISCONNECTED"
 
     invoke-direct {v0, v1}, Landroid/content/Intent;-><init>(Ljava/lang/String;)V
 
-    .line 472
+    .line 414
     .local v0, statusIntent:Landroid/content/Intent;
     const/high16 v1, 0x800
 
     invoke-virtual {v0, v1}, Landroid/content/Intent;->setFlags(I)Landroid/content/Intent;
 
-    .line 473
+    .line 415
     iget-object v1, p0, Lcom/android/server/BatteryService$4;->this$0:Lcom/android/server/BatteryService;
 
     #getter for: Lcom/android/server/BatteryService;->mContext:Landroid/content/Context;
@@ -66,6 +66,6 @@
 
     invoke-virtual {v1, v0, v2}, Landroid/content/Context;->sendBroadcastAsUser(Landroid/content/Intent;Landroid/os/UserHandle;)V
 
-    .line 474
+    .line 416
     return-void
 .end method

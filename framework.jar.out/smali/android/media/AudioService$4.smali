@@ -8,7 +8,7 @@
 
 # annotations
 .annotation system Ldalvik/annotation/EnclosingMethod;
-    value = Landroid/media/AudioService;->masterVolumeChanged(I)V
+    value = Landroid/media/AudioService;->showVolumeChangeUi(II)V
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
@@ -22,18 +22,23 @@
 
 .field final synthetic val$flags:I
 
+.field final synthetic val$streamType:I
+
 
 # direct methods
-.method constructor <init>(Landroid/media/AudioService;I)V
+.method constructor <init>(Landroid/media/AudioService;II)V
     .locals 0
+    .parameter
     .parameter
     .parameter
 
     .prologue
-    .line 4155
+    .line 4015
     iput-object p1, p0, Landroid/media/AudioService$4;->this$0:Landroid/media/AudioService;
 
-    iput p2, p0, Landroid/media/AudioService$4;->val$flags:I
+    iput p2, p0, Landroid/media/AudioService$4;->val$streamType:I
+
+    iput p3, p0, Landroid/media/AudioService$4;->val$flags:I
 
     invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 
@@ -46,7 +51,7 @@
     .locals 4
 
     .prologue
-    .line 4158
+    .line 4018
     iget-object v1, p0, Landroid/media/AudioService$4;->this$0:Landroid/media/AudioService;
 
     #getter for: Landroid/media/AudioService;->mUiContext:Landroid/content/Context;
@@ -56,13 +61,13 @@
 
     if-nez v1, :cond_0
 
-    .line 4159
+    .line 4019
     iget-object v1, p0, Landroid/media/AudioService$4;->this$0:Landroid/media/AudioService;
 
     iget-object v2, p0, Landroid/media/AudioService$4;->this$0:Landroid/media/AudioService;
 
     #getter for: Landroid/media/AudioService;->mContext:Landroid/content/Context;
-    invoke-static {v2}, Landroid/media/AudioService;->access$8900(Landroid/media/AudioService;)Landroid/content/Context;
+    invoke-static {v2}, Landroid/media/AudioService;->access$8200(Landroid/media/AudioService;)Landroid/content/Context;
 
     move-result-object v2
 
@@ -73,7 +78,7 @@
     #setter for: Landroid/media/AudioService;->mUiContext:Landroid/content/Context;
     invoke-static {v1, v2}, Landroid/media/AudioService;->access$402(Landroid/media/AudioService;Landroid/content/Context;)Landroid/content/Context;
 
-    .line 4162
+    .line 4022
     :cond_0
     iget-object v1, p0, Landroid/media/AudioService$4;->this$0:Landroid/media/AudioService;
 
@@ -91,42 +96,44 @@
 
     move-result-object v0
 
-    .line 4163
+    .line 4023
     .local v0, context:Landroid/content/Context;
     :goto_0
     iget-object v1, p0, Landroid/media/AudioService$4;->this$0:Landroid/media/AudioService;
 
-    new-instance v2, Lmiui/view/VolumePanel;
+    new-instance v2, Landroid/view/VolumePanel;
 
     iget-object v3, p0, Landroid/media/AudioService$4;->this$0:Landroid/media/AudioService;
 
-    invoke-direct {v2, v0, v3}, Lmiui/view/VolumePanel;-><init>(Landroid/content/Context;Landroid/media/AudioService;)V
+    invoke-direct {v2, v0, v3}, Landroid/view/VolumePanel;-><init>(Landroid/content/Context;Landroid/media/AudioService;)V
 
-    #setter for: Landroid/media/AudioService;->mVolumePanel:Lmiui/view/VolumePanel;
-    invoke-static {v1, v2}, Landroid/media/AudioService;->access$9602(Landroid/media/AudioService;Lmiui/view/VolumePanel;)Lmiui/view/VolumePanel;
+    #setter for: Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    invoke-static {v1, v2}, Landroid/media/AudioService;->access$8902(Landroid/media/AudioService;Landroid/view/VolumePanel;)Landroid/view/VolumePanel;
 
-    .line 4164
+    .line 4024
     iget-object v1, p0, Landroid/media/AudioService$4;->this$0:Landroid/media/AudioService;
 
-    #getter for: Landroid/media/AudioService;->mVolumePanel:Lmiui/view/VolumePanel;
-    invoke-static {v1}, Landroid/media/AudioService;->access$9600(Landroid/media/AudioService;)Lmiui/view/VolumePanel;
+    #getter for: Landroid/media/AudioService;->mVolumePanel:Landroid/view/VolumePanel;
+    invoke-static {v1}, Landroid/media/AudioService;->access$8900(Landroid/media/AudioService;)Landroid/view/VolumePanel;
 
     move-result-object v1
 
-    iget v2, p0, Landroid/media/AudioService$4;->val$flags:I
+    iget v2, p0, Landroid/media/AudioService$4;->val$streamType:I
 
-    invoke-virtual {v1, v2}, Lmiui/view/VolumePanel;->postMasterVolumeChanged(I)V
+    iget v3, p0, Landroid/media/AudioService$4;->val$flags:I
 
-    .line 4165
+    invoke-virtual {v1, v2, v3}, Landroid/view/VolumePanel;->postVolumeChanged(II)V
+
+    .line 4025
     return-void
 
-    .line 4162
+    .line 4022
     .end local v0           #context:Landroid/content/Context;
     :cond_1
     iget-object v1, p0, Landroid/media/AudioService$4;->this$0:Landroid/media/AudioService;
 
     #getter for: Landroid/media/AudioService;->mContext:Landroid/content/Context;
-    invoke-static {v1}, Landroid/media/AudioService;->access$8900(Landroid/media/AudioService;)Landroid/content/Context;
+    invoke-static {v1}, Landroid/media/AudioService;->access$8200(Landroid/media/AudioService;)Landroid/content/Context;
 
     move-result-object v0
 

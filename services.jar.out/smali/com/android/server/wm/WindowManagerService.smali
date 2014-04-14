@@ -16,7 +16,6 @@
         Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;,
         Lcom/android/server/wm/WindowManagerService$OnHardKeyboardStatusChangeListener;,
         Lcom/android/server/wm/WindowManagerService$H;,
-        Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;,
         Lcom/android/server/wm/WindowManagerService$WindowChangeListener;,
         Lcom/android/server/wm/WindowManagerService$DragInputEventReceiver;,
         Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;,
@@ -315,8 +314,6 @@
 
 .field mFocusedApp:Lcom/android/server/wm/AppWindowToken;
 
-.field private mForceDisableHardwareKeyboard:Z
-
 .field mForceDisplayEnabled:Z
 
 .field mForceRemoves:Ljava/util/ArrayList;
@@ -534,6 +531,8 @@
     .end annotation
 .end field
 
+.field final mSetLandscapeProperty:Z
+
 .field mShowingBootMessages:Z
 
 .field mSkipAppTransitionAnimation:Z
@@ -652,553 +651,554 @@
 
 
 # direct methods
-.method private constructor <init>(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Lcom/android/internal/os/IDeviceHandler;Landroid/os/Handler;ZZZ)V
+.method private constructor <init>(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Landroid/os/Handler;ZZZ)V
     .locals 11
     .parameter "context"
     .parameter "pm"
     .parameter "displayManager"
     .parameter "inputManager"
-    .parameter "device"
     .parameter "uiHandler"
     .parameter "haveInputMethods"
     .parameter "showBootMsgs"
     .parameter "onlyCore"
 
     .prologue
-    .line 805
+    .line 804
     invoke-direct {p0}, Landroid/view/IWindowManager$Stub;-><init>()V
 
-    .line 305
+    .line 304
     new-instance v8, Lcom/android/server/wm/WindowManagerService$1;
 
     invoke-direct {v8, p0}, Lcom/android/server/wm/WindowManagerService$1;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mThemeChangeReceiver:Landroid/content/BroadcastReceiver;
 
-    .line 311
+    .line 310
     new-instance v8, Lcom/android/server/wm/WindowManagerService$2;
 
     invoke-direct {v8, p0}, Lcom/android/server/wm/WindowManagerService$2;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mBroadcastReceiver:Landroid/content/BroadcastReceiver;
 
-    .line 343
+    .line 335
+    invoke-static {}, Lcom/android/internal/policy/PolicyManager;->makeNewWindowManager()Landroid/view/WindowManagerPolicy;
+
+    move-result-object v8
+
+    iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
+
+    .line 344
     new-instance v8, Ljava/util/HashSet;
 
     invoke-direct {v8}, Ljava/util/HashSet;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mSessions:Ljava/util/HashSet;
 
-    .line 349
+    .line 350
     new-instance v8, Ljava/util/HashMap;
 
     invoke-direct {v8}, Ljava/util/HashMap;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
-    .line 354
+    .line 355
     new-instance v8, Ljava/util/HashMap;
 
     invoke-direct {v8}, Ljava/util/HashMap;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
-    .line 361
+    .line 362
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mExitingTokens:Ljava/util/ArrayList;
 
-    .line 367
+    .line 368
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
-    .line 375
+    .line 376
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
-    .line 381
+    .line 382
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mExitingAppTokens:Ljava/util/ArrayList;
 
-    .line 387
+    .line 388
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mFinishedStarting:Ljava/util/ArrayList;
 
-    .line 393
+    .line 394
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mFakeWindows:Ljava/util/ArrayList;
 
-    .line 400
+    .line 401
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mResizingWindows:Ljava/util/ArrayList;
 
-    .line 405
+    .line 406
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mPendingRemove:Ljava/util/ArrayList;
 
-    .line 410
+    .line 411
     const/16 v8, 0x14
 
     new-array v8, v8, [Lcom/android/server/wm/WindowState;
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mPendingRemoveTmp:[Lcom/android/server/wm/WindowState;
 
-    .line 415
+    .line 416
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mDestroySurface:Ljava/util/ArrayList;
 
-    .line 421
+    .line 422
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mLosingFocus:Ljava/util/ArrayList;
 
-    .line 432
+    .line 433
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForDrawn:Ljava/util/ArrayList;
 
-    .line 439
+    .line 440
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mRelayoutWhileAnimating:Ljava/util/ArrayList;
 
-    .line 445
+    .line 446
     const/16 v8, 0x14
 
     new-array v8, v8, [Lcom/android/server/wm/WindowState;
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mRebuildTmp:[Lcom/android/server/wm/WindowState;
 
-    .line 453
+    .line 454
     const/16 v8, 0x9
 
     new-array v8, v8, [F
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mTmpFloats:[F
 
-    .line 457
+    .line 458
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayEnabled:Z
 
-    .line 458
+    .line 459
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mSystemBooted:Z
 
-    .line 459
+    .line 460
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mForceDisplayEnabled:Z
 
-    .line 460
+    .line 461
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mShowingBootMessages:Z
 
-    .line 465
+    .line 466
     new-instance v8, Landroid/util/SparseArray;
 
     invoke-direct {v8}, Landroid/util/SparseArray;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayContents:Landroid/util/SparseArray;
 
-    .line 467
+    .line 468
     const/4 v8, 0x0
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
 
-    .line 468
+    .line 469
     const/4 v8, -0x1
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mForcedAppOrientation:I
 
-    .line 469
+    .line 470
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mAltOrientation:Z
 
-    .line 470
+    .line 471
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mRotationWatchers:Ljava/util/ArrayList;
 
-    .line 474
+    .line 475
     new-instance v8, Landroid/graphics/Rect;
 
     invoke-direct {v8}, Landroid/graphics/Rect;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mSystemDecorRect:Landroid/graphics/Rect;
 
-    .line 475
+    .line 476
     const/4 v8, 0x0
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mSystemDecorLayer:I
 
-    .line 476
+    .line 477
     new-instance v8, Landroid/graphics/Rect;
 
     invoke-direct {v8}, Landroid/graphics/Rect;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mScreenRect:Landroid/graphics/Rect;
 
-    .line 478
+    .line 479
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mTraversalScheduled:Z
 
-    .line 479
+    .line 480
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayFrozen:Z
 
-    .line 480
+    .line 481
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForConfig:Z
 
-    .line 481
+    .line 482
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsFreezingScreen:Z
 
-    .line 482
+    .line 483
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mClientFreezingScreen:Z
 
-    .line 483
+    .line 484
     const/4 v8, 0x0
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mAppsFreezingScreen:I
 
-    .line 484
+    .line 485
     const/4 v8, -0x1
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mLastWindowForcedOrientation:I
 
-    .line 486
+    .line 487
     const/4 v8, 0x0
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutSeq:I
 
-    .line 488
+    .line 489
     const/4 v8, 0x0
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mLastStatusBarVisibility:I
 
-    .line 493
+    .line 494
     new-instance v8, Landroid/content/res/Configuration;
 
     invoke-direct {v8}, Landroid/content/res/Configuration;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mCurConfiguration:Landroid/content/res/Configuration;
 
-    .line 505
+    .line 506
     const/4 v8, -0x1
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
-    .line 506
+    .line 507
     const/4 v8, 0x0
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
 
-    .line 518
+    .line 519
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionReady:Z
 
-    .line 519
+    .line 520
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionRunning:Z
 
-    .line 520
+    .line 521
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionTimeout:Z
 
-    .line 521
+    .line 522
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mStartingIconInTransition:Z
 
-    .line 522
+    .line 523
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mSkipAppTransitionAnimation:Z
-
-    .line 523
-    new-instance v8, Ljava/util/ArrayList;
-
-    invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
-
-    iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mOpeningApps:Ljava/util/ArrayList;
 
     .line 524
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
+    iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mOpeningApps:Ljava/util/ArrayList;
+
+    .line 525
+    new-instance v8, Ljava/util/ArrayList;
+
+    invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
+
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mClosingApps:Ljava/util/ArrayList;
-
-    .line 528
-    new-instance v8, Landroid/util/DisplayMetrics;
-
-    invoke-direct {v8}, Landroid/util/DisplayMetrics;-><init>()V
-
-    iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayMetrics:Landroid/util/DisplayMetrics;
 
     .line 529
     new-instance v8, Landroid/util/DisplayMetrics;
 
     invoke-direct {v8}, Landroid/util/DisplayMetrics;-><init>()V
 
-    iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mRealDisplayMetrics:Landroid/util/DisplayMetrics;
+    iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayMetrics:Landroid/util/DisplayMetrics;
 
     .line 530
     new-instance v8, Landroid/util/DisplayMetrics;
 
     invoke-direct {v8}, Landroid/util/DisplayMetrics;-><init>()V
 
-    iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mTmpDisplayMetrics:Landroid/util/DisplayMetrics;
+    iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mRealDisplayMetrics:Landroid/util/DisplayMetrics;
 
     .line 531
     new-instance v8, Landroid/util/DisplayMetrics;
 
     invoke-direct {v8}, Landroid/util/DisplayMetrics;-><init>()V
 
+    iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mTmpDisplayMetrics:Landroid/util/DisplayMetrics;
+
+    .line 532
+    new-instance v8, Landroid/util/DisplayMetrics;
+
+    invoke-direct {v8}, Landroid/util/DisplayMetrics;-><init>()V
+
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mCompatDisplayMetrics:Landroid/util/DisplayMetrics;
 
-    .line 533
+    .line 534
     new-instance v8, Lcom/android/server/wm/WindowManagerService$H;
 
     invoke-direct {v8, p0}, Lcom/android/server/wm/WindowManagerService$H;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
-    .line 535
+    .line 536
     invoke-static {}, Landroid/view/Choreographer;->getInstance()Landroid/view/Choreographer;
 
     move-result-object v8
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mChoreographer:Landroid/view/Choreographer;
 
-    .line 537
+    .line 538
     const/4 v8, 0x0
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mCurrentFocus:Lcom/android/server/wm/WindowState;
 
-    .line 538
+    .line 539
     const/4 v8, 0x0
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mLastFocus:Lcom/android/server/wm/WindowState;
 
-    .line 542
+    .line 543
     const/4 v8, 0x0
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
 
-    .line 548
+    .line 549
     const/4 v8, 0x0
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
-    .line 549
+    .line 550
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodDialogs:Ljava/util/ArrayList;
 
-    .line 555
+    .line 556
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
-    .line 559
+    .line 560
     const/4 v8, 0x0
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 562
+    .line 563
     const/4 v8, 0x0
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 565
+    .line 566
     const/4 v8, 0x0
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mUpperWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 567
+    .line 568
     const/high16 v8, -0x4080
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperX:F
 
-    .line 568
+    .line 569
     const/high16 v8, -0x4080
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperY:F
 
-    .line 569
+    .line 570
     const/high16 v8, -0x4080
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperXStep:F
 
-    .line 570
+    .line 571
     const/high16 v8, -0x4080
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperYStep:F
 
-    .line 581
+    .line 582
     const/4 v8, 0x0
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mFocusedApp:Lcom/android/server/wm/AppWindowToken;
 
-    .line 585
+    .line 586
     const/high16 v8, 0x3f80
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mWindowAnimationScale:F
 
-    .line 586
+    .line 587
     const/high16 v8, 0x3f80
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mTransitionAnimationScale:F
 
-    .line 587
+    .line 588
     const/high16 v8, 0x3f80
 
     iput v8, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatorDurationScale:F
 
-    .line 593
-    const/4 v8, 0x0
-
-    iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mForceDisableHardwareKeyboard:Z
-
-    .line 601
+    .line 600
     const/4 v8, 0x0
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mDragState:Lcom/android/server/wm/DragState;
 
-    .line 630
+    .line 629
     new-instance v8, Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     invoke-direct {v8, p0}, Lcom/android/server/wm/WindowManagerService$LayoutFields;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
-    .line 665
+    .line 664
     new-instance v8, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
     invoke-direct {v8}, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
-    .line 668
+    .line 667
     const/4 v8, 0x0
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mWindowDetachedWallpaper:Lcom/android/server/wm/WindowState;
 
-    .line 746
+    .line 745
     const/4 v8, 0x1
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mInTouchMode:Z
 
-    .line 749
+    .line 748
     new-instance v8, Landroid/graphics/Region;
 
     invoke-direct {v8}, Landroid/graphics/Region;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mTempRegion:Landroid/graphics/Region;
 
-    .line 752
+    .line 751
     new-instance v8, Ljava/util/ArrayList;
 
     invoke-direct {v8}, Ljava/util/ArrayList;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mWindowChangeListeners:Ljava/util/ArrayList;
 
-    .line 754
+    .line 753
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 761
+    .line 760
     new-instance v8, Landroid/content/res/Configuration;
 
     invoke-direct {v8}, Landroid/content/res/Configuration;-><init>()V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mTempConfiguration:Landroid/content/res/Configuration;
 
-    .line 7208
+    .line 7176
     new-instance v8, Lcom/android/server/wm/InputMonitor;
 
     invoke-direct {v8, p0}, Lcom/android/server/wm/InputMonitor;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
-    .line 8358
+    .line 8326
     const/4 v8, 0x0
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mInLayout:Z
 
-    .line 806
+    .line 805
     iput-object p1, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
+
+    .line 806
+    move/from16 v0, p6
+
+    iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mHaveInputMethods:Z
 
     .line 807
     move/from16 v0, p7
 
-    iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mHaveInputMethods:Z
+    iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mAllowBootMessages:Z
 
     .line 808
     move/from16 v0, p8
 
-    iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mAllowBootMessages:Z
-
-    .line 809
-    move/from16 v0, p9
-
     iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mOnlyCore:Z
 
-    .line 810
+    .line 809
     invoke-virtual {p1}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
 
     move-result-object v8
@@ -1211,22 +1211,28 @@
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mLimitedAlphaCompositing:Z
 
-    .line 812
-    iput-object p3, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayManagerService:Lcom/android/server/display/DisplayManagerService;
+    .line 811
+    invoke-virtual {p1}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object v8
+
+    const v9, 0x1110050
+
+    invoke-virtual {v8, v9}, Landroid/content/res/Resources;->getBoolean(I)Z
+
+    move-result v8
+
+    iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mSetLandscapeProperty:Z
 
     .line 813
+    iput-object p3, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayManagerService:Lcom/android/server/display/DisplayManagerService;
+
+    .line 814
     invoke-virtual {p3}, Lcom/android/server/display/DisplayManagerService;->isHeadless()Z
 
     move-result v8
 
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mHeadless:Z
-
-    .line 814
-    invoke-static/range {p5 .. p5}, Lcom/android/internal/policy/PolicyManager;->makeNewWindowManager(Lcom/android/internal/os/IDeviceHandler;)Landroid/view/WindowManagerPolicy;
-
-    move-result-object v8
-
-    iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     .line 816
     const-string v8, "display"
@@ -1442,53 +1448,40 @@
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
     .line 856
-    invoke-virtual {p1}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
-
-    move-result-object v8
-
-    const v9, 0x1110055
-
-    invoke-virtual {v8, v9}, Landroid/content/res/Resources;->getBoolean(I)Z
-
-    move-result v8
-
-    iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mForceDisableHardwareKeyboard:Z
-
-    .line 859
-    move-object/from16 v0, p6
+    move-object/from16 v0, p5
 
     invoke-direct {p0, v0}, Lcom/android/server/wm/WindowManagerService;->initPolicy(Landroid/os/Handler;)V
 
-    .line 862
+    .line 859
     invoke-static {}, Lcom/android/server/Watchdog;->getInstance()Lcom/android/server/Watchdog;
 
     move-result-object v8
 
     invoke-virtual {v8, p0}, Lcom/android/server/Watchdog;->addMonitor(Lcom/android/server/Watchdog$Monitor;)V
 
-    .line 864
+    .line 861
     invoke-static {}, Landroid/view/Surface;->openTransaction()V
 
-    .line 866
+    .line 863
     :try_start_0
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->createWatermarkInTransaction()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 868
+    .line 865
     invoke-static {}, Landroid/view/Surface;->closeTransaction()V
 
-    .line 871
+    .line 868
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mThemeChangeReceiver:Landroid/content/BroadcastReceiver;
 
     invoke-static {v8, v9}, Lcom/android/internal/app/ThemeUtils;->registerThemeChangeReceiver(Landroid/content/Context;Landroid/content/BroadcastReceiver;)V
 
-    .line 872
+    .line 869
     return-void
 
-    .line 868
+    .line 865
     :catchall_0
     move-exception v8
 
@@ -1497,7 +1490,7 @@
     throw v8
 .end method
 
-.method synthetic constructor <init>(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Lcom/android/internal/os/IDeviceHandler;Landroid/os/Handler;ZZZLcom/android/server/wm/WindowManagerService$1;)V
+.method synthetic constructor <init>(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Landroid/os/Handler;ZZZLcom/android/server/wm/WindowManagerService$1;)V
     .locals 0
     .parameter "x0"
     .parameter "x1"
@@ -1508,11 +1501,10 @@
     .parameter "x6"
     .parameter "x7"
     .parameter "x8"
-    .parameter "x9"
 
     .prologue
-    .line 175
-    invoke-direct/range {p0 .. p9}, Lcom/android/server/wm/WindowManagerService;-><init>(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Lcom/android/internal/os/IDeviceHandler;Landroid/os/Handler;ZZZ)V
+    .line 174
+    invoke-direct/range {p0 .. p8}, Lcom/android/server/wm/WindowManagerService;-><init>(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Landroid/os/Handler;ZZZ)V
 
     return-void
 .end method
@@ -1523,7 +1515,7 @@
     .parameter "x1"
 
     .prologue
-    .line 175
+    .line 174
     iput-object p1, p0, Lcom/android/server/wm/WindowManagerService;->mUiContext:Landroid/content/Context;
 
     return-object p1
@@ -1534,7 +1526,7 @@
     .parameter "x0"
 
     .prologue
-    .line 175
+    .line 174
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mKeyguardDisableHandler:Lcom/android/server/wm/KeyguardDisableHandler;
 
     return-object v0
@@ -1547,39 +1539,26 @@
     .parameter "x2"
 
     .prologue
-    .line 175
-    invoke-direct {p0, p1, p2}, Lcom/android/server/wm/WindowManagerService;->showStrictModeViolation(II)V
-
-    return-void
-.end method
-
-.method static synthetic access$1100(Lcom/android/server/wm/WindowManagerService;II)V
-    .locals 0
-    .parameter "x0"
-    .parameter "x1"
-    .parameter "x2"
-
-    .prologue
-    .line 175
+    .line 174
     invoke-direct {p0, p1, p2}, Lcom/android/server/wm/WindowManagerService;->handleNotifyRotationChanged(II)V
 
     return-void
 .end method
 
-.method static synthetic access$1200(Lcom/android/server/wm/WindowManagerService;ILandroid/view/WindowInfo;)V
+.method static synthetic access$1100(Lcom/android/server/wm/WindowManagerService;ILandroid/view/WindowInfo;)V
     .locals 0
     .parameter "x0"
     .parameter "x1"
     .parameter "x2"
 
     .prologue
-    .line 175
+    .line 174
     invoke-direct {p0, p1, p2}, Lcom/android/server/wm/WindowManagerService;->handleNotifyWindowTranstion(ILandroid/view/WindowInfo;)V
 
     return-void
 .end method
 
-.method static synthetic access$1300(Lcom/android/server/wm/WindowManagerService;ILandroid/graphics/Rect;Z)V
+.method static synthetic access$1200(Lcom/android/server/wm/WindowManagerService;ILandroid/graphics/Rect;Z)V
     .locals 0
     .parameter "x0"
     .parameter "x1"
@@ -1587,20 +1566,32 @@
     .parameter "x3"
 
     .prologue
-    .line 175
+    .line 174
     invoke-direct {p0, p1, p2, p3}, Lcom/android/server/wm/WindowManagerService;->handleNotifyRectangleOnScreenRequested(ILandroid/graphics/Rect;Z)V
 
     return-void
 .end method
 
-.method static synthetic access$1400(Lcom/android/server/wm/WindowManagerService;Lcom/android/server/wm/DisplayContent;)V
+.method static synthetic access$1300(Lcom/android/server/wm/WindowManagerService;Lcom/android/server/wm/DisplayContent;)V
     .locals 0
     .parameter "x0"
     .parameter "x1"
 
     .prologue
-    .line 175
+    .line 174
     invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->handleNotifyWindowLayersChanged(Lcom/android/server/wm/DisplayContent;)V
+
+    return-void
+.end method
+
+.method static synthetic access$1400(Lcom/android/server/wm/WindowManagerService;I)V
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
+
+    .prologue
+    .line 174
+    invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->handleDisplayAddedLocked(I)V
 
     return-void
 .end method
@@ -1611,8 +1602,8 @@
     .parameter "x1"
 
     .prologue
-    .line 175
-    invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->handleDisplayAddedLocked(I)V
+    .line 174
+    invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->handleDisplayRemovedLocked(I)V
 
     return-void
 .end method
@@ -1623,33 +1614,32 @@
     .parameter "x1"
 
     .prologue
-    .line 175
-    invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->handleDisplayRemovedLocked(I)V
-
-    return-void
-.end method
-
-.method static synthetic access$1700(Lcom/android/server/wm/WindowManagerService;I)V
-    .locals 0
-    .parameter "x0"
-    .parameter "x1"
-
-    .prologue
-    .line 175
+    .line 174
     invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->handleDisplayChangedLocked(I)V
 
     return-void
 .end method
 
-.method static synthetic access$2600(Lcom/android/server/wm/WindowManagerService;)Landroid/util/SparseArray;
+.method static synthetic access$2500(Lcom/android/server/wm/WindowManagerService;)Landroid/util/SparseArray;
     .locals 1
     .parameter "x0"
 
     .prologue
-    .line 175
+    .line 174
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayContents:Landroid/util/SparseArray;
 
     return-object v0
+.end method
+
+.method static synthetic access$300(Lcom/android/server/wm/WindowManagerService;)V
+    .locals 0
+    .parameter "x0"
+
+    .prologue
+    .line 174
+    invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->notifyFocusChanged()V
+
+    return-void
 .end method
 
 .method static synthetic access$400(Lcom/android/server/wm/WindowManagerService;)V
@@ -1657,8 +1647,8 @@
     .parameter "x0"
 
     .prologue
-    .line 175
-    invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->notifyFocusChanged()V
+    .line 174
+    invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
     return-void
 .end method
@@ -1668,68 +1658,70 @@
     .parameter "x0"
 
     .prologue
-    .line 175
-    invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
-
-    return-void
-.end method
-
-.method static synthetic access$600(Lcom/android/server/wm/WindowManagerService;)V
-    .locals 0
-    .parameter "x0"
-
-    .prologue
-    .line 175
+    .line 174
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->stopFreezingDisplayLocked()V
 
     return-void
 .end method
 
-.method static synthetic access$700(Lcom/android/server/wm/WindowManagerService;)Z
+.method static synthetic access$600(Lcom/android/server/wm/WindowManagerService;)Z
     .locals 1
     .parameter "x0"
 
     .prologue
-    .line 175
+    .line 174
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
     return v0
 .end method
 
-.method static synthetic access$702(Lcom/android/server/wm/WindowManagerService;Z)Z
+.method static synthetic access$602(Lcom/android/server/wm/WindowManagerService;Z)Z
     .locals 0
     .parameter "x0"
     .parameter "x1"
 
     .prologue
-    .line 175
+    .line 174
     iput-boolean p1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
     return p1
 .end method
 
-.method static synthetic access$800(Lcom/android/server/wm/WindowManagerService;)V
+.method static synthetic access$700(Lcom/android/server/wm/WindowManagerService;)V
     .locals 0
     .parameter "x0"
 
     .prologue
-    .line 175
+    .line 174
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->notifyWindowsChanged()V
 
     return-void
 .end method
 
-.method static synthetic access$900(Lcom/android/server/wm/WindowManagerService;)Z
+.method static synthetic access$800(Lcom/android/server/wm/WindowManagerService;)Z
     .locals 1
     .parameter "x0"
 
     .prologue
-    .line 175
+    .line 174
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->copyAnimToLayoutParamsLocked()Z
 
     move-result v0
 
     return v0
+.end method
+
+.method static synthetic access$900(Lcom/android/server/wm/WindowManagerService;II)V
+    .locals 0
+    .parameter "x0"
+    .parameter "x1"
+    .parameter "x2"
+
+    .prologue
+    .line 174
+    invoke-direct {p0, p1, p2}, Lcom/android/server/wm/WindowManagerService;->showStrictModeViolation(II)V
+
+    return-void
 .end method
 
 .method private addAppTokenToAnimating(ILcom/android/server/wm/AppWindowToken;)V
@@ -1738,7 +1730,7 @@
     .parameter "atoken"
 
     .prologue
-    .line 3783
+    .line 3780
     if-eqz p1, :cond_0
 
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
@@ -1749,17 +1741,17 @@
 
     if-ne p1, v1, :cond_1
 
-    .line 3785
+    .line 3782
     :cond_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v1, p1, p2}, Ljava/util/ArrayList;->add(ILjava/lang/Object;)V
 
-    .line 3792
+    .line 3789
     :goto_0
     return-void
 
-    .line 3790
+    .line 3787
     :cond_1
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
@@ -1771,7 +1763,7 @@
 
     check-cast v0, Lcom/android/server/wm/AppWindowToken;
 
-    .line 3791
+    .line 3788
     .local v0, aboveAnchor:Lcom/android/server/wm/AppWindowToken;
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
@@ -1792,12 +1784,12 @@
     .parameter "addToToken"
 
     .prologue
-    .line 973
+    .line 970
     move-object/from16 v0, p1
 
     iget-object v10, v0, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
 
-    .line 974
+    .line 971
     .local v10, client:Landroid/view/IWindow;
     move-object/from16 v0, p1
 
@@ -1805,31 +1797,31 @@
 
     move-object/from16 v22, v0
 
-    .line 975
+    .line 972
     .local v22, token:Lcom/android/server/wm/WindowToken;
     move-object/from16 v0, p1
 
     iget-object v11, v0, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
-    .line 977
+    .line 974
     .local v11, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-virtual/range {p1 .. p1}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v30
 
-    .line 978
+    .line 975
     .local v30, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual/range {v30 .. v30}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v3
 
-    .line 979
+    .line 976
     .local v3, N:I
     move-object/from16 v0, p1
 
     iget-object v8, v0, Lcom/android/server/wm/WindowState;->mAttachedWindow:Lcom/android/server/wm/WindowState;
 
-    .line 981
+    .line 978
     .local v8, attached:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, p0
 
@@ -1839,20 +1831,20 @@
 
     move-result-object v23
 
-    .line 982
+    .line 979
     .local v23, tokenWindowList:Lcom/android/server/wm/WindowList;
     if-nez v8, :cond_14
 
-    .line 983
+    .line 980
     const/16 v24, 0x0
 
-    .line 984
+    .line 981
     .local v24, tokenWindowsPos:I
     invoke-virtual/range {v23 .. v23}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v28
 
-    .line 985
+    .line 982
     .local v28, windowListPos:I
     move-object/from16 v0, v22
 
@@ -1862,14 +1854,14 @@
 
     if-eqz v31, :cond_11
 
-    .line 986
+    .line 983
     add-int/lit8 v13, v28, -0x1
 
-    .line 987
+    .line 984
     .local v13, index:I
     if-ltz v13, :cond_5
 
-    .line 991
+    .line 988
     move-object/from16 v0, p1
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
@@ -1890,7 +1882,7 @@
 
     if-ne v0, v1, :cond_2
 
-    .line 993
+    .line 990
     const/16 v31, 0x0
 
     move-object/from16 v0, v23
@@ -1903,7 +1895,7 @@
 
     check-cast v16, Lcom/android/server/wm/WindowState;
 
-    .line 994
+    .line 991
     .local v16, lowestWindow:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, p0
 
@@ -1913,7 +1905,7 @@
 
     invoke-direct {v0, v1, v2}, Lcom/android/server/wm/WindowManagerService;->placeWindowBefore(Lcom/android/server/wm/WindowState;Lcom/android/server/wm/WindowState;)V
 
-    .line 995
+    .line 992
     move-object/from16 v0, v22
 
     iget-object v0, v0, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
@@ -1930,13 +1922,13 @@
 
     move-result v24
 
-    .line 1126
+    .line 1123
     .end local v13           #index:I
     .end local v16           #lowestWindow:Lcom/android/server/wm/WindowState;
     :goto_0
     if-eqz p2, :cond_0
 
-    .line 1128
+    .line 1125
     move-object/from16 v0, v22
 
     iget-object v0, v0, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
@@ -1951,7 +1943,7 @@
 
     invoke-virtual {v0, v1, v2}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 1185
+    .line 1182
     .end local v24           #tokenWindowsPos:I
     .end local v28           #windowListPos:I
     :cond_0
@@ -1966,7 +1958,7 @@
 
     if-eqz p2, :cond_1
 
-    .line 1186
+    .line 1183
     move-object/from16 v0, p1
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
@@ -1985,11 +1977,11 @@
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 1188
+    .line 1185
     :cond_1
     return-void
 
-    .line 997
+    .line 994
     .restart local v13       #index:I
     .restart local v24       #tokenWindowsPos:I
     .restart local v28       #windowListPos:I
@@ -1998,7 +1990,7 @@
 
     iget-object v7, v0, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 998
+    .line 995
     .local v7, atoken:Lcom/android/server/wm/AppWindowToken;
     move-object/from16 v0, v23
 
@@ -2008,7 +2000,7 @@
 
     check-cast v15, Lcom/android/server/wm/WindowState;
 
-    .line 999
+    .line 996
     .local v15, lastWindow:Lcom/android/server/wm/WindowState;
     if-eqz v7, :cond_3
 
@@ -2020,14 +2012,14 @@
 
     if-ne v15, v0, :cond_3
 
-    .line 1000
+    .line 997
     move-object/from16 v0, p0
 
     move-object/from16 v1, p1
 
     invoke-direct {v0, v15, v1}, Lcom/android/server/wm/WindowManagerService;->placeWindowBefore(Lcom/android/server/wm/WindowState;Lcom/android/server/wm/WindowState;)V
 
-    .line 1001
+    .line 998
     move-object/from16 v0, v22
 
     iget-object v0, v0, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
@@ -2044,13 +2036,13 @@
 
     goto :goto_0
 
-    .line 1003
+    .line 1000
     :cond_3
     invoke-direct/range {p0 .. p1}, Lcom/android/server/wm/WindowManagerService;->findIdxBasedOnAppTokens(Lcom/android/server/wm/WindowState;)I
 
     move-result v18
 
-    .line 1012
+    .line 1009
     .local v18, newIdx:I
     add-int/lit8 v31, v18, 0x1
 
@@ -2062,13 +2054,13 @@
 
     invoke-virtual {v0, v1, v2}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 1013
+    .line 1010
     if-gez v18, :cond_4
 
-    .line 1015
+    .line 1012
     const/16 v24, 0x0
 
-    .line 1020
+    .line 1017
     :goto_2
     const/16 v31, 0x1
 
@@ -2080,7 +2072,7 @@
 
     goto :goto_0
 
-    .line 1017
+    .line 1014
     :cond_4
     move-object/from16 v0, v30
 
@@ -2112,7 +2104,7 @@
 
     goto :goto_2
 
-    .line 1030
+    .line 1027
     .end local v7           #atoken:Lcom/android/server/wm/AppWindowToken;
     .end local v15           #lastWindow:Lcom/android/server/wm/WindowState;
     .end local v18           #newIdx:I
@@ -2127,11 +2119,11 @@
 
     move-result v4
 
-    .line 1031
+    .line 1028
     .local v4, NA:I
     const/16 v19, 0x0
 
-    .line 1032
+    .line 1029
     .local v19, pos:Lcom/android/server/wm/WindowState;
     add-int/lit8 v12, v4, -0x1
 
@@ -2139,7 +2131,7 @@
     :goto_3
     if-ltz v12, :cond_6
 
-    .line 1033
+    .line 1030
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
@@ -2154,7 +2146,7 @@
 
     check-cast v21, Lcom/android/server/wm/AppWindowToken;
 
-    .line 1034
+    .line 1031
     .local v21, t:Lcom/android/server/wm/AppWindowToken;
     move-object/from16 v0, v21
 
@@ -2162,15 +2154,15 @@
 
     if-ne v0, v1, :cond_8
 
-    .line 1035
+    .line 1032
     add-int/lit8 v12, v12, -0x1
 
-    .line 1050
+    .line 1047
     .end local v21           #t:Lcom/android/server/wm/AppWindowToken;
     :cond_6
     if-eqz v19, :cond_b
 
-    .line 1052
+    .line 1049
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
@@ -2193,11 +2185,11 @@
 
     check-cast v7, Lcom/android/server/wm/WindowToken;
 
-    .line 1053
+    .line 1050
     .local v7, atoken:Lcom/android/server/wm/WindowToken;
     if-eqz v7, :cond_7
 
-    .line 1054
+    .line 1051
     move-object/from16 v0, p1
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
@@ -2212,16 +2204,16 @@
 
     move-result-object v23
 
-    .line 1056
+    .line 1053
     invoke-virtual/range {v23 .. v23}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v5
 
-    .line 1057
+    .line 1054
     .local v5, NC:I
     if-lez v5, :cond_7
 
-    .line 1058
+    .line 1055
     const/16 v31, 0x0
 
     move-object/from16 v0, v23
@@ -2234,7 +2226,7 @@
 
     check-cast v9, Lcom/android/server/wm/WindowState;
 
-    .line 1059
+    .line 1056
     .local v9, bottom:Lcom/android/server/wm/WindowState;
     iget v0, v9, Lcom/android/server/wm/WindowState;->mSubLayer:I
 
@@ -2242,10 +2234,10 @@
 
     if-gez v31, :cond_7
 
-    .line 1060
+    .line 1057
     move-object/from16 v19, v9
 
-    .line 1064
+    .line 1061
     .end local v5           #NC:I
     .end local v9           #bottom:Lcom/android/server/wm/WindowState;
     :cond_7
@@ -2259,7 +2251,7 @@
 
     goto/16 :goto_0
 
-    .line 1042
+    .line 1039
     .end local v7           #atoken:Lcom/android/server/wm/WindowToken;
     .restart local v21       #t:Lcom/android/server/wm/AppWindowToken;
     :cond_8
@@ -2279,7 +2271,7 @@
 
     move-result-object v23
 
-    .line 1043
+    .line 1040
     move-object/from16 v0, v21
 
     iget-boolean v0, v0, Lcom/android/server/wm/AppWindowToken;->sendingToBottom:Z
@@ -2294,7 +2286,7 @@
 
     if-lez v31, :cond_9
 
-    .line 1044
+    .line 1041
     const/16 v31, 0x0
 
     move-object/from16 v0, v23
@@ -2308,25 +2300,25 @@
     .end local v19           #pos:Lcom/android/server/wm/WindowState;
     check-cast v19, Lcom/android/server/wm/WindowState;
 
-    .line 1032
+    .line 1029
     .restart local v19       #pos:Lcom/android/server/wm/WindowState;
     :cond_9
     add-int/lit8 v12, v12, -0x1
 
     goto/16 :goto_3
 
-    .line 1076
+    .line 1073
     .local v6, NW:I
     :cond_a
     add-int/lit8 v12, v12, -0x1
 
-    .line 1068
+    .line 1065
     .end local v6           #NW:I
     .end local v21           #t:Lcom/android/server/wm/AppWindowToken;
     :cond_b
     if-ltz v12, :cond_c
 
-    .line 1069
+    .line 1066
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
@@ -2341,7 +2333,7 @@
 
     check-cast v21, Lcom/android/server/wm/AppWindowToken;
 
-    .line 1070
+    .line 1067
     .restart local v21       #t:Lcom/android/server/wm/AppWindowToken;
     move-object/from16 v0, p1
 
@@ -2359,16 +2351,16 @@
 
     move-result-object v23
 
-    .line 1071
+    .line 1068
     invoke-virtual/range {v23 .. v23}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v6
 
-    .line 1072
+    .line 1069
     .restart local v6       #NW:I
     if-lez v6, :cond_a
 
-    .line 1073
+    .line 1070
     add-int/lit8 v31, v6, -0x1
 
     move-object/from16 v0, v23
@@ -2382,14 +2374,14 @@
     .end local v19           #pos:Lcom/android/server/wm/WindowState;
     check-cast v19, Lcom/android/server/wm/WindowState;
 
-    .line 1078
+    .line 1075
     .end local v6           #NW:I
     .end local v21           #t:Lcom/android/server/wm/AppWindowToken;
     .restart local v19       #pos:Lcom/android/server/wm/WindowState;
     :cond_c
     if-eqz v19, :cond_e
 
-    .line 1081
+    .line 1078
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
@@ -2412,11 +2404,11 @@
 
     check-cast v7, Lcom/android/server/wm/WindowToken;
 
-    .line 1082
+    .line 1079
     .restart local v7       #atoken:Lcom/android/server/wm/WindowToken;
     if-eqz v7, :cond_d
 
-    .line 1083
+    .line 1080
     iget-object v0, v7, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     move-object/from16 v31, v0
@@ -2425,11 +2417,11 @@
 
     move-result v5
 
-    .line 1084
+    .line 1081
     .restart local v5       #NC:I
     if-lez v5, :cond_d
 
-    .line 1085
+    .line 1082
     iget-object v0, v7, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     move-object/from16 v31, v0
@@ -2442,7 +2434,7 @@
 
     check-cast v25, Lcom/android/server/wm/WindowState;
 
-    .line 1086
+    .line 1083
     .local v25, top:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, v25
 
@@ -2452,10 +2444,10 @@
 
     if-ltz v31, :cond_d
 
-    .line 1087
+    .line 1084
     move-object/from16 v19, v25
 
-    .line 1091
+    .line 1088
     .end local v5           #NC:I
     .end local v25           #top:Lcom/android/server/wm/WindowState;
     :cond_d
@@ -2469,7 +2461,7 @@
 
     goto/16 :goto_0
 
-    .line 1094
+    .line 1091
     .end local v7           #atoken:Lcom/android/server/wm/WindowToken;
     :cond_e
     move-object/from16 v0, p1
@@ -2478,14 +2470,14 @@
 
     move/from16 v17, v0
 
-    .line 1095
+    .line 1092
     .local v17, myLayer:I
     const/4 v12, 0x0
 
     :goto_4
     if-ge v12, v3, :cond_f
 
-    .line 1096
+    .line 1093
     move-object/from16 v0, v30
 
     invoke-virtual {v0, v12}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -2494,7 +2486,7 @@
 
     check-cast v26, Lcom/android/server/wm/WindowState;
 
-    .line 1097
+    .line 1094
     .local v26, w:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, v26
 
@@ -2508,7 +2500,7 @@
 
     if-le v0, v1, :cond_10
 
-    .line 1105
+    .line 1102
     .end local v26           #w:Lcom/android/server/wm/WindowState;
     :cond_f
     move-object/from16 v0, v30
@@ -2517,7 +2509,7 @@
 
     invoke-virtual {v0, v12, v1}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 1106
+    .line 1103
     const/16 v31, 0x1
 
     move/from16 v0, v31
@@ -2528,14 +2520,14 @@
 
     goto/16 :goto_0
 
-    .line 1095
+    .line 1092
     .restart local v26       #w:Lcom/android/server/wm/WindowState;
     :cond_10
     add-int/lit8 v12, v12, 0x1
 
     goto :goto_4
 
-    .line 1112
+    .line 1109
     .end local v4           #NA:I
     .end local v12           #i:I
     .end local v13           #index:I
@@ -2549,7 +2541,7 @@
 
     move/from16 v17, v0
 
-    .line 1113
+    .line 1110
     .restart local v17       #myLayer:I
     add-int/lit8 v12, v3, -0x1
 
@@ -2557,7 +2549,7 @@
     :goto_5
     if-ltz v12, :cond_12
 
-    .line 1114
+    .line 1111
     move-object/from16 v0, v30
 
     invoke-virtual {v0, v12}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -2578,18 +2570,18 @@
 
     if-gt v0, v1, :cond_13
 
-    .line 1118
+    .line 1115
     :cond_12
     add-int/lit8 v12, v12, 0x1
 
-    .line 1122
+    .line 1119
     move-object/from16 v0, v30
 
     move-object/from16 v1, p1
 
     invoke-virtual {v0, v12, v1}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 1123
+    .line 1120
     const/16 v31, 0x1
 
     move/from16 v0, v31
@@ -2600,13 +2592,13 @@
 
     goto/16 :goto_0
 
-    .line 1113
+    .line 1110
     :cond_13
     add-int/lit8 v12, v12, -0x1
 
     goto :goto_5
 
-    .line 1134
+    .line 1131
     .end local v12           #i:I
     .end local v17           #myLayer:I
     .end local v24           #tokenWindowsPos:I
@@ -2616,7 +2608,7 @@
 
     move-result v4
 
-    .line 1135
+    .line 1132
     .restart local v4       #NA:I
     move-object/from16 v0, p1
 
@@ -2624,15 +2616,15 @@
 
     move/from16 v20, v0
 
-    .line 1136
+    .line 1133
     .local v20, sublayer:I
     const/high16 v14, -0x8000
 
-    .line 1137
+    .line 1134
     .local v14, largestSublayer:I
     const/16 v29, 0x0
 
-    .line 1138
+    .line 1135
     .local v29, windowWithLargestSublayer:Lcom/android/server/wm/WindowState;
     const/4 v12, 0x0
 
@@ -2640,7 +2632,7 @@
     :goto_6
     if-ge v12, v4, :cond_18
 
-    .line 1139
+    .line 1136
     move-object/from16 v0, v23
 
     invoke-virtual {v0, v12}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -2649,7 +2641,7 @@
 
     check-cast v26, Lcom/android/server/wm/WindowState;
 
-    .line 1140
+    .line 1137
     .restart local v26       #w:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, v26
 
@@ -2657,33 +2649,33 @@
 
     move/from16 v27, v0
 
-    .line 1141
+    .line 1138
     .local v27, wSublayer:I
     move/from16 v0, v27
 
     if-lt v0, v14, :cond_15
 
-    .line 1142
+    .line 1139
     move/from16 v14, v27
 
-    .line 1143
+    .line 1140
     move-object/from16 v29, v26
 
-    .line 1145
+    .line 1142
     :cond_15
     if-gez v20, :cond_1a
 
-    .line 1148
+    .line 1145
     move/from16 v0, v27
 
     move/from16 v1, v20
 
     if-lt v0, v1, :cond_1c
 
-    .line 1149
+    .line 1146
     if-eqz p2, :cond_16
 
-    .line 1151
+    .line 1148
     move-object/from16 v0, v22
 
     iget-object v0, v0, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
@@ -2696,7 +2688,7 @@
 
     invoke-virtual {v0, v12, v1}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 1153
+    .line 1150
     :cond_16
     if-ltz v27, :cond_17
 
@@ -2712,16 +2704,16 @@
 
     invoke-direct {v0, v1, v2}, Lcom/android/server/wm/WindowManagerService;->placeWindowBefore(Lcom/android/server/wm/WindowState;Lcom/android/server/wm/WindowState;)V
 
-    .line 1169
+    .line 1166
     .end local v27           #wSublayer:I
     :cond_18
     :goto_7
     if-lt v12, v4, :cond_0
 
-    .line 1170
+    .line 1167
     if-eqz p2, :cond_19
 
-    .line 1172
+    .line 1169
     move-object/from16 v0, v22
 
     iget-object v0, v0, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
@@ -2734,11 +2726,11 @@
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowList;->add(Ljava/lang/Object;)Z
 
-    .line 1174
+    .line 1171
     :cond_19
     if-gez v20, :cond_1d
 
-    .line 1175
+    .line 1172
     move-object/from16 v0, p0
 
     move-object/from16 v1, p1
@@ -2747,7 +2739,7 @@
 
     goto/16 :goto_1
 
-    .line 1159
+    .line 1156
     .restart local v26       #w:Lcom/android/server/wm/WindowState;
     .restart local v27       #wSublayer:I
     :cond_1a
@@ -2757,10 +2749,10 @@
 
     if-le v0, v1, :cond_1c
 
-    .line 1160
+    .line 1157
     if-eqz p2, :cond_1b
 
-    .line 1162
+    .line 1159
     move-object/from16 v0, v22
 
     iget-object v0, v0, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
@@ -2773,7 +2765,7 @@
 
     invoke-virtual {v0, v12, v1}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 1164
+    .line 1161
     :cond_1b
     move-object/from16 v0, p0
 
@@ -2785,13 +2777,13 @@
 
     goto :goto_7
 
-    .line 1138
+    .line 1135
     :cond_1c
     add-int/lit8 v12, v12, 0x1
 
     goto :goto_6
 
-    .line 1177
+    .line 1174
     .end local v26           #w:Lcom/android/server/wm/WindowState;
     .end local v27           #wSublayer:I
     :cond_1d
@@ -2884,14 +2876,14 @@
     .locals 5
 
     .prologue
-    .line 8937
+    .line 8905
     const/4 v0, 0x0
 
-    .line 8938
+    .line 8906
     .local v0, changes:I
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 8939
+    .line 8907
     .local v1, oldWallpaper:Lcom/android/server/wm/WindowState;
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
@@ -2903,7 +2895,7 @@
 
     if-eqz v2, :cond_0
 
-    .line 8947
+    .line 8915
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     iget-object v2, v2, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
@@ -2912,17 +2904,17 @@
 
     if-eqz v2, :cond_0
 
-    .line 8951
+    .line 8919
     const/4 v2, 0x0
 
     iput-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mUpperWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     iput-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 8952
+    .line 8920
     or-int/lit8 v0, v0, 0x8
 
-    .line 8955
+    .line 8923
     :cond_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
@@ -2936,7 +2928,7 @@
 
     iput v3, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mAdjResult:I
 
-    .line 8959
+    .line 8927
     return v0
 .end method
 
@@ -2956,23 +2948,23 @@
 
     const/4 v6, 0x0
 
-    .line 3523
+    .line 3520
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->okToDisplay()Z
 
     move-result v7
 
     if-eqz v7, :cond_12
 
-    .line 3525
+    .line 3522
     const/4 v2, 0x0
 
-    .line 3526
+    .line 3523
     .local v2, initialized:Z
     iget v7, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
 
     if-ne v7, v5, :cond_2
 
-    .line 3527
+    .line 3524
     iget v7, p1, Lcom/android/server/wm/AppWindowToken;->userId:I
 
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionPackage:Ljava/lang/String;
@@ -2986,17 +2978,17 @@
 
     move-result-object v0
 
-    .line 3616
+    .line 3613
     .local v0, a:Landroid/view/animation/Animation;
     :goto_1
     if-eqz v0, :cond_0
 
-    .line 3625
+    .line 3622
     iget-object v4, p1, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     invoke-virtual {v4, v0, v2}, Lcom/android/server/wm/AppWindowAnimator;->setAnimation(Landroid/view/animation/Animation;Z)V
 
-    .line 3631
+    .line 3628
     .end local v0           #a:Landroid/view/animation/Animation;
     .end local v2           #initialized:Z
     :cond_0
@@ -3010,14 +3002,14 @@
     :goto_3
     return v5
 
-    .line 3527
+    .line 3524
     .restart local v2       #initialized:Z
     :cond_1
     iget v4, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionExit:I
 
     goto :goto_0
 
-    .line 3534
+    .line 3531
     :cond_2
     iget v7, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
 
@@ -3025,18 +3017,18 @@
 
     if-ne v7, v8, :cond_3
 
-    .line 3535
+    .line 3532
     invoke-direct {p0, p3, p4}, Lcom/android/server/wm/WindowManagerService;->createScaleUpAnimationLocked(IZ)Landroid/view/animation/Animation;
 
     move-result-object v0
 
-    .line 3536
+    .line 3533
     .restart local v0       #a:Landroid/view/animation/Animation;
     const/4 v2, 0x1
 
     goto :goto_1
 
-    .line 3542
+    .line 3539
     .end local v0           #a:Landroid/view/animation/Animation;
     :cond_3
     iget v7, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
@@ -3047,7 +3039,7 @@
 
     if-ne v7, v4, :cond_6
 
-    .line 3544
+    .line 3541
     :cond_4
     iget v4, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
 
@@ -3055,18 +3047,18 @@
 
     move v3, v5
 
-    .line 3545
+    .line 3542
     .local v3, scaleUp:Z
     :goto_4
     invoke-direct {p0, p3, p4, v6, v3}, Lcom/android/server/wm/WindowManagerService;->createThumbnailAnimationLocked(IZZZ)Landroid/view/animation/Animation;
 
     move-result-object v0
 
-    .line 3546
+    .line 3543
     .restart local v0       #a:Landroid/view/animation/Animation;
     const/4 v2, 0x1
 
-    .line 3554
+    .line 3551
     goto :goto_1
 
     .end local v0           #a:Landroid/view/animation/Animation;
@@ -3074,18 +3066,18 @@
     :cond_5
     move v3, v6
 
-    .line 3544
+    .line 3541
     goto :goto_4
 
-    .line 3555
+    .line 3552
     :cond_6
     const/4 v1, 0x0
 
-    .line 3556
+    .line 3553
     .local v1, animAttr:I
     sparse-switch p3, :sswitch_data_0
 
-    .line 3608
+    .line 3605
     :goto_5
     if-eqz v1, :cond_11
 
@@ -3099,152 +3091,152 @@
     :goto_6
     goto :goto_1
 
-    .line 3558
+    .line 3555
     .end local v0           #a:Landroid/view/animation/Animation;
     :sswitch_0
     if-eqz p4, :cond_7
 
     move v1, v4
 
-    .line 3561
+    .line 3558
     :goto_7
     goto :goto_5
 
-    .line 3558
+    .line 3555
     :cond_7
     const/4 v1, 0x5
 
     goto :goto_7
 
-    .line 3563
+    .line 3560
     :sswitch_1
     if-eqz p4, :cond_8
 
     const/4 v1, 0x6
 
-    .line 3566
+    .line 3563
     :goto_8
     goto :goto_5
 
-    .line 3563
+    .line 3560
     :cond_8
     const/4 v1, 0x7
 
     goto :goto_8
 
-    .line 3568
+    .line 3565
     :sswitch_2
     if-eqz p4, :cond_9
 
     const/16 v1, 0x8
 
-    .line 3571
+    .line 3568
     :goto_9
     goto :goto_5
 
-    .line 3568
+    .line 3565
     :cond_9
     const/16 v1, 0x9
 
     goto :goto_9
 
-    .line 3573
+    .line 3570
     :sswitch_3
     if-eqz p4, :cond_a
 
     const/16 v1, 0xa
 
-    .line 3576
+    .line 3573
     :goto_a
     goto :goto_5
 
-    .line 3573
+    .line 3570
     :cond_a
     const/16 v1, 0xb
 
     goto :goto_a
 
-    .line 3578
+    .line 3575
     :sswitch_4
     if-eqz p4, :cond_b
 
     const/16 v1, 0xc
 
-    .line 3581
+    .line 3578
     :goto_b
     goto :goto_5
 
-    .line 3578
+    .line 3575
     :cond_b
     const/16 v1, 0xd
 
     goto :goto_b
 
-    .line 3583
+    .line 3580
     :sswitch_5
     if-eqz p4, :cond_c
 
     const/16 v1, 0xe
 
-    .line 3586
+    .line 3583
     :goto_c
     goto :goto_5
 
-    .line 3583
+    .line 3580
     :cond_c
     const/16 v1, 0xf
 
     goto :goto_c
 
-    .line 3588
+    .line 3585
     :sswitch_6
     if-eqz p4, :cond_d
 
     const/16 v1, 0x10
 
-    .line 3591
+    .line 3588
     :goto_d
     goto :goto_5
 
-    .line 3588
+    .line 3585
     :cond_d
     const/16 v1, 0x11
 
     goto :goto_d
 
-    .line 3593
+    .line 3590
     :sswitch_7
     if-eqz p4, :cond_e
 
     const/16 v1, 0x12
 
-    .line 3596
+    .line 3593
     :goto_e
     goto :goto_5
 
-    .line 3593
+    .line 3590
     :cond_e
     const/16 v1, 0x13
 
     goto :goto_e
 
-    .line 3598
+    .line 3595
     :sswitch_8
     if-eqz p4, :cond_f
 
     const/16 v1, 0x14
 
-    .line 3601
+    .line 3598
     :goto_f
     goto :goto_5
 
-    .line 3598
+    .line 3595
     :cond_f
     const/16 v1, 0x15
 
     goto :goto_f
 
-    .line 3603
+    .line 3600
     :sswitch_9
     if-eqz p4, :cond_10
 
@@ -3258,13 +3250,13 @@
 
     goto :goto_10
 
-    .line 3608
+    .line 3605
     :cond_11
     const/4 v0, 0x0
 
     goto :goto_6
 
-    .line 3628
+    .line 3625
     .end local v1           #animAttr:I
     .end local v2           #initialized:Z
     :cond_12
@@ -3277,10 +3269,10 @@
     :cond_13
     move v5, v6
 
-    .line 3631
+    .line 3628
     goto/16 :goto_3
 
-    .line 3556
+    .line 3553
     nop
 
     :sswitch_data_0
@@ -3303,24 +3295,24 @@
     .parameter "windows"
 
     .prologue
-    .line 8280
+    .line 8248
     invoke-virtual {p1}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v0
 
-    .line 8281
+    .line 8249
     .local v0, N:I
     const/4 v2, 0x0
 
-    .line 8282
+    .line 8250
     .local v2, curBaseLayer:I
     const/4 v3, 0x0
 
-    .line 8291
+    .line 8259
     .local v3, curLayer:I
     const/4 v1, 0x0
 
-    .line 8293
+    .line 8261
     .local v1, anyLayerChanged:Z
     const/4 v4, 0x0
 
@@ -3328,26 +3320,26 @@
     :goto_0
     if-ge v4, v0, :cond_9
 
-    .line 8294
+    .line 8262
     invoke-virtual {p1, v4}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v7
 
     check-cast v7, Lcom/android/server/wm/WindowState;
 
-    .line 8295
+    .line 8263
     .local v7, w:Lcom/android/server/wm/WindowState;
     iget-object v8, v7, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
-    .line 8296
+    .line 8264
     .local v8, winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     const/4 v5, 0x0
 
-    .line 8297
+    .line 8265
     .local v5, layerChanged:Z
     iget v6, v7, Lcom/android/server/wm/WindowState;->mLayer:I
 
-    .line 8298
+    .line 8266
     .local v6, oldLayer:I
     iget v9, v7, Lcom/android/server/wm/WindowState;->mBaseLayer:I
 
@@ -3363,35 +3355,35 @@
 
     if-eqz v9, :cond_5
 
-    .line 8300
+    .line 8268
     :cond_0
     add-int/lit8 v3, v3, 0x5
 
-    .line 8301
+    .line 8269
     iput v3, v7, Lcom/android/server/wm/WindowState;->mLayer:I
 
-    .line 8306
+    .line 8274
     :goto_1
     iget v9, v7, Lcom/android/server/wm/WindowState;->mLayer:I
 
     if-eq v9, v6, :cond_1
 
-    .line 8307
+    .line 8275
     const/4 v5, 0x1
 
-    .line 8308
+    .line 8276
     const/4 v1, 0x1
 
-    .line 8310
+    .line 8278
     :cond_1
     iget v6, v8, Lcom/android/server/wm/WindowStateAnimator;->mAnimLayer:I
 
-    .line 8311
+    .line 8279
     iget-object v9, v7, Lcom/android/server/wm/WindowState;->mTargetAppToken:Lcom/android/server/wm/AppWindowToken;
 
     if-eqz v9, :cond_6
 
-    .line 8312
+    .line 8280
     iget v9, v7, Lcom/android/server/wm/WindowState;->mLayer:I
 
     iget-object v10, v7, Lcom/android/server/wm/WindowState;->mTargetAppToken:Lcom/android/server/wm/AppWindowToken;
@@ -3404,13 +3396,13 @@
 
     iput v9, v8, Lcom/android/server/wm/WindowStateAnimator;->mAnimLayer:I
 
-    .line 8320
+    .line 8288
     :goto_2
     iget-boolean v9, v7, Lcom/android/server/wm/WindowState;->mIsImWindow:Z
 
     if-eqz v9, :cond_8
 
-    .line 8321
+    .line 8289
     iget v9, v8, Lcom/android/server/wm/WindowStateAnimator;->mAnimLayer:I
 
     iget v10, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodAnimLayerAdjustment:I
@@ -3419,20 +3411,20 @@
 
     iput v9, v8, Lcom/android/server/wm/WindowStateAnimator;->mAnimLayer:I
 
-    .line 8325
+    .line 8293
     :cond_2
     :goto_3
     iget v9, v8, Lcom/android/server/wm/WindowStateAnimator;->mAnimLayer:I
 
     if-eq v9, v6, :cond_3
 
-    .line 8326
+    .line 8294
     const/4 v5, 0x1
 
-    .line 8327
+    .line 8295
     const/4 v1, 0x1
 
-    .line 8329
+    .line 8297
     :cond_3
     if-eqz v5, :cond_4
 
@@ -3444,33 +3436,33 @@
 
     if-eqz v9, :cond_4
 
-    .line 8331
+    .line 8299
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->updateLayoutToAnimationLocked()V
 
-    .line 8293
+    .line 8261
     :cond_4
     add-int/lit8 v4, v4, 0x1
 
     goto :goto_0
 
-    .line 8303
+    .line 8271
     :cond_5
     iget v3, v7, Lcom/android/server/wm/WindowState;->mBaseLayer:I
 
     move v2, v3
 
-    .line 8304
+    .line 8272
     iput v3, v7, Lcom/android/server/wm/WindowState;->mLayer:I
 
     goto :goto_1
 
-    .line 8314
+    .line 8282
     :cond_6
     iget-object v9, v7, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     if-eqz v9, :cond_7
 
-    .line 8315
+    .line 8283
     iget v9, v7, Lcom/android/server/wm/WindowState;->mLayer:I
 
     iget-object v10, v7, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
@@ -3485,7 +3477,7 @@
 
     goto :goto_2
 
-    .line 8318
+    .line 8286
     :cond_7
     iget v9, v7, Lcom/android/server/wm/WindowState;->mLayer:I
 
@@ -3493,13 +3485,13 @@
 
     goto :goto_2
 
-    .line 8322
+    .line 8290
     :cond_8
     iget-boolean v9, v7, Lcom/android/server/wm/WindowState;->mIsWallpaper:Z
 
     if-eqz v9, :cond_2
 
-    .line 8323
+    .line 8291
     iget v9, v8, Lcom/android/server/wm/WindowStateAnimator;->mAnimLayer:I
 
     iget v10, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperAnimLayerAdjustment:I
@@ -3510,7 +3502,7 @@
 
     goto :goto_3
 
-    .line 8343
+    .line 8311
     .end local v5           #layerChanged:Z
     .end local v6           #oldLayer:I
     .end local v7           #w:Lcom/android/server/wm/WindowState;
@@ -3518,140 +3510,16 @@
     :cond_9
     if-eqz v1, :cond_a
 
-    .line 8344
+    .line 8312
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v9
 
     invoke-direct {p0, v9}, Lcom/android/server/wm/WindowManagerService;->scheduleNotifyWindowLayersChangedIfNeededLocked(Lcom/android/server/wm/DisplayContent;)V
 
-    .line 8346
+    .line 8314
     :cond_a
     return-void
-.end method
-
-.method private calculateDisplayMetrics(Lcom/android/server/wm/DisplayContent;)Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-    .locals 9
-    .parameter "displayContent"
-
-    .prologue
-    const/4 v5, 0x1
-
-    const v8, 0x3fa66666
-
-    .line 6937
-    new-instance v0, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-
-    const/4 v6, 0x0
-
-    invoke-direct {v0, v6}, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;-><init>(Lcom/android/server/wm/WindowManagerService$1;)V
-
-    .line 6939
-    .local v0, dm:Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-    iget v6, p0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
-
-    if-eq v6, v5, :cond_0
-
-    iget v6, p0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
-
-    const/4 v7, 0x3
-
-    if-ne v6, v7, :cond_2
-
-    :cond_0
-    :goto_0
-    iput-boolean v5, v0, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->rotated:Z
-
-    .line 6940
-    iget-boolean v5, v0, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->rotated:Z
-
-    if-eqz v5, :cond_3
-
-    iget v4, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayHeight:I
-
-    .line 6942
-    .local v4, realdw:I
-    :goto_1
-    iget-boolean v5, v0, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->rotated:Z
-
-    if-eqz v5, :cond_4
-
-    iget v3, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayWidth:I
-
-    .line 6945
-    .local v3, realdh:I
-    :goto_2
-    iput v4, v0, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dw:I
-
-    .line 6946
-    iput v3, v0, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dh:I
-
-    .line 6948
-    iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mAltOrientation:Z
-
-    if-eqz v5, :cond_1
-
-    .line 6949
-    if-le v4, v3, :cond_5
-
-    .line 6951
-    int-to-float v5, v3
-
-    div-float/2addr v5, v8
-
-    float-to-int v2, v5
-
-    .line 6952
-    .local v2, maxw:I
-    if-ge v2, v4, :cond_1
-
-    .line 6953
-    iput v2, v0, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dw:I
-
-    .line 6964
-    .end local v2           #maxw:I
-    :cond_1
-    :goto_3
-    return-object v0
-
-    .line 6939
-    .end local v3           #realdh:I
-    .end local v4           #realdw:I
-    :cond_2
-    const/4 v5, 0x0
-
-    goto :goto_0
-
-    .line 6940
-    :cond_3
-    iget v4, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayWidth:I
-
-    goto :goto_1
-
-    .line 6942
-    .restart local v4       #realdw:I
-    :cond_4
-    iget v3, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayHeight:I
-
-    goto :goto_2
-
-    .line 6957
-    .restart local v3       #realdh:I
-    :cond_5
-    int-to-float v5, v4
-
-    div-float/2addr v5, v8
-
-    float-to-int v1, v5
-
-    .line 6958
-    .local v1, maxh:I
-    if-ge v1, v3, :cond_1
-
-    .line 6959
-    iput v1, v0, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dh:I
-
-    goto :goto_3
 .end method
 
 .method static canBeImeTarget(Lcom/android/server/wm/WindowState;)Z
@@ -3661,14 +3529,14 @@
     .prologue
     const v2, 0x20008
 
-    .line 1192
+    .line 1189
     iget-object v1, p0, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
     iget v1, v1, Landroid/view/WindowManager$LayoutParams;->flags:I
 
     and-int v0, v1, v2
 
-    .line 1194
+    .line 1191
     .local v0, fl:I
     if-eqz v0, :cond_0
 
@@ -3682,13 +3550,13 @@
 
     if-ne v1, v2, :cond_1
 
-    .line 1210
+    .line 1207
     :cond_0
     invoke-virtual {p0}, Lcom/android/server/wm/WindowState;->isVisibleOrAdding()Z
 
     move-result v1
 
-    .line 1212
+    .line 1209
     :goto_0
     return v1
 
@@ -3802,7 +3670,7 @@
     .locals 5
 
     .prologue
-    .line 10120
+    .line 10066
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
     iget-object v4, v4, Lcom/android/server/wm/WindowAnimator;->mUniverseBackground:Lcom/android/server/wm/WindowStateAnimator;
@@ -3821,19 +3689,19 @@
 
     if-eqz v4, :cond_1
 
-    .line 10122
+    .line 10068
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
     iget-object v4, v4, Lcom/android/server/wm/WindowAnimator;->mUniverseBackground:Lcom/android/server/wm/WindowStateAnimator;
 
     iget-object v3, v4, Lcom/android/server/wm/WindowStateAnimator;->mWin:Lcom/android/server/wm/WindowState;
 
-    .line 10133
+    .line 10079
     :cond_0
     :goto_0
     return-object v3
 
-    .line 10125
+    .line 10071
     :cond_1
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayContents:Landroid/util/SparseArray;
 
@@ -3841,7 +3709,7 @@
 
     move-result v1
 
-    .line 10126
+    .line 10072
     .local v1, displayCount:I
     const/4 v2, 0x0
 
@@ -3849,7 +3717,7 @@
     :goto_1
     if-ge v2, v1, :cond_2
 
-    .line 10127
+    .line 10073
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayContents:Landroid/util/SparseArray;
 
     invoke-virtual {v4, v2}, Landroid/util/SparseArray;->valueAt(I)Ljava/lang/Object;
@@ -3858,22 +3726,22 @@
 
     check-cast v0, Lcom/android/server/wm/DisplayContent;
 
-    .line 10128
+    .line 10074
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-direct {p0, v0}, Lcom/android/server/wm/WindowManagerService;->findFocusedWindowLocked(Lcom/android/server/wm/DisplayContent;)Lcom/android/server/wm/WindowState;
 
     move-result-object v3
 
-    .line 10129
+    .line 10075
     .local v3, win:Lcom/android/server/wm/WindowState;
     if-nez v3, :cond_0
 
-    .line 10126
+    .line 10072
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_1
 
-    .line 10133
+    .line 10079
     .end local v0           #displayContent:Lcom/android/server/wm/DisplayContent;
     .end local v3           #win:Lcom/android/server/wm/WindowState;
     :cond_2
@@ -3888,12 +3756,12 @@
     .parameter "finalScale"
 
     .prologue
-    .line 3329
+    .line 3326
     const/high16 v1, 0x3f80
 
     sub-float v0, p1, v1
 
-    .line 3330
+    .line 3327
     .local v0, denom:F
     invoke-static {v0}, Ljava/lang/Math;->abs(F)F
 
@@ -3905,10 +3773,10 @@
 
     if-gez v1, :cond_0
 
-    .line 3331
+    .line 3328
     int-to-float v1, p0
 
-    .line 3333
+    .line 3330
     :goto_0
     return v1
 
@@ -4090,120 +3958,120 @@
     .locals 9
 
     .prologue
-    .line 9905
+    .line 9851
     const/4 v4, 0x0
 
-    .line 9906
+    .line 9852
     .local v4, doRequest:Z
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
     iget-object v0, v7, Lcom/android/server/wm/WindowAnimator;->mAnimToLayout:Lcom/android/server/wm/WindowAnimator$AnimatorToLayoutParams;
 
-    .line 9907
+    .line 9853
     .local v0, animToLayout:Lcom/android/server/wm/WindowAnimator$AnimatorToLayoutParams;
     monitor-enter v0
 
-    .line 9908
+    .line 9854
     const/4 v7, 0x0
 
     :try_start_0
     iput-boolean v7, v0, Lcom/android/server/wm/WindowAnimator$AnimatorToLayoutParams;->mUpdateQueued:Z
 
-    .line 9909
+    .line 9855
     iget v1, v0, Lcom/android/server/wm/WindowAnimator$AnimatorToLayoutParams;->mBulkUpdateParams:I
 
-    .line 9912
+    .line 9858
     .local v1, bulkUpdateParams:I
     and-int/lit8 v7, v1, 0x1
 
     if-eqz v7, :cond_0
 
-    .line 9913
+    .line 9859
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     const/4 v8, 0x1
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUpdateRotation:Z
-    invoke-static {v7, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2502(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
+    invoke-static {v7, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2402(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
 
-    .line 9914
+    .line 9860
     const/4 v4, 0x1
 
-    .line 9916
+    .line 9862
     :cond_0
     and-int/lit8 v7, v1, 0x2
 
     if-eqz v7, :cond_1
 
-    .line 9917
+    .line 9863
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     const/4 v8, 0x1
 
     iput-boolean v8, v7, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mWallpaperMayChange:Z
 
-    .line 9918
+    .line 9864
     const/4 v4, 0x1
 
-    .line 9920
+    .line 9866
     :cond_1
     and-int/lit8 v7, v1, 0x4
 
     if-eqz v7, :cond_2
 
-    .line 9921
+    .line 9867
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     const/4 v8, 0x1
 
     iput-boolean v8, v7, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mWallpaperForceHidingChanged:Z
 
-    .line 9922
+    .line 9868
     const/4 v4, 0x1
 
-    .line 9924
+    .line 9870
     :cond_2
     and-int/lit8 v7, v1, 0x8
 
     if-nez v7, :cond_7
 
-    .line 9925
+    .line 9871
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     const/4 v8, 0x0
 
     iput-boolean v8, v7, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mOrientationChangeComplete:Z
 
-    .line 9932
+    .line 9878
     :cond_3
     :goto_0
     and-int/lit8 v7, v1, 0x10
 
     if-eqz v7, :cond_4
 
-    .line 9933
+    .line 9879
     const/4 v7, 0x1
 
     iput-boolean v7, p0, Lcom/android/server/wm/WindowManagerService;->mTurnOnScreen:Z
 
-    .line 9936
+    .line 9882
     :cond_4
     iget-object v6, v0, Lcom/android/server/wm/WindowAnimator$AnimatorToLayoutParams;->mPendingLayoutChanges:Landroid/util/SparseIntArray;
 
-    .line 9937
+    .line 9883
     .local v6, pendingLayouts:Landroid/util/SparseIntArray;
     invoke-virtual {v6}, Landroid/util/SparseIntArray;->size()I
 
     move-result v2
 
-    .line 9938
+    .line 9884
     .local v2, count:I
     if-lez v2, :cond_5
 
-    .line 9939
+    .line 9885
     const/4 v4, 0x1
 
-    .line 9941
+    .line 9887
     :cond_5
     const/4 v5, 0x0
 
@@ -4211,7 +4079,7 @@
     :goto_1
     if-ge v5, v2, :cond_8
 
-    .line 9942
+    .line 9888
     invoke-virtual {v6, v5}, Landroid/util/SparseIntArray;->keyAt(I)I
 
     move-result v7
@@ -4220,11 +4088,11 @@
 
     move-result-object v3
 
-    .line 9944
+    .line 9890
     .local v3, displayContent:Lcom/android/server/wm/DisplayContent;
     if-eqz v3, :cond_6
 
-    .line 9945
+    .line 9891
     iget v7, v3, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
     invoke-virtual {v6, v5}, Landroid/util/SparseIntArray;->valueAt(I)I
@@ -4235,13 +4103,13 @@
 
     iput v7, v3, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    .line 9941
+    .line 9887
     :cond_6
     add-int/lit8 v5, v5, 0x1
 
     goto :goto_1
 
-    .line 9927
+    .line 9873
     .end local v2           #count:I
     .end local v3           #displayContent:Lcom/android/server/wm/DisplayContent;
     .end local v5           #i:I
@@ -4253,17 +4121,17 @@
 
     iput-boolean v8, v7, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mOrientationChangeComplete:Z
 
-    .line 9928
+    .line 9874
     iget-boolean v7, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsFreezingScreen:Z
 
     if-eqz v7, :cond_3
 
-    .line 9929
+    .line 9875
     const/4 v4, 0x1
 
     goto :goto_0
 
-    .line 9949
+    .line 9895
     .restart local v2       #count:I
     .restart local v5       #i:I
     .restart local v6       #pendingLayouts:Landroid/util/SparseIntArray;
@@ -4272,13 +4140,13 @@
 
     iput-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mWindowDetachedWallpaper:Lcom/android/server/wm/WindowState;
 
-    .line 9950
+    .line 9896
     monitor-exit v0
 
-    .line 9951
+    .line 9897
     return v4
 
-    .line 9950
+    .line 9896
     .end local v1           #bulkUpdateParams:I
     .end local v2           #count:I
     .end local v5           #i:I
@@ -4301,7 +4169,7 @@
     .prologue
     const/high16 v3, 0x3f80
 
-    .line 3301
+    .line 3298
     const/16 v2, 0x100e
 
     if-eq p1, v2, :cond_0
@@ -4310,7 +4178,7 @@
 
     if-ne p1, v2, :cond_1
 
-    .line 3307
+    .line 3304
     :cond_0
     new-instance v0, Landroid/view/animation/AlphaAnimation;
 
@@ -4318,33 +4186,33 @@
 
     invoke-direct {v0, v3, v2}, Landroid/view/animation/AlphaAnimation;-><init>(FF)V
 
-    .line 3308
+    .line 3305
     .local v0, a:Landroid/view/animation/Animation;
     const/4 v2, 0x1
 
     invoke-virtual {v0, v2}, Landroid/view/animation/Animation;->setDetachWallpaper(Z)V
 
-    .line 3309
+    .line 3306
     int-to-long v2, p2
 
     invoke-virtual {v0, v2, v3}, Landroid/view/animation/Animation;->setDuration(J)V
 
     move-object v1, v0
 
-    .line 3315
+    .line 3312
     .end local v0           #a:Landroid/view/animation/Animation;
     .local v1, a:Ljava/lang/Object;
     :goto_0
     return-object v1
 
-    .line 3313
+    .line 3310
     .end local v1           #a:Ljava/lang/Object;
     :cond_1
     new-instance v0, Landroid/view/animation/AlphaAnimation;
 
     invoke-direct {v0, v3, v3}, Landroid/view/animation/AlphaAnimation;-><init>(FF)V
 
-    .line 3314
+    .line 3311
     .restart local v0       #a:Landroid/view/animation/Animation;
     int-to-long v2, p2
 
@@ -4352,7 +4220,7 @@
 
     move-object v1, v0
 
-    .line 3315
+    .line 3312
     .restart local v1       #a:Ljava/lang/Object;
     goto :goto_0
 .end method
@@ -4363,24 +4231,24 @@
     .parameter "enter"
 
     .prologue
-    .line 3342
+    .line 3339
     sparse-switch p1, :sswitch_data_0
 
-    .line 3349
+    .line 3346
     const/16 v10, 0x12c
 
-    .line 3353
+    .line 3350
     .local v10, duration:I
     :goto_0
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayInfoLocked()Landroid/view/DisplayInfo;
 
     move-result-object v9
 
-    .line 3354
+    .line 3351
     .local v9, displayInfo:Landroid/view/DisplayInfo;
     if-eqz p2, :cond_0
 
-    .line 3356
+    .line 3353
     iget v2, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartWidth:I
 
     int-to-float v2, v2
@@ -4391,7 +4259,7 @@
 
     div-float v1, v2, v4
 
-    .line 3357
+    .line 3354
     .local v1, scaleW:F
     iget v2, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartHeight:I
 
@@ -4403,7 +4271,7 @@
 
     div-float v3, v2, v4
 
-    .line 3358
+    .line 3355
     .local v3, scaleH:F
     new-instance v0, Landroid/view/animation/ScaleAnimation;
 
@@ -4425,20 +4293,20 @@
 
     invoke-direct/range {v0 .. v6}, Landroid/view/animation/ScaleAnimation;-><init>(FFFFFF)V
 
-    .line 3361
+    .line 3358
     .local v0, scale:Landroid/view/animation/Animation;
     int-to-long v4, v10
 
     invoke-virtual {v0, v4, v5}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 3362
+    .line 3359
     new-instance v12, Landroid/view/animation/AnimationSet;
 
     const/4 v2, 0x1
 
     invoke-direct {v12, v2}, Landroid/view/animation/AnimationSet;-><init>(Z)V
 
-    .line 3363
+    .line 3360
     .local v12, set:Landroid/view/animation/AnimationSet;
     new-instance v8, Landroid/view/animation/AlphaAnimation;
 
@@ -4448,32 +4316,32 @@
 
     invoke-direct {v8, v2, v4}, Landroid/view/animation/AlphaAnimation;-><init>(FF)V
 
-    .line 3364
+    .line 3361
     .local v8, alpha:Landroid/view/animation/Animation;
     int-to-long v4, v10
 
     invoke-virtual {v0, v4, v5}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 3365
+    .line 3362
     invoke-virtual {v12, v0}, Landroid/view/animation/AnimationSet;->addAnimation(Landroid/view/animation/Animation;)V
 
-    .line 3366
+    .line 3363
     int-to-long v4, v10
 
     invoke-virtual {v8, v4, v5}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 3367
+    .line 3364
     invoke-virtual {v12, v8}, Landroid/view/animation/AnimationSet;->addAnimation(Landroid/view/animation/Animation;)V
 
-    .line 3368
+    .line 3365
     const/4 v2, 0x1
 
     invoke-virtual {v12, v2}, Landroid/view/animation/AnimationSet;->setDetachWallpaper(Z)V
 
-    .line 3369
+    .line 3366
     move-object v7, v12
 
-    .line 3373
+    .line 3370
     .end local v0           #scale:Landroid/view/animation/Animation;
     .end local v1           #scaleW:F
     .end local v3           #scaleH:F
@@ -4485,7 +4353,7 @@
 
     invoke-virtual {v7, v2}, Landroid/view/animation/Animation;->setFillAfter(Z)V
 
-    .line 3374
+    .line 3371
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     const v4, 0x10c0003
@@ -4494,11 +4362,11 @@
 
     move-result-object v11
 
-    .line 3376
+    .line 3373
     .local v11, interpolator:Landroid/view/animation/Interpolator;
     invoke-virtual {v7, v11}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 3377
+    .line 3374
     iget v2, v9, Landroid/view/DisplayInfo;->appWidth:I
 
     iget v4, v9, Landroid/view/DisplayInfo;->appHeight:I
@@ -4509,10 +4377,10 @@
 
     invoke-virtual {v7, v2, v4, v5, v6}, Landroid/view/animation/Animation;->initialize(IIII)V
 
-    .line 3379
+    .line 3376
     return-object v7
 
-    .line 3345
+    .line 3342
     .end local v7           #a:Landroid/view/animation/Animation;
     .end local v9           #displayInfo:Landroid/view/DisplayInfo;
     .end local v10           #duration:I
@@ -4530,11 +4398,11 @@
 
     move-result v10
 
-    .line 3347
+    .line 3344
     .restart local v10       #duration:I
     goto :goto_0
 
-    .line 3371
+    .line 3368
     .restart local v9       #displayInfo:Landroid/view/DisplayInfo;
     :cond_0
     invoke-direct {p0, p1, v10}, Lcom/android/server/wm/WindowManagerService;->createExitAnimationLocked(II)Landroid/view/animation/Animation;
@@ -4544,7 +4412,7 @@
     .restart local v7       #a:Landroid/view/animation/Animation;
     goto :goto_1
 
-    .line 3342
+    .line 3339
     nop
 
     :sswitch_data_0
@@ -4562,7 +4430,7 @@
     .parameter "scaleUp"
 
     .prologue
-    .line 3385
+    .line 3382
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionThumbnail:Landroid/graphics/Bitmap;
@@ -4571,7 +4439,7 @@
 
     move-result v18
 
-    .line 3386
+    .line 3383
     .local v18, thumbWidthI:I
     if-lez v18, :cond_0
 
@@ -4581,7 +4449,7 @@
 
     move/from16 v17, v0
 
-    .line 3387
+    .line 3384
     .local v17, thumbWidth:F
     :goto_0
     move-object/from16 v0, p0
@@ -4592,7 +4460,7 @@
 
     move-result v16
 
-    .line 3388
+    .line 3385
     .local v16, thumbHeightI:I
     if-lez v16, :cond_1
 
@@ -4600,36 +4468,36 @@
 
     int-to-float v15, v0
 
-    .line 3393
+    .line 3390
     .local v15, thumbHeight:F
     :goto_1
     sparse-switch p1, :sswitch_data_0
 
-    .line 3400
+    .line 3397
     const/16 v12, 0xfa
 
-    .line 3404
+    .line 3401
     .local v12, duration:I
     :goto_2
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayInfoLocked()Landroid/view/DisplayInfo;
 
     move-result-object v11
 
-    .line 3405
+    .line 3402
     .local v11, displayInfo:Landroid/view/DisplayInfo;
     if-eqz p3, :cond_3
 
-    .line 3408
+    .line 3405
     if-eqz p4, :cond_2
 
-    .line 3409
+    .line 3406
     iget v2, v11, Landroid/view/DisplayInfo;->appWidth:I
 
     int-to-float v2, v2
 
     div-float v3, v2, v17
 
-    .line 3410
+    .line 3407
     .local v3, scaleW:F
     iget v2, v11, Landroid/view/DisplayInfo;->appHeight:I
 
@@ -4637,7 +4505,7 @@
 
     div-float v5, v2, v15
 
-    .line 3412
+    .line 3409
     .local v5, scaleH:F
     new-instance v1, Landroid/view/animation/ScaleAnimation;
 
@@ -4671,7 +4539,7 @@
 
     invoke-direct/range {v1 .. v7}, Landroid/view/animation/ScaleAnimation;-><init>(FFFFFF)V
 
-    .line 3415
+    .line 3412
     .local v1, scale:Landroid/view/animation/Animation;
     new-instance v14, Landroid/view/animation/AnimationSet;
 
@@ -4679,7 +4547,7 @@
 
     invoke-direct {v14, v2}, Landroid/view/animation/AnimationSet;-><init>(Z)V
 
-    .line 3416
+    .line 3413
     .local v14, set:Landroid/view/animation/AnimationSet;
     new-instance v10, Landroid/view/animation/AlphaAnimation;
 
@@ -4689,13 +4557,13 @@
 
     invoke-direct {v10, v2, v4}, Landroid/view/animation/AlphaAnimation;-><init>(FF)V
 
-    .line 3417
+    .line 3414
     .local v10, alpha:Landroid/view/animation/Animation;
     int-to-long v6, v12
 
     invoke-virtual {v1, v6, v7}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 3418
+    .line 3415
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
@@ -4708,15 +4576,15 @@
 
     invoke-virtual {v1, v2}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 3420
+    .line 3417
     invoke-virtual {v14, v1}, Landroid/view/animation/AnimationSet;->addAnimation(Landroid/view/animation/Animation;)V
 
-    .line 3421
+    .line 3418
     int-to-long v6, v12
 
     invoke-virtual {v10, v6, v7}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 3422
+    .line 3419
     new-instance v2, Lcom/android/server/wm/WindowManagerService$5;
 
     move-object/from16 v0, p0
@@ -4725,18 +4593,18 @@
 
     invoke-virtual {v10, v2}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 3433
+    .line 3430
     invoke-virtual {v14, v10}, Landroid/view/animation/AnimationSet;->addAnimation(Landroid/view/animation/Animation;)V
 
-    .line 3434
+    .line 3431
     const/4 v2, 0x1
 
     invoke-virtual {v14, v2}, Landroid/view/animation/AnimationSet;->setFillBefore(Z)V
 
-    .line 3435
+    .line 3432
     move-object v9, v14
 
-    .line 3508
+    .line 3505
     .end local v1           #scale:Landroid/view/animation/Animation;
     .end local v3           #scaleW:F
     .end local v5           #scaleH:F
@@ -4748,7 +4616,7 @@
 
     invoke-virtual {v9, v2}, Landroid/view/animation/Animation;->setFillAfter(Z)V
 
-    .line 3509
+    .line 3506
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
@@ -4759,11 +4627,11 @@
 
     move-result-object v13
 
-    .line 3511
+    .line 3508
     .local v13, interpolator:Landroid/view/animation/Interpolator;
     invoke-virtual {v9, v13}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 3512
+    .line 3509
     iget v2, v11, Landroid/view/DisplayInfo;->appWidth:I
 
     iget v4, v11, Landroid/view/DisplayInfo;->appHeight:I
@@ -4774,10 +4642,10 @@
 
     invoke-virtual {v9, v2, v4, v6, v7}, Landroid/view/animation/Animation;->initialize(IIII)V
 
-    .line 3514
+    .line 3511
     return-object v9
 
-    .line 3386
+    .line 3383
     .end local v9           #a:Landroid/view/animation/Animation;
     .end local v11           #displayInfo:Landroid/view/DisplayInfo;
     .end local v12           #duration:I
@@ -4790,7 +4658,7 @@
 
     goto/16 :goto_0
 
-    .line 3388
+    .line 3385
     .restart local v16       #thumbHeightI:I
     .restart local v17       #thumbWidth:F
     :cond_1
@@ -4798,7 +4666,7 @@
 
     goto/16 :goto_1
 
-    .line 3396
+    .line 3393
     .restart local v15       #thumbHeight:F
     :sswitch_0
     move-object/from16 v0, p0
@@ -4815,11 +4683,11 @@
 
     move-result v12
 
-    .line 3398
+    .line 3395
     .restart local v12       #duration:I
     goto/16 :goto_2
 
-    .line 3437
+    .line 3434
     .restart local v11       #displayInfo:Landroid/view/DisplayInfo;
     :cond_2
     iget v2, v11, Landroid/view/DisplayInfo;->appWidth:I
@@ -4828,7 +4696,7 @@
 
     div-float v3, v2, v17
 
-    .line 3438
+    .line 3435
     .restart local v3       #scaleW:F
     iget v2, v11, Landroid/view/DisplayInfo;->appHeight:I
 
@@ -4836,7 +4704,7 @@
 
     div-float v5, v2, v15
 
-    .line 3440
+    .line 3437
     .restart local v5       #scaleH:F
     new-instance v1, Landroid/view/animation/ScaleAnimation;
 
@@ -4872,7 +4740,7 @@
 
     invoke-direct/range {v2 .. v8}, Landroid/view/animation/ScaleAnimation;-><init>(FFFFFF)V
 
-    .line 3443
+    .line 3440
     .restart local v1       #scale:Landroid/view/animation/Animation;
     new-instance v14, Landroid/view/animation/AnimationSet;
 
@@ -4880,7 +4748,7 @@
 
     invoke-direct {v14, v2}, Landroid/view/animation/AnimationSet;-><init>(Z)V
 
-    .line 3444
+    .line 3441
     .restart local v14       #set:Landroid/view/animation/AnimationSet;
     new-instance v10, Landroid/view/animation/AlphaAnimation;
 
@@ -4890,13 +4758,13 @@
 
     invoke-direct {v10, v2, v4}, Landroid/view/animation/AlphaAnimation;-><init>(FF)V
 
-    .line 3445
+    .line 3442
     .restart local v10       #alpha:Landroid/view/animation/Animation;
     int-to-long v6, v12
 
     invoke-virtual {v1, v6, v7}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 3446
+    .line 3443
     new-instance v2, Landroid/view/animation/DecelerateInterpolator;
 
     const/high16 v4, 0x3fc0
@@ -4905,30 +4773,30 @@
 
     invoke-virtual {v1, v2}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 3448
+    .line 3445
     invoke-virtual {v14, v1}, Landroid/view/animation/AnimationSet;->addAnimation(Landroid/view/animation/Animation;)V
 
-    .line 3449
+    .line 3446
     int-to-long v6, v12
 
     invoke-virtual {v10, v6, v7}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 3450
+    .line 3447
     invoke-virtual {v14, v10}, Landroid/view/animation/AnimationSet;->addAnimation(Landroid/view/animation/Animation;)V
 
-    .line 3451
+    .line 3448
     const/4 v2, 0x1
 
     invoke-virtual {v14, v2}, Landroid/view/animation/AnimationSet;->setFillBefore(Z)V
 
-    .line 3453
+    .line 3450
     move-object v9, v14
 
-    .line 3454
+    .line 3451
     .restart local v9       #a:Landroid/view/animation/Animation;
     goto/16 :goto_3
 
-    .line 3455
+    .line 3452
     .end local v1           #scale:Landroid/view/animation/Animation;
     .end local v3           #scaleW:F
     .end local v5           #scaleH:F
@@ -4938,17 +4806,17 @@
     :cond_3
     if-eqz p2, :cond_5
 
-    .line 3457
+    .line 3454
     if-eqz p4, :cond_4
 
-    .line 3458
+    .line 3455
     iget v2, v11, Landroid/view/DisplayInfo;->appWidth:I
 
     int-to-float v2, v2
 
     div-float v3, v17, v2
 
-    .line 3459
+    .line 3456
     .restart local v3       #scaleW:F
     iget v2, v11, Landroid/view/DisplayInfo;->appHeight:I
 
@@ -4956,7 +4824,7 @@
 
     div-float v5, v15, v2
 
-    .line 3460
+    .line 3457
     .restart local v5       #scaleH:F
     new-instance v1, Landroid/view/animation/ScaleAnimation;
 
@@ -4984,13 +4852,13 @@
 
     invoke-direct/range {v2 .. v8}, Landroid/view/animation/ScaleAnimation;-><init>(FFFFFF)V
 
-    .line 3463
+    .line 3460
     .restart local v1       #scale:Landroid/view/animation/Animation;
     int-to-long v6, v12
 
     invoke-virtual {v1, v6, v7}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 3464
+    .line 3461
     new-instance v2, Landroid/view/animation/DecelerateInterpolator;
 
     const/high16 v4, 0x3fc0
@@ -4999,19 +4867,19 @@
 
     invoke-virtual {v1, v2}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 3466
+    .line 3463
     const/4 v2, 0x1
 
     invoke-virtual {v1, v2}, Landroid/view/animation/Animation;->setFillBefore(Z)V
 
-    .line 3467
+    .line 3464
     move-object v9, v1
 
-    .line 3468
+    .line 3465
     .restart local v9       #a:Landroid/view/animation/Animation;
     goto/16 :goto_3
 
-    .line 3470
+    .line 3467
     .end local v1           #scale:Landroid/view/animation/Animation;
     .end local v3           #scaleW:F
     .end local v5           #scaleH:F
@@ -5025,7 +4893,7 @@
 
     invoke-direct {v9, v2, v4}, Landroid/view/animation/AlphaAnimation;-><init>(FF)V
 
-    .line 3471
+    .line 3468
     .restart local v9       #a:Landroid/view/animation/Animation;
     int-to-long v6, v12
 
@@ -5033,19 +4901,19 @@
 
     goto/16 :goto_3
 
-    .line 3475
+    .line 3472
     .end local v9           #a:Landroid/view/animation/Animation;
     :cond_5
     if-eqz p4, :cond_7
 
-    .line 3476
+    .line 3473
     const/16 v2, 0x100e
 
     move/from16 v0, p1
 
     if-ne v0, v2, :cond_6
 
-    .line 3480
+    .line 3477
     new-instance v9, Landroid/view/animation/AlphaAnimation;
 
     const/high16 v2, 0x3f80
@@ -5054,7 +4922,7 @@
 
     invoke-direct {v9, v2, v4}, Landroid/view/animation/AlphaAnimation;-><init>(FF)V
 
-    .line 3485
+    .line 3482
     .restart local v9       #a:Landroid/view/animation/Animation;
     :goto_4
     int-to-long v6, v12
@@ -5063,7 +4931,7 @@
 
     goto/16 :goto_3
 
-    .line 3483
+    .line 3480
     .end local v9           #a:Landroid/view/animation/Animation;
     :cond_6
     new-instance v9, Landroid/view/animation/AlphaAnimation;
@@ -5077,7 +4945,7 @@
     .restart local v9       #a:Landroid/view/animation/Animation;
     goto :goto_4
 
-    .line 3487
+    .line 3484
     .end local v9           #a:Landroid/view/animation/Animation;
     :cond_7
     iget v2, v11, Landroid/view/DisplayInfo;->appWidth:I
@@ -5086,7 +4954,7 @@
 
     div-float v3, v17, v2
 
-    .line 3488
+    .line 3485
     .restart local v3       #scaleW:F
     iget v2, v11, Landroid/view/DisplayInfo;->appHeight:I
 
@@ -5094,7 +4962,7 @@
 
     div-float v5, v15, v2
 
-    .line 3489
+    .line 3486
     .restart local v5       #scaleH:F
     new-instance v1, Landroid/view/animation/ScaleAnimation;
 
@@ -5120,13 +4988,13 @@
 
     invoke-direct/range {v1 .. v7}, Landroid/view/animation/ScaleAnimation;-><init>(FFFFFF)V
 
-    .line 3492
+    .line 3489
     .restart local v1       #scale:Landroid/view/animation/Animation;
     int-to-long v6, v12
 
     invoke-virtual {v1, v6, v7}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 3493
+    .line 3490
     new-instance v2, Landroid/view/animation/DecelerateInterpolator;
 
     const/high16 v4, 0x3fc0
@@ -5135,19 +5003,19 @@
 
     invoke-virtual {v1, v2}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 3495
+    .line 3492
     const/4 v2, 0x1
 
     invoke-virtual {v1, v2}, Landroid/view/animation/Animation;->setFillBefore(Z)V
 
-    .line 3496
+    .line 3493
     new-instance v14, Landroid/view/animation/AnimationSet;
 
     const/4 v2, 0x1
 
     invoke-direct {v14, v2}, Landroid/view/animation/AnimationSet;-><init>(Z)V
 
-    .line 3497
+    .line 3494
     .restart local v14       #set:Landroid/view/animation/AnimationSet;
     new-instance v10, Landroid/view/animation/AlphaAnimation;
 
@@ -5157,16 +5025,16 @@
 
     invoke-direct {v10, v2, v4}, Landroid/view/animation/AlphaAnimation;-><init>(FF)V
 
-    .line 3498
+    .line 3495
     .restart local v10       #alpha:Landroid/view/animation/Animation;
     invoke-virtual {v14, v1}, Landroid/view/animation/AnimationSet;->addAnimation(Landroid/view/animation/Animation;)V
 
-    .line 3499
+    .line 3496
     int-to-long v6, v12
 
     invoke-virtual {v10, v6, v7}, Landroid/view/animation/Animation;->setDuration(J)V
 
-    .line 3500
+    .line 3497
     new-instance v2, Landroid/view/animation/DecelerateInterpolator;
 
     const/high16 v4, 0x3fc0
@@ -5175,26 +5043,26 @@
 
     invoke-virtual {v10, v2}, Landroid/view/animation/Animation;->setInterpolator(Landroid/view/animation/Interpolator;)V
 
-    .line 3502
+    .line 3499
     invoke-virtual {v14, v10}, Landroid/view/animation/AnimationSet;->addAnimation(Landroid/view/animation/Animation;)V
 
-    .line 3503
+    .line 3500
     const/4 v2, 0x1
 
     invoke-virtual {v14, v2}, Landroid/view/animation/AnimationSet;->setFillBefore(Z)V
 
-    .line 3504
+    .line 3501
     const/4 v2, 0x1
 
     invoke-virtual {v14, v2}, Landroid/view/animation/AnimationSet;->setZAdjustment(I)V
 
-    .line 3505
+    .line 3502
     move-object v9, v14
 
     .restart local v9       #a:Landroid/view/animation/Animation;
     goto/16 :goto_3
 
-    .line 3393
+    .line 3390
     nop
 
     :sswitch_data_0
@@ -5209,40 +5077,40 @@
     .parameter "displayId"
 
     .prologue
-    .line 7343
+    .line 7311
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v4
 
-    .line 7344
+    .line 7312
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 7345
+    .line 7313
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     if-eqz v0, :cond_1
 
-    .line 7346
+    .line 7314
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
     invoke-virtual {v3, p1}, Lcom/android/server/wm/WindowAnimator;->addDisplayLocked(I)V
 
-    .line 7347
+    .line 7315
     iget-object v5, v0, Lcom/android/server/wm/DisplayContent;->mDisplaySizeLock:Ljava/lang/Object;
 
     monitor-enter v5
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_1
 
-    .line 7349
+    .line 7317
     :try_start_1
     invoke-virtual {v0}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
 
     move-result-object v1
 
-    .line 7350
+    .line 7318
     .local v1, displayInfo:Landroid/view/DisplayInfo;
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayManagerService:Lcom/android/server/display/DisplayManagerService;
 
@@ -5250,50 +5118,50 @@
 
     move-result-object v2
 
-    .line 7351
+    .line 7319
     .local v2, newDisplayInfo:Landroid/view/DisplayInfo;
     if-eqz v2, :cond_0
 
-    .line 7352
+    .line 7320
     invoke-virtual {v1, v2}, Landroid/view/DisplayInfo;->copyFrom(Landroid/view/DisplayInfo;)V
 
-    .line 7354
+    .line 7322
     :cond_0
     iget v3, v1, Landroid/view/DisplayInfo;->logicalWidth:I
 
     iput v3, v0, Lcom/android/server/wm/DisplayContent;->mInitialDisplayWidth:I
 
-    .line 7355
+    .line 7323
     iget v3, v1, Landroid/view/DisplayInfo;->logicalHeight:I
 
     iput v3, v0, Lcom/android/server/wm/DisplayContent;->mInitialDisplayHeight:I
 
-    .line 7356
+    .line 7324
     iget v3, v1, Landroid/view/DisplayInfo;->logicalDensityDpi:I
 
     iput v3, v0, Lcom/android/server/wm/DisplayContent;->mInitialDisplayDensity:I
 
-    .line 7357
+    .line 7325
     iget v3, v0, Lcom/android/server/wm/DisplayContent;->mInitialDisplayWidth:I
 
     iput v3, v0, Lcom/android/server/wm/DisplayContent;->mBaseDisplayWidth:I
 
-    .line 7358
+    .line 7326
     iget v3, v0, Lcom/android/server/wm/DisplayContent;->mInitialDisplayHeight:I
 
     iput v3, v0, Lcom/android/server/wm/DisplayContent;->mBaseDisplayHeight:I
 
-    .line 7359
+    .line 7327
     iget v3, v0, Lcom/android/server/wm/DisplayContent;->mInitialDisplayDensity:I
 
     iput v3, v0, Lcom/android/server/wm/DisplayContent;->mBaseDisplayDensity:I
 
-    .line 7360
+    .line 7328
     monitor-exit v5
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 7362
+    .line 7330
     .end local v1           #displayInfo:Landroid/view/DisplayInfo;
     .end local v2           #newDisplayInfo:Landroid/view/DisplayInfo;
     :cond_1
@@ -5302,10 +5170,10 @@
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_1
 
-    .line 7363
+    .line 7331
     return-void
 
-    .line 7360
+    .line 7328
     :catchall_0
     move-exception v3
 
@@ -5317,7 +5185,7 @@
     :try_start_4
     throw v3
 
-    .line 7362
+    .line 7330
     .end local v0           #displayContent:Lcom/android/server/wm/DisplayContent;
     :catchall_1
     move-exception v3
@@ -5336,7 +5204,7 @@
     .prologue
     const/4 v8, 0x0
 
-    .line 10137
+    .line 10083
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v7}, Ljava/util/ArrayList;->size()I
@@ -5345,7 +5213,7 @@
 
     add-int/lit8 v2, v7, -0x1
 
-    .line 10138
+    .line 10084
     .local v2, nextAppIndex:I
     if-ltz v2, :cond_1
 
@@ -5359,14 +5227,14 @@
 
     move-object v1, v7
 
-    .line 10140
+    .line 10086
     .local v1, nextApp:Lcom/android/server/wm/WindowToken;
     :goto_0
     invoke-virtual {p1}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v6
 
-    .line 10141
+    .line 10087
     .local v6, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v6}, Lcom/android/server/wm/WindowList;->size()I
 
@@ -5378,18 +5246,18 @@
     :goto_1
     if-ltz v0, :cond_4
 
-    .line 10142
+    .line 10088
     invoke-virtual {v6, v0}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v5
 
     check-cast v5, Lcom/android/server/wm/WindowState;
 
-    .line 10150
+    .line 10096
     .local v5, win:Lcom/android/server/wm/WindowState;
     iget-object v4, v5, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 10153
+    .line 10099
     .local v4, thisApp:Lcom/android/server/wm/AppWindowToken;
     if-eqz v4, :cond_2
 
@@ -5401,7 +5269,7 @@
 
     if-eqz v7, :cond_2
 
-    .line 10141
+    .line 10087
     :cond_0
     add-int/lit8 v0, v0, -0x1
 
@@ -5415,10 +5283,10 @@
     :cond_1
     move-object v1, v8
 
-    .line 10138
+    .line 10084
     goto :goto_0
 
-    .line 10162
+    .line 10108
     .restart local v0       #i:I
     .restart local v1       #nextApp:Lcom/android/server/wm/WindowToken;
     .restart local v4       #thisApp:Lcom/android/server/wm/AppWindowToken;
@@ -5439,20 +5307,20 @@
 
     if-eq v7, v9, :cond_7
 
-    .line 10164
+    .line 10110
     move v3, v2
 
-    .line 10165
+    .line 10111
     .local v3, origAppIndex:I
     :cond_3
     if-lez v2, :cond_6
 
-    .line 10166
+    .line 10112
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mFocusedApp:Lcom/android/server/wm/AppWindowToken;
 
     if-ne v1, v7, :cond_5
 
-    .line 10195
+    .line 10141
     .end local v3           #origAppIndex:I
     .end local v4           #thisApp:Lcom/android/server/wm/AppWindowToken;
     .end local v5           #win:Lcom/android/server/wm/WindowState;
@@ -5460,14 +5328,14 @@
     :goto_2
     return-object v8
 
-    .line 10173
+    .line 10119
     .restart local v3       #origAppIndex:I
     .restart local v4       #thisApp:Lcom/android/server/wm/AppWindowToken;
     .restart local v5       #win:Lcom/android/server/wm/WindowState;
     :cond_5
     add-int/lit8 v2, v2, -0x1
 
-    .line 10174
+    .line 10120
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v7, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -5477,18 +5345,18 @@
     .end local v1           #nextApp:Lcom/android/server/wm/WindowToken;
     check-cast v1, Lcom/android/server/wm/WindowToken;
 
-    .line 10175
+    .line 10121
     .restart local v1       #nextApp:Lcom/android/server/wm/WindowToken;
     if-ne v1, v4, :cond_3
 
-    .line 10179
+    .line 10125
     :cond_6
     if-eq v4, v1, :cond_7
 
-    .line 10183
+    .line 10129
     move v2, v3
 
-    .line 10184
+    .line 10130
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v7, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -5498,7 +5366,7 @@
     .end local v1           #nextApp:Lcom/android/server/wm/WindowToken;
     check-cast v1, Lcom/android/server/wm/WindowToken;
 
-    .line 10189
+    .line 10135
     .end local v3           #origAppIndex:I
     .restart local v1       #nextApp:Lcom/android/server/wm/WindowToken;
     :cond_7
@@ -5510,7 +5378,7 @@
 
     move-object v8, v5
 
-    .line 10192
+    .line 10138
     goto :goto_2
 .end method
 
@@ -5519,12 +5387,12 @@
     .parameter "win"
 
     .prologue
-    .line 923
+    .line 920
     invoke-virtual {p1}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v2
 
-    .line 924
+    .line 921
     .local v2, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v2}, Lcom/android/server/wm/WindowList;->size()I
 
@@ -5536,14 +5404,14 @@
     :goto_0
     if-ltz v0, :cond_1
 
-    .line 925
+    .line 922
     invoke-virtual {v2, v0}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v1
 
     check-cast v1, Lcom/android/server/wm/WindowState;
 
-    .line 926
+    .line 923
     .local v1, wentry:Lcom/android/server/wm/WindowState;
     iget-object v3, v1, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
@@ -5551,13 +5419,13 @@
 
     if-ne v3, v4, :cond_0
 
-    .line 930
+    .line 927
     .end local v0           #j:I
     .end local v1           #wentry:Lcom/android/server/wm/WindowState;
     :goto_1
     return v0
 
-    .line 924
+    .line 921
     .restart local v0       #j:I
     .restart local v1       #wentry:Lcom/android/server/wm/WindowState;
     :cond_0
@@ -5565,7 +5433,7 @@
 
     goto :goto_0
 
-    .line 930
+    .line 927
     .end local v1           #wentry:Lcom/android/server/wm/WindowState;
     :cond_1
     const/4 v0, -0x1
@@ -5662,12 +5530,12 @@
     .parameter "tokenPos"
 
     .prologue
-    .line 4927
+    .line 4924
     invoke-virtual {p1}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v0
 
-    .line 4929
+    .line 4926
     .local v0, NW:I
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
@@ -5677,25 +5545,25 @@
 
     if-lt p2, v7, :cond_1
 
-    .line 4930
+    .line 4927
     move v2, v0
 
-    .line 4931
+    .line 4928
     .local v2, i:I
     :cond_0
     if-lez v2, :cond_1
 
-    .line 4932
+    .line 4929
     add-int/lit8 v2, v2, -0x1
 
-    .line 4933
+    .line 4930
     invoke-virtual {p1, v2}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v5
 
     check-cast v5, Lcom/android/server/wm/WindowState;
 
-    .line 4934
+    .line 4931
     .local v5, win:Lcom/android/server/wm/WindowState;
     invoke-virtual {v5}, Lcom/android/server/wm/WindowState;->getAppToken()Landroid/view/IApplicationToken;
 
@@ -5703,21 +5571,21 @@
 
     if-eqz v7, :cond_0
 
-    .line 4935
+    .line 4932
     add-int/lit8 v7, v2, 0x1
 
-    .line 4980
+    .line 4977
     .end local v2           #i:I
     .end local v5           #win:Lcom/android/server/wm/WindowState;
     :goto_0
     return v7
 
-    .line 4940
+    .line 4937
     :cond_1
     :goto_1
     if-lez p2, :cond_9
 
-    .line 4943
+    .line 4940
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     add-int/lit8 v8, p2, -0x1
@@ -5728,19 +5596,19 @@
 
     check-cast v6, Lcom/android/server/wm/AppWindowToken;
 
-    .line 4946
+    .line 4943
     .local v6, wtoken:Lcom/android/server/wm/AppWindowToken;
     iget-boolean v7, v6, Lcom/android/server/wm/AppWindowToken;->sendingToBottom:Z
 
     if-eqz v7, :cond_2
 
-    .line 4949
+    .line 4946
     add-int/lit8 p2, p2, -0x1
 
-    .line 4950
+    .line 4947
     goto :goto_1
 
-    .line 4952
+    .line 4949
     :cond_2
     iget-object v7, v6, Lcom/android/server/wm/AppWindowToken;->windows:Lcom/android/server/wm/WindowList;
 
@@ -5748,15 +5616,15 @@
 
     move-result v2
 
-    .line 4953
+    .line 4950
     .restart local v2       #i:I
     :cond_3
     if-lez v2, :cond_8
 
-    .line 4954
+    .line 4951
     add-int/lit8 v2, v2, -0x1
 
-    .line 4955
+    .line 4952
     iget-object v7, v6, Lcom/android/server/wm/AppWindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v7, v2}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -5765,7 +5633,7 @@
 
     check-cast v5, Lcom/android/server/wm/WindowState;
 
-    .line 4956
+    .line 4953
     .restart local v5       #win:Lcom/android/server/wm/WindowState;
     iget-object v7, v5, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
@@ -5773,15 +5641,15 @@
 
     move-result v3
 
-    .line 4957
+    .line 4954
     .local v3, j:I
     :cond_4
     if-lez v3, :cond_6
 
-    .line 4958
+    .line 4955
     add-int/lit8 v3, v3, -0x1
 
-    .line 4959
+    .line 4956
     iget-object v7, v5, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v7, v3}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -5790,38 +5658,38 @@
 
     check-cast v1, Lcom/android/server/wm/WindowState;
 
-    .line 4960
+    .line 4957
     .local v1, cwin:Lcom/android/server/wm/WindowState;
     iget v7, v1, Lcom/android/server/wm/WindowState;->mSubLayer:I
 
     if-ltz v7, :cond_4
 
-    .line 4961
+    .line 4958
     add-int/lit8 v4, v0, -0x1
 
     .local v4, pos:I
     :goto_2
     if-ltz v4, :cond_4
 
-    .line 4962
+    .line 4959
     invoke-virtual {p1, v4}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v7
 
     if-ne v7, v1, :cond_5
 
-    .line 4965
+    .line 4962
     add-int/lit8 v7, v4, 0x1
 
     goto :goto_0
 
-    .line 4961
+    .line 4958
     :cond_5
     add-int/lit8 v4, v4, -0x1
 
     goto :goto_2
 
-    .line 4970
+    .line 4967
     .end local v1           #cwin:Lcom/android/server/wm/WindowState;
     .end local v4           #pos:I
     :cond_6
@@ -5831,35 +5699,35 @@
     :goto_3
     if-ltz v4, :cond_3
 
-    .line 4971
+    .line 4968
     invoke-virtual {p1, v4}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v7
 
     if-ne v7, v5, :cond_7
 
-    .line 4973
+    .line 4970
     add-int/lit8 v7, v4, 0x1
 
     goto :goto_0
 
-    .line 4970
+    .line 4967
     :cond_7
     add-int/lit8 v4, v4, -0x1
 
     goto :goto_3
 
-    .line 4977
+    .line 4974
     .end local v3           #j:I
     .end local v4           #pos:I
     .end local v5           #win:Lcom/android/server/wm/WindowState;
     :cond_8
     add-int/lit8 p2, p2, -0x1
 
-    .line 4978
+    .line 4975
     goto :goto_1
 
-    .line 4980
+    .line 4977
     .end local v2           #i:I
     .end local v6           #wtoken:Lcom/android/server/wm/AppWindowToken;
     :cond_9
@@ -5873,14 +5741,14 @@
     .parameter "updateInputWindows"
 
     .prologue
-    .line 10116
+    .line 10062
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mCurrentFocus:Lcom/android/server/wm/WindowState;
 
     invoke-virtual {v0, v1, p1}, Lcom/android/server/wm/InputMonitor;->setInputFocusLw(Lcom/android/server/wm/WindowState;Z)V
 
-    .line 10117
+    .line 10063
     return-void
 .end method
 
@@ -5889,7 +5757,7 @@
     .parameter "scale"
 
     .prologue
-    .line 5383
+    .line 5380
     const/4 v0, 0x0
 
     cmpg-float v0, p0, v0
@@ -5898,7 +5766,7 @@
 
     const/4 p0, 0x0
 
-    .line 5385
+    .line 5382
     :cond_0
     :goto_0
     invoke-static {p0}, Ljava/lang/Math;->abs(F)F
@@ -5907,7 +5775,7 @@
 
     return v0
 
-    .line 5384
+    .line 5381
     :cond_1
     const/high16 v0, 0x41a0
 
@@ -5926,26 +5794,26 @@
     .parameter "lp"
 
     .prologue
-    .line 3236
+    .line 3233
     if-eqz p2, :cond_2
 
     iget v2, p2, Landroid/view/WindowManager$LayoutParams;->windowAnimations:I
 
     if-eqz v2, :cond_2
 
-    .line 3240
+    .line 3237
     iget-object v2, p2, Landroid/view/WindowManager$LayoutParams;->packageName:Ljava/lang/String;
 
     if-eqz v2, :cond_1
 
     iget-object v0, p2, Landroid/view/WindowManager$LayoutParams;->packageName:Ljava/lang/String;
 
-    .line 3241
+    .line 3238
     .local v0, packageName:Ljava/lang/String;
     :goto_0
     iget v1, p2, Landroid/view/WindowManager$LayoutParams;->windowAnimations:I
 
-    .line 3242
+    .line 3239
     .local v1, resId:I
     const/high16 v2, -0x100
 
@@ -5955,10 +5823,10 @@
 
     if-ne v2, v3, :cond_0
 
-    .line 3243
+    .line 3240
     const-string v0, "android"
 
-    .line 3247
+    .line 3244
     :cond_0
     invoke-static {}, Lcom/android/server/AttributeCache;->instance()Lcom/android/server/AttributeCache;
 
@@ -5970,19 +5838,19 @@
 
     move-result-object v2
 
-    .line 3250
+    .line 3247
     .end local v0           #packageName:Ljava/lang/String;
     .end local v1           #resId:I
     :goto_1
     return-object v2
 
-    .line 3240
+    .line 3237
     :cond_1
     const-string v0, "android"
 
     goto :goto_0
 
-    .line 3250
+    .line 3247
     :cond_2
     const/4 v2, 0x0
 
@@ -5996,10 +5864,10 @@
     .parameter "resId"
 
     .prologue
-    .line 3256
+    .line 3253
     if-eqz p2, :cond_1
 
-    .line 3257
+    .line 3254
     const/high16 v0, -0x100
 
     and-int/2addr v0, p3
@@ -6008,10 +5876,10 @@
 
     if-ne v0, v1, :cond_0
 
-    .line 3258
+    .line 3255
     const-string p2, "android"
 
-    .line 3262
+    .line 3259
     :cond_0
     invoke-static {}, Lcom/android/server/AttributeCache;->instance()Lcom/android/server/AttributeCache;
 
@@ -6023,7 +5891,7 @@
 
     move-result-object v0
 
-    .line 3265
+    .line 3262
     :goto_0
     return-object v0
 
@@ -6037,12 +5905,12 @@
     .locals 2
 
     .prologue
-    .line 7269
+    .line 7237
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 7270
+    .line 7238
     :try_start_0
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->getFocusedWindowLocked()Lcom/android/server/wm/WindowState;
 
@@ -6052,7 +5920,7 @@
 
     return-object v0
 
-    .line 7271
+    .line 7239
     :catchall_0
     move-exception v0
 
@@ -6067,7 +5935,7 @@
     .locals 1
 
     .prologue
-    .line 7275
+    .line 7243
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mCurrentFocus:Lcom/android/server/wm/WindowState;
 
     return-object v0
@@ -6082,15 +5950,15 @@
     .parameter "dm"
 
     .prologue
-    .line 10339
+    .line 10285
     array-length v2, p0
 
     if-ge p1, v2, :cond_0
 
-    .line 10340
+    .line 10286
     aget-object v0, p0, p1
 
-    .line 10341
+    .line 10287
     .local v0, str:Ljava/lang/String;
     if-eqz v0, :cond_0
 
@@ -6100,7 +5968,7 @@
 
     if-lez v2, :cond_0
 
-    .line 10343
+    .line 10289
     :try_start_0
     invoke-static {v0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
     :try_end_0
@@ -6108,27 +5976,27 @@
 
     move-result v1
 
-    .line 10353
+    .line 10299
     .end local v0           #str:Ljava/lang/String;
     :goto_0
     return v1
 
-    .line 10345
+    .line 10291
     .restart local v0       #str:Ljava/lang/String;
     :catch_0
     move-exception v2
 
-    .line 10349
+    .line 10295
     .end local v0           #str:Ljava/lang/String;
     :cond_0
     if-nez p2, :cond_1
 
     move v1, p3
 
-    .line 10350
+    .line 10296
     goto :goto_0
 
-    .line 10352
+    .line 10298
     :cond_1
     int-to-float v2, p3
 
@@ -6138,7 +6006,7 @@
 
     float-to-int v1, v2
 
-    .line 10353
+    .line 10299
     .local v1, val:I
     goto :goto_0
 .end method
@@ -6147,12 +6015,12 @@
     .locals 1
 
     .prologue
-    .line 875
+    .line 872
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mUiContext:Landroid/content/Context;
 
     if-nez v0, :cond_0
 
-    .line 876
+    .line 873
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     invoke-static {v0}, Lcom/android/internal/app/ThemeUtils;->createUiContext(Landroid/content/Context;)Landroid/content/Context;
@@ -6161,7 +6029,7 @@
 
     iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mUiContext:Landroid/content/Context;
 
-    .line 878
+    .line 875
     :cond_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mUiContext:Landroid/content/Context;
 
@@ -6183,12 +6051,12 @@
     .parameter "window"
 
     .prologue
-    .line 3219
+    .line 3216
     invoke-static {}, Landroid/view/WindowInfo;->obtain()Landroid/view/WindowInfo;
 
     move-result-object v0
 
-    .line 3220
+    .line 3217
     .local v0, info:Landroid/view/WindowInfo;
     iget-object v1, p1, Lcom/android/server/wm/WindowState;->mToken:Lcom/android/server/wm/WindowToken;
 
@@ -6196,33 +6064,33 @@
 
     iput-object v1, v0, Landroid/view/WindowInfo;->token:Landroid/os/IBinder;
 
-    .line 3221
+    .line 3218
     iget-object v1, v0, Landroid/view/WindowInfo;->frame:Landroid/graphics/Rect;
 
     iget-object v2, p1, Lcom/android/server/wm/WindowState;->mFrame:Landroid/graphics/Rect;
 
     invoke-virtual {v1, v2}, Landroid/graphics/Rect;->set(Landroid/graphics/Rect;)V
 
-    .line 3222
+    .line 3219
     iget-object v1, p1, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
     iget v1, v1, Landroid/view/WindowManager$LayoutParams;->type:I
 
     iput v1, v0, Landroid/view/WindowInfo;->type:I
 
-    .line 3223
+    .line 3220
     invoke-virtual {p1}, Lcom/android/server/wm/WindowState;->getDisplayId()I
 
     move-result v1
 
     iput v1, v0, Landroid/view/WindowInfo;->displayId:I
 
-    .line 3224
+    .line 3221
     iget v1, p1, Lcom/android/server/wm/WindowState;->mGlobalScale:F
 
     iput v1, v0, Landroid/view/WindowInfo;->compatibilityScale:F
 
-    .line 3225
+    .line 3222
     invoke-virtual {p1}, Lcom/android/server/wm/WindowState;->isVisibleLw()Z
 
     move-result v1
@@ -6241,27 +6109,27 @@
     :goto_0
     iput-boolean v1, v0, Landroid/view/WindowInfo;->visible:Z
 
-    .line 3226
+    .line 3223
     iget v1, p1, Lcom/android/server/wm/WindowState;->mLayer:I
 
     iput v1, v0, Landroid/view/WindowInfo;->layer:I
 
-    .line 3227
+    .line 3224
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mTempRegion:Landroid/graphics/Region;
 
     invoke-virtual {p1, v1}, Lcom/android/server/wm/WindowState;->getTouchableRegion(Landroid/graphics/Region;)V
 
-    .line 3228
+    .line 3225
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mTempRegion:Landroid/graphics/Region;
 
     iget-object v2, v0, Landroid/view/WindowInfo;->touchableRegion:Landroid/graphics/Rect;
 
     invoke-virtual {v1, v2}, Landroid/graphics/Region;->getBounds(Landroid/graphics/Rect;)Z
 
-    .line 3229
+    .line 3226
     return-object v0
 
-    .line 3225
+    .line 3222
     :cond_1
     const/4 v1, 0x0
 
@@ -6276,14 +6144,14 @@
 
     const/4 v4, 0x1
 
-    .line 8908
+    .line 8876
     const/4 v0, 0x0
 
-    .line 8910
+    .line 8878
     .local v0, changes:I
     iput-boolean v3, p0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionRunning:Z
 
-    .line 8912
+    .line 8880
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v2}, Ljava/util/ArrayList;->size()I
@@ -6296,7 +6164,7 @@
     :goto_0
     if-ltz v1, :cond_0
 
-    .line 8913
+    .line 8881
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v2, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -6307,31 +6175,31 @@
 
     iput-boolean v3, v2, Lcom/android/server/wm/AppWindowToken;->sendingToBottom:Z
 
-    .line 8912
+    .line 8880
     add-int/lit8 v1, v1, -0x1
 
     goto :goto_0
 
-    .line 8915
+    .line 8883
     :cond_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v2}, Ljava/util/ArrayList;->clear()V
 
-    .line 8916
+    .line 8884
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v2, v3}, Ljava/util/ArrayList;->addAll(Ljava/util/Collection;)Z
 
-    .line 8917
+    .line 8885
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->rebuildAppWindowListLocked()V
 
-    .line 8919
+    .line 8887
     or-int/lit8 v0, v0, 0x1
 
-    .line 8920
+    .line 8888
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     iget v3, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mAdjResult:I
@@ -6340,18 +6208,18 @@
 
     iput v3, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mAdjResult:I
 
-    .line 8921
+    .line 8889
     invoke-virtual {p0, v4}, Lcom/android/server/wm/WindowManagerService;->moveInputMethodWindowsIfNeededLocked(Z)Z
 
-    .line 8922
+    .line 8890
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     iput-boolean v4, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mWallpaperMayChange:Z
 
-    .line 8926
+    .line 8894
     iput-boolean v4, p0, Lcom/android/server/wm/WindowManagerService;->mFocusMayChange:Z
 
-    .line 8928
+    .line 8896
     return v0
 .end method
 
@@ -6360,24 +6228,24 @@
     .parameter "displayId"
 
     .prologue
-    .line 11290
+    .line 11206
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayManager:Landroid/hardware/display/DisplayManager;
 
     invoke-virtual {v1, p1}, Landroid/hardware/display/DisplayManager;->getDisplay(I)Landroid/view/Display;
 
     move-result-object v0
 
-    .line 11291
+    .line 11207
     .local v0, display:Landroid/view/Display;
     if-eqz v0, :cond_0
 
-    .line 11292
+    .line 11208
     invoke-virtual {p0, v0}, Lcom/android/server/wm/WindowManagerService;->createDisplayContentLocked(Landroid/view/Display;)V
 
-    .line 11293
+    .line 11209
     invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->displayReady(I)V
 
-    .line 11295
+    .line 11211
     :cond_0
     return-void
 .end method
@@ -6387,19 +6255,19 @@
     .parameter "displayId"
 
     .prologue
-    .line 11321
+    .line 11237
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 11322
+    .line 11238
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     if-eqz v0, :cond_0
 
-    .line 11323
+    .line 11239
     invoke-virtual {v0}, Lcom/android/server/wm/DisplayContent;->updateDisplayInfo()V
 
-    .line 11325
+    .line 11241
     :cond_0
     return-void
 .end method
@@ -6409,26 +6277,26 @@
     .parameter "displayId"
 
     .prologue
-    .line 11303
+    .line 11219
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 11304
+    .line 11220
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     if-eqz v0, :cond_0
 
-    .line 11305
+    .line 11221
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayContents:Landroid/util/SparseArray;
 
     invoke-virtual {v3, p1}, Landroid/util/SparseArray;->delete(I)V
 
-    .line 11306
+    .line 11222
     invoke-virtual {v0}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v2
 
-    .line 11307
+    .line 11223
     .local v2, windows:Lcom/android/server/wm/WindowList;
     :goto_0
     invoke-virtual {v2}, Lcom/android/server/wm/WindowList;->isEmpty()Z
@@ -6437,7 +6305,7 @@
 
     if-nez v3, :cond_0
 
-    .line 11308
+    .line 11224
     invoke-virtual {v2}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v3
@@ -6450,7 +6318,7 @@
 
     check-cast v1, Lcom/android/server/wm/WindowState;
 
-    .line 11309
+    .line 11225
     .local v1, win:Lcom/android/server/wm/WindowState;
     iget-object v3, v1, Lcom/android/server/wm/WindowState;->mSession:Lcom/android/server/wm/Session;
 
@@ -6458,7 +6326,7 @@
 
     goto :goto_0
 
-    .line 11312
+    .line 11228
     .end local v1           #win:Lcom/android/server/wm/WindowState;
     .end local v2           #windows:Lcom/android/server/wm/WindowList;
     :cond_0
@@ -6466,7 +6334,7 @@
 
     invoke-virtual {v3, p1}, Lcom/android/server/wm/WindowAnimator;->removeDisplayLocked(I)V
 
-    .line 11313
+    .line 11229
     return-void
 .end method
 
@@ -6478,22 +6346,22 @@
     .parameter "innerDh"
 
     .prologue
-    .line 9034
+    .line 9002
     move-object/from16 v0, p1
 
     iget-object v4, v0, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
-    .line 9035
+    .line 9003
     .local v4, attrs:Landroid/view/WindowManager$LayoutParams;
     iget v3, v4, Landroid/view/WindowManager$LayoutParams;->flags:I
 
-    .line 9036
+    .line 9004
     .local v3, attrFlags:I
     invoke-virtual/range {p1 .. p1}, Lcom/android/server/wm/WindowState;->isDisplayedLw()Z
 
     move-result v5
 
-    .line 9038
+    .line 9006
     .local v5, canBeSeen:Z
     move-object/from16 v0, p1
 
@@ -6501,12 +6369,12 @@
 
     if-eqz v12, :cond_7
 
-    .line 9039
+    .line 9007
     and-int/lit16 v12, v3, 0x80
 
     if-eqz v12, :cond_0
 
-    .line 9040
+    .line 9008
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -6516,16 +6384,16 @@
     iget-object v13, v0, Lcom/android/server/wm/WindowState;->mSession:Lcom/android/server/wm/Session;
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mHoldScreen:Lcom/android/server/wm/Session;
-    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1802(Lcom/android/server/wm/WindowManagerService$LayoutFields;Lcom/android/server/wm/Session;)Lcom/android/server/wm/Session;
+    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1702(Lcom/android/server/wm/WindowManagerService$LayoutFields;Lcom/android/server/wm/Session;)Lcom/android/server/wm/Session;
 
-    .line 9042
+    .line 9010
     :cond_0
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mSyswin:Z
-    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1900(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
+    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1800(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
 
     move-result v12
 
@@ -6548,7 +6416,7 @@
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
-    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2000(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
+    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1900(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
 
     move-result v12
 
@@ -6558,7 +6426,7 @@
 
     if-gez v12, :cond_1
 
-    .line 9044
+    .line 9012
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -6570,16 +6438,16 @@
     iget v13, v13, Landroid/view/WindowManager$LayoutParams;->screenBrightness:F
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
-    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2002(Lcom/android/server/wm/WindowManagerService$LayoutFields;F)F
+    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1902(Lcom/android/server/wm/WindowManagerService$LayoutFields;F)F
 
-    .line 9046
+    .line 9014
     :cond_1
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mSyswin:Z
-    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1900(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
+    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1800(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
 
     move-result v12
 
@@ -6602,7 +6470,7 @@
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
-    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2100(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
+    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2000(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
 
     move-result v12
 
@@ -6612,7 +6480,7 @@
 
     if-gez v12, :cond_2
 
-    .line 9048
+    .line 9016
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -6624,16 +6492,16 @@
     iget v13, v13, Landroid/view/WindowManager$LayoutParams;->buttonBrightness:F
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
-    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2102(Lcom/android/server/wm/WindowManagerService$LayoutFields;F)F
+    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2002(Lcom/android/server/wm/WindowManagerService$LayoutFields;F)F
 
-    .line 9050
+    .line 9018
     :cond_2
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mSyswin:Z
-    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1900(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
+    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1800(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
 
     move-result v12
 
@@ -6656,7 +6524,7 @@
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUserActivityTimeout:J
-    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2200(Lcom/android/server/wm/WindowManagerService$LayoutFields;)J
+    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2100(Lcom/android/server/wm/WindowManagerService$LayoutFields;)J
 
     move-result-wide v12
 
@@ -6666,7 +6534,7 @@
 
     if-gez v12, :cond_3
 
-    .line 9052
+    .line 9020
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -6678,13 +6546,13 @@
     iget-wide v13, v13, Landroid/view/WindowManager$LayoutParams;->userActivityTimeout:J
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUserActivityTimeout:J
-    invoke-static {v12, v13, v14}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2202(Lcom/android/server/wm/WindowManagerService$LayoutFields;J)J
+    invoke-static {v12, v13, v14}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2102(Lcom/android/server/wm/WindowManagerService$LayoutFields;J)J
 
-    .line 9055
+    .line 9023
     :cond_3
     iget v9, v4, Landroid/view/WindowManager$LayoutParams;->type:I
 
-    .line 9056
+    .line 9024
     .local v9, type:I
     if-eqz v5, :cond_5
 
@@ -6704,7 +6572,7 @@
 
     if-ne v9, v12, :cond_5
 
-    .line 9061
+    .line 9029
     :cond_4
     move-object/from16 v0, p0
 
@@ -6713,13 +6581,13 @@
     const/4 v13, 0x1
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mSyswin:Z
-    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1902(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
+    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1802(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
 
-    .line 9064
+    .line 9032
     :cond_5
     if-eqz v5, :cond_7
 
-    .line 9065
+    .line 9033
     const/16 v12, 0x7e7
 
     if-eq v9, v12, :cond_6
@@ -6728,7 +6596,7 @@
 
     if-ne v9, v12, :cond_9
 
-    .line 9066
+    .line 9034
     :cond_6
     move-object/from16 v0, p0
 
@@ -6737,9 +6605,9 @@
     const/4 v13, 0x1
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDisplayHasContent:I
-    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2302(Lcom/android/server/wm/WindowManagerService$LayoutFields;I)I
+    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2202(Lcom/android/server/wm/WindowManagerService$LayoutFields;I)I
 
-    .line 9074
+    .line 9042
     .end local v9           #type:I
     :cond_7
     :goto_0
@@ -6753,7 +6621,7 @@
 
     const/4 v8, 0x1
 
-    .line 9075
+    .line 9043
     .local v8, opaqueDrawn:Z
     :goto_1
     if-eqz v8, :cond_b
@@ -6770,7 +6638,7 @@
 
     if-eqz v12, :cond_b
 
-    .line 9079
+    .line 9047
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -6778,14 +6646,14 @@
     const/4 v13, 0x1
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mObscured:Z
-    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2402(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
+    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2302(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
 
-    .line 9103
+    .line 9071
     :cond_8
     :goto_2
     return-void
 
-    .line 9067
+    .line 9035
     .end local v8           #opaqueDrawn:Z
     .restart local v9       #type:I
     :cond_9
@@ -6794,13 +6662,13 @@
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDisplayHasContent:I
-    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2300(Lcom/android/server/wm/WindowManagerService$LayoutFields;)I
+    invoke-static {v12}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2200(Lcom/android/server/wm/WindowManagerService$LayoutFields;)I
 
     move-result v12
 
     if-nez v12, :cond_7
 
-    .line 9069
+    .line 9037
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -6808,18 +6676,18 @@
     const/4 v13, 0x2
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDisplayHasContent:I
-    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2302(Lcom/android/server/wm/WindowManagerService$LayoutFields;I)I
+    invoke-static {v12, v13}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2202(Lcom/android/server/wm/WindowManagerService$LayoutFields;I)I
 
     goto :goto_0
 
-    .line 9074
+    .line 9042
     .end local v9           #type:I
     :cond_a
     const/4 v8, 0x0
 
     goto :goto_1
 
-    .line 9080
+    .line 9048
     .restart local v8       #opaqueDrawn:Z
     :cond_b
     if-eqz v5, :cond_8
@@ -6849,7 +6717,7 @@
 
     if-nez v12, :cond_8
 
-    .line 9084
+    .line 9052
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -6858,7 +6726,7 @@
 
     if-nez v12, :cond_8
 
-    .line 9086
+    .line 9054
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -6867,12 +6735,12 @@
 
     iput-boolean v13, v12, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDimming:Z
 
-    .line 9087
+    .line 9055
     move-object/from16 v0, p1
 
     iget-object v11, v0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
-    .line 9088
+    .line 9056
     .local v11, winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     move-object/from16 v0, p0
 
@@ -6884,14 +6752,14 @@
 
     if-nez v12, :cond_8
 
-    .line 9090
+    .line 9058
     iget v12, v4, Landroid/view/WindowManager$LayoutParams;->type:I
 
     const/16 v13, 0x7e5
 
     if-ne v12, v13, :cond_d
 
-    .line 9091
+    .line 9059
     move-object/from16 v0, p1
 
     iget-object v12, v0, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
@@ -6900,15 +6768,15 @@
 
     move-result-object v6
 
-    .line 9092
+    .line 9060
     .local v6, displayInfo:Landroid/view/DisplayInfo;
     iget v10, v6, Landroid/view/DisplayInfo;->logicalWidth:I
 
-    .line 9093
+    .line 9061
     .local v10, width:I
     iget v7, v6, Landroid/view/DisplayInfo;->logicalHeight:I
 
-    .line 9098
+    .line 9066
     .end local v6           #displayInfo:Landroid/view/DisplayInfo;
     .local v7, height:I
     :goto_3
@@ -6927,20 +6795,20 @@
 
     goto :goto_2
 
-    .line 9095
+    .line 9063
     .end local v7           #height:I
     .end local v10           #width:I
     :cond_d
     move/from16 v10, p4
 
-    .line 9096
+    .line 9064
     .restart local v10       #width:I
     move/from16 v7, p5
 
     .restart local v7       #height:I
     goto :goto_3
 
-    .line 9098
+    .line 9066
     :cond_e
     move-object/from16 v0, p1
 
@@ -6958,45 +6826,45 @@
     .parameter "immediate"
 
     .prologue
-    .line 2744
+    .line 2741
     const/4 v1, 0x0
 
-    .line 2745
+    .line 2742
     .local v1, callbacks:Landroid/os/RemoteCallbackList;,"Landroid/os/RemoteCallbackList<Landroid/view/IDisplayContentChangeListener;>;"
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v5
 
-    .line 2746
+    .line 2743
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
 
     move-result-object v2
 
-    .line 2747
+    .line 2744
     .local v2, displayContent:Lcom/android/server/wm/DisplayContent;
     if-nez v2, :cond_0
 
-    .line 2748
+    .line 2745
     monitor-exit v5
 
-    .line 2768
+    .line 2765
     :goto_0
     return-void
 
-    .line 2750
+    .line 2747
     :cond_0
     iget-object v1, v2, Lcom/android/server/wm/DisplayContent;->mDisplayContentChangeListeners:Landroid/os/RemoteCallbackList;
 
-    .line 2751
+    .line 2748
     if-nez v1, :cond_1
 
-    .line 2752
+    .line 2749
     monitor-exit v5
 
     goto :goto_0
 
-    .line 2754
+    .line 2751
     .end local v2           #displayContent:Lcom/android/server/wm/DisplayContent;
     :catchall_0
     move-exception v4
@@ -7014,12 +6882,12 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 2755
+    .line 2752
     invoke-virtual {v1}, Landroid/os/RemoteCallbackList;->beginBroadcast()I
 
     move-result v0
 
-    .line 2757
+    .line 2754
     .local v0, callbackCount:I
     const/4 v3, 0x0
 
@@ -7027,7 +6895,7 @@
     :goto_1
     if-ge v3, v0, :cond_2
 
-    .line 2759
+    .line 2756
     :try_start_2
     invoke-virtual {v1, v3}, Landroid/os/RemoteCallbackList;->getBroadcastItem(I)Landroid/os/IInterface;
 
@@ -7040,13 +6908,13 @@
     .catchall {:try_start_2 .. :try_end_2} :catchall_1
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_0
 
-    .line 2757
+    .line 2754
     :goto_2
     add-int/lit8 v3, v3, 0x1
 
     goto :goto_1
 
-    .line 2766
+    .line 2763
     :cond_2
     invoke-virtual {v1}, Landroid/os/RemoteCallbackList;->finishBroadcast()V
 
@@ -7059,7 +6927,7 @@
 
     throw v4
 
-    .line 2761
+    .line 2758
     :catch_0
     move-exception v4
 
@@ -7423,7 +7291,7 @@
     .parameter "windows"
 
     .prologue
-    .line 958
+    .line 955
     invoke-virtual {p2}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v2
@@ -7434,25 +7302,25 @@
     :goto_0
     if-ltz v0, :cond_3
 
-    .line 959
+    .line 956
     invoke-virtual {p2, v0}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v1
 
     check-cast v1, Lcom/android/server/wm/WindowState;
 
-    .line 960
+    .line 957
     .local v1, w:Lcom/android/server/wm/WindowState;
     if-ne v1, p1, :cond_1
 
-    .line 969
+    .line 966
     .end local v0           #i:I
     .end local v1           #w:Lcom/android/server/wm/WindowState;
     :cond_0
     :goto_1
     return v0
 
-    .line 963
+    .line 960
     .restart local v0       #i:I
     .restart local v1       #w:Lcom/android/server/wm/WindowState;
     :cond_1
@@ -7464,7 +7332,7 @@
 
     if-nez v2, :cond_2
 
-    .line 964
+    .line 961
     iget-object v2, v1, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
     invoke-direct {p0, p1, v2}, Lcom/android/server/wm/WindowManagerService;->indexOfWinInWindowList(Lcom/android/server/wm/WindowState;Lcom/android/server/wm/WindowList;)I
@@ -7473,13 +7341,13 @@
 
     if-gez v2, :cond_0
 
-    .line 958
+    .line 955
     :cond_2
     add-int/lit8 v0, v0, -0x1
 
     goto :goto_0
 
-    .line 969
+    .line 966
     .end local v1           #w:Lcom/android/server/wm/WindowState;
     :cond_3
     const/4 v0, -0x1
@@ -7492,7 +7360,7 @@
     .parameter "uiHandler"
 
     .prologue
-    .line 789
+    .line 788
     new-instance v0, Lcom/android/server/wm/WindowManagerService$4;
 
     invoke-direct {v0, p0}, Lcom/android/server/wm/WindowManagerService$4;-><init>(Lcom/android/server/wm/WindowManagerService;)V
@@ -7501,7 +7369,7 @@
 
     invoke-virtual {p1, v0, v1, v2}, Landroid/os/Handler;->runWithScissors(Ljava/lang/Runnable;J)Z
 
-    .line 800
+    .line 799
     return-void
 .end method
 
@@ -7560,43 +7428,43 @@
     .parameter "resId"
 
     .prologue
-    .line 3285
+    .line 3282
     const/4 v0, 0x0
 
-    .line 3286
+    .line 3283
     .local v0, anim:I
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
-    .line 3287
+    .line 3284
     .local v1, context:Landroid/content/Context;
     if-ltz p3, :cond_0
 
-    .line 3288
+    .line 3285
     invoke-direct {p0, p1, p2, p3}, Lcom/android/server/wm/WindowManagerService;->getCachedAnimations(ILjava/lang/String;I)Lcom/android/server/AttributeCache$Entry;
 
     move-result-object v2
 
-    .line 3289
+    .line 3286
     .local v2, ent:Lcom/android/server/AttributeCache$Entry;
     if-eqz v2, :cond_0
 
-    .line 3290
+    .line 3287
     iget-object v1, v2, Lcom/android/server/AttributeCache$Entry;->context:Landroid/content/Context;
 
-    .line 3291
+    .line 3288
     move v0, p3
 
-    .line 3294
+    .line 3291
     .end local v2           #ent:Lcom/android/server/AttributeCache$Entry;
     :cond_0
     if-eqz v0, :cond_1
 
-    .line 3295
+    .line 3292
     invoke-static {v1, v0}, Landroid/view/animation/AnimationUtils;->loadAnimation(Landroid/content/Context;I)Landroid/view/animation/Animation;
 
     move-result-object v3
 
-    .line 3297
+    .line 3294
     :goto_0
     return-object v3
 
@@ -7614,7 +7482,7 @@
     .parameter "where"
 
     .prologue
-    .line 2577
+    .line 2574
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
@@ -7653,20 +7521,20 @@
 
     move-result-object v0
 
-    .line 2578
+    .line 2575
     .local v0, str:Ljava/lang/String;
     if-eqz p3, :cond_0
 
-    .line 2579
+    .line 2576
     const-string v1, "WindowManager"
 
     invoke-static {v1, v0, p3}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 2583
+    .line 2580
     :goto_0
     return-void
 
-    .line 2581
+    .line 2578
     :cond_0
     const-string v1, "WindowManager"
 
@@ -7682,7 +7550,7 @@
     .parameter "where"
 
     .prologue
-    .line 2568
+    .line 2565
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
@@ -7711,20 +7579,20 @@
 
     move-result-object v0
 
-    .line 2569
+    .line 2566
     .local v0, str:Ljava/lang/String;
     if-eqz p2, :cond_0
 
-    .line 2570
+    .line 2567
     const-string v1, "WindowManager"
 
     invoke-static {v1, v0, p2}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 2574
+    .line 2571
     :goto_0
     return-void
 
-    .line 2572
+    .line 2569
     :cond_0
     const-string v1, "WindowManager"
 
@@ -7733,13 +7601,12 @@
     goto :goto_0
 .end method
 
-.method public static main(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Lcom/android/internal/os/IDeviceHandler;Landroid/os/Handler;Landroid/os/Handler;ZZZ)Lcom/android/server/wm/WindowManagerService;
-    .locals 12
+.method public static main(Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Landroid/os/Handler;Landroid/os/Handler;ZZZ)Lcom/android/server/wm/WindowManagerService;
+    .locals 10
     .parameter "context"
     .parameter "pm"
     .parameter "dm"
     .parameter "im"
-    .parameter "device"
     .parameter "uiHandler"
     .parameter "wmHandler"
     .parameter "haveInputMethods"
@@ -7747,47 +7614,43 @@
     .parameter "onlyCore"
 
     .prologue
+    .line 776
+    const/4 v0, 0x1
+
+    new-array v1, v0, [Lcom/android/server/wm/WindowManagerService;
+
     .line 777
-    const/4 v1, 0x1
+    .local v1, holder:[Lcom/android/server/wm/WindowManagerService;
+    new-instance v0, Lcom/android/server/wm/WindowManagerService$3;
 
-    new-array v2, v1, [Lcom/android/server/wm/WindowManagerService;
+    move-object v2, p0
 
-    .line 778
-    .local v2, holder:[Lcom/android/server/wm/WindowManagerService;
-    new-instance v1, Lcom/android/server/wm/WindowManagerService$3;
+    move-object v3, p1
 
-    move-object v3, p0
+    move-object v4, p2
 
-    move-object v4, p1
+    move-object v5, p3
 
-    move-object v5, p2
+    move-object v6, p4
 
-    move-object v6, p3
+    move/from16 v7, p6
 
-    move-object/from16 v7, p4
+    move/from16 v8, p7
 
-    move-object/from16 v8, p5
+    move/from16 v9, p8
 
-    move/from16 v9, p7
+    invoke-direct/range {v0 .. v9}, Lcom/android/server/wm/WindowManagerService$3;-><init>([Lcom/android/server/wm/WindowManagerService;Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Landroid/os/Handler;ZZZ)V
 
-    move/from16 v10, p8
+    const-wide/16 v2, 0x0
 
-    move/from16 v11, p9
+    invoke-virtual {p5, v0, v2, v3}, Landroid/os/Handler;->runWithScissors(Ljava/lang/Runnable;J)Z
 
-    invoke-direct/range {v1 .. v11}, Lcom/android/server/wm/WindowManagerService$3;-><init>([Lcom/android/server/wm/WindowManagerService;Landroid/content/Context;Lcom/android/server/power/PowerManagerService;Lcom/android/server/display/DisplayManagerService;Lcom/android/server/input/InputManagerService;Lcom/android/internal/os/IDeviceHandler;Landroid/os/Handler;ZZZ)V
+    .line 784
+    const/4 v0, 0x0
 
-    const-wide/16 v3, 0x0
+    aget-object v0, v1, v0
 
-    move-object/from16 v0, p6
-
-    invoke-virtual {v0, v1, v3, v4}, Landroid/os/Handler;->runWithScissors(Ljava/lang/Runnable;J)Z
-
-    .line 785
-    const/4 v1, 0x0
-
-    aget-object v1, v2, v1
-
-    return-object v1
+    return-object v0
 .end method
 
 .method private moveAppWindowsLocked(Lcom/android/server/wm/AppWindowToken;IZ)V
@@ -7799,15 +7662,15 @@
     .prologue
     const/4 v6, 0x0
 
-    .line 5112
+    .line 5109
     invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->tmpRemoveAppWindowsLocked(Lcom/android/server/wm/WindowToken;)Z
 
-    .line 5115
+    .line 5112
     new-instance v1, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
 
     invoke-direct {v1, p0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 5116
+    .line 5113
     .local v1, iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :cond_0
     :goto_0
@@ -7817,39 +7680,39 @@
 
     if-eqz v5, :cond_2
 
-    .line 5117
+    .line 5114
     invoke-virtual {v1}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 5118
+    .line 5115
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-virtual {v0}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v4
 
-    .line 5119
+    .line 5116
     .local v4, windows:Lcom/android/server/wm/WindowList;
     invoke-direct {p0, v4, p2}, Lcom/android/server/wm/WindowManagerService;->findWindowOffsetLocked(Lcom/android/server/wm/WindowList;I)I
 
     move-result v3
 
-    .line 5120
+    .line 5117
     .local v3, pos:I
     invoke-direct {p0, v0, v3, p1}, Lcom/android/server/wm/WindowManagerService;->reAddAppWindowsLocked(Lcom/android/server/wm/DisplayContent;ILcom/android/server/wm/WindowToken;)I
 
     move-result v2
 
-    .line 5121
+    .line 5118
     .local v2, newPos:I
     if-eq v3, v2, :cond_1
 
-    .line 5122
+    .line 5119
     const/4 v5, 0x1
 
     iput-boolean v5, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 5125
+    .line 5122
     :cond_1
     if-eqz p3, :cond_0
 
@@ -7861,12 +7724,12 @@
 
     if-nez v5, :cond_0
 
-    .line 5127
+    .line 5124
     invoke-direct {p0, v4}, Lcom/android/server/wm/WindowManagerService;->assignLayersLocked(Lcom/android/server/wm/WindowList;)V
 
     goto :goto_0
 
-    .line 5131
+    .line 5128
     .end local v0           #displayContent:Lcom/android/server/wm/DisplayContent;
     .end local v2           #newPos:I
     .end local v3           #pos:I
@@ -7874,26 +7737,26 @@
     :cond_2
     if-eqz p3, :cond_4
 
-    .line 5132
+    .line 5129
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v5}, Lcom/android/server/wm/InputMonitor;->setUpdateInputWindowsNeededLw()V
 
-    .line 5136
+    .line 5133
     iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mInLayout:Z
 
     if-nez v5, :cond_3
 
-    .line 5137
+    .line 5134
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 5139
+    .line 5136
     :cond_3
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v5, v6}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 5141
+    .line 5138
     :cond_4
     return-void
 .end method
@@ -7916,12 +7779,12 @@
     .local p1, tokens:Ljava/util/List;,"Ljava/util/List<Landroid/os/IBinder;>;"
     const/4 v10, 0x0
 
-    .line 5145
+    .line 5142
     invoke-interface {p1}, Ljava/util/List;->size()I
 
     move-result v0
 
-    .line 5147
+    .line 5144
     .local v0, N:I
     const/4 v2, 0x0
 
@@ -7929,7 +7792,7 @@
     :goto_0
     if-ge v2, v0, :cond_1
 
-    .line 5148
+    .line 5145
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
     invoke-interface {p1, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -7942,27 +7805,27 @@
 
     check-cast v6, Lcom/android/server/wm/WindowToken;
 
-    .line 5149
+    .line 5146
     .local v6, token:Lcom/android/server/wm/WindowToken;
     if-eqz v6, :cond_0
 
-    .line 5150
+    .line 5147
     invoke-direct {p0, v6}, Lcom/android/server/wm/WindowManagerService;->tmpRemoveAppWindowsLocked(Lcom/android/server/wm/WindowToken;)Z
 
-    .line 5147
+    .line 5144
     :cond_0
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 5155
+    .line 5152
     .end local v6           #token:Lcom/android/server/wm/WindowToken;
     :cond_1
     new-instance v3, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
 
     invoke-direct {v3, p0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 5156
+    .line 5153
     .local v3, iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :cond_2
     :goto_1
@@ -7972,31 +7835,31 @@
 
     if-eqz v8, :cond_6
 
-    .line 5157
+    .line 5154
     invoke-virtual {v3}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v1
 
-    .line 5158
+    .line 5155
     .local v1, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-virtual {v1}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v7
 
-    .line 5160
+    .line 5157
     .local v7, windows:Lcom/android/server/wm/WindowList;
     invoke-direct {p0, v7, p2}, Lcom/android/server/wm/WindowManagerService;->findWindowOffsetLocked(Lcom/android/server/wm/WindowList;I)I
 
     move-result v5
 
-    .line 5161
+    .line 5158
     .local v5, pos:I
     const/4 v2, 0x0
 
     :goto_2
     if-ge v2, v0, :cond_5
 
-    .line 5162
+    .line 5159
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
     invoke-interface {p1, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
@@ -8009,36 +7872,36 @@
 
     check-cast v6, Lcom/android/server/wm/WindowToken;
 
-    .line 5163
+    .line 5160
     .restart local v6       #token:Lcom/android/server/wm/WindowToken;
     if-eqz v6, :cond_4
 
-    .line 5164
+    .line 5161
     invoke-direct {p0, v1, v5, v6}, Lcom/android/server/wm/WindowManagerService;->reAddAppWindowsLocked(Lcom/android/server/wm/DisplayContent;ILcom/android/server/wm/WindowToken;)I
 
     move-result v4
 
-    .line 5165
+    .line 5162
     .local v4, newPos:I
     if-eq v4, v5, :cond_3
 
-    .line 5166
+    .line 5163
     const/4 v8, 0x1
 
     iput-boolean v8, v1, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 5168
+    .line 5165
     :cond_3
     move v5, v4
 
-    .line 5161
+    .line 5158
     .end local v4           #newPos:I
     :cond_4
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_2
 
-    .line 5171
+    .line 5168
     .end local v6           #token:Lcom/android/server/wm/WindowToken;
     :cond_5
     const/4 v8, 0x3
@@ -8049,12 +7912,12 @@
 
     if-nez v8, :cond_2
 
-    .line 5173
+    .line 5170
     invoke-direct {p0, v7}, Lcom/android/server/wm/WindowManagerService;->assignLayersLocked(Lcom/android/server/wm/WindowList;)V
 
     goto :goto_1
 
-    .line 5177
+    .line 5174
     .end local v1           #displayContent:Lcom/android/server/wm/DisplayContent;
     .end local v5           #pos:I
     .end local v7           #windows:Lcom/android/server/wm/WindowList;
@@ -8072,15 +7935,15 @@
 
     invoke-virtual {v8}, Lcom/android/server/wm/InputMonitor;->setUpdateInputWindowsNeededLw()V
 
-    .line 5181
+    .line 5178
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 5182
+    .line 5179
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v8, v10}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 5185
+    .line 5182
     return-void
 .end method
 
@@ -8088,12 +7951,12 @@
     .locals 2
 
     .prologue
-    .line 9895
+    .line 9841
     new-instance v0, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
 
     invoke-direct {v0, p0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 9896
+    .line 9842
     .local v0, iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :cond_0
     invoke-virtual {v0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->hasNext()Z
@@ -8102,7 +7965,7 @@
 
     if-eqz v1, :cond_1
 
-    .line 9897
+    .line 9843
     invoke-virtual {v0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v1
@@ -8111,10 +7974,10 @@
 
     if-eqz v1, :cond_0
 
-    .line 9898
+    .line 9844
     const/4 v1, 0x1
 
-    .line 9901
+    .line 9847
     :goto_0
     return v1
 
@@ -8306,52 +8169,52 @@
     .locals 3
 
     .prologue
-    .line 8349
+    .line 8317
     const/4 v0, 0x6
 
-    .line 8351
+    .line 8319
     .local v0, loopCount:I
     :cond_0
     const/4 v1, 0x0
 
     iput-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mTraversalScheduled:Z
 
-    .line 8352
+    .line 8320
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLockedLoop()V
 
-    .line 8353
+    .line 8321
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/4 v2, 0x4
 
     invoke-virtual {v1, v2}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 8354
+    .line 8322
     add-int/lit8 v0, v0, -0x1
 
-    .line 8355
+    .line 8323
     iget-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mTraversalScheduled:Z
 
     if-eqz v1, :cond_1
 
     if-gtz v0, :cond_0
 
-    .line 8356
+    .line 8324
     :cond_1
     return-void
 .end method
 
 .method private final performLayoutAndPlaceSurfacesLockedInner(Z)V
-    .locals 56
+    .locals 48
     .parameter "recoveringMemory"
 
     .prologue
-    .line 9132
+    .line 9100
     invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
 
     move-result-wide v4
 
-    .line 9136
+    .line 9104
     .local v4, currentTime:J
     move-object/from16 v0, p0
 
@@ -8359,14 +8222,14 @@
 
     if-eqz v2, :cond_0
 
-    .line 9137
+    .line 9105
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mFocusMayChange:Z
 
-    .line 9138
+    .line 9106
     const/4 v2, 0x3
 
     const/4 v8, 0x0
@@ -8375,7 +8238,7 @@
 
     invoke-direct {v0, v2, v8}, Lcom/android/server/wm/WindowManagerService;->updateFocusedWindowLocked(IZ)Z
 
-    .line 9143
+    .line 9111
     :cond_0
     move-object/from16 v0, p0
 
@@ -8385,18 +8248,18 @@
 
     move-result v2
 
-    add-int/lit8 v42, v2, -0x1
+    add-int/lit8 v34, v2, -0x1
 
-    .local v42, i:I
+    .local v34, i:I
     :goto_0
-    if-ltz v42, :cond_1
+    if-ltz v34, :cond_1
 
-    .line 9144
+    .line 9112
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mExitingTokens:Ljava/util/ArrayList;
 
-    move/from16 v0, v42
+    move/from16 v0, v34
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
@@ -8408,12 +8271,12 @@
 
     iput-boolean v8, v2, Lcom/android/server/wm/WindowToken;->hasVisible:Z
 
-    .line 9143
-    add-int/lit8 v42, v42, -0x1
+    .line 9111
+    add-int/lit8 v34, v34, -0x1
 
     goto :goto_0
 
-    .line 9148
+    .line 9116
     :cond_1
     move-object/from16 v0, p0
 
@@ -8423,17 +8286,17 @@
 
     move-result v2
 
-    add-int/lit8 v42, v2, -0x1
+    add-int/lit8 v34, v2, -0x1
 
     :goto_1
-    if-ltz v42, :cond_2
+    if-ltz v34, :cond_2
 
-    .line 9149
+    .line 9117
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mExitingAppTokens:Ljava/util/ArrayList;
 
-    move/from16 v0, v42
+    move/from16 v0, v34
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
@@ -8445,12 +8308,12 @@
 
     iput-boolean v8, v2, Lcom/android/server/wm/AppWindowToken;->hasVisible:Z
 
-    .line 9148
-    add-int/lit8 v42, v42, -0x1
+    .line 9116
+    add-int/lit8 v34, v34, -0x1
 
     goto :goto_1
 
-    .line 9152
+    .line 9120
     :cond_2
     move-object/from16 v0, p0
 
@@ -8459,9 +8322,9 @@
     const/4 v8, 0x0
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mHoldScreen:Lcom/android/server/wm/Session;
-    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1802(Lcom/android/server/wm/WindowManagerService$LayoutFields;Lcom/android/server/wm/Session;)Lcom/android/server/wm/Session;
+    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1702(Lcom/android/server/wm/WindowManagerService$LayoutFields;Lcom/android/server/wm/Session;)Lcom/android/server/wm/Session;
 
-    .line 9153
+    .line 9121
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -8469,9 +8332,9 @@
     const/high16 v8, -0x4080
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
-    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2002(Lcom/android/server/wm/WindowManagerService$LayoutFields;F)F
+    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1902(Lcom/android/server/wm/WindowManagerService$LayoutFields;F)F
 
-    .line 9154
+    .line 9122
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -8479,9 +8342,9 @@
     const/high16 v8, -0x4080
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
-    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2102(Lcom/android/server/wm/WindowManagerService$LayoutFields;F)F
+    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2002(Lcom/android/server/wm/WindowManagerService$LayoutFields;F)F
 
-    .line 9155
+    .line 9123
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -8489,9 +8352,9 @@
     const-wide/16 v8, -0x1
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUserActivityTimeout:J
-    invoke-static {v2, v8, v9}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2202(Lcom/android/server/wm/WindowManagerService$LayoutFields;J)J
+    invoke-static {v2, v8, v9}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2102(Lcom/android/server/wm/WindowManagerService$LayoutFields;J)J
 
-    .line 9156
+    .line 9124
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -8499,9 +8362,9 @@
     const/4 v8, 0x0
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDisplayHasContent:I
-    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2302(Lcom/android/server/wm/WindowManagerService$LayoutFields;I)I
+    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2202(Lcom/android/server/wm/WindowManagerService$LayoutFields;I)I
 
-    .line 9158
+    .line 9126
     move-object/from16 v0, p0
 
     iget v2, v0, Lcom/android/server/wm/WindowManagerService;->mTransactionSequence:I
@@ -8512,38 +8375,38 @@
 
     iput v2, v0, Lcom/android/server/wm/WindowManagerService;->mTransactionSequence:I
 
-    .line 9160
+    .line 9128
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
-    move-result-object v28
+    move-result-object v20
 
-    .line 9161
-    .local v28, defaultDisplay:Lcom/android/server/wm/DisplayContent;
-    invoke-virtual/range {v28 .. v28}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
+    .line 9129
+    .local v20, defaultDisplay:Lcom/android/server/wm/DisplayContent;
+    invoke-virtual/range {v20 .. v20}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
 
-    move-result-object v30
+    move-result-object v22
 
-    .line 9162
-    .local v30, defaultInfo:Landroid/view/DisplayInfo;
-    move-object/from16 v0, v30
+    .line 9130
+    .local v22, defaultInfo:Landroid/view/DisplayInfo;
+    move-object/from16 v0, v22
 
     iget v0, v0, Landroid/view/DisplayInfo;->logicalWidth:I
 
-    move/from16 v29, v0
+    move/from16 v21, v0
 
-    .line 9163
-    .local v29, defaultDw:I
-    move-object/from16 v0, v30
+    .line 9131
+    .local v21, defaultDw:I
+    move-object/from16 v0, v22
 
     iget v0, v0, Landroid/view/DisplayInfo;->logicalHeight:I
 
-    move/from16 v27, v0
+    move/from16 v19, v0
 
-    .line 9167
-    .local v27, defaultDh:I
+    .line 9135
+    .local v19, defaultDh:I
     invoke-static {}, Landroid/view/Surface;->openTransaction()V
 
-    .line 9170
+    .line 9138
     :try_start_0
     move-object/from16 v0, p0
 
@@ -8551,18 +8414,18 @@
 
     if-eqz v2, :cond_3
 
-    .line 9171
+    .line 9139
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mWatermark:Lcom/android/server/wm/Watermark;
 
-    move/from16 v0, v29
+    move/from16 v0, v21
 
-    move/from16 v1, v27
+    move/from16 v1, v19
 
     invoke-virtual {v2, v0, v1}, Lcom/android/server/wm/Watermark;->positionSurface(II)V
 
-    .line 9173
+    .line 9141
     :cond_3
     move-object/from16 v0, p0
 
@@ -8570,111 +8433,111 @@
 
     if-eqz v2, :cond_4
 
-    .line 9174
+    .line 9142
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mStrictModeFlash:Lcom/android/server/wm/StrictModeFlash;
 
-    move/from16 v0, v29
+    move/from16 v0, v21
 
-    move/from16 v1, v27
+    move/from16 v1, v19
 
     invoke-virtual {v2, v0, v1}, Lcom/android/server/wm/StrictModeFlash;->positionSurface(II)V
 
-    .line 9177
+    .line 9145
     :cond_4
-    const/16 v40, 0x0
+    const/16 v32, 0x0
 
-    .line 9178
-    .local v40, focusDisplayed:Z
-    const/16 v51, 0x0
+    .line 9146
+    .local v32, focusDisplayed:Z
+    const/16 v43, 0x0
 
-    .line 9180
-    .local v51, updateAllDrawn:Z
-    new-instance v45, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
+    .line 9148
+    .local v43, updateAllDrawn:Z
+    new-instance v37, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
 
-    move-object/from16 v0, v45
+    move-object/from16 v0, v37
 
     move-object/from16 v1, p0
 
     invoke-direct {v0, v1}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 9181
-    .local v45, iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
+    .line 9149
+    .local v37, iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :cond_5
     :goto_2
-    invoke-virtual/range {v45 .. v45}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->hasNext()Z
+    invoke-virtual/range {v37 .. v37}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->hasNext()Z
 
     move-result v2
 
     if-eqz v2, :cond_28
 
-    .line 9182
-    invoke-virtual/range {v45 .. v45}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
+    .line 9150
+    invoke-virtual/range {v37 .. v37}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
 
-    move-result-object v34
+    move-result-object v26
 
-    .line 9183
-    .local v34, displayContent:Lcom/android/server/wm/DisplayContent;
-    invoke-virtual/range {v34 .. v34}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
+    .line 9151
+    .local v26, displayContent:Lcom/android/server/wm/DisplayContent;
+    invoke-virtual/range {v26 .. v26}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
-    move-result-object v55
+    move-result-object v47
 
-    .line 9184
-    .local v55, windows:Lcom/android/server/wm/WindowList;
-    invoke-virtual/range {v34 .. v34}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
+    .line 9152
+    .local v47, windows:Lcom/android/server/wm/WindowList;
+    invoke-virtual/range {v26 .. v26}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
 
-    move-result-object v36
+    move-result-object v28
 
-    .line 9185
-    .local v36, displayInfo:Landroid/view/DisplayInfo;
-    invoke-virtual/range {v34 .. v34}, Lcom/android/server/wm/DisplayContent;->getDisplayId()I
+    .line 9153
+    .local v28, displayInfo:Landroid/view/DisplayInfo;
+    invoke-virtual/range {v26 .. v26}, Lcom/android/server/wm/DisplayContent;->getDisplayId()I
 
-    move-result v35
+    move-result v27
 
-    .line 9186
-    .local v35, displayId:I
-    move-object/from16 v0, v36
+    .line 9154
+    .local v27, displayId:I
+    move-object/from16 v0, v28
 
     iget v0, v0, Landroid/view/DisplayInfo;->logicalWidth:I
 
-    move/from16 v38, v0
+    move/from16 v30, v0
 
-    .line 9187
-    .local v38, dw:I
-    move-object/from16 v0, v36
+    .line 9155
+    .local v30, dw:I
+    move-object/from16 v0, v28
 
     iget v0, v0, Landroid/view/DisplayInfo;->logicalHeight:I
 
-    move/from16 v32, v0
+    move/from16 v24, v0
 
-    .line 9188
-    .local v32, dh:I
-    move-object/from16 v0, v36
+    .line 9156
+    .local v24, dh:I
+    move-object/from16 v0, v28
 
     iget v6, v0, Landroid/view/DisplayInfo;->appWidth:I
 
-    .line 9189
+    .line 9157
     .local v6, innerDw:I
-    move-object/from16 v0, v36
+    move-object/from16 v0, v28
 
     iget v7, v0, Landroid/view/DisplayInfo;->appHeight:I
 
-    .line 9190
+    .line 9158
     .local v7, innerDh:I
-    if-nez v35, :cond_13
+    if-nez v27, :cond_13
 
-    const/16 v44, 0x1
+    const/16 v36, 0x1
 
-    .line 9193
-    .local v44, isDefaultDisplay:Z
+    .line 9161
+    .local v36, isDefaultDisplay:Z
     :goto_3
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDisplayHasContent:I
-    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2300(Lcom/android/server/wm/WindowManagerService$LayoutFields;)I
+    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2200(Lcom/android/server/wm/WindowManagerService$LayoutFields;)I
 
     move-result v2
 
@@ -8682,7 +8545,7 @@
 
     if-eq v2, v8, :cond_6
 
-    .line 9194
+    .line 9162
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -8690,39 +8553,39 @@
     const/4 v8, 0x0
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDisplayHasContent:I
-    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2302(Lcom/android/server/wm/WindowManagerService$LayoutFields;I)I
+    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2202(Lcom/android/server/wm/WindowManagerService$LayoutFields;I)I
 
-    .line 9197
+    .line 9165
     :cond_6
-    const/16 v48, 0x0
+    const/16 v40, 0x0
 
-    .line 9199
-    .local v48, repeats:I
+    .line 9167
+    .local v40, repeats:I
     :cond_7
-    add-int/lit8 v48, v48, 0x1
+    add-int/lit8 v40, v40, 0x1
 
-    .line 9200
+    .line 9168
     const/4 v2, 0x6
 
-    move/from16 v0, v48
+    move/from16 v0, v40
 
     if-le v0, v2, :cond_14
 
-    .line 9201
+    .line 9169
     const-string v2, "WindowManager"
 
     const-string v8, "Animation repeat aborted after too many iterations"
 
     invoke-static {v2, v8}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 9202
+    .line 9170
     const/4 v2, 0x0
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iput-boolean v2, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 9260
+    .line 9228
     :goto_4
     move-object/from16 v0, p0
 
@@ -8731,9 +8594,9 @@
     const/4 v8, 0x0
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mObscured:Z
-    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2402(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
+    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2302(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
 
-    .line 9261
+    .line 9229
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -8742,7 +8605,7 @@
 
     iput-boolean v8, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDimming:Z
 
-    .line 9262
+    .line 9230
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -8750,9 +8613,9 @@
     const/4 v8, 0x0
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mSyswin:Z
-    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1902(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
+    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1802(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
 
-    .line 9265
+    .line 9233
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mLosingFocus:Ljava/util/ArrayList;
@@ -8763,26 +8626,26 @@
 
     if-nez v2, :cond_24
 
-    const/16 v49, 0x1
+    const/16 v41, 0x1
 
-    .line 9267
-    .local v49, someoneLosingFocus:Z
+    .line 9235
+    .local v41, someoneLosingFocus:Z
     :goto_5
-    invoke-virtual/range {v55 .. v55}, Lcom/android/server/wm/WindowList;->size()I
+    invoke-virtual/range {v47 .. v47}, Lcom/android/server/wm/WindowList;->size()I
 
-    move-result v22
+    move-result v14
 
-    .line 9268
-    .local v22, N:I
-    add-int/lit8 v42, v22, -0x1
+    .line 9236
+    .local v14, N:I
+    add-int/lit8 v34, v14, -0x1
 
     :goto_6
-    if-ltz v42, :cond_27
+    if-ltz v34, :cond_27
 
-    .line 9269
-    move-object/from16 v0, v55
+    .line 9237
+    move-object/from16 v0, v47
 
-    move/from16 v1, v42
+    move/from16 v1, v34
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
@@ -8790,7 +8653,7 @@
 
     check-cast v3, Lcom/android/server/wm/WindowState;
 
-    .line 9271
+    .line 9239
     .local v3, w:Lcom/android/server/wm/WindowState;
     iget-boolean v2, v3, Lcom/android/server/wm/WindowState;->mObscured:Z
 
@@ -8799,35 +8662,35 @@
     iget-object v8, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mObscured:Z
-    invoke-static {v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2400(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
+    invoke-static {v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2300(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
 
     move-result v8
 
     if-eq v2, v8, :cond_25
 
-    const/16 v47, 0x1
+    const/16 v39, 0x1
 
-    .line 9274
-    .local v47, obscuredChanged:Z
+    .line 9242
+    .local v39, obscuredChanged:Z
     :goto_7
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mObscured:Z
-    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2400(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
+    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2300(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
 
     move-result v2
 
     iput-boolean v2, v3, Lcom/android/server/wm/WindowState;->mObscured:Z
 
-    .line 9275
+    .line 9243
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mObscured:Z
-    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2400(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
+    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2300(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
 
     move-result v2
 
@@ -8835,14 +8698,14 @@
 
     move-object/from16 v2, p0
 
-    .line 9276
+    .line 9244
     invoke-direct/range {v2 .. v7}, Lcom/android/server/wm/WindowManagerService;->handleNotObscuredLocked(Lcom/android/server/wm/WindowState;JII)V
 
-    .line 9279
+    .line 9247
     :cond_8
-    if-eqz v44, :cond_9
+    if-eqz v36, :cond_9
 
-    if-eqz v47, :cond_9
+    if-eqz v39, :cond_9
 
     move-object/from16 v0, p0
 
@@ -8856,17 +8719,17 @@
 
     if-eqz v2, :cond_9
 
-    .line 9284
+    .line 9252
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->updateWallpaperVisibilityLocked()V
 
-    .line 9287
+    .line 9255
     :cond_9
     iget-object v0, v3, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
-    move-object/from16 v54, v0
+    move-object/from16 v46, v0
 
-    .line 9292
-    .local v54, winAnimator:Lcom/android/server/wm/WindowStateAnimator;
+    .line 9260
+    .local v46, winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     iget-boolean v2, v3, Lcom/android/server/wm/WindowState;->mHasSurface:Z
 
     if-eqz v2, :cond_a
@@ -8877,7 +8740,7 @@
 
     if-eqz v2, :cond_a
 
-    .line 9296
+    .line 9264
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
@@ -8886,17 +8749,15 @@
 
     invoke-static {v2, v8}, Landroid/view/animation/AnimationUtils;->loadAnimation(Landroid/content/Context;I)Landroid/view/animation/Animation;
 
-    move-result-object v23
+    move-result-object v15
 
-    .line 9298
-    .local v23, a:Landroid/view/animation/Animation;
-    move-object/from16 v0, v54
+    .line 9266
+    .local v15, a:Landroid/view/animation/Animation;
+    move-object/from16 v0, v46
 
-    move-object/from16 v1, v23
+    invoke-virtual {v0, v15}, Lcom/android/server/wm/WindowStateAnimator;->setAnimation(Landroid/view/animation/Animation;)V
 
-    invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowStateAnimator;->setAnimation(Landroid/view/animation/Animation;)V
-
-    .line 9299
+    .line 9267
     iget-object v2, v3, Lcom/android/server/wm/WindowState;->mLastFrame:Landroid/graphics/Rect;
 
     iget v2, v2, Landroid/graphics/Rect;->left:I
@@ -8907,11 +8768,11 @@
 
     sub-int/2addr v2, v8
 
-    move-object/from16 v0, v54
+    move-object/from16 v0, v46
 
     iput v2, v0, Lcom/android/server/wm/WindowStateAnimator;->mAnimDw:I
 
-    .line 9300
+    .line 9268
     iget-object v2, v3, Lcom/android/server/wm/WindowState;->mLastFrame:Landroid/graphics/Rect;
 
     iget v2, v2, Landroid/graphics/Rect;->top:I
@@ -8922,14 +8783,14 @@
 
     sub-int/2addr v2, v8
 
-    move-object/from16 v0, v54
+    move-object/from16 v0, v46
 
     iput v2, v0, Lcom/android/server/wm/WindowStateAnimator;->mAnimDh:I
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
     .catch Ljava/lang/RuntimeException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 9302
+    .line 9270
     :try_start_1
     iget-object v2, v3, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
 
@@ -8947,8 +8808,8 @@
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_3
     .catch Ljava/lang/RuntimeException; {:try_start_1 .. :try_end_1} :catch_0
 
-    .line 9308
-    .end local v23           #a:Landroid/view/animation/Animation;
+    .line 9276
+    .end local v15           #a:Landroid/view/animation/Animation;
     :cond_a
     :goto_8
     const/4 v2, 0x0
@@ -8956,25 +8817,25 @@
     :try_start_2
     iput-boolean v2, v3, Lcom/android/server/wm/WindowState;->mContentChanged:Z
 
-    .line 9311
+    .line 9279
     iget-boolean v2, v3, Lcom/android/server/wm/WindowState;->mHasSurface:Z
 
     if-eqz v2, :cond_11
 
-    .line 9313
-    move-object/from16 v0, v54
+    .line 9281
+    move-object/from16 v0, v46
 
     invoke-virtual {v0, v4, v5}, Lcom/android/server/wm/WindowStateAnimator;->commitFinishDrawingLocked(J)Z
 
-    move-result v25
+    move-result v17
 
-    .line 9315
-    .local v25, committed:Z
-    if-eqz v44, :cond_c
+    .line 9283
+    .local v17, committed:Z
+    if-eqz v36, :cond_c
 
-    if-eqz v25, :cond_c
+    if-eqz v17, :cond_c
 
-    .line 9316
+    .line 9284
     iget-object v2, v3, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
     iget v2, v2, Landroid/view/WindowManager$LayoutParams;->type:I
@@ -8983,21 +8844,21 @@
 
     if-ne v2, v8, :cond_b
 
-    .line 9321
-    move-object/from16 v0, v34
+    .line 9289
+    move-object/from16 v0, v26
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
     or-int/lit8 v2, v2, 0x1
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iput v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    .line 9324
+    .line 9292
     const-string v2, "dream and commitFinishDrawingLocked true"
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iget v8, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9005,7 +8866,7 @@
 
     invoke-virtual {v0, v2, v8}, Lcom/android/server/wm/WindowManagerService;->debugLayoutRepeats(Ljava/lang/String;I)V
 
-    .line 9329
+    .line 9297
     :cond_b
     iget-object v2, v3, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
@@ -9017,7 +8878,7 @@
 
     if-eqz v2, :cond_c
 
-    .line 9332
+    .line 9300
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -9026,21 +8887,21 @@
 
     iput-boolean v8, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mWallpaperMayChange:Z
 
-    .line 9333
-    move-object/from16 v0, v34
+    .line 9301
+    move-object/from16 v0, v26
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
     or-int/lit8 v2, v2, 0x4
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iput v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    .line 9336
+    .line 9304
     const-string v2, "wallpaper and commitFinishDrawingLocked true"
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iget v8, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9048,30 +8909,30 @@
 
     invoke-virtual {v0, v2, v8}, Lcom/android/server/wm/WindowManagerService;->debugLayoutRepeats(Ljava/lang/String;I)V
 
-    .line 9343
+    .line 9311
     :cond_c
-    move-object/from16 v0, v54
+    move-object/from16 v0, v46
 
     move/from16 v1, p1
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowStateAnimator;->setSurfaceBoundariesLocked(Z)V
 
-    .line 9345
+    .line 9313
     iget-object v0, v3, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    move-object/from16 v24, v0
+    move-object/from16 v16, v0
 
-    .line 9352
-    .local v24, atoken:Lcom/android/server/wm/AppWindowToken;
-    if-eqz v24, :cond_11
+    .line 9320
+    .local v16, atoken:Lcom/android/server/wm/AppWindowToken;
+    if-eqz v16, :cond_11
 
-    move-object/from16 v0, v24
+    move-object/from16 v0, v16
 
     iget-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->allDrawn:Z
 
     if-eqz v2, :cond_d
 
-    move-object/from16 v0, v24
+    move-object/from16 v0, v16
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
@@ -9079,9 +8940,9 @@
 
     if-eqz v2, :cond_11
 
-    .line 9354
+    .line 9322
     :cond_d
-    move-object/from16 v0, v24
+    move-object/from16 v0, v16
 
     iget-wide v8, v0, Lcom/android/server/wm/AppWindowToken;->lastTransactionSequence:J
 
@@ -9089,44 +8950,42 @@
 
     iget v2, v0, Lcom/android/server/wm/WindowManagerService;->mTransactionSequence:I
 
-    int-to-long v0, v2
+    int-to-long v10, v2
 
-    move-wide/from16 v16, v0
-
-    cmp-long v2, v8, v16
+    cmp-long v2, v8, v10
 
     if-eqz v2, :cond_e
 
-    .line 9355
+    .line 9323
     move-object/from16 v0, p0
 
     iget v2, v0, Lcom/android/server/wm/WindowManagerService;->mTransactionSequence:I
 
     int-to-long v8, v2
 
-    move-object/from16 v0, v24
+    move-object/from16 v0, v16
 
     iput-wide v8, v0, Lcom/android/server/wm/AppWindowToken;->lastTransactionSequence:J
 
-    .line 9356
+    .line 9324
     const/4 v2, 0x0
 
-    move-object/from16 v0, v24
+    move-object/from16 v0, v16
 
     iput v2, v0, Lcom/android/server/wm/AppWindowToken;->numDrawnWindows:I
 
-    move-object/from16 v0, v24
+    move-object/from16 v0, v16
 
     iput v2, v0, Lcom/android/server/wm/AppWindowToken;->numInterestingWindows:I
 
-    .line 9357
+    .line 9325
     const/4 v2, 0x0
 
-    move-object/from16 v0, v24
+    move-object/from16 v0, v16
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->startingDisplayed:Z
 
-    .line 9359
+    .line 9327
     :cond_e
     invoke-virtual {v3}, Lcom/android/server/wm/WindowState;->isOnScreen()Z
 
@@ -9134,7 +8993,7 @@
 
     if-nez v2, :cond_f
 
-    move-object/from16 v0, v54
+    move-object/from16 v0, v46
 
     iget v2, v0, Lcom/android/server/wm/WindowStateAnimator;->mAttrType:I
 
@@ -9151,15 +9010,15 @@
 
     if-nez v2, :cond_11
 
-    .line 9374
-    move-object/from16 v0, v24
+    .line 9342
+    move-object/from16 v0, v16
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingWindow:Lcom/android/server/wm/WindowState;
 
     if-eq v3, v2, :cond_26
 
-    .line 9375
-    move-object/from16 v0, v24
+    .line 9343
+    move-object/from16 v0, v16
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
@@ -9171,47 +9030,47 @@
 
     if-nez v2, :cond_11
 
-    .line 9376
+    .line 9344
     :cond_10
-    move-object/from16 v0, v24
+    move-object/from16 v0, v16
 
     iget v2, v0, Lcom/android/server/wm/AppWindowToken;->numInterestingWindows:I
 
     add-int/lit8 v2, v2, 0x1
 
-    move-object/from16 v0, v24
+    move-object/from16 v0, v16
 
     iput v2, v0, Lcom/android/server/wm/AppWindowToken;->numInterestingWindows:I
 
-    .line 9377
+    .line 9345
     invoke-virtual {v3}, Lcom/android/server/wm/WindowState;->isDrawnLw()Z
 
     move-result v2
 
     if-eqz v2, :cond_11
 
-    .line 9378
-    move-object/from16 v0, v24
+    .line 9346
+    move-object/from16 v0, v16
 
     iget v2, v0, Lcom/android/server/wm/AppWindowToken;->numDrawnWindows:I
 
     add-int/lit8 v2, v2, 0x1
 
-    move-object/from16 v0, v24
+    move-object/from16 v0, v16
 
     iput v2, v0, Lcom/android/server/wm/AppWindowToken;->numDrawnWindows:I
 
-    .line 9384
-    const/16 v51, 0x1
+    .line 9352
+    const/16 v43, 0x1
 
-    .line 9394
-    .end local v24           #atoken:Lcom/android/server/wm/AppWindowToken;
-    .end local v25           #committed:Z
+    .line 9362
+    .end local v16           #atoken:Lcom/android/server/wm/AppWindowToken;
+    .end local v17           #committed:Z
     :cond_11
     :goto_9
-    if-eqz v44, :cond_12
+    if-eqz v36, :cond_12
 
-    if-eqz v49, :cond_12
+    if-eqz v41, :cond_12
 
     move-object/from16 v0, p0
 
@@ -9225,40 +9084,40 @@
 
     if-eqz v2, :cond_12
 
-    .line 9396
-    const/16 v40, 0x1
+    .line 9364
+    const/16 v32, 0x1
 
-    .line 9399
+    .line 9367
     :cond_12
     move-object/from16 v0, p0
 
     invoke-direct {v0, v3}, Lcom/android/server/wm/WindowManagerService;->updateResizingWindows(Lcom/android/server/wm/WindowState;)V
 
-    .line 9268
-    add-int/lit8 v42, v42, -0x1
+    .line 9236
+    add-int/lit8 v34, v34, -0x1
 
     goto/16 :goto_6
 
-    .line 9190
+    .line 9158
     .end local v3           #w:Lcom/android/server/wm/WindowState;
-    .end local v22           #N:I
-    .end local v44           #isDefaultDisplay:Z
-    .end local v47           #obscuredChanged:Z
-    .end local v48           #repeats:I
-    .end local v49           #someoneLosingFocus:Z
-    .end local v54           #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
+    .end local v14           #N:I
+    .end local v36           #isDefaultDisplay:Z
+    .end local v39           #obscuredChanged:Z
+    .end local v40           #repeats:I
+    .end local v41           #someoneLosingFocus:Z
+    .end local v46           #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     :cond_13
-    const/16 v44, 0x0
+    const/16 v36, 0x0
 
     goto/16 :goto_3
 
-    .line 9206
-    .restart local v44       #isDefaultDisplay:Z
-    .restart local v48       #repeats:I
+    .line 9174
+    .restart local v36       #isDefaultDisplay:Z
+    .restart local v40       #repeats:I
     :cond_14
     const-string v2, "On entry to LockedInner"
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iget v8, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9266,10 +9125,10 @@
 
     invoke-virtual {v0, v2, v8}, Lcom/android/server/wm/WindowManagerService;->debugLayoutRepeats(Ljava/lang/String;I)V
 
-    .line 9209
-    if-eqz v44, :cond_15
+    .line 9177
+    if-eqz v36, :cond_15
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9285,25 +9144,25 @@
 
     if-eqz v2, :cond_15
 
-    .line 9213
+    .line 9181
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v55
+    move-object/from16 v1, v47
 
     invoke-direct {v0, v1}, Lcom/android/server/wm/WindowManagerService;->assignLayersLocked(Lcom/android/server/wm/WindowList;)V
 
-    .line 9214
+    .line 9182
     const/4 v2, 0x1
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iput-boolean v2, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 9217
+    .line 9185
     :cond_15
-    if-eqz v44, :cond_16
+    if-eqz v36, :cond_16
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9311,7 +9170,7 @@
 
     if-eqz v2, :cond_16
 
-    .line 9220
+    .line 9188
     const/4 v2, 0x1
 
     move-object/from16 v0, p0
@@ -9322,14 +9181,14 @@
 
     if-eqz v2, :cond_16
 
-    .line 9221
+    .line 9189
     const/4 v2, 0x1
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iput-boolean v2, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 9222
+    .line 9190
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -9338,9 +9197,9 @@
 
     invoke-virtual {v2, v8}, Lcom/android/server/wm/WindowManagerService$H;->sendEmptyMessage(I)Z
 
-    .line 9226
+    .line 9194
     :cond_16
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9348,25 +9207,25 @@
 
     if-eqz v2, :cond_17
 
-    .line 9228
+    .line 9196
     const/4 v2, 0x1
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iput-boolean v2, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 9232
+    .line 9200
     :cond_17
     const/4 v2, 0x4
 
-    move/from16 v0, v48
+    move/from16 v0, v40
 
     if-ge v0, v2, :cond_1a
 
-    .line 9233
+    .line 9201
     const/4 v2, 0x1
 
-    move/from16 v0, v48
+    move/from16 v0, v40
 
     if-ne v0, v2, :cond_19
 
@@ -9377,19 +9236,19 @@
 
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v34
+    move-object/from16 v1, v26
 
     invoke-direct {v0, v1, v2, v8}, Lcom/android/server/wm/WindowManagerService;->performLayoutLockedInner(Lcom/android/server/wm/DisplayContent;ZZ)V
 
-    .line 9241
+    .line 9209
     :goto_b
     const/4 v2, 0x0
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iput v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    .line 9243
+    .line 9211
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
@@ -9412,7 +9271,7 @@
 
     move-result-object v2
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iget v8, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9420,34 +9279,34 @@
 
     invoke-virtual {v0, v2, v8}, Lcom/android/server/wm/WindowManagerService;->debugLayoutRepeats(Ljava/lang/String;I)V
 
-    .line 9246
-    if-eqz v44, :cond_23
+    .line 9214
+    if-eqz v36, :cond_23
 
-    .line 9247
+    .line 9215
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
-    move/from16 v0, v38
+    move/from16 v0, v30
 
-    move/from16 v1, v32
+    move/from16 v1, v24
 
     invoke-interface {v2, v0, v1}, Landroid/view/WindowManagerPolicy;->beginPostLayoutPolicyLw(II)V
 
-    .line 9248
-    invoke-virtual/range {v55 .. v55}, Lcom/android/server/wm/WindowList;->size()I
+    .line 9216
+    invoke-virtual/range {v47 .. v47}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v2
 
-    add-int/lit8 v42, v2, -0x1
+    add-int/lit8 v34, v2, -0x1
 
     :goto_c
-    if-ltz v42, :cond_22
+    if-ltz v34, :cond_22
 
-    .line 9249
-    move-object/from16 v0, v55
+    .line 9217
+    move-object/from16 v0, v47
 
-    move/from16 v1, v42
+    move/from16 v1, v34
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
@@ -9455,13 +9314,13 @@
 
     check-cast v3, Lcom/android/server/wm/WindowState;
 
-    .line 9250
+    .line 9218
     .restart local v3       #w:Lcom/android/server/wm/WindowState;
     iget-boolean v2, v3, Lcom/android/server/wm/WindowState;->mHasSurface:Z
 
     if-eqz v2, :cond_18
 
-    .line 9251
+    .line 9219
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -9470,20 +9329,20 @@
 
     invoke-interface {v2, v3, v8}, Landroid/view/WindowManagerPolicy;->applyPostLayoutPolicyLw(Landroid/view/WindowManagerPolicy$WindowState;Landroid/view/WindowManager$LayoutParams;)V
 
-    .line 9248
+    .line 9216
     :cond_18
-    add-int/lit8 v42, v42, -0x1
+    add-int/lit8 v34, v34, -0x1
 
     goto :goto_c
 
-    .line 9233
+    .line 9201
     .end local v3           #w:Lcom/android/server/wm/WindowState;
     :cond_19
     const/4 v2, 0x0
 
     goto :goto_a
 
-    .line 9236
+    .line 9204
     :cond_1a
     const-string v2, "WindowManager"
 
@@ -9496,62 +9355,62 @@
 
     goto :goto_b
 
-    .line 9435
+    .line 9403
     .end local v6           #innerDw:I
     .end local v7           #innerDh:I
-    .end local v32           #dh:I
-    .end local v34           #displayContent:Lcom/android/server/wm/DisplayContent;
-    .end local v35           #displayId:I
-    .end local v36           #displayInfo:Landroid/view/DisplayInfo;
-    .end local v38           #dw:I
-    .end local v40           #focusDisplayed:Z
-    .end local v44           #isDefaultDisplay:Z
-    .end local v45           #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
-    .end local v48           #repeats:I
-    .end local v51           #updateAllDrawn:Z
-    .end local v55           #windows:Lcom/android/server/wm/WindowList;
+    .end local v24           #dh:I
+    .end local v26           #displayContent:Lcom/android/server/wm/DisplayContent;
+    .end local v27           #displayId:I
+    .end local v28           #displayInfo:Landroid/view/DisplayInfo;
+    .end local v30           #dw:I
+    .end local v32           #focusDisplayed:Z
+    .end local v36           #isDefaultDisplay:Z
+    .end local v37           #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
+    .end local v40           #repeats:I
+    .end local v43           #updateAllDrawn:Z
+    .end local v47           #windows:Lcom/android/server/wm/WindowList;
     :catch_0
-    move-exception v39
+    move-exception v31
 
-    .line 9436
-    .local v39, e:Ljava/lang/RuntimeException;
+    .line 9404
+    .local v31, e:Ljava/lang/RuntimeException;
     :try_start_3
     const-string v2, "WindowManager"
 
     const-string v8, "Unhandled exception in Window Manager"
 
-    move-object/from16 v0, v39
+    move-object/from16 v0, v31
 
     invoke-static {v2, v8, v0}, Landroid/util/Log;->wtf(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_0
 
-    .line 9438
+    .line 9406
     invoke-static {}, Landroid/view/Surface;->closeTransaction()V
 
-    .line 9443
-    .end local v39           #e:Ljava/lang/RuntimeException;
+    .line 9411
+    .end local v31           #e:Ljava/lang/RuntimeException;
     :goto_d
-    invoke-virtual/range {v28 .. v28}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
+    invoke-virtual/range {v20 .. v20}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
-    move-result-object v31
+    move-result-object v23
 
-    .line 9448
-    .local v31, defaultWindows:Lcom/android/server/wm/WindowList;
+    .line 9416
+    .local v23, defaultWindows:Lcom/android/server/wm/WindowList;
     move-object/from16 v0, p0
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionReady:Z
 
     if-eqz v2, :cond_1b
 
-    .line 9449
-    move-object/from16 v0, v28
+    .line 9417
+    move-object/from16 v0, v20
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v31
+    move-object/from16 v1, v23
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowManagerService;->handleAppTransitionReadyLocked(Lcom/android/server/wm/WindowList;)I
 
@@ -9559,14 +9418,14 @@
 
     or-int/2addr v2, v8
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iput v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    .line 9450
+    .line 9418
     const-string v2, "after handleAppTransitionReadyLocked"
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iget v8, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9574,7 +9433,7 @@
 
     invoke-virtual {v0, v2, v8}, Lcom/android/server/wm/WindowManagerService;->debugLayoutRepeats(Ljava/lang/String;I)V
 
-    .line 9454
+    .line 9422
     :cond_1b
     move-object/from16 v0, p0
 
@@ -9584,7 +9443,7 @@
 
     iput v8, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mAdjResult:I
 
-    .line 9456
+    .line 9424
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
@@ -9599,8 +9458,8 @@
 
     if-eqz v2, :cond_1c
 
-    .line 9463
-    move-object/from16 v0, v28
+    .line 9431
+    move-object/from16 v0, v20
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9610,14 +9469,14 @@
 
     or-int/2addr v2, v8
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iput v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    .line 9464
+    .line 9432
     const-string v2, "after handleAnimStopAndXitionLock"
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iget v8, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9625,7 +9484,7 @@
 
     invoke-virtual {v0, v2, v8}, Lcom/android/server/wm/WindowManagerService;->debugLayoutRepeats(Ljava/lang/String;I)V
 
-    .line 9468
+    .line 9436
     :cond_1c
     move-object/from16 v0, p0
 
@@ -9635,7 +9494,7 @@
 
     if-eqz v2, :cond_1d
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9647,8 +9506,8 @@
 
     if-nez v2, :cond_1d
 
-    .line 9476
-    move-object/from16 v0, v28
+    .line 9444
+    move-object/from16 v0, v20
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9658,14 +9517,14 @@
 
     or-int/2addr v2, v8
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iput v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    .line 9477
+    .line 9445
     const-string v2, "after animateAwayWallpaperLocked"
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iget v8, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9673,7 +9532,7 @@
 
     invoke-virtual {v0, v2, v8}, Lcom/android/server/wm/WindowManagerService;->debugLayoutRepeats(Ljava/lang/String;I)V
 
-    .line 9480
+    .line 9448
     :cond_1d
     move-object/from16 v0, p0
 
@@ -9683,7 +9542,7 @@
 
     iput-boolean v8, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mWallpaperForceHidingChanged:Z
 
-    .line 9482
+    .line 9450
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -9692,7 +9551,7 @@
 
     if-eqz v2, :cond_1e
 
-    .line 9485
+    .line 9453
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -9707,7 +9566,7 @@
 
     iput v8, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mAdjResult:I
 
-    .line 9488
+    .line 9456
     :cond_1e
     move-object/from16 v0, p0
 
@@ -9719,25 +9578,25 @@
 
     if-eqz v2, :cond_2b
 
-    .line 9491
-    move-object/from16 v0, v28
+    .line 9459
+    move-object/from16 v0, v20
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
     or-int/lit8 v2, v2, 0x1
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iput v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    .line 9492
+    .line 9460
     move-object/from16 v0, p0
 
-    move-object/from16 v1, v31
+    move-object/from16 v1, v23
 
     invoke-direct {v0, v1}, Lcom/android/server/wm/WindowManagerService;->assignLayersLocked(Lcom/android/server/wm/WindowList;)V
 
-    .line 9499
+    .line 9467
     :cond_1f
     :goto_e
     move-object/from16 v0, p0
@@ -9746,14 +9605,14 @@
 
     if-eqz v2, :cond_20
 
-    .line 9500
+    .line 9468
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mFocusMayChange:Z
 
-    .line 9501
+    .line 9469
     const/4 v2, 0x2
 
     const/4 v8, 0x0
@@ -9766,18 +9625,18 @@
 
     if-eqz v2, :cond_20
 
-    .line 9503
-    move-object/from16 v0, v28
+    .line 9471
+    move-object/from16 v0, v20
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
     or-int/lit8 v2, v2, 0x8
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iput v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    .line 9504
+    .line 9472
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -9786,7 +9645,7 @@
 
     iput v8, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mAdjResult:I
 
-    .line 9508
+    .line 9476
     :cond_20
     invoke-direct/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->needsLayout()Z
 
@@ -9794,21 +9653,21 @@
 
     if-eqz v2, :cond_21
 
-    .line 9509
-    move-object/from16 v0, v28
+    .line 9477
+    move-object/from16 v0, v20
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
     or-int/lit8 v2, v2, 0x1
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iput v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    .line 9510
+    .line 9478
     const-string v2, "mLayoutNeeded"
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iget v8, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9816,7 +9675,7 @@
 
     invoke-virtual {v0, v2, v8}, Lcom/android/server/wm/WindowManagerService;->debugLayoutRepeats(Ljava/lang/String;I)V
 
-    .line 9514
+    .line 9482
     :cond_21
     move-object/from16 v0, p0
 
@@ -9826,57 +9685,57 @@
 
     move-result v2
 
-    add-int/lit8 v42, v2, -0x1
+    add-int/lit8 v34, v2, -0x1
 
     :goto_f
-    if-ltz v42, :cond_30
+    if-ltz v34, :cond_2f
 
-    .line 9515
+    .line 9483
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mResizingWindows:Ljava/util/ArrayList;
 
-    move/from16 v0, v42
+    move/from16 v0, v34
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
-    move-result-object v53
+    move-result-object v45
 
-    check-cast v53, Lcom/android/server/wm/WindowState;
+    check-cast v45, Lcom/android/server/wm/WindowState;
 
-    .line 9516
-    .local v53, win:Lcom/android/server/wm/WindowState;
-    move-object/from16 v0, v53
+    .line 9484
+    .local v45, win:Lcom/android/server/wm/WindowState;
+    move-object/from16 v0, v45
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowState;->mAppFreezing:Z
 
     if-eqz v2, :cond_2c
 
-    .line 9514
+    .line 9482
     :goto_10
-    add-int/lit8 v42, v42, -0x1
+    add-int/lit8 v34, v34, -0x1
 
     goto :goto_f
 
-    .line 9254
-    .end local v31           #defaultWindows:Lcom/android/server/wm/WindowList;
-    .end local v53           #win:Lcom/android/server/wm/WindowState;
+    .line 9222
+    .end local v23           #defaultWindows:Lcom/android/server/wm/WindowList;
+    .end local v45           #win:Lcom/android/server/wm/WindowState;
     .restart local v6       #innerDw:I
     .restart local v7       #innerDh:I
-    .restart local v32       #dh:I
-    .restart local v34       #displayContent:Lcom/android/server/wm/DisplayContent;
-    .restart local v35       #displayId:I
-    .restart local v36       #displayInfo:Landroid/view/DisplayInfo;
-    .restart local v38       #dw:I
-    .restart local v40       #focusDisplayed:Z
-    .restart local v44       #isDefaultDisplay:Z
-    .restart local v45       #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
-    .restart local v48       #repeats:I
-    .restart local v51       #updateAllDrawn:Z
-    .restart local v55       #windows:Lcom/android/server/wm/WindowList;
+    .restart local v24       #dh:I
+    .restart local v26       #displayContent:Lcom/android/server/wm/DisplayContent;
+    .restart local v27       #displayId:I
+    .restart local v28       #displayInfo:Landroid/view/DisplayInfo;
+    .restart local v30       #dw:I
+    .restart local v32       #focusDisplayed:Z
+    .restart local v36       #isDefaultDisplay:Z
+    .restart local v37       #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
+    .restart local v40       #repeats:I
+    .restart local v43       #updateAllDrawn:Z
+    .restart local v47       #windows:Lcom/android/server/wm/WindowList;
     :cond_22
     :try_start_4
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9890,14 +9749,14 @@
 
     or-int/2addr v2, v8
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iput v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    .line 9255
+    .line 9223
     const-string v2, "after finishPostLayoutPolicyLw"
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iget v8, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9905,9 +9764,9 @@
 
     invoke-virtual {v0, v2, v8}, Lcom/android/server/wm/WindowManagerService;->debugLayoutRepeats(Ljava/lang/String;I)V
 
-    .line 9258
+    .line 9226
     :cond_23
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
@@ -9915,26 +9774,26 @@
 
     goto/16 :goto_4
 
-    .line 9265
+    .line 9233
     :cond_24
-    const/16 v49, 0x0
+    const/16 v41, 0x0
 
     goto/16 :goto_5
 
-    .line 9271
+    .line 9239
     .restart local v3       #w:Lcom/android/server/wm/WindowState;
-    .restart local v22       #N:I
-    .restart local v49       #someoneLosingFocus:Z
+    .restart local v14       #N:I
+    .restart local v41       #someoneLosingFocus:Z
     :cond_25
-    const/16 v47, 0x0
+    const/16 v39, 0x0
 
     goto/16 :goto_7
 
-    .line 9387
-    .restart local v24       #atoken:Lcom/android/server/wm/AppWindowToken;
-    .restart local v25       #committed:Z
-    .restart local v47       #obscuredChanged:Z
-    .restart local v54       #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
+    .line 9355
+    .restart local v16       #atoken:Lcom/android/server/wm/AppWindowToken;
+    .restart local v17       #committed:Z
+    .restart local v39       #obscuredChanged:Z
+    .restart local v46       #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     :cond_26
     invoke-virtual {v3}, Lcom/android/server/wm/WindowState;->isDrawnLw()Z
 
@@ -9942,10 +9801,10 @@
 
     if-eqz v2, :cond_11
 
-    .line 9388
+    .line 9356
     const/4 v2, 0x1
 
-    move-object/from16 v0, v24
+    move-object/from16 v0, v16
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->startingDisplayed:Z
     :try_end_4
@@ -9954,27 +9813,27 @@
 
     goto/16 :goto_9
 
-    .line 9438
+    .line 9406
     .end local v3           #w:Lcom/android/server/wm/WindowState;
     .end local v6           #innerDw:I
     .end local v7           #innerDh:I
-    .end local v22           #N:I
-    .end local v24           #atoken:Lcom/android/server/wm/AppWindowToken;
-    .end local v25           #committed:Z
-    .end local v32           #dh:I
-    .end local v34           #displayContent:Lcom/android/server/wm/DisplayContent;
-    .end local v35           #displayId:I
-    .end local v36           #displayInfo:Landroid/view/DisplayInfo;
-    .end local v38           #dw:I
-    .end local v40           #focusDisplayed:Z
-    .end local v44           #isDefaultDisplay:Z
-    .end local v45           #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
-    .end local v47           #obscuredChanged:Z
-    .end local v48           #repeats:I
-    .end local v49           #someoneLosingFocus:Z
-    .end local v51           #updateAllDrawn:Z
-    .end local v54           #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
-    .end local v55           #windows:Lcom/android/server/wm/WindowList;
+    .end local v14           #N:I
+    .end local v16           #atoken:Lcom/android/server/wm/AppWindowToken;
+    .end local v17           #committed:Z
+    .end local v24           #dh:I
+    .end local v26           #displayContent:Lcom/android/server/wm/DisplayContent;
+    .end local v27           #displayId:I
+    .end local v28           #displayInfo:Landroid/view/DisplayInfo;
+    .end local v30           #dw:I
+    .end local v32           #focusDisplayed:Z
+    .end local v36           #isDefaultDisplay:Z
+    .end local v37           #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
+    .end local v39           #obscuredChanged:Z
+    .end local v40           #repeats:I
+    .end local v41           #someoneLosingFocus:Z
+    .end local v43           #updateAllDrawn:Z
+    .end local v46           #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
+    .end local v47           #windows:Lcom/android/server/wm/WindowList;
     :catchall_0
     move-exception v2
 
@@ -9982,22 +9841,22 @@
 
     throw v2
 
-    .line 9403
+    .line 9371
     .restart local v6       #innerDw:I
     .restart local v7       #innerDh:I
-    .restart local v22       #N:I
-    .restart local v32       #dh:I
-    .restart local v34       #displayContent:Lcom/android/server/wm/DisplayContent;
-    .restart local v35       #displayId:I
-    .restart local v36       #displayInfo:Landroid/view/DisplayInfo;
-    .restart local v38       #dw:I
-    .restart local v40       #focusDisplayed:Z
-    .restart local v44       #isDefaultDisplay:Z
-    .restart local v45       #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
-    .restart local v48       #repeats:I
-    .restart local v49       #someoneLosingFocus:Z
-    .restart local v51       #updateAllDrawn:Z
-    .restart local v55       #windows:Lcom/android/server/wm/WindowList;
+    .restart local v14       #N:I
+    .restart local v24       #dh:I
+    .restart local v26       #displayContent:Lcom/android/server/wm/DisplayContent;
+    .restart local v27       #displayId:I
+    .restart local v28       #displayInfo:Landroid/view/DisplayInfo;
+    .restart local v30       #dw:I
+    .restart local v32       #focusDisplayed:Z
+    .restart local v36       #isDefaultDisplay:Z
+    .restart local v37       #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
+    .restart local v40       #repeats:I
+    .restart local v41       #someoneLosingFocus:Z
+    .restart local v43       #updateAllDrawn:Z
+    .restart local v47       #windows:Lcom/android/server/wm/WindowList;
     :cond_27
     :try_start_5
     move-object/from16 v0, p0
@@ -10005,17 +9864,17 @@
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mDisplayHasContent:I
-    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2300(Lcom/android/server/wm/WindowManagerService$LayoutFields;)I
+    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2200(Lcom/android/server/wm/WindowManagerService$LayoutFields;)I
 
     move-result v2
 
     packed-switch v2, :pswitch_data_0
 
-    .line 9412
-    const/16 v41, 0x0
+    .line 9380
+    const/16 v33, 0x0
 
-    .line 9415
-    .local v41, hasUniqueContent:Z
+    .line 9383
+    .local v33, hasUniqueContent:Z
     :goto_11
     move-object/from16 v0, p0
 
@@ -10023,13 +9882,13 @@
 
     const/4 v8, 0x1
 
-    move/from16 v0, v35
+    move/from16 v0, v27
 
-    move/from16 v1, v41
+    move/from16 v1, v33
 
     invoke-virtual {v2, v0, v1, v8}, Lcom/android/server/display/DisplayManagerService;->setDisplayHasContent(IZZ)V
 
-    .line 9418
+    .line 9386
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -10042,7 +9901,7 @@
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
-    move/from16 v0, v35
+    move/from16 v0, v27
 
     invoke-virtual {v2, v0}, Lcom/android/server/wm/WindowAnimator;->isDimmingLocked(I)Z
 
@@ -10050,58 +9909,58 @@
 
     if-eqz v2, :cond_5
 
-    .line 9419
+    .line 9387
     move-object/from16 v0, p0
 
-    move/from16 v1, v35
+    move/from16 v1, v27
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowManagerService;->stopDimmingLocked(I)V
 
     goto/16 :goto_2
 
-    .line 9405
-    .end local v41           #hasUniqueContent:Z
+    .line 9373
+    .end local v33           #hasUniqueContent:Z
     :pswitch_0
-    move/from16 v41, v44
+    move/from16 v33, v36
 
-    .line 9406
-    .restart local v41       #hasUniqueContent:Z
+    .line 9374
+    .restart local v33       #hasUniqueContent:Z
     goto :goto_11
 
-    .line 9408
-    .end local v41           #hasUniqueContent:Z
+    .line 9376
+    .end local v33           #hasUniqueContent:Z
     :pswitch_1
-    const/16 v41, 0x1
+    const/16 v33, 0x1
 
-    .line 9409
-    .restart local v41       #hasUniqueContent:Z
+    .line 9377
+    .restart local v33       #hasUniqueContent:Z
     goto :goto_11
 
-    .line 9423
+    .line 9391
     .end local v6           #innerDw:I
     .end local v7           #innerDh:I
-    .end local v22           #N:I
-    .end local v32           #dh:I
-    .end local v34           #displayContent:Lcom/android/server/wm/DisplayContent;
-    .end local v35           #displayId:I
-    .end local v36           #displayInfo:Landroid/view/DisplayInfo;
-    .end local v38           #dw:I
-    .end local v41           #hasUniqueContent:Z
-    .end local v44           #isDefaultDisplay:Z
-    .end local v48           #repeats:I
-    .end local v49           #someoneLosingFocus:Z
-    .end local v55           #windows:Lcom/android/server/wm/WindowList;
+    .end local v14           #N:I
+    .end local v24           #dh:I
+    .end local v26           #displayContent:Lcom/android/server/wm/DisplayContent;
+    .end local v27           #displayId:I
+    .end local v28           #displayInfo:Landroid/view/DisplayInfo;
+    .end local v30           #dw:I
+    .end local v33           #hasUniqueContent:Z
+    .end local v36           #isDefaultDisplay:Z
+    .end local v40           #repeats:I
+    .end local v41           #someoneLosingFocus:Z
+    .end local v47           #windows:Lcom/android/server/wm/WindowList;
     :cond_28
-    if-eqz v51, :cond_29
+    if-eqz v43, :cond_29
 
-    .line 9424
+    .line 9392
     invoke-direct/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->updateAllDrawnLocked()V
 
-    .line 9427
+    .line 9395
     :cond_29
-    if-eqz v40, :cond_2a
+    if-eqz v32, :cond_2a
 
-    .line 9428
+    .line 9396
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -10110,7 +9969,7 @@
 
     invoke-virtual {v2, v8}, Lcom/android/server/wm/WindowManagerService$H;->sendEmptyMessage(I)Z
 
-    .line 9433
+    .line 9401
     :cond_2a
     move-object/from16 v0, p0
 
@@ -10121,16 +9980,16 @@
     .catchall {:try_start_5 .. :try_end_5} :catchall_0
     .catch Ljava/lang/RuntimeException; {:try_start_5 .. :try_end_5} :catch_0
 
-    .line 9438
+    .line 9406
     invoke-static {}, Landroid/view/Surface;->closeTransaction()V
 
     goto/16 :goto_d
 
-    .line 9493
-    .end local v40           #focusDisplayed:Z
-    .end local v45           #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
-    .end local v51           #updateAllDrawn:Z
-    .restart local v31       #defaultWindows:Lcom/android/server/wm/WindowList;
+    .line 9461
+    .end local v32           #focusDisplayed:Z
+    .end local v37           #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
+    .end local v43           #updateAllDrawn:Z
+    .restart local v23       #defaultWindows:Lcom/android/server/wm/WindowList;
     :cond_2b
     move-object/from16 v0, p0
 
@@ -10142,258 +10001,178 @@
 
     if-eqz v2, :cond_1f
 
-    .line 9496
-    move-object/from16 v0, v28
+    .line 9464
+    move-object/from16 v0, v20
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
     or-int/lit8 v2, v2, 0x1
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iput v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
     goto/16 :goto_e
 
-    .line 9520
-    .restart local v53       #win:Lcom/android/server/wm/WindowState;
+    .line 9488
+    .restart local v45       #win:Lcom/android/server/wm/WindowState;
     :cond_2c
-    move-object/from16 v0, v53
+    move-object/from16 v0, v45
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
-    move-object/from16 v54, v0
+    move-object/from16 v46, v0
 
-    .line 9524
-    .restart local v54       #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
-    const/16 v33, 0x0
+    .line 9492
+    .restart local v46       #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
+    const/16 v25, 0x0
 
-    .line 9525
-    .local v33, diff:I
+    .line 9493
+    .local v25, diff:I
     :try_start_6
-    invoke-virtual/range {v53 .. v53}, Lcom/android/server/wm/WindowState;->isConfigChanged()Z
+    invoke-virtual/range {v45 .. v45}, Lcom/android/server/wm/WindowState;->isConfigChanged()Z
 
-    move-result v26
+    move-result v18
 
-    .line 9533
-    .local v26, configChanged:Z
+    .line 9501
+    .local v18, configChanged:Z
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mCurConfiguration:Landroid/content/res/Configuration;
 
-    move-object/from16 v0, v53
+    move-object/from16 v0, v45
 
     invoke-virtual {v0, v2}, Lcom/android/server/wm/WindowState;->setConfiguration(Landroid/content/res/Configuration;)V
 
-    .line 9537
-    move-object/from16 v0, v54
+    .line 9505
+    move-object/from16 v0, v45
+
+    iget-object v8, v0, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
+
+    move-object/from16 v0, v45
+
+    iget-object v9, v0, Lcom/android/server/wm/WindowState;->mFrame:Landroid/graphics/Rect;
+
+    move-object/from16 v0, v45
+
+    iget-object v10, v0, Lcom/android/server/wm/WindowState;->mLastContentInsets:Landroid/graphics/Rect;
+
+    move-object/from16 v0, v45
+
+    iget-object v11, v0, Lcom/android/server/wm/WindowState;->mLastVisibleInsets:Landroid/graphics/Rect;
+
+    move-object/from16 v0, v46
 
     iget v2, v0, Lcom/android/server/wm/WindowStateAnimator;->mDrawState:I
 
-    const/4 v8, 0x1
+    const/4 v12, 0x1
 
-    if-ne v2, v8, :cond_2d
+    if-ne v2, v12, :cond_2d
 
-    const/4 v14, 0x1
+    const/4 v12, 0x1
 
-    .line 9539
-    .local v14, reportDraw:Z
     :goto_12
-    if-eqz v26, :cond_2e
+    if-eqz v18, :cond_2e
 
-    move-object/from16 v0, v53
+    move-object/from16 v0, v45
 
-    iget-object v15, v0, Lcom/android/server/wm/WindowState;->mConfiguration:Landroid/content/res/Configuration;
+    iget-object v13, v0, Lcom/android/server/wm/WindowState;->mConfiguration:Landroid/content/res/Configuration;
 
-    .line 9540
-    .local v15, newConfig:Landroid/content/res/Configuration;
     :goto_13
-    move-object/from16 v0, v53
+    invoke-interface/range {v8 .. v13}, Landroid/view/IWindow;->resized(Landroid/graphics/Rect;Landroid/graphics/Rect;Landroid/graphics/Rect;ZLandroid/content/res/Configuration;)V
 
-    iget-object v2, v0, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
-
-    instance-of v2, v2, Landroid/view/IWindow$Stub;
-
-    if-eqz v2, :cond_2f
-
-    .line 9542
-    move-object/from16 v0, v53
-
-    iget-object v10, v0, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
-
-    .line 9543
-    .local v10, client:Landroid/view/IWindow;
-    move-object/from16 v0, v53
-
-    iget-object v11, v0, Lcom/android/server/wm/WindowState;->mFrame:Landroid/graphics/Rect;
-
-    .line 9544
-    .local v11, frame:Landroid/graphics/Rect;
-    move-object/from16 v0, v53
-
-    iget-object v12, v0, Lcom/android/server/wm/WindowState;->mLastContentInsets:Landroid/graphics/Rect;
-
-    .line 9545
-    .local v12, contentInsets:Landroid/graphics/Rect;
-    move-object/from16 v0, v53
-
-    iget-object v13, v0, Lcom/android/server/wm/WindowState;->mLastVisibleInsets:Landroid/graphics/Rect;
-
-    .line 9546
-    .local v13, visibleInsets:Landroid/graphics/Rect;
-    move-object/from16 v0, p0
-
-    iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
-
-    new-instance v8, Lcom/android/server/wm/WindowManagerService$8;
-
-    move-object/from16 v9, p0
-
-    invoke-direct/range {v8 .. v15}, Lcom/android/server/wm/WindowManagerService$8;-><init>(Lcom/android/server/wm/WindowManagerService;Landroid/view/IWindow;Landroid/graphics/Rect;Landroid/graphics/Rect;Landroid/graphics/Rect;ZLandroid/content/res/Configuration;)V
-
-    invoke-virtual {v2, v8}, Lcom/android/server/wm/WindowManagerService$H;->post(Ljava/lang/Runnable;)Z
-
-    .line 9562
-    .end local v10           #client:Landroid/view/IWindow;
-    .end local v11           #frame:Landroid/graphics/Rect;
-    .end local v12           #contentInsets:Landroid/graphics/Rect;
-    .end local v13           #visibleInsets:Landroid/graphics/Rect;
-    :goto_14
+    .line 9508
     const/4 v2, 0x0
 
-    move-object/from16 v0, v53
+    move-object/from16 v0, v45
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowState;->mContentInsetsChanged:Z
 
-    .line 9563
+    .line 9509
     const/4 v2, 0x0
 
-    move-object/from16 v0, v53
+    move-object/from16 v0, v45
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowState;->mVisibleInsetsChanged:Z
 
-    .line 9564
+    .line 9510
     const/4 v2, 0x0
 
-    move-object/from16 v0, v54
+    move-object/from16 v0, v46
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceResized:Z
     :try_end_6
     .catch Landroid/os/RemoteException; {:try_start_6 .. :try_end_6} :catch_1
 
-    .line 9568
-    .end local v14           #reportDraw:Z
-    .end local v15           #newConfig:Landroid/content/res/Configuration;
-    .end local v26           #configChanged:Z
-    :goto_15
+    .line 9514
+    .end local v18           #configChanged:Z
+    :goto_14
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mResizingWindows:Ljava/util/ArrayList;
 
-    move/from16 v0, v42
+    move/from16 v0, v34
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->remove(I)Ljava/lang/Object;
 
     goto/16 :goto_10
 
-    .line 9537
-    .restart local v26       #configChanged:Z
+    .line 9505
+    .restart local v18       #configChanged:Z
     :cond_2d
-    const/4 v14, 0x0
+    const/4 v12, 0x0
 
     goto :goto_12
 
-    .line 9539
-    .restart local v14       #reportDraw:Z
     :cond_2e
-    const/4 v15, 0x0
+    const/4 v13, 0x0
 
     goto :goto_13
 
-    .line 9559
-    .restart local v15       #newConfig:Landroid/content/res/Configuration;
-    :cond_2f
-    :try_start_7
-    move-object/from16 v0, v53
-
-    iget-object v0, v0, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
-
-    move-object/from16 v16, v0
-
-    move-object/from16 v0, v53
-
-    iget-object v0, v0, Lcom/android/server/wm/WindowState;->mFrame:Landroid/graphics/Rect;
-
-    move-object/from16 v17, v0
-
-    move-object/from16 v0, v53
-
-    iget-object v0, v0, Lcom/android/server/wm/WindowState;->mLastContentInsets:Landroid/graphics/Rect;
-
-    move-object/from16 v18, v0
-
-    move-object/from16 v0, v53
-
-    iget-object v0, v0, Lcom/android/server/wm/WindowState;->mLastVisibleInsets:Landroid/graphics/Rect;
-
-    move-object/from16 v19, v0
-
-    move/from16 v20, v14
-
-    move-object/from16 v21, v15
-
-    invoke-interface/range {v16 .. v21}, Landroid/view/IWindow;->resized(Landroid/graphics/Rect;Landroid/graphics/Rect;Landroid/graphics/Rect;ZLandroid/content/res/Configuration;)V
-    :try_end_7
-    .catch Landroid/os/RemoteException; {:try_start_7 .. :try_end_7} :catch_1
-
-    goto :goto_14
-
-    .line 9565
-    .end local v14           #reportDraw:Z
-    .end local v15           #newConfig:Landroid/content/res/Configuration;
-    .end local v26           #configChanged:Z
+    .line 9511
+    .end local v18           #configChanged:Z
     :catch_1
-    move-exception v39
+    move-exception v31
 
-    .line 9566
-    .local v39, e:Landroid/os/RemoteException;
+    .line 9512
+    .local v31, e:Landroid/os/RemoteException;
     const/4 v2, 0x0
 
-    move-object/from16 v0, v53
+    move-object/from16 v0, v45
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowState;->mOrientationChanging:Z
 
-    goto :goto_15
+    goto :goto_14
 
-    .line 9574
-    .end local v33           #diff:I
-    .end local v39           #e:Landroid/os/RemoteException;
-    .end local v53           #win:Lcom/android/server/wm/WindowState;
-    .end local v54           #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
-    :cond_30
+    .line 9520
+    .end local v25           #diff:I
+    .end local v31           #e:Landroid/os/RemoteException;
+    .end local v45           #win:Lcom/android/server/wm/WindowState;
+    .end local v46           #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
+    :cond_2f
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     iget-boolean v2, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mOrientationChangeComplete:Z
 
-    if-eqz v2, :cond_32
+    if-eqz v2, :cond_31
 
-    .line 9575
+    .line 9521
     move-object/from16 v0, p0
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mWindowsFreezingScreen:Z
 
-    if-eqz v2, :cond_31
+    if-eqz v2, :cond_30
 
-    .line 9576
+    .line 9522
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mWindowsFreezingScreen:Z
 
-    .line 9577
+    .line 9523
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -10402,84 +10181,84 @@
 
     invoke-virtual {v2, v8}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 9579
-    :cond_31
+    .line 9525
+    :cond_30
     invoke-direct/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->stopFreezingDisplayLocked()V
 
-    .line 9583
-    :cond_32
-    const/16 v52, 0x0
+    .line 9529
+    :cond_31
+    const/16 v44, 0x0
 
-    .line 9584
-    .local v52, wallpaperDestroyed:Z
+    .line 9530
+    .local v44, wallpaperDestroyed:Z
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mDestroySurface:Ljava/util/ArrayList;
 
     invoke-virtual {v2}, Ljava/util/ArrayList;->size()I
 
-    move-result v42
+    move-result v34
 
-    .line 9585
-    if-lez v42, :cond_36
+    .line 9531
+    if-lez v34, :cond_35
 
-    .line 9587
-    :cond_33
-    add-int/lit8 v42, v42, -0x1
+    .line 9533
+    :cond_32
+    add-int/lit8 v34, v34, -0x1
 
-    .line 9588
+    .line 9534
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mDestroySurface:Ljava/util/ArrayList;
 
-    move/from16 v0, v42
+    move/from16 v0, v34
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
-    move-result-object v53
+    move-result-object v45
 
-    check-cast v53, Lcom/android/server/wm/WindowState;
+    check-cast v45, Lcom/android/server/wm/WindowState;
 
-    .line 9589
-    .restart local v53       #win:Lcom/android/server/wm/WindowState;
+    .line 9535
+    .restart local v45       #win:Lcom/android/server/wm/WindowState;
     const/4 v2, 0x0
 
-    move-object/from16 v0, v53
+    move-object/from16 v0, v45
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowState;->mDestroying:Z
 
-    .line 9590
+    .line 9536
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
-    move-object/from16 v0, v53
+    move-object/from16 v0, v45
 
-    if-ne v2, v0, :cond_34
+    if-ne v2, v0, :cond_33
 
-    .line 9591
+    .line 9537
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
-    .line 9593
-    :cond_34
+    .line 9539
+    :cond_33
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    move-object/from16 v0, v53
+    move-object/from16 v0, v45
 
-    if-ne v0, v2, :cond_35
+    if-ne v0, v2, :cond_34
 
-    .line 9594
-    const/16 v52, 0x1
+    .line 9540
+    const/16 v44, 0x1
 
-    .line 9596
-    :cond_35
-    move-object/from16 v0, v53
+    .line 9542
+    :cond_34
+    move-object/from16 v0, v45
 
     iget-object v2, v0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
@@ -10487,19 +10266,19 @@
 
     invoke-virtual {v2, v8}, Lcom/android/server/wm/WindowStateAnimator;->destroySurfaceLocked(Z)V
 
-    .line 9597
-    if-gtz v42, :cond_33
+    .line 9543
+    if-gtz v34, :cond_32
 
-    .line 9598
+    .line 9544
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mDestroySurface:Ljava/util/ArrayList;
 
     invoke-virtual {v2}, Ljava/util/ArrayList;->clear()V
 
-    .line 9602
-    .end local v53           #win:Lcom/android/server/wm/WindowState;
-    :cond_36
+    .line 9548
+    .end local v45           #win:Lcom/android/server/wm/WindowState;
+    :cond_35
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mExitingTokens:Ljava/util/ArrayList;
@@ -10508,71 +10287,71 @@
 
     move-result v2
 
-    add-int/lit8 v42, v2, -0x1
+    add-int/lit8 v34, v2, -0x1
 
-    :goto_16
-    if-ltz v42, :cond_38
+    :goto_15
+    if-ltz v34, :cond_37
 
-    .line 9603
+    .line 9549
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mExitingTokens:Ljava/util/ArrayList;
 
-    move/from16 v0, v42
+    move/from16 v0, v34
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
-    move-result-object v50
+    move-result-object v42
 
-    check-cast v50, Lcom/android/server/wm/WindowToken;
+    check-cast v42, Lcom/android/server/wm/WindowToken;
 
-    .line 9604
-    .local v50, token:Lcom/android/server/wm/WindowToken;
-    move-object/from16 v0, v50
+    .line 9550
+    .local v42, token:Lcom/android/server/wm/WindowToken;
+    move-object/from16 v0, v42
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowToken;->hasVisible:Z
 
-    if-nez v2, :cond_37
+    if-nez v2, :cond_36
 
-    .line 9605
+    .line 9551
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mExitingTokens:Ljava/util/ArrayList;
 
-    move/from16 v0, v42
+    move/from16 v0, v34
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->remove(I)Ljava/lang/Object;
 
-    .line 9606
-    move-object/from16 v0, v50
+    .line 9552
+    move-object/from16 v0, v42
 
     iget v2, v0, Lcom/android/server/wm/WindowToken;->windowType:I
 
     const/16 v8, 0x7dd
 
-    if-ne v2, v8, :cond_37
+    if-ne v2, v8, :cond_36
 
-    .line 9607
+    .line 9553
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
-    move-object/from16 v0, v50
+    move-object/from16 v0, v42
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 9608
+    .line 9554
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->updateLayoutToAnimWallpaperTokens()V
 
-    .line 9602
+    .line 9548
+    :cond_36
+    add-int/lit8 v34, v34, -0x1
+
+    goto :goto_15
+
+    .line 9560
+    .end local v42           #token:Lcom/android/server/wm/WindowToken;
     :cond_37
-    add-int/lit8 v42, v42, -0x1
-
-    goto :goto_16
-
-    .line 9614
-    .end local v50           #token:Lcom/android/server/wm/WindowToken;
-    :cond_38
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mExitingAppTokens:Ljava/util/ArrayList;
@@ -10581,53 +10360,53 @@
 
     move-result v2
 
-    add-int/lit8 v42, v2, -0x1
+    add-int/lit8 v34, v2, -0x1
 
-    :goto_17
-    if-ltz v42, :cond_3a
+    :goto_16
+    if-ltz v34, :cond_39
 
-    .line 9615
+    .line 9561
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mExitingAppTokens:Ljava/util/ArrayList;
 
-    move/from16 v0, v42
+    move/from16 v0, v34
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
-    move-result-object v50
+    move-result-object v42
 
-    check-cast v50, Lcom/android/server/wm/AppWindowToken;
+    check-cast v42, Lcom/android/server/wm/AppWindowToken;
 
-    .line 9616
-    .local v50, token:Lcom/android/server/wm/AppWindowToken;
-    move-object/from16 v0, v50
+    .line 9562
+    .local v42, token:Lcom/android/server/wm/AppWindowToken;
+    move-object/from16 v0, v42
 
     iget-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->hasVisible:Z
 
-    if-nez v2, :cond_39
+    if-nez v2, :cond_38
 
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mClosingApps:Ljava/util/ArrayList;
 
-    move-object/from16 v0, v50
+    move-object/from16 v0, v42
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->contains(Ljava/lang/Object;)Z
 
     move-result v2
 
-    if-nez v2, :cond_39
+    if-nez v2, :cond_38
 
-    .line 9620
-    move-object/from16 v0, v50
+    .line 9566
+    move-object/from16 v0, v42
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     invoke-virtual {v2}, Lcom/android/server/wm/AppWindowAnimator;->clearAnimation()V
 
-    .line 9621
-    move-object/from16 v0, v50
+    .line 9567
+    move-object/from16 v0, v42
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
@@ -10635,49 +10414,49 @@
 
     iput-boolean v8, v2, Lcom/android/server/wm/AppWindowAnimator;->animating:Z
 
-    .line 9624
+    .line 9570
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
-    move-object/from16 v0, v50
+    move-object/from16 v0, v42
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 9625
+    .line 9571
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
-    move-object/from16 v0, v50
+    move-object/from16 v0, v42
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 9626
+    .line 9572
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mExitingAppTokens:Ljava/util/ArrayList;
 
-    move/from16 v0, v42
+    move/from16 v0, v34
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->remove(I)Ljava/lang/Object;
 
-    .line 9614
+    .line 9560
+    :cond_38
+    add-int/lit8 v34, v34, -0x1
+
+    goto :goto_16
+
+    .line 9576
+    .end local v42           #token:Lcom/android/server/wm/AppWindowToken;
     :cond_39
-    add-int/lit8 v42, v42, -0x1
-
-    goto :goto_17
-
-    .line 9630
-    .end local v50           #token:Lcom/android/server/wm/AppWindowToken;
-    :cond_3a
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
     iget-boolean v2, v2, Lcom/android/server/wm/WindowAnimator;->mAnimating:Z
 
-    if-nez v2, :cond_3c
+    if-nez v2, :cond_3b
 
     move-object/from16 v0, p0
 
@@ -10687,9 +10466,9 @@
 
     move-result v2
 
-    if-lez v2, :cond_3c
+    if-lez v2, :cond_3b
 
-    .line 9631
+    .line 9577
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mRelayoutWhileAnimating:Ljava/util/ArrayList;
@@ -10698,19 +10477,19 @@
 
     move-result v2
 
-    add-int/lit8 v46, v2, -0x1
+    add-int/lit8 v38, v2, -0x1
 
-    .local v46, j:I
-    :goto_18
-    if-ltz v46, :cond_3b
+    .local v38, j:I
+    :goto_17
+    if-ltz v38, :cond_3a
 
-    .line 9633
-    :try_start_8
+    .line 9579
+    :try_start_7
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mRelayoutWhileAnimating:Ljava/util/ArrayList;
 
-    move/from16 v0, v46
+    move/from16 v0, v38
 
     invoke-virtual {v2, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
@@ -10721,35 +10500,35 @@
     iget-object v2, v2, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
 
     invoke-interface {v2}, Landroid/view/IWindow;->doneAnimating()V
-    :try_end_8
-    .catch Landroid/os/RemoteException; {:try_start_8 .. :try_end_8} :catch_2
+    :try_end_7
+    .catch Landroid/os/RemoteException; {:try_start_7 .. :try_end_7} :catch_2
 
-    .line 9631
-    :goto_19
-    add-int/lit8 v46, v46, -0x1
+    .line 9577
+    :goto_18
+    add-int/lit8 v38, v38, -0x1
 
-    goto :goto_18
+    goto :goto_17
 
-    .line 9637
-    :cond_3b
+    .line 9583
+    :cond_3a
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mRelayoutWhileAnimating:Ljava/util/ArrayList;
 
     invoke-virtual {v2}, Ljava/util/ArrayList;->clear()V
 
-    .line 9640
-    .end local v46           #j:I
-    :cond_3c
-    if-eqz v52, :cond_3d
+    .line 9586
+    .end local v38           #j:I
+    :cond_3b
+    if-eqz v44, :cond_3c
 
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->adjustWallpaperWindowsLocked()I
 
     move-result v2
 
-    if-eqz v2, :cond_3d
+    if-eqz v2, :cond_3c
 
-    .line 9641
+    .line 9587
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v2
@@ -10758,51 +10537,51 @@
 
     iput-boolean v8, v2, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 9644
-    :cond_3d
-    new-instance v45, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
+    .line 9590
+    :cond_3c
+    new-instance v37, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
 
-    move-object/from16 v0, v45
+    move-object/from16 v0, v37
 
     move-object/from16 v1, p0
 
     invoke-direct {v0, v1}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 9645
-    .restart local v45       #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
-    :cond_3e
-    :goto_1a
-    invoke-virtual/range {v45 .. v45}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->hasNext()Z
+    .line 9591
+    .restart local v37       #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
+    :cond_3d
+    :goto_19
+    invoke-virtual/range {v37 .. v37}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->hasNext()Z
 
     move-result v2
 
-    if-eqz v2, :cond_3f
+    if-eqz v2, :cond_3e
 
-    .line 9646
-    invoke-virtual/range {v45 .. v45}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
+    .line 9592
+    invoke-virtual/range {v37 .. v37}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
 
-    move-result-object v34
+    move-result-object v26
 
-    .line 9647
-    .restart local v34       #displayContent:Lcom/android/server/wm/DisplayContent;
-    move-object/from16 v0, v34
+    .line 9593
+    .restart local v26       #displayContent:Lcom/android/server/wm/DisplayContent;
+    move-object/from16 v0, v26
 
     iget v2, v0, Lcom/android/server/wm/DisplayContent;->pendingLayoutChanges:I
 
-    if-eqz v2, :cond_3e
+    if-eqz v2, :cond_3d
 
-    .line 9648
+    .line 9594
     const/4 v2, 0x1
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iput-boolean v2, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    goto :goto_1a
+    goto :goto_19
 
-    .line 9653
-    .end local v34           #displayContent:Lcom/android/server/wm/DisplayContent;
-    :cond_3f
+    .line 9599
+    .end local v26           #displayContent:Lcom/android/server/wm/DisplayContent;
+    :cond_3e
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
@@ -10811,13 +10590,13 @@
 
     invoke-virtual {v2, v8}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 9655
+    .line 9601
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mHoldScreen:Lcom/android/server/wm/Session;
-    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1800(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Lcom/android/server/wm/Session;
+    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1700(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Lcom/android/server/wm/Session;
 
     move-result-object v2
 
@@ -10825,19 +10604,61 @@
 
     invoke-virtual {v0, v2}, Lcom/android/server/wm/WindowManagerService;->setHoldScreenLocked(Lcom/android/server/wm/Session;)V
 
-    .line 9656
+    .line 9602
     move-object/from16 v0, p0
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mDisplayFrozen:Z
 
-    if-nez v2, :cond_42
+    if-nez v2, :cond_41
 
-    .line 9657
+    .line 9603
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
+    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1900(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
+
+    move-result v2
+
+    const/4 v8, 0x0
+
+    cmpg-float v2, v2, v8
+
+    if-ltz v2, :cond_3f
+
+    move-object/from16 v0, p0
+
+    iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
+
+    #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
+    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1900(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
+
+    move-result v2
+
+    const/high16 v8, 0x3f80
+
+    cmpl-float v2, v2, v8
+
+    if-lez v2, :cond_47
+
+    .line 9604
+    :cond_3f
+    move-object/from16 v0, p0
+
+    iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPowerManager:Lcom/android/server/power/PowerManagerService;
+
+    const/4 v8, -0x1
+
+    invoke-virtual {v2, v8}, Lcom/android/server/power/PowerManagerService;->setScreenBrightnessOverrideFromWindowManager(I)V
+
+    .line 9609
+    :goto_1a
+    move-object/from16 v0, p0
+
+    iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
+
+    #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
     invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2000(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
 
     move-result v2
@@ -10852,7 +10673,7 @@
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
-    #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
+    #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
     invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2000(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
 
     move-result v2
@@ -10863,50 +10684,8 @@
 
     if-lez v2, :cond_48
 
-    .line 9658
+    .line 9610
     :cond_40
-    move-object/from16 v0, p0
-
-    iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPowerManager:Lcom/android/server/power/PowerManagerService;
-
-    const/4 v8, -0x1
-
-    invoke-virtual {v2, v8}, Lcom/android/server/power/PowerManagerService;->setScreenBrightnessOverrideFromWindowManager(I)V
-
-    .line 9663
-    :goto_1b
-    move-object/from16 v0, p0
-
-    iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
-
-    #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
-    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2100(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
-
-    move-result v2
-
-    const/4 v8, 0x0
-
-    cmpg-float v2, v2, v8
-
-    if-ltz v2, :cond_41
-
-    move-object/from16 v0, p0
-
-    iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
-
-    #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
-    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2100(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
-
-    move-result v2
-
-    const/high16 v8, 0x3f80
-
-    cmpl-float v2, v2, v8
-
-    if-lez v2, :cond_49
-
-    .line 9664
-    :cond_41
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPowerManager:Lcom/android/server/power/PowerManagerService;
@@ -10915,8 +10694,8 @@
 
     invoke-virtual {v2, v8}, Lcom/android/server/power/PowerManagerService;->setButtonBrightnessOverrideFromWindowManager(I)V
 
-    .line 9669
-    :goto_1c
+    .line 9615
+    :goto_1b
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPowerManager:Lcom/android/server/power/PowerManagerService;
@@ -10926,21 +10705,21 @@
     iget-object v8, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUserActivityTimeout:J
-    invoke-static {v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2200(Lcom/android/server/wm/WindowManagerService$LayoutFields;)J
+    invoke-static {v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2100(Lcom/android/server/wm/WindowManagerService$LayoutFields;)J
 
     move-result-wide v8
 
     invoke-virtual {v2, v8, v9}, Lcom/android/server/power/PowerManagerService;->setUserActivityTimeoutOverrideFromWindowManager(J)V
 
-    .line 9673
-    :cond_42
+    .line 9619
+    :cond_41
     move-object/from16 v0, p0
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mTurnOnScreen:Z
 
-    if-eqz v2, :cond_43
+    if-eqz v2, :cond_42
 
-    .line 9675
+    .line 9621
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPowerManager:Lcom/android/server/power/PowerManagerService;
@@ -10951,27 +10730,27 @@
 
     invoke-virtual {v2, v8, v9}, Lcom/android/server/power/PowerManagerService;->wakeUp(J)V
 
-    .line 9676
+    .line 9622
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mTurnOnScreen:Z
 
-    .line 9679
-    :cond_43
+    .line 9625
+    :cond_42
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUpdateRotation:Z
-    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2500(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
+    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2400(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
 
     move-result v2
 
-    if-eqz v2, :cond_44
+    if-eqz v2, :cond_43
 
-    .line 9681
+    .line 9627
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
@@ -10980,9 +10759,9 @@
 
     move-result v2
 
-    if-eqz v2, :cond_4a
+    if-eqz v2, :cond_49
 
-    .line 9682
+    .line 9628
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -10991,64 +10770,62 @@
 
     invoke-virtual {v2, v8}, Lcom/android/server/wm/WindowManagerService$H;->sendEmptyMessage(I)Z
 
-    .line 9688
-    :cond_44
-    :goto_1d
+    .line 9634
+    :cond_43
+    :goto_1c
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     iget-boolean v2, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mOrientationChangeComplete:Z
 
-    if-eqz v2, :cond_45
+    if-eqz v2, :cond_44
 
-    move-object/from16 v0, v28
+    move-object/from16 v0, v20
 
     iget-boolean v2, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    if-nez v2, :cond_45
+    if-nez v2, :cond_44
 
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUpdateRotation:Z
-    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2500(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
+    invoke-static {v2}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2400(Lcom/android/server/wm/WindowManagerService$LayoutFields;)Z
 
     move-result v2
 
-    if-nez v2, :cond_45
+    if-nez v2, :cond_44
 
-    .line 9690
+    .line 9636
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->checkDrawnWindowsLocked()V
 
-    .line 9693
-    :cond_45
+    .line 9639
+    :cond_44
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPendingRemove:Ljava/util/ArrayList;
 
     invoke-virtual {v2}, Ljava/util/ArrayList;->size()I
 
-    move-result v22
+    move-result v14
 
-    .line 9694
-    .restart local v22       #N:I
-    if-lez v22, :cond_4c
+    .line 9640
+    .restart local v14       #N:I
+    if-lez v14, :cond_4b
 
-    .line 9695
+    .line 9641
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPendingRemoveTmp:[Lcom/android/server/wm/WindowState;
 
     array-length v2, v2
 
-    move/from16 v0, v22
+    if-ge v2, v14, :cond_45
 
-    if-ge v2, v0, :cond_46
-
-    .line 9696
-    add-int/lit8 v2, v22, 0xa
+    .line 9642
+    add-int/lit8 v2, v14, 0xa
 
     new-array v2, v2, [Lcom/android/server/wm/WindowState;
 
@@ -11056,8 +10833,8 @@
 
     iput-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPendingRemoveTmp:[Lcom/android/server/wm/WindowState;
 
-    .line 9698
-    :cond_46
+    .line 9644
+    :cond_45
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPendingRemove:Ljava/util/ArrayList;
@@ -11068,37 +10845,35 @@
 
     invoke-virtual {v2, v8}, Ljava/util/ArrayList;->toArray([Ljava/lang/Object;)[Ljava/lang/Object;
 
-    .line 9699
+    .line 9645
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPendingRemove:Ljava/util/ArrayList;
 
     invoke-virtual {v2}, Ljava/util/ArrayList;->clear()V
 
-    .line 9700
-    new-instance v37, Lcom/android/server/wm/DisplayContentList;
+    .line 9646
+    new-instance v29, Lcom/android/server/wm/DisplayContentList;
 
-    invoke-direct/range {v37 .. v37}, Lcom/android/server/wm/DisplayContentList;-><init>()V
+    invoke-direct/range {v29 .. v29}, Lcom/android/server/wm/DisplayContentList;-><init>()V
 
-    .line 9701
-    .local v37, displayList:Lcom/android/server/wm/DisplayContentList;
-    const/16 v42, 0x0
+    .line 9647
+    .local v29, displayList:Lcom/android/server/wm/DisplayContentList;
+    const/16 v34, 0x0
 
-    :goto_1e
-    move/from16 v0, v42
+    :goto_1d
+    move/from16 v0, v34
 
-    move/from16 v1, v22
+    if-ge v0, v14, :cond_4a
 
-    if-ge v0, v1, :cond_4b
-
-    .line 9702
+    .line 9648
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPendingRemoveTmp:[Lcom/android/server/wm/WindowState;
 
-    aget-object v3, v2, v42
+    aget-object v3, v2, v34
 
-    .line 9703
+    .line 9649
     .restart local v3       #w:Lcom/android/server/wm/WindowState;
     iget-object v2, v3, Lcom/android/server/wm/WindowState;->mSession:Lcom/android/server/wm/Session;
 
@@ -11106,35 +10881,35 @@
 
     invoke-direct {v0, v2, v3}, Lcom/android/server/wm/WindowManagerService;->removeWindowInnerLocked(Lcom/android/server/wm/Session;Lcom/android/server/wm/WindowState;)V
 
-    .line 9704
+    .line 9650
     iget-object v2, v3, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
-    move-object/from16 v0, v37
+    move-object/from16 v0, v29
 
     invoke-virtual {v0, v2}, Lcom/android/server/wm/DisplayContentList;->contains(Ljava/lang/Object;)Z
 
     move-result v2
 
-    if-nez v2, :cond_47
+    if-nez v2, :cond_46
 
-    .line 9705
+    .line 9651
     iget-object v2, v3, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
-    move-object/from16 v0, v37
+    move-object/from16 v0, v29
 
     invoke-virtual {v0, v2}, Lcom/android/server/wm/DisplayContentList;->add(Ljava/lang/Object;)Z
 
-    .line 9701
-    :cond_47
-    add-int/lit8 v42, v42, 0x1
+    .line 9647
+    :cond_46
+    add-int/lit8 v34, v34, 0x1
 
-    goto :goto_1e
+    goto :goto_1d
 
-    .line 9660
+    .line 9606
     .end local v3           #w:Lcom/android/server/wm/WindowState;
-    .end local v22           #N:I
-    .end local v37           #displayList:Lcom/android/server/wm/DisplayContentList;
-    :cond_48
+    .end local v14           #N:I
+    .end local v29           #displayList:Lcom/android/server/wm/DisplayContentList;
+    :cond_47
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPowerManager:Lcom/android/server/power/PowerManagerService;
@@ -11144,7 +10919,7 @@
     iget-object v8, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mScreenBrightness:F
-    invoke-static {v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2000(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
+    invoke-static {v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$1900(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
 
     move-result v8
 
@@ -11156,10 +10931,10 @@
 
     invoke-virtual {v2, v8}, Lcom/android/server/power/PowerManagerService;->setScreenBrightnessOverrideFromWindowManager(I)V
 
-    goto/16 :goto_1b
+    goto/16 :goto_1a
 
-    .line 9666
-    :cond_49
+    .line 9612
+    :cond_48
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mPowerManager:Lcom/android/server/power/PowerManagerService;
@@ -11169,7 +10944,7 @@
     iget-object v8, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     #getter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mButtonBrightness:F
-    invoke-static {v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2100(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
+    invoke-static {v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2000(Lcom/android/server/wm/WindowManagerService$LayoutFields;)F
 
     move-result v8
 
@@ -11181,10 +10956,10 @@
 
     invoke-virtual {v2, v8}, Lcom/android/server/power/PowerManagerService;->setButtonBrightnessOverrideFromWindowManager(I)V
 
-    goto/16 :goto_1c
+    goto/16 :goto_1b
 
-    .line 9684
-    :cond_4a
+    .line 9630
+    :cond_49
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -11192,35 +10967,35 @@
     const/4 v8, 0x0
 
     #setter for: Lcom/android/server/wm/WindowManagerService$LayoutFields;->mUpdateRotation:Z
-    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2502(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
+    invoke-static {v2, v8}, Lcom/android/server/wm/WindowManagerService$LayoutFields;->access$2402(Lcom/android/server/wm/WindowManagerService$LayoutFields;Z)Z
 
-    goto/16 :goto_1d
+    goto/16 :goto_1c
 
-    .line 9709
-    .restart local v22       #N:I
-    .restart local v37       #displayList:Lcom/android/server/wm/DisplayContentList;
-    :cond_4b
-    invoke-virtual/range {v37 .. v37}, Lcom/android/server/wm/DisplayContentList;->iterator()Ljava/util/Iterator;
+    .line 9655
+    .restart local v14       #N:I
+    .restart local v29       #displayList:Lcom/android/server/wm/DisplayContentList;
+    :cond_4a
+    invoke-virtual/range {v29 .. v29}, Lcom/android/server/wm/DisplayContentList;->iterator()Ljava/util/Iterator;
 
-    move-result-object v43
+    move-result-object v35
 
-    .local v43, i$:Ljava/util/Iterator;
-    :goto_1f
-    invoke-interface/range {v43 .. v43}, Ljava/util/Iterator;->hasNext()Z
+    .local v35, i$:Ljava/util/Iterator;
+    :goto_1e
+    invoke-interface/range {v35 .. v35}, Ljava/util/Iterator;->hasNext()Z
 
     move-result v2
 
-    if-eqz v2, :cond_4c
+    if-eqz v2, :cond_4b
 
-    invoke-interface/range {v43 .. v43}, Ljava/util/Iterator;->next()Ljava/lang/Object;
+    invoke-interface/range {v35 .. v35}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
-    move-result-object v34
+    move-result-object v26
 
-    check-cast v34, Lcom/android/server/wm/DisplayContent;
+    check-cast v26, Lcom/android/server/wm/DisplayContent;
 
-    .line 9710
-    .restart local v34       #displayContent:Lcom/android/server/wm/DisplayContent;
-    invoke-virtual/range {v34 .. v34}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
+    .line 9656
+    .restart local v26       #displayContent:Lcom/android/server/wm/DisplayContent;
+    invoke-virtual/range {v26 .. v26}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v2
 
@@ -11228,66 +11003,68 @@
 
     invoke-direct {v0, v2}, Lcom/android/server/wm/WindowManagerService;->assignLayersLocked(Lcom/android/server/wm/WindowList;)V
 
-    .line 9711
+    .line 9657
     const/4 v2, 0x1
 
-    move-object/from16 v0, v34
+    move-object/from16 v0, v26
 
     iput-boolean v2, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    goto :goto_1f
+    goto :goto_1e
 
-    .line 9717
-    .end local v34           #displayContent:Lcom/android/server/wm/DisplayContent;
-    .end local v37           #displayList:Lcom/android/server/wm/DisplayContentList;
-    .end local v43           #i$:Ljava/util/Iterator;
-    :cond_4c
+    .line 9663
+    .end local v26           #displayContent:Lcom/android/server/wm/DisplayContent;
+    .end local v29           #displayList:Lcom/android/server/wm/DisplayContentList;
+    .end local v35           #i$:Ljava/util/Iterator;
+    :cond_4b
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->enableScreenIfNeededLocked()V
 
-    .line 9719
+    .line 9665
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->updateLayoutToAnimationLocked()V
 
-    .line 9725
+    .line 9671
     return-void
 
-    .line 9634
-    .end local v22           #N:I
-    .end local v45           #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
-    .restart local v46       #j:I
+    .line 9580
+    .end local v14           #N:I
+    .end local v37           #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
+    .restart local v38       #j:I
     :catch_2
     move-exception v2
 
-    goto/16 :goto_19
+    goto/16 :goto_18
 
-    .line 9303
-    .end local v31           #defaultWindows:Lcom/android/server/wm/WindowList;
-    .end local v46           #j:I
-    .end local v52           #wallpaperDestroyed:Z
+    .line 9271
+    .end local v23           #defaultWindows:Lcom/android/server/wm/WindowList;
+    .end local v38           #j:I
+    .end local v44           #wallpaperDestroyed:Z
     .restart local v3       #w:Lcom/android/server/wm/WindowState;
     .restart local v6       #innerDw:I
     .restart local v7       #innerDh:I
-    .restart local v22       #N:I
-    .restart local v23       #a:Landroid/view/animation/Animation;
-    .restart local v32       #dh:I
-    .restart local v34       #displayContent:Lcom/android/server/wm/DisplayContent;
-    .restart local v35       #displayId:I
-    .restart local v36       #displayInfo:Landroid/view/DisplayInfo;
-    .restart local v38       #dw:I
-    .restart local v40       #focusDisplayed:Z
-    .restart local v44       #isDefaultDisplay:Z
-    .restart local v45       #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
-    .restart local v47       #obscuredChanged:Z
-    .restart local v48       #repeats:I
-    .restart local v49       #someoneLosingFocus:Z
-    .restart local v51       #updateAllDrawn:Z
-    .restart local v54       #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
-    .restart local v55       #windows:Lcom/android/server/wm/WindowList;
+    .restart local v14       #N:I
+    .restart local v15       #a:Landroid/view/animation/Animation;
+    .restart local v24       #dh:I
+    .restart local v26       #displayContent:Lcom/android/server/wm/DisplayContent;
+    .restart local v27       #displayId:I
+    .restart local v28       #displayInfo:Landroid/view/DisplayInfo;
+    .restart local v30       #dw:I
+    .restart local v32       #focusDisplayed:Z
+    .restart local v36       #isDefaultDisplay:Z
+    .restart local v37       #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
+    .restart local v39       #obscuredChanged:Z
+    .restart local v40       #repeats:I
+    .restart local v41       #someoneLosingFocus:Z
+    .restart local v43       #updateAllDrawn:Z
+    .restart local v46       #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
+    .restart local v47       #windows:Lcom/android/server/wm/WindowList;
     :catch_3
     move-exception v2
 
     goto/16 :goto_8
 
-    .line 9403
+    .line 9371
+    nop
+
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_0
@@ -11303,12 +11080,12 @@
 
     const/4 v8, 0x0
 
-    .line 8360
+    .line 8328
     iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mInLayout:Z
 
     if-eqz v5, :cond_1
 
-    .line 8364
+    .line 8332
     const-string v5, "WindowManager"
 
     new-instance v6, Ljava/lang/StringBuilder;
@@ -11337,46 +11114,46 @@
 
     invoke-static {v5, v6}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8434
+    .line 8402
     :cond_0
     :goto_0
     return-void
 
-    .line 8369
+    .line 8337
     :cond_1
     iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForConfig:Z
 
     if-nez v5, :cond_0
 
-    .line 8376
+    .line 8344
     iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayReady:Z
 
     if-eqz v5, :cond_0
 
-    .line 8381
+    .line 8349
     const-string v5, "wmLayout"
 
     invoke-static {v9, v10, v5}, Landroid/os/Trace;->traceBegin(JLjava/lang/String;)V
 
-    .line 8382
+    .line 8350
     const/4 v5, 0x1
 
     iput-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mInLayout:Z
 
-    .line 8383
+    .line 8351
     const/4 v2, 0x0
 
-    .line 8386
+    .line 8354
     .local v2, recoveringMemory:Z
     :try_start_0
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mForceRemoves:Ljava/util/ArrayList;
 
     if-eqz v5, :cond_3
 
-    .line 8387
+    .line 8355
     const/4 v2, 0x1
 
-    .line 8389
+    .line 8357
     const/4 v1, 0x0
 
     .local v1, i:I
@@ -11389,7 +11166,7 @@
 
     if-ge v1, v5, :cond_2
 
-    .line 8390
+    .line 8358
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mForceRemoves:Ljava/util/ArrayList;
 
     invoke-virtual {v5, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -11398,7 +11175,7 @@
 
     check-cast v4, Lcom/android/server/wm/WindowState;
 
-    .line 8391
+    .line 8359
     .local v4, ws:Lcom/android/server/wm/WindowState;
     const-string v5, "WindowManager"
 
@@ -11422,42 +11199,42 @@
 
     invoke-static {v5, v6}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8392
+    .line 8360
     iget-object v5, v4, Lcom/android/server/wm/WindowState;->mSession:Lcom/android/server/wm/Session;
 
     invoke-direct {p0, v5, v4}, Lcom/android/server/wm/WindowManagerService;->removeWindowInnerLocked(Lcom/android/server/wm/Session;Lcom/android/server/wm/WindowState;)V
 
-    .line 8389
+    .line 8357
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_1
 
-    .line 8394
+    .line 8362
     .end local v4           #ws:Lcom/android/server/wm/WindowState;
     :cond_2
     const/4 v5, 0x0
 
     iput-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mForceRemoves:Ljava/util/ArrayList;
 
-    .line 8395
+    .line 8363
     const-string v5, "WindowManager"
 
     const-string v6, "Due to memory failure, waiting a bit for next layout"
 
     invoke-static {v5, v6}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8396
+    .line 8364
     new-instance v3, Ljava/lang/Object;
 
     invoke-direct {v3}, Ljava/lang/Object;-><init>()V
 
-    .line 8397
+    .line 8365
     .local v3, tmp:Ljava/lang/Object;
     monitor-enter v3
     :try_end_0
     .catch Ljava/lang/RuntimeException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 8399
+    .line 8367
     const-wide/16 v5, 0xfa
 
     :try_start_1
@@ -11466,14 +11243,14 @@
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
     .catch Ljava/lang/InterruptedException; {:try_start_1 .. :try_end_1} :catch_2
 
-    .line 8402
+    .line 8370
     :goto_2
     :try_start_2
     monitor-exit v3
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
-    .line 8409
+    .line 8377
     .end local v1           #i:I
     .end local v3           #tmp:Ljava/lang/Object;
     :cond_3
@@ -11481,19 +11258,19 @@
     :try_start_3
     invoke-direct {p0, v2}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLockedInner(Z)V
 
-    .line 8411
+    .line 8379
     const/4 v5, 0x0
 
     iput-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mInLayout:Z
 
-    .line 8413
+    .line 8381
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->needsLayout()Z
 
     move-result v5
 
     if-eqz v5, :cond_6
 
-    .line 8414
+    .line 8382
     iget v5, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutRepeatCount:I
 
     add-int/lit8 v5, v5, 0x1
@@ -11504,10 +11281,10 @@
 
     if-ge v5, v6, :cond_5
 
-    .line 8415
+    .line 8383
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->requestTraversalLocked()V
 
-    .line 8424
+    .line 8392
     :goto_4
     iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
@@ -11521,14 +11298,14 @@
 
     if-nez v5, :cond_4
 
-    .line 8425
+    .line 8393
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/16 v6, 0x13
 
     invoke-virtual {v5, v6}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 8426
+    .line 8394
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -11566,13 +11343,13 @@
     :try_end_5
     .catch Ljava/lang/RuntimeException; {:try_start_5 .. :try_end_5} :catch_0
 
-    .line 8404
+    .line 8372
     .end local v1           #i:I
     .end local v3           #tmp:Ljava/lang/Object;
     :catch_0
     move-exception v0
 
-    .line 8405
+    .line 8373
     .local v0, e:Ljava/lang/RuntimeException;
     const-string v5, "WindowManager"
 
@@ -11582,7 +11359,7 @@
 
     goto :goto_3
 
-    .line 8417
+    .line 8385
     .end local v0           #e:Ljava/lang/RuntimeException;
     :cond_5
     :try_start_6
@@ -11592,7 +11369,7 @@
 
     invoke-static {v5, v6}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8418
+    .line 8386
     const/4 v5, 0x0
 
     iput v5, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutRepeatCount:I
@@ -11601,15 +11378,15 @@
 
     goto :goto_4
 
-    .line 8428
+    .line 8396
     :catch_1
     move-exception v0
 
-    .line 8429
+    .line 8397
     .restart local v0       #e:Ljava/lang/RuntimeException;
     iput-boolean v8, p0, Lcom/android/server/wm/WindowManagerService;->mInLayout:Z
 
-    .line 8430
+    .line 8398
     const-string v5, "WindowManager"
 
     const-string v6, "Unhandled exception while laying out windows"
@@ -11618,7 +11395,7 @@
 
     goto :goto_5
 
-    .line 8421
+    .line 8389
     .end local v0           #e:Ljava/lang/RuntimeException;
     :cond_6
     const/4 v5, 0x0
@@ -11630,7 +11407,7 @@
 
     goto :goto_4
 
-    .line 8400
+    .line 8368
     .restart local v1       #i:I
     .restart local v3       #tmp:Ljava/lang/Object;
     :catch_2
@@ -11646,7 +11423,7 @@
     .parameter "updateInputWindows"
 
     .prologue
-    .line 8438
+    .line 8406
     move-object/from16 v0, p1
 
     iget-boolean v0, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
@@ -11655,11 +11432,11 @@
 
     if-nez v19, :cond_0
 
-    .line 8606
+    .line 8574
     :goto_0
     return-void
 
-    .line 8441
+    .line 8409
     :cond_0
     const/16 v19, 0x0
 
@@ -11669,32 +11446,32 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 8442
+    .line 8410
     invoke-virtual/range {p1 .. p1}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v18
 
-    .line 8443
+    .line 8411
     .local v18, windows:Lcom/android/server/wm/WindowList;
     move-object/from16 v0, p1
 
     iget-boolean v13, v0, Lcom/android/server/wm/DisplayContent;->isDefaultDisplay:Z
 
-    .line 8445
+    .line 8413
     .local v13, isDefaultDisplay:Z
     invoke-virtual/range {p1 .. p1}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
 
     move-result-object v9
 
-    .line 8446
+    .line 8414
     .local v9, displayInfo:Landroid/view/DisplayInfo;
     iget v10, v9, Landroid/view/DisplayInfo;->logicalWidth:I
 
-    .line 8447
+    .line 8415
     .local v10, dw:I
     iget v8, v9, Landroid/view/DisplayInfo;->logicalHeight:I
 
-    .line 8449
+    .line 8417
     .local v8, dh:I
     move-object/from16 v0, p0
 
@@ -11706,7 +11483,7 @@
 
     move-result v5
 
-    .line 8450
+    .line 8418
     .local v5, NFW:I
     const/4 v12, 0x0
 
@@ -11714,7 +11491,7 @@
     :goto_1
     if-ge v12, v5, :cond_1
 
-    .line 8451
+    .line 8419
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mFakeWindows:Ljava/util/ArrayList;
@@ -11733,22 +11510,22 @@
 
     invoke-virtual {v0, v10, v8}, Lcom/android/server/wm/FakeWindowImpl;->layout(II)V
 
-    .line 8450
+    .line 8418
     add-int/lit8 v12, v12, 0x1
 
     goto :goto_1
 
-    .line 8454
+    .line 8422
     :cond_1
     invoke-virtual/range {v18 .. v18}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v4
 
-    .line 8463
+    .line 8431
     .local v4, N:I
     const/16 v16, 0x0
 
-    .line 8465
+    .line 8433
     .local v16, universeBackground:Lcom/android/server/wm/WindowStateAnimator;
     move-object/from16 v0, p0
 
@@ -11768,10 +11545,10 @@
 
     invoke-interface {v0, v13, v10, v8, v1}, Landroid/view/WindowManagerPolicy;->beginLayoutLw(ZIII)V
 
-    .line 8466
+    .line 8434
     if-eqz v13, :cond_2
 
-    .line 8468
+    .line 8436
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -11794,7 +11571,7 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowManagerService;->mSystemDecorLayer:I
 
-    .line 8469
+    .line 8437
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mScreenRect:Landroid/graphics/Rect;
@@ -11813,7 +11590,7 @@
 
     invoke-virtual {v0, v1, v2, v10, v8}, Landroid/graphics/Rect;->set(IIII)V
 
-    .line 8472
+    .line 8440
     :cond_2
     move-object/from16 v0, p0
 
@@ -11823,33 +11600,33 @@
 
     add-int/lit8 v14, v19, 0x1
 
-    .line 8473
+    .line 8441
     .local v14, seq:I
     if-gez v14, :cond_3
 
     const/4 v14, 0x0
 
-    .line 8474
+    .line 8442
     :cond_3
     move-object/from16 v0, p0
 
     iput v14, v0, Lcom/android/server/wm/WindowManagerService;->mLayoutSeq:I
 
-    .line 8476
+    .line 8444
     const/4 v7, 0x0
 
-    .line 8480
+    .line 8448
     .local v7, behindDream:Z
     const/4 v15, -0x1
 
-    .line 8481
+    .line 8449
     .local v15, topAttached:I
     add-int/lit8 v12, v4, -0x1
 
     :goto_2
     if-ltz v12, :cond_f
 
-    .line 8482
+    .line 8450
     move-object/from16 v0, v18
 
     invoke-virtual {v0, v12}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -11858,7 +11635,7 @@
 
     check-cast v17, Lcom/android/server/wm/WindowState;
 
-    .line 8487
+    .line 8455
     .local v17, win:Lcom/android/server/wm/WindowState;
     if-eqz v7, :cond_4
 
@@ -11896,7 +11673,7 @@
     :cond_5
     const/4 v11, 0x1
 
-    .line 8515
+    .line 8483
     .local v11, gone:Z
     :goto_3
     if-eqz v11, :cond_8
@@ -11985,7 +11762,7 @@
 
     if-ne v0, v1, :cond_b
 
-    .line 8519
+    .line 8487
     :cond_8
     move-object/from16 v0, v17
 
@@ -11995,10 +11772,10 @@
 
     if-nez v19, :cond_e
 
-    .line 8520
+    .line 8488
     if-eqz p2, :cond_9
 
-    .line 8522
+    .line 8490
     const/16 v19, 0x0
 
     move/from16 v0, v19
@@ -12007,7 +11784,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mContentChanged:Z
 
-    .line 8524
+    .line 8492
     :cond_9
     move-object/from16 v0, v17
 
@@ -12029,10 +11806,10 @@
 
     if-ne v0, v1, :cond_a
 
-    .line 8528
+    .line 8496
     const/4 v7, 0x1
 
-    .line 8530
+    .line 8498
     :cond_a
     const/16 v19, 0x0
 
@@ -12042,10 +11819,10 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mLayoutNeeded:Z
 
-    .line 8531
+    .line 8499
     invoke-virtual/range {v17 .. v17}, Lcom/android/server/wm/WindowState;->prelayout()V
 
-    .line 8532
+    .line 8500
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -12070,12 +11847,12 @@
 
     invoke-interface {v0, v1, v2, v3}, Landroid/view/WindowManagerPolicy;->layoutWindowLw(Landroid/view/WindowManagerPolicy$WindowState;Landroid/view/WindowManager$LayoutParams;Landroid/view/WindowManagerPolicy$WindowState;)V
 
-    .line 8533
+    .line 8501
     move-object/from16 v0, v17
 
     iput v14, v0, Lcom/android/server/wm/WindowState;->mLayoutSeq:I
 
-    .line 8542
+    .line 8510
     :cond_b
     :goto_4
     move-object/from16 v0, v17
@@ -12108,27 +11885,27 @@
 
     if-nez v16, :cond_c
 
-    .line 8545
+    .line 8513
     move-object/from16 v0, v17
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
     move-object/from16 v16, v0
 
-    .line 8481
+    .line 8449
     :cond_c
     add-int/lit8 v12, v12, -0x1
 
     goto/16 :goto_2
 
-    .line 8487
+    .line 8455
     .end local v11           #gone:Z
     :cond_d
     const/4 v11, 0x0
 
     goto/16 :goto_3
 
-    .line 8539
+    .line 8507
     .restart local v11       #gone:Z
     :cond_e
     if-gez v15, :cond_b
@@ -12137,7 +11914,7 @@
 
     goto :goto_4
 
-    .line 8549
+    .line 8517
     .end local v11           #gone:Z
     .end local v17           #win:Lcom/android/server/wm/WindowState;
     :cond_f
@@ -12159,7 +11936,7 @@
 
     if-eq v0, v1, :cond_10
 
-    .line 8550
+    .line 8518
     const/16 v19, 0x1
 
     move/from16 v0, v19
@@ -12168,7 +11945,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowManagerService;->mFocusMayChange:Z
 
-    .line 8551
+    .line 8519
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
@@ -12181,18 +11958,18 @@
 
     iput-object v0, v1, Lcom/android/server/wm/WindowAnimator;->mUniverseBackground:Lcom/android/server/wm/WindowStateAnimator;
 
-    .line 8554
+    .line 8522
     :cond_10
     const/4 v6, 0x0
 
-    .line 8560
+    .line 8528
     .local v6, attachedBehindDream:Z
     move v12, v15
 
     :goto_5
     if-ltz v12, :cond_17
 
-    .line 8561
+    .line 8529
     move-object/from16 v0, v18
 
     invoke-virtual {v0, v12}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -12201,7 +11978,7 @@
 
     check-cast v17, Lcom/android/server/wm/WindowState;
 
-    .line 8563
+    .line 8531
     .restart local v17       #win:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, v17
 
@@ -12211,7 +11988,7 @@
 
     if-eqz v19, :cond_16
 
-    .line 8573
+    .line 8541
     if-eqz v6, :cond_12
 
     move-object/from16 v0, p0
@@ -12238,14 +12015,14 @@
 
     if-eqz v19, :cond_12
 
-    .line 8560
+    .line 8528
     :cond_11
     :goto_6
     add-int/lit8 v12, v12, -0x1
 
     goto :goto_5
 
-    .line 8576
+    .line 8544
     :cond_12
     move-object/from16 v0, v17
 
@@ -12286,11 +12063,11 @@
 
     if-eqz v19, :cond_11
 
-    .line 8578
+    .line 8546
     :cond_14
     if-eqz p2, :cond_15
 
-    .line 8580
+    .line 8548
     const/16 v19, 0x0
 
     move/from16 v0, v19
@@ -12299,7 +12076,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mContentChanged:Z
 
-    .line 8582
+    .line 8550
     :cond_15
     const/16 v19, 0x0
 
@@ -12309,10 +12086,10 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mLayoutNeeded:Z
 
-    .line 8583
+    .line 8551
     invoke-virtual/range {v17 .. v17}, Lcom/android/server/wm/WindowState;->prelayout()V
 
-    .line 8584
+    .line 8552
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -12341,14 +12118,14 @@
 
     invoke-interface {v0, v1, v2, v3}, Landroid/view/WindowManagerPolicy;->layoutWindowLw(Landroid/view/WindowManagerPolicy$WindowState;Landroid/view/WindowManager$LayoutParams;Landroid/view/WindowManagerPolicy$WindowState;)V
 
-    .line 8585
+    .line 8553
     move-object/from16 v0, v17
 
     iput v14, v0, Lcom/android/server/wm/WindowState;->mLayoutSeq:I
 
     goto :goto_6
 
-    .line 8591
+    .line 8559
     :cond_16
     move-object/from16 v0, v17
 
@@ -12370,12 +12147,12 @@
 
     if-ne v0, v1, :cond_11
 
-    .line 8595
+    .line 8563
     move v6, v7
 
     goto :goto_6
 
-    .line 8600
+    .line 8568
     .end local v17           #win:Lcom/android/server/wm/WindowState;
     :cond_17
     move-object/from16 v0, p0
@@ -12386,10 +12163,10 @@
 
     invoke-virtual/range {v19 .. v19}, Lcom/android/server/wm/InputMonitor;->setUpdateInputWindowsNeededLw()V
 
-    .line 8601
+    .line 8569
     if-eqz p3, :cond_18
 
-    .line 8602
+    .line 8570
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
@@ -12400,7 +12177,7 @@
 
     invoke-virtual/range {v19 .. v20}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 8605
+    .line 8573
     :cond_18
     move-object/from16 v0, p0
 
@@ -12419,29 +12196,29 @@
     .parameter "window"
 
     .prologue
-    .line 901
+    .line 898
     invoke-virtual {p1}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v1
 
-    .line 902
+    .line 899
     .local v1, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v1, p1}, Lcom/android/server/wm/WindowList;->indexOf(Ljava/lang/Object;)I
 
     move-result v0
 
-    .line 906
+    .line 903
     .local v0, i:I
     add-int/lit8 v2, v0, 0x1
 
     invoke-virtual {v1, v2, p2}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 907
+    .line 904
     const/4 v2, 0x1
 
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 908
+    .line 905
     return-void
 .end method
 
@@ -12451,27 +12228,27 @@
     .parameter "window"
 
     .prologue
-    .line 911
+    .line 908
     invoke-virtual {p1}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v1
 
-    .line 912
+    .line 909
     .local v1, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v1, p1}, Lcom/android/server/wm/WindowList;->indexOf(Ljava/lang/Object;)I
 
     move-result v0
 
-    .line 916
+    .line 913
     .local v0, i:I
     invoke-virtual {v1, v0, p2}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 917
+    .line 914
     const/4 v2, 0x1
 
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 918
+    .line 915
     return-void
 .end method
 
@@ -12482,14 +12259,14 @@
     .parameter "token"
 
     .prologue
-    .line 5016
+    .line 5013
     iget-object v3, p3, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v3}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v0
 
-    .line 5017
+    .line 5014
     .local v0, NW:I
     const/4 v1, 0x0
 
@@ -12497,7 +12274,7 @@
     :goto_0
     if-ge v1, v0, :cond_1
 
-    .line 5018
+    .line 5015
     iget-object v3, p3, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v3, v1}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -12506,24 +12283,24 @@
 
     check-cast v2, Lcom/android/server/wm/WindowState;
 
-    .line 5019
+    .line 5016
     .local v2, win:Lcom/android/server/wm/WindowState;
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
     if-ne v3, p1, :cond_0
 
-    .line 5020
+    .line 5017
     invoke-direct {p0, p2, v2}, Lcom/android/server/wm/WindowManagerService;->reAddWindowLocked(ILcom/android/server/wm/WindowState;)I
 
     move-result p2
 
-    .line 5017
+    .line 5014
     :cond_0
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 5023
+    .line 5020
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     :cond_1
     return p2
@@ -12537,12 +12314,12 @@
     .prologue
     const/4 v6, 0x0
 
-    .line 4984
+    .line 4981
     invoke-virtual {p2}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v4
 
-    .line 4985
+    .line 4982
     .local v4, windows:Lcom/android/server/wm/WindowList;
     iget-object v5, p2, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
@@ -12550,11 +12327,11 @@
 
     move-result v0
 
-    .line 4986
+    .line 4983
     .local v0, NCW:I
     const/4 v1, 0x0
 
-    .line 4987
+    .line 4984
     .local v1, added:Z
     const/4 v3, 0x0
 
@@ -12562,7 +12339,7 @@
     :goto_0
     if-ge v3, v0, :cond_1
 
-    .line 4988
+    .line 4985
     iget-object v5, p2, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v5, v3}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -12571,7 +12348,7 @@
 
     check-cast v2, Lcom/android/server/wm/WindowState;
 
-    .line 4989
+    .line 4986
     .local v2, cwin:Lcom/android/server/wm/WindowState;
     if-nez v1, :cond_0
 
@@ -12579,54 +12356,54 @@
 
     if-ltz v5, :cond_0
 
-    .line 4992
+    .line 4989
     iput-boolean v6, p2, Lcom/android/server/wm/WindowState;->mRebuilding:Z
 
-    .line 4993
+    .line 4990
     invoke-virtual {v4, p1, p2}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 4994
+    .line 4991
     add-int/lit8 p1, p1, 0x1
 
-    .line 4995
+    .line 4992
     const/4 v1, 0x1
 
-    .line 4999
+    .line 4996
     :cond_0
     iput-boolean v6, v2, Lcom/android/server/wm/WindowState;->mRebuilding:Z
 
-    .line 5000
+    .line 4997
     invoke-virtual {v4, p1, v2}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 5001
+    .line 4998
     add-int/lit8 p1, p1, 0x1
 
-    .line 4987
+    .line 4984
     add-int/lit8 v3, v3, 0x1
 
     goto :goto_0
 
-    .line 5003
+    .line 5000
     .end local v2           #cwin:Lcom/android/server/wm/WindowState;
     :cond_1
     if-nez v1, :cond_2
 
-    .line 5006
+    .line 5003
     iput-boolean v6, p2, Lcom/android/server/wm/WindowState;->mRebuilding:Z
 
-    .line 5007
+    .line 5004
     invoke-virtual {v4, p1, p2}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 5008
+    .line 5005
     add-int/lit8 p1, p1, 0x1
 
-    .line 5010
+    .line 5007
     :cond_2
     const/4 v5, 0x1
 
     iput-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 5011
+    .line 5008
     return p1
 .end method
 
@@ -12635,38 +12412,38 @@
     .parameter "win"
 
     .prologue
-    .line 1426
+    .line 1423
     const/4 v2, 0x0
 
     invoke-direct {p0, p1, v2}, Lcom/android/server/wm/WindowManagerService;->addWindowToListInOrderLocked(Lcom/android/server/wm/WindowState;Z)V
 
-    .line 1430
+    .line 1427
     invoke-virtual {p1}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v0
 
-    .line 1431
+    .line 1428
     .local v0, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v0, p1}, Lcom/android/server/wm/WindowList;->indexOf(Ljava/lang/Object;)I
 
     move-result v1
 
-    .line 1432
+    .line 1429
     .local v1, wpos:I
     if-ltz v1, :cond_0
 
-    .line 1434
+    .line 1431
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowList;->remove(I)Ljava/lang/Object;
 
-    .line 1435
+    .line 1432
     const/4 v2, 0x1
 
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 1436
+    .line 1433
     invoke-direct {p0, v1, p1}, Lcom/android/server/wm/WindowManagerService;->reAddWindowLocked(ILcom/android/server/wm/WindowState;)I
 
-    .line 1438
+    .line 1435
     :cond_0
     return-void
 .end method
@@ -12678,7 +12455,7 @@
     .prologue
     const/16 v8, 0x2c
 
-    .line 8031
+    .line 7999
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     invoke-virtual {v6}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
@@ -12691,7 +12468,7 @@
 
     move-result-object v4
 
-    .line 8033
+    .line 8001
     .local v4, sizeStr:Ljava/lang/String;
     if-eqz v4, :cond_2
 
@@ -12701,12 +12478,12 @@
 
     if-lez v6, :cond_2
 
-    .line 8034
+    .line 8002
     invoke-virtual {v4, v8}, Ljava/lang/String;->indexOf(I)I
 
     move-result v3
 
-    .line 8035
+    .line 8003
     .local v3, pos:I
     if-lez v3, :cond_2
 
@@ -12716,7 +12493,7 @@
 
     if-ne v6, v3, :cond_2
 
-    .line 8038
+    .line 8006
     const/4 v6, 0x0
 
     :try_start_0
@@ -12728,7 +12505,7 @@
 
     move-result v5
 
-    .line 8039
+    .line 8007
     .local v5, width:I
     add-int/lit8 v6, v3, 0x1
 
@@ -12740,7 +12517,7 @@
 
     move-result v2
 
-    .line 8040
+    .line 8008
     .local v2, height:I
     iget-object v7, p1, Lcom/android/server/wm/DisplayContent;->mDisplaySizeLock:Ljava/lang/Object;
 
@@ -12748,7 +12525,7 @@
     :try_end_0
     .catch Ljava/lang/NumberFormatException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 8041
+    .line 8009
     :try_start_1
     iget v6, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayWidth:I
 
@@ -12758,7 +12535,7 @@
 
     if-eq v6, v2, :cond_1
 
-    .line 8043
+    .line 8011
     :cond_0
     const-string v6, "WindowManager"
 
@@ -12792,19 +12569,19 @@
 
     invoke-static {v6, v8}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8044
+    .line 8012
     iput v5, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayWidth:I
 
-    .line 8045
+    .line 8013
     iput v2, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayHeight:I
 
-    .line 8047
+    .line 8015
     :cond_1
     monitor-exit v7
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 8052
+    .line 8020
     .end local v2           #height:I
     .end local v3           #pos:I
     .end local v5           #width:I
@@ -12822,7 +12599,7 @@
 
     move-result-object v1
 
-    .line 8054
+    .line 8022
     .local v1, densityStr:Ljava/lang/String;
     if-eqz v1, :cond_4
 
@@ -12832,13 +12609,13 @@
 
     if-lez v6, :cond_4
 
-    .line 8057
+    .line 8025
     :try_start_2
     invoke-static {v1}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
 
     move-result v0
 
-    .line 8058
+    .line 8026
     .local v0, density:I
     iget-object v7, p1, Lcom/android/server/wm/DisplayContent;->mDisplaySizeLock:Ljava/lang/Object;
 
@@ -12846,13 +12623,13 @@
     :try_end_2
     .catch Ljava/lang/NumberFormatException; {:try_start_2 .. :try_end_2} :catch_1
 
-    .line 8059
+    .line 8027
     :try_start_3
     iget v6, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayDensity:I
 
     if-eq v6, v0, :cond_3
 
-    .line 8060
+    .line 8028
     const-string v6, "WindowManager"
 
     new-instance v8, Ljava/lang/StringBuilder;
@@ -12875,22 +12652,22 @@
 
     invoke-static {v6, v8}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8061
+    .line 8029
     iput v0, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayDensity:I
 
-    .line 8063
+    .line 8031
     :cond_3
     monitor-exit v7
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_1
 
-    .line 8067
+    .line 8035
     .end local v0           #density:I
     :cond_4
     :goto_1
     return-void
 
-    .line 8047
+    .line 8015
     .end local v1           #densityStr:Ljava/lang/String;
     .restart local v2       #height:I
     .restart local v3       #pos:I
@@ -12908,7 +12685,7 @@
     :try_end_5
     .catch Ljava/lang/NumberFormatException; {:try_start_5 .. :try_end_5} :catch_0
 
-    .line 8048
+    .line 8016
     .end local v2           #height:I
     .end local v5           #width:I
     :catch_0
@@ -12916,7 +12693,7 @@
 
     goto :goto_0
 
-    .line 8063
+    .line 8031
     .end local v3           #pos:I
     .restart local v0       #density:I
     .restart local v1       #densityStr:Ljava/lang/String;
@@ -12933,7 +12710,7 @@
     :try_end_7
     .catch Ljava/lang/NumberFormatException; {:try_start_7 .. :try_end_7} :catch_1
 
-    .line 8064
+    .line 8032
     .end local v0           #density:I
     :catch_1
     move-exception v6
@@ -12946,26 +12723,26 @@
     .parameter "displayContent"
 
     .prologue
-    .line 8204
+    .line 8172
     invoke-virtual/range {p1 .. p1}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v12
 
-    .line 8205
+    .line 8173
     .local v12, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v12}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v3
 
-    .line 8207
+    .line 8175
     .local v3, NW:I
     const/4 v6, -0x1
 
-    .line 8208
+    .line 8176
     .local v6, lastBelow:I
     const/4 v7, 0x0
 
-    .line 8210
+    .line 8178
     .local v7, numRemoved:I
     move-object/from16 v0, p0
 
@@ -12975,7 +12752,7 @@
 
     if-ge v14, v3, :cond_0
 
-    .line 8211
+    .line 8179
     add-int/lit8 v14, v3, 0xa
 
     new-array v14, v14, [Lcom/android/server/wm/WindowState;
@@ -12984,72 +12761,72 @@
 
     iput-object v14, v0, Lcom/android/server/wm/WindowManagerService;->mRebuildTmp:[Lcom/android/server/wm/WindowState;
 
-    .line 8215
+    .line 8183
     :cond_0
     const/4 v4, 0x0
 
-    .line 8216
+    .line 8184
     .local v4, i:I
     :goto_0
     if-ge v4, v3, :cond_4
 
-    .line 8217
+    .line 8185
     invoke-virtual {v12, v4}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v10
 
     check-cast v10, Lcom/android/server/wm/WindowState;
 
-    .line 8218
+    .line 8186
     .local v10, w:Lcom/android/server/wm/WindowState;
     iget-object v14, v10, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     if-eqz v14, :cond_1
 
-    .line 8219
+    .line 8187
     invoke-virtual {v12, v4}, Lcom/android/server/wm/WindowList;->remove(I)Ljava/lang/Object;
 
     move-result-object v11
 
     check-cast v11, Lcom/android/server/wm/WindowState;
 
-    .line 8220
+    .line 8188
     .local v11, win:Lcom/android/server/wm/WindowState;
     const/4 v14, 0x1
 
     iput-boolean v14, v11, Lcom/android/server/wm/WindowState;->mRebuilding:Z
 
-    .line 8221
+    .line 8189
     move-object/from16 v0, p0
 
     iget-object v14, v0, Lcom/android/server/wm/WindowManagerService;->mRebuildTmp:[Lcom/android/server/wm/WindowState;
 
     aput-object v11, v14, v7
 
-    .line 8222
+    .line 8190
     const/4 v14, 0x1
 
     move-object/from16 v0, p0
 
     iput-boolean v14, v0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 8225
+    .line 8193
     add-int/lit8 v3, v3, -0x1
 
-    .line 8226
+    .line 8194
     add-int/lit8 v7, v7, 0x1
 
-    .line 8227
+    .line 8195
     goto :goto_0
 
-    .line 8228
+    .line 8196
     .end local v11           #win:Lcom/android/server/wm/WindowState;
     :cond_1
     add-int/lit8 v14, v4, -0x1
 
     if-ne v6, v14, :cond_3
 
-    .line 8229
+    .line 8197
     iget-object v14, v10, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
     iget v14, v14, Landroid/view/WindowManager$LayoutParams;->type:I
@@ -13066,26 +12843,26 @@
 
     if-ne v14, v15, :cond_3
 
-    .line 8230
+    .line 8198
     :cond_2
     move v6, v4
 
-    .line 8233
+    .line 8201
     :cond_3
     add-int/lit8 v4, v4, 0x1
 
-    .line 8234
+    .line 8202
     goto :goto_0
 
-    .line 8238
+    .line 8206
     .end local v10           #w:Lcom/android/server/wm/WindowState;
     :cond_4
     add-int/lit8 v6, v6, 0x1
 
-    .line 8239
+    .line 8207
     move v4, v6
 
-    .line 8245
+    .line 8213
     move-object/from16 v0, p0
 
     iget-object v14, v0, Lcom/android/server/wm/WindowManagerService;->mExitingAppTokens:Ljava/util/ArrayList;
@@ -13094,7 +12871,7 @@
 
     move-result v2
 
-    .line 8246
+    .line 8214
     .local v2, NT:I
     const/4 v5, 0x0
 
@@ -13102,7 +12879,7 @@
     :goto_1
     if-ge v5, v2, :cond_5
 
-    .line 8247
+    .line 8215
     move-object/from16 v0, p0
 
     iget-object v14, v0, Lcom/android/server/wm/WindowManagerService;->mExitingAppTokens:Ljava/util/ArrayList;
@@ -13121,12 +12898,12 @@
 
     move-result v4
 
-    .line 8246
+    .line 8214
     add-int/lit8 v5, v5, 0x1
 
     goto :goto_1
 
-    .line 8251
+    .line 8219
     :cond_5
     move-object/from16 v0, p0
 
@@ -13136,13 +12913,13 @@
 
     move-result v2
 
-    .line 8252
+    .line 8220
     const/4 v5, 0x0
 
     :goto_2
     if-ge v5, v2, :cond_6
 
-    .line 8253
+    .line 8221
     move-object/from16 v0, p0
 
     iget-object v14, v0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
@@ -13161,19 +12938,19 @@
 
     move-result v4
 
-    .line 8252
+    .line 8220
     add-int/lit8 v5, v5, 0x1
 
     goto :goto_2
 
-    .line 8256
+    .line 8224
     :cond_6
     sub-int/2addr v4, v6
 
-    .line 8257
+    .line 8225
     if-eq v4, v7, :cond_9
 
-    .line 8258
+    .line 8226
     const-string v14, "WindowManager"
 
     new-instance v15, Ljava/lang/StringBuilder;
@@ -13206,37 +12983,37 @@
 
     invoke-static {v14, v15}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8260
+    .line 8228
     const/4 v4, 0x0
 
     :goto_3
     if-ge v4, v7, :cond_8
 
-    .line 8261
+    .line 8229
     move-object/from16 v0, p0
 
     iget-object v14, v0, Lcom/android/server/wm/WindowManagerService;->mRebuildTmp:[Lcom/android/server/wm/WindowState;
 
     aget-object v13, v14, v4
 
-    .line 8262
+    .line 8230
     .local v13, ws:Lcom/android/server/wm/WindowState;
     iget-boolean v14, v13, Lcom/android/server/wm/WindowState;->mRebuilding:Z
 
     if-eqz v14, :cond_7
 
-    .line 8263
+    .line 8231
     new-instance v9, Ljava/io/StringWriter;
 
     invoke-direct {v9}, Ljava/io/StringWriter;-><init>()V
 
-    .line 8264
+    .line 8232
     .local v9, sw:Ljava/io/StringWriter;
     new-instance v8, Ljava/io/PrintWriter;
 
     invoke-direct {v8, v9}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
 
-    .line 8265
+    .line 8233
     .local v8, pw:Ljava/io/PrintWriter;
     const-string v14, ""
 
@@ -13244,10 +13021,10 @@
 
     invoke-virtual {v13, v8, v14, v15}, Lcom/android/server/wm/WindowState;->dump(Ljava/io/PrintWriter;Ljava/lang/String;Z)V
 
-    .line 8266
+    .line 8234
     invoke-virtual {v8}, Ljava/io/PrintWriter;->flush()V
 
-    .line 8267
+    .line 8235
     const-string v14, "WindowManager"
 
     new-instance v15, Ljava/lang/StringBuilder;
@@ -13270,7 +13047,7 @@
 
     invoke-static {v14, v15}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8268
+    .line 8236
     const-string v14, "WindowManager"
 
     invoke-virtual {v9}, Ljava/io/StringWriter;->toString()Ljava/lang/String;
@@ -13279,14 +13056,14 @@
 
     invoke-static {v14, v15}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8269
+    .line 8237
     iget-object v14, v13, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
     const/4 v15, 0x0
 
     invoke-virtual {v14, v15}, Lcom/android/server/wm/WindowStateAnimator;->destroySurfaceLocked(Z)V
 
-    .line 8260
+    .line 8228
     .end local v8           #pw:Ljava/io/PrintWriter;
     .end local v9           #sw:Ljava/io/StringWriter;
     :cond_7
@@ -13294,7 +13071,7 @@
 
     goto :goto_3
 
-    .line 8272
+    .line 8240
     .end local v13           #ws:Lcom/android/server/wm/WindowState;
     :cond_8
     const-string v14, "WindowManager"
@@ -13303,20 +13080,20 @@
 
     invoke-static {v14, v15}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8273
+    .line 8241
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->dumpAnimatingAppTokensLocked()V
 
-    .line 8274
+    .line 8242
     const-string v14, "WindowManager"
 
     const-string v15, "Final window list:"
 
     invoke-static {v14, v15}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8275
+    .line 8243
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->dumpWindowsLocked()V
 
-    .line 8277
+    .line 8245
     :cond_9
     return-void
 .end method
@@ -13330,7 +13107,7 @@
 
     const/4 v6, 0x0
 
-    .line 8130
+    .line 8098
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-virtual {p1}, Lcom/android/server/wm/DisplayContent;->getDisplay()Landroid/view/Display;
@@ -13345,21 +13122,21 @@
 
     invoke-interface {v1, v2, v3, v4, v5}, Landroid/view/WindowManagerPolicy;->setInitialDisplaySize(Landroid/view/Display;III)V
 
-    .line 8135
+    .line 8103
     iput-boolean v7, p1, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 8137
+    .line 8105
     invoke-virtual {p0, v6}, Lcom/android/server/wm/WindowManagerService;->updateOrientationFromAppTokensLocked(Z)Z
 
     move-result v0
 
-    .line 8138
+    .line 8106
     .local v0, configChanged:Z
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mTempConfiguration:Landroid/content/res/Configuration;
 
     invoke-virtual {v1}, Landroid/content/res/Configuration;->setToDefaults()V
 
-    .line 8139
+    .line 8107
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mTempConfiguration:Landroid/content/res/Configuration;
 
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mCurConfiguration:Landroid/content/res/Configuration;
@@ -13368,7 +13145,7 @@
 
     iput v2, v1, Landroid/content/res/Configuration;->fontScale:F
 
-    .line 8140
+    .line 8108
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mTempConfiguration:Landroid/content/res/Configuration;
 
     invoke-virtual {p0, v1}, Lcom/android/server/wm/WindowManagerService;->computeScreenConfigurationLocked(Landroid/content/res/Configuration;)Z
@@ -13377,7 +13154,7 @@
 
     if-eqz v1, :cond_0
 
-    .line 8141
+    .line 8109
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mCurConfiguration:Landroid/content/res/Configuration;
 
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mTempConfiguration:Landroid/content/res/Configuration;
@@ -13388,31 +13165,31 @@
 
     if-eqz v1, :cond_0
 
-    .line 8142
+    .line 8110
     const/4 v0, 0x1
 
-    .line 8146
+    .line 8114
     :cond_0
     if-eqz v0, :cond_1
 
-    .line 8147
+    .line 8115
     iput-boolean v7, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForConfig:Z
 
-    .line 8148
+    .line 8116
     invoke-direct {p0, v6, v6, v6}, Lcom/android/server/wm/WindowManagerService;->startFreezingDisplayLocked(ZII)V
 
-    .line 8149
+    .line 8117
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/16 v2, 0x12
 
     invoke-virtual {v1, v2}, Lcom/android/server/wm/WindowManagerService$H;->sendEmptyMessage(I)Z
 
-    .line 8152
+    .line 8120
     :cond_1
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 8153
+    .line 8121
     return-void
 .end method
 
@@ -13567,13 +13344,13 @@
     .end annotation
 
     .prologue
-    .line 5094
+    .line 5091
     .local p1, tokens:Ljava/util/List;,"Ljava/util/List<Landroid/os/IBinder;>;"
     invoke-interface {p1}, Ljava/util/List;->size()I
 
     move-result v0
 
-    .line 5095
+    .line 5092
     .local v0, N:I
     const/4 v1, 0x0
 
@@ -13581,20 +13358,20 @@
     :goto_0
     if-ge v1, v0, :cond_1
 
-    .line 5096
+    .line 5093
     invoke-interface {p1, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object v2
 
     check-cast v2, Landroid/os/IBinder;
 
-    .line 5097
+    .line 5094
     .local v2, token:Landroid/os/IBinder;
     invoke-virtual {p0, v2}, Lcom/android/server/wm/WindowManagerService;->findAppWindowToken(Landroid/os/IBinder;)Lcom/android/server/wm/AppWindowToken;
 
     move-result-object v3
 
-    .line 5100
+    .line 5097
     .local v3, wtoken:Lcom/android/server/wm/AppWindowToken;
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
@@ -13604,7 +13381,7 @@
 
     if-nez v4, :cond_0
 
-    .line 5101
+    .line 5098
     const-string v4, "WindowManager"
 
     new-instance v5, Ljava/lang/StringBuilder;
@@ -13643,19 +13420,19 @@
 
     invoke-static {v4, v5}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 5103
+    .line 5100
     add-int/lit8 v1, v1, -0x1
 
-    .line 5104
+    .line 5101
     add-int/lit8 v0, v0, -0x1
 
-    .line 5095
+    .line 5092
     :cond_0
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 5107
+    .line 5104
     .end local v2           #token:Landroid/os/IBinder;
     .end local v3           #wtoken:Lcom/android/server/wm/AppWindowToken;
     :cond_1
@@ -13674,16 +13451,16 @@
 
     const/4 v9, 0x1
 
-    .line 2466
+    .line 2463
     iget-boolean v6, p2, Lcom/android/server/wm/WindowState;->mRemoved:Z
 
     if-eqz v6, :cond_0
 
-    .line 2565
+    .line 2562
     :goto_0
     return-void
 
-    .line 2471
+    .line 2468
     :cond_0
     iget-object v6, p2, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
@@ -13697,7 +13474,7 @@
     :goto_1
     if-ltz v2, :cond_1
 
-    .line 2472
+    .line 2469
     iget-object v6, p2, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v6, v2}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -13706,7 +13483,7 @@
 
     check-cast v1, Lcom/android/server/wm/WindowState;
 
-    .line 2473
+    .line 2470
     .local v1, cwin:Lcom/android/server/wm/WindowState;
     const-string v6, "WindowManager"
 
@@ -13740,39 +13517,39 @@
 
     invoke-static {v6, v7}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2475
+    .line 2472
     iget-object v6, v1, Lcom/android/server/wm/WindowState;->mSession:Lcom/android/server/wm/Session;
 
     invoke-direct {p0, v6, v1}, Lcom/android/server/wm/WindowManagerService;->removeWindowInnerLocked(Lcom/android/server/wm/Session;Lcom/android/server/wm/WindowState;)V
 
-    .line 2471
+    .line 2468
     add-int/lit8 v2, v2, -0x1
 
     goto :goto_1
 
-    .line 2478
+    .line 2475
     .end local v1           #cwin:Lcom/android/server/wm/WindowState;
     :cond_1
     iput-boolean v9, p2, Lcom/android/server/wm/WindowState;->mRemoved:Z
 
-    .line 2480
+    .line 2477
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
 
     if-ne v6, p2, :cond_2
 
-    .line 2481
+    .line 2478
     invoke-virtual {p0, v11}, Lcom/android/server/wm/WindowManagerService;->moveInputMethodWindowsIfNeededLocked(Z)Z
 
-    .line 2490
+    .line 2487
     :cond_2
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v6, p2}, Landroid/view/WindowManagerPolicy;->removeWindowLw(Landroid/view/WindowManagerPolicy$WindowState;)V
 
-    .line 2491
+    .line 2488
     invoke-virtual {p2}, Lcom/android/server/wm/WindowState;->removeLocked()V
 
-    .line 2494
+    .line 2491
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     iget-object v7, p2, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
@@ -13783,60 +13560,60 @@
 
     invoke-virtual {v6, v7}, Ljava/util/HashMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 2496
+    .line 2493
     invoke-virtual {p2}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v5
 
-    .line 2497
+    .line 2494
     .local v5, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v5, p2}, Lcom/android/server/wm/WindowList;->remove(Ljava/lang/Object;)Z
 
-    .line 2498
+    .line 2495
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mPendingRemove:Ljava/util/ArrayList;
 
     invoke-virtual {v6, p2}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 2499
+    .line 2496
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mResizingWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v6, p2}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 2500
+    .line 2497
     iput-boolean v9, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 2503
+    .line 2500
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
     if-ne v6, p2, :cond_9
 
-    .line 2504
+    .line 2501
     iput-object v10, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
-    .line 2509
+    .line 2506
     :cond_3
     :goto_2
     iget-object v4, p2, Lcom/android/server/wm/WindowState;->mToken:Lcom/android/server/wm/WindowToken;
 
-    .line 2510
+    .line 2507
     .local v4, token:Lcom/android/server/wm/WindowToken;
     iget-object v0, p2, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 2512
+    .line 2509
     .local v0, atoken:Lcom/android/server/wm/AppWindowToken;
     iget-object v6, v4, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v6, p2}, Lcom/android/server/wm/WindowList;->remove(Ljava/lang/Object;)Z
 
-    .line 2513
+    .line 2510
     if-eqz v0, :cond_4
 
-    .line 2514
+    .line 2511
     iget-object v6, v0, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v6, p2}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 2519
+    .line 2516
     :cond_4
     iget-object v6, v4, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
@@ -13846,32 +13623,32 @@
 
     if-nez v6, :cond_5
 
-    .line 2520
+    .line 2517
     iget-boolean v6, v4, Lcom/android/server/wm/WindowToken;->explicit:Z
 
     if-nez v6, :cond_a
 
-    .line 2521
+    .line 2518
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
     iget-object v7, v4, Lcom/android/server/wm/WindowToken;->token:Landroid/os/IBinder;
 
     invoke-virtual {v6, v7}, Ljava/util/HashMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 2527
+    .line 2524
     :cond_5
     :goto_3
     if-eqz v0, :cond_6
 
-    .line 2528
+    .line 2525
     iget-object v6, v0, Lcom/android/server/wm/AppWindowToken;->startingWindow:Lcom/android/server/wm/WindowState;
 
     if-ne v6, p2, :cond_b
 
-    .line 2530
+    .line 2527
     iput-object v10, v0, Lcom/android/server/wm/AppWindowToken;->startingWindow:Lcom/android/server/wm/WindowState;
 
-    .line 2548
+    .line 2545
     :cond_6
     :goto_4
     iget-object v6, p2, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
@@ -13882,43 +13659,43 @@
 
     if-ne v6, v7, :cond_d
 
-    .line 2549
+    .line 2546
     const-wide/16 v6, 0x0
 
     iput-wide v6, p0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperTimeoutTime:J
 
-    .line 2550
+    .line 2547
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->adjustWallpaperWindowsLocked()I
 
-    .line 2555
+    .line 2552
     :cond_7
     :goto_5
     iget-boolean v6, p0, Lcom/android/server/wm/WindowManagerService;->mInLayout:Z
 
     if-nez v6, :cond_8
 
-    .line 2556
+    .line 2553
     invoke-direct {p0, v5}, Lcom/android/server/wm/WindowManagerService;->assignLayersLocked(Lcom/android/server/wm/WindowList;)V
 
-    .line 2557
+    .line 2554
     iget-object v6, p2, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
     iput-boolean v9, v6, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 2558
+    .line 2555
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 2559
+    .line 2556
     iget-object v6, p2, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     if-eqz v6, :cond_8
 
-    .line 2560
+    .line 2557
     iget-object v6, p2, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     invoke-virtual {v6}, Lcom/android/server/wm/AppWindowToken;->updateReportedVisibilityLocked()V
 
-    .line 2564
+    .line 2561
     :cond_8
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
@@ -13926,7 +13703,7 @@
 
     goto/16 :goto_0
 
-    .line 2505
+    .line 2502
     .end local v0           #atoken:Lcom/android/server/wm/AppWindowToken;
     .end local v4           #token:Lcom/android/server/wm/WindowToken;
     :cond_9
@@ -13938,25 +13715,25 @@
 
     if-ne v6, v7, :cond_3
 
-    .line 2506
+    .line 2503
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodDialogs:Ljava/util/ArrayList;
 
     invoke-virtual {v6, p2}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
     goto :goto_2
 
-    .line 2522
+    .line 2519
     .restart local v0       #atoken:Lcom/android/server/wm/AppWindowToken;
     .restart local v4       #token:Lcom/android/server/wm/WindowToken;
     :cond_a
     if-eqz v0, :cond_5
 
-    .line 2523
+    .line 2520
     iput-boolean v11, v0, Lcom/android/server/wm/AppWindowToken;->firstWindowDrawn:Z
 
     goto :goto_3
 
-    .line 2531
+    .line 2528
     :cond_b
     iget-object v6, v0, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
@@ -13970,12 +13747,12 @@
 
     if-eqz v6, :cond_c
 
-    .line 2535
+    .line 2532
     iput-object v10, v0, Lcom/android/server/wm/AppWindowToken;->startingData:Lcom/android/server/wm/StartingData;
 
     goto :goto_4
 
-    .line 2536
+    .line 2533
     :cond_c
     iget-object v6, v0, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
@@ -13989,7 +13766,7 @@
 
     if-eqz v6, :cond_6
 
-    .line 2543
+    .line 2540
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/4 v7, 0x6
@@ -13998,7 +13775,7 @@
 
     move-result-object v3
 
-    .line 2544
+    .line 2541
     .local v3, m:Landroid/os/Message;
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
@@ -14006,7 +13783,7 @@
 
     goto :goto_4
 
-    .line 2551
+    .line 2548
     .end local v3           #m:Landroid/os/Message;
     :cond_d
     iget-object v6, p2, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
@@ -14019,7 +13796,7 @@
 
     if-eqz v6, :cond_7
 
-    .line 2552
+    .line 2549
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->adjustWallpaperWindowsLocked()I
 
     goto :goto_5
@@ -14030,10 +13807,10 @@
     .parameter "cb"
 
     .prologue
-    .line 4194
+    .line 4191
     if-eqz p1, :cond_0
 
-    .line 4195
+    .line 4192
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -14046,7 +13823,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowManagerService$H;->sendMessage(Landroid/os/Message;)Z
 
-    .line 4197
+    .line 4194
     :cond_0
     return-void
 .end method
@@ -14058,10 +13835,10 @@
     .parameter "immediate"
 
     .prologue
-    .line 2734
+    .line 2731
     iget-object v0, p1, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
-    .line 2735
+    .line 2732
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     iget-object v1, v0, Lcom/android/server/wm/DisplayContent;->mDisplayContentChangeListeners:Landroid/os/RemoteCallbackList;
 
@@ -14075,7 +13852,7 @@
 
     if-lez v1, :cond_0
 
-    .line 2737
+    .line 2734
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/16 v3, 0x1e
@@ -14099,11 +13876,11 @@
 
     invoke-virtual {v1}, Landroid/os/Message;->sendToTarget()V
 
-    .line 2740
+    .line 2737
     :cond_0
     return-void
 
-    .line 2737
+    .line 2734
     :cond_1
     const/4 v1, 0x0
 
@@ -14187,20 +13964,20 @@
     .locals 3
 
     .prologue
-    .line 7371
+    .line 7339
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mPowerManager:Lcom/android/server/power/PowerManagerService;
 
     invoke-virtual {v2}, Lcom/android/server/power/PowerManagerService;->isScreenOn()Z
 
     move-result v1
 
-    .line 7372
+    .line 7340
     .local v1, on:Z
     new-instance v0, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
 
     invoke-direct {v0, p0}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 7373
+    .line 7341
     .local v0, iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     :goto_0
     invoke-virtual {v0}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->hasNext()Z
@@ -14209,7 +13986,7 @@
 
     if-eqz v2, :cond_0
 
-    .line 7375
+    .line 7343
     :try_start_0
     invoke-virtual {v0}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->next()Lcom/android/server/wm/WindowState;
 
@@ -14223,13 +14000,13 @@
 
     goto :goto_0
 
-    .line 7376
+    .line 7344
     :catch_0
     move-exception v2
 
     goto :goto_0
 
-    .line 7380
+    .line 7348
     :cond_0
     return-void
 .end method
@@ -14239,13 +14016,13 @@
     .parameter "scale"
 
     .prologue
-    .line 5430
+    .line 5427
     iput p1, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatorDurationScale:F
 
-    .line 5431
+    .line 5428
     invoke-static {p1}, Landroid/animation/ValueAnimator;->setDurationScale(F)V
 
-    .line 5432
+    .line 5429
     return-void
 .end method
 
@@ -14255,7 +14032,7 @@
     .parameter "density"
 
     .prologue
-    .line 8107
+    .line 8075
     const-string v0, "WindowManager"
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -14278,27 +14055,27 @@
 
     invoke-static {v0, v1}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8109
+    .line 8077
     iget-object v1, p1, Lcom/android/server/wm/DisplayContent;->mDisplaySizeLock:Ljava/lang/Object;
 
     monitor-enter v1
 
-    .line 8110
+    .line 8078
     :try_start_0
     iput p2, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayDensity:I
 
-    .line 8111
+    .line 8079
     monitor-exit v1
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 8112
+    .line 8080
     invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->reconfigureDisplayLocked(Lcom/android/server/wm/DisplayContent;)V
 
-    .line 8113
+    .line 8081
     return-void
 
-    .line 8111
+    .line 8079
     :catchall_0
     move-exception v0
 
@@ -14317,7 +14094,7 @@
     .parameter "height"
 
     .prologue
-    .line 8071
+    .line 8039
     const-string v0, "WindowManager"
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -14350,30 +14127,30 @@
 
     invoke-static {v0, v1}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 8073
+    .line 8041
     iget-object v1, p1, Lcom/android/server/wm/DisplayContent;->mDisplaySizeLock:Ljava/lang/Object;
 
     monitor-enter v1
 
-    .line 8074
+    .line 8042
     :try_start_0
     iput p2, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayWidth:I
 
-    .line 8075
+    .line 8043
     iput p3, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayHeight:I
 
-    .line 8076
+    .line 8044
     monitor-exit v1
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 8077
+    .line 8045
     invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->reconfigureDisplayLocked(Lcom/android/server/wm/DisplayContent;)V
 
-    .line 8078
+    .line 8046
     return-void
 
-    .line 8076
+    .line 8044
     :catchall_0
     move-exception v0
 
@@ -14391,32 +14168,32 @@
     .parameter "pid"
 
     .prologue
-    .line 5759
+    .line 5756
     if-eqz p1, :cond_2
 
     const/4 v2, 0x1
 
-    .line 5760
+    .line 5757
     .local v2, on:Z
     :goto_0
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v5
 
-    .line 5764
+    .line 5761
     if-eqz v2, :cond_3
 
-    .line 5765
+    .line 5762
     const/4 v0, 0x0
 
-    .line 5766
+    .line 5763
     .local v0, isVisible:Z
     :try_start_0
     new-instance v1, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
 
     invoke-direct {v1, p0}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 5767
+    .line 5764
     .local v1, iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     :cond_0
     invoke-virtual {v1}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->hasNext()Z
@@ -14425,12 +14202,12 @@
 
     if-eqz v4, :cond_1
 
-    .line 5768
+    .line 5765
     invoke-virtual {v1}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->next()Lcom/android/server/wm/WindowState;
 
     move-result-object v3
 
-    .line 5769
+    .line 5766
     .local v3, ws:Lcom/android/server/wm/WindowState;
     iget-object v4, v3, Lcom/android/server/wm/WindowState;->mSession:Lcom/android/server/wm/Session;
 
@@ -14444,44 +14221,44 @@
 
     if-eqz v4, :cond_0
 
-    .line 5770
+    .line 5767
     const/4 v0, 0x1
 
-    .line 5774
+    .line 5771
     .end local v3           #ws:Lcom/android/server/wm/WindowState;
     :cond_1
     if-nez v0, :cond_3
 
-    .line 5775
+    .line 5772
     monitor-exit v5
 
-    .line 5795
+    .line 5792
     .end local v0           #isVisible:Z
     .end local v1           #iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     :goto_1
     return-void
 
-    .line 5759
+    .line 5756
     .end local v2           #on:Z
     :cond_2
     const/4 v2, 0x0
 
     goto :goto_0
 
-    .line 5781
+    .line 5778
     .restart local v2       #on:Z
     :cond_3
     invoke-static {}, Landroid/view/Surface;->openTransaction()V
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 5784
+    .line 5781
     :try_start_1
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mStrictModeFlash:Lcom/android/server/wm/StrictModeFlash;
 
     if-nez v4, :cond_4
 
-    .line 5785
+    .line 5782
     new-instance v4, Lcom/android/server/wm/StrictModeFlash;
 
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
@@ -14498,7 +14275,7 @@
 
     iput-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mStrictModeFlash:Lcom/android/server/wm/StrictModeFlash;
 
-    .line 5788
+    .line 5785
     :cond_4
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mStrictModeFlash:Lcom/android/server/wm/StrictModeFlash;
 
@@ -14506,11 +14283,11 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_1
 
-    .line 5790
+    .line 5787
     :try_start_2
     invoke-static {}, Landroid/view/Surface;->closeTransaction()V
 
-    .line 5794
+    .line 5791
     monitor-exit v5
 
     goto :goto_1
@@ -14524,7 +14301,7 @@
 
     throw v4
 
-    .line 5790
+    .line 5787
     :catchall_1
     move-exception v4
 
@@ -14543,17 +14320,17 @@
     .parameter "enterAnim"
 
     .prologue
-    .line 10200
+    .line 10146
     iget-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayFrozen:Z
 
     if-eqz v1, :cond_1
 
-    .line 10252
+    .line 10198
     :cond_0
     :goto_0
     return-void
 
-    .line 10204
+    .line 10150
     :cond_1
     iget-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayReady:Z
 
@@ -14567,22 +14344,22 @@
 
     if-eqz v1, :cond_0
 
-    .line 10210
+    .line 10156
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mScreenFrozenLock:Landroid/os/PowerManager$WakeLock;
 
     invoke-virtual {v1}, Landroid/os/PowerManager$WakeLock;->acquire()V
 
-    .line 10212
+    .line 10158
     const/4 v1, 0x1
 
     iput-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayFrozen:Z
 
-    .line 10214
+    .line 10160
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v1}, Lcom/android/server/wm/InputMonitor;->freezeInputDispatchingLw()V
 
-    .line 10219
+    .line 10165
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     const/4 v3, 0x0
@@ -14591,51 +14368,51 @@
 
     invoke-interface {v1, v3, v4}, Landroid/view/WindowManagerPolicy;->setLastInputMethodWindowLw(Landroid/view/WindowManagerPolicy$WindowState;Landroid/view/WindowManagerPolicy$WindowState;)V
 
-    .line 10221
+    .line 10167
     iget v1, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
     const/4 v3, -0x1
 
     if-eq v1, v3, :cond_2
 
-    .line 10222
+    .line 10168
     const/4 v1, -0x1
 
     iput v1, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
-    .line 10223
+    .line 10169
     const/4 v1, 0x0
 
     iput v1, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
 
-    .line 10224
+    .line 10170
     const/4 v1, 0x0
 
     iput-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionPackage:Ljava/lang/String;
 
-    .line 10225
+    .line 10171
     const/4 v1, 0x0
 
     iput-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionThumbnail:Landroid/graphics/Bitmap;
 
-    .line 10226
+    .line 10172
     const/4 v1, 0x1
 
     iput-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionReady:Z
 
-    .line 10235
+    .line 10181
     :cond_2
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v10
 
-    .line 10236
+    .line 10182
     .local v10, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-virtual {v10}, Lcom/android/server/wm/DisplayContent;->getDisplayId()I
 
     move-result v11
 
-    .line 10237
+    .line 10183
     .local v11, displayId:I
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
@@ -14643,26 +14420,26 @@
 
     move-result-object v0
 
-    .line 10239
+    .line 10185
     .local v0, screenRotationAnimation:Lcom/android/server/wm/ScreenRotationAnimation;
     if-eqz v0, :cond_3
 
-    .line 10240
+    .line 10186
     invoke-virtual {v0}, Lcom/android/server/wm/ScreenRotationAnimation;->kill()V
 
-    .line 10244
+    .line 10190
     :cond_3
     invoke-virtual {v10}, Lcom/android/server/wm/DisplayContent;->getDisplay()Landroid/view/Display;
 
     move-result-object v2
 
-    .line 10245
+    .line 10191
     .local v2, display:Landroid/view/Display;
     invoke-virtual {v10}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
 
     move-result-object v12
 
-    .line 10246
+    .line 10192
     .local v12, displayInfo:Landroid/view/DisplayInfo;
     new-instance v0, Lcom/android/server/wm/ScreenRotationAnimation;
 
@@ -14687,7 +14464,7 @@
 
     invoke-direct/range {v0 .. v9}, Lcom/android/server/wm/ScreenRotationAnimation;-><init>(Landroid/content/Context;Landroid/view/Display;Landroid/view/SurfaceSession;ZIIIII)V
 
-    .line 10250
+    .line 10196
     .restart local v0       #screenRotationAnimation:Lcom/android/server/wm/ScreenRotationAnimation;
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
@@ -14704,17 +14481,17 @@
 
     const/4 v12, 0x0
 
-    .line 10255
+    .line 10201
     iget-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayFrozen:Z
 
     if-nez v1, :cond_1
 
-    .line 10335
+    .line 10281
     :cond_0
     :goto_0
     return-void
 
-    .line 10259
+    .line 10205
     :cond_1
     iget-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForConfig:Z
 
@@ -14732,39 +14509,39 @@
 
     if-nez v1, :cond_0
 
-    .line 10269
+    .line 10215
     iput-boolean v12, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayFrozen:Z
 
-    .line 10270
+    .line 10216
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/16 v2, 0x11
 
     invoke-virtual {v1, v2}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 10271
+    .line 10217
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/16 v2, 0x23
 
     invoke-virtual {v1, v2}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 10276
+    .line 10222
     const/4 v11, 0x0
 
-    .line 10278
+    .line 10224
     .local v11, updateRotation:Z
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v8
 
-    .line 10279
+    .line 10225
     .local v8, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-virtual {v8}, Lcom/android/server/wm/DisplayContent;->getDisplayId()I
 
     move-result v9
 
-    .line 10280
+    .line 10226
     .local v9, displayId:I
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
@@ -14772,7 +14549,7 @@
 
     move-result-object v0
 
-    .line 10282
+    .line 10228
     .local v0, screenRotationAnimation:Lcom/android/server/wm/ScreenRotationAnimation;
     if-eqz v0, :cond_4
 
@@ -14782,12 +14559,12 @@
 
     if-eqz v1, :cond_4
 
-    .line 10286
+    .line 10232
     invoke-virtual {v8}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
 
     move-result-object v10
 
-    .line 10287
+    .line 10233
     .local v10, displayInfo:Landroid/view/DisplayInfo;
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mFxSession:Landroid/view/SurfaceSession;
 
@@ -14805,28 +14582,28 @@
 
     if-eqz v1, :cond_3
 
-    .line 10290
+    .line 10236
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->updateLayoutToAnimationLocked()V
 
-    .line 10306
+    .line 10252
     .end local v10           #displayInfo:Landroid/view/DisplayInfo;
     :goto_1
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v1}, Lcom/android/server/wm/InputMonitor;->thawInputDispatchingLw()V
 
-    .line 10314
+    .line 10260
     invoke-virtual {p0, v12}, Lcom/android/server/wm/WindowManagerService;->updateOrientationFromAppTokensLocked(Z)Z
 
     move-result v7
 
-    .line 10321
+    .line 10267
     .local v7, configChanged:Z
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     invoke-virtual {v1, v13}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 10322
+    .line 10268
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -14839,26 +14616,26 @@
 
     invoke-virtual {v1, v2, v3, v4}, Lcom/android/server/wm/WindowManagerService$H;->sendMessageDelayed(Landroid/os/Message;J)Z
 
-    .line 10325
+    .line 10271
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mScreenFrozenLock:Landroid/os/PowerManager$WakeLock;
 
     invoke-virtual {v1}, Landroid/os/PowerManager$WakeLock;->release()V
 
-    .line 10327
+    .line 10273
     if-eqz v11, :cond_2
 
-    .line 10329
+    .line 10275
     invoke-virtual {p0, v12}, Lcom/android/server/wm/WindowManagerService;->updateRotationUncheckedLocked(Z)Z
 
     move-result v1
 
     or-int/2addr v7, v1
 
-    .line 10332
+    .line 10278
     :cond_2
     if-eqz v7, :cond_0
 
-    .line 10333
+    .line 10279
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/16 v2, 0x12
@@ -14867,42 +14644,42 @@
 
     goto :goto_0
 
-    .line 10292
+    .line 10238
     .end local v7           #configChanged:Z
     .restart local v10       #displayInfo:Landroid/view/DisplayInfo;
     :cond_3
     invoke-virtual {v0}, Lcom/android/server/wm/ScreenRotationAnimation;->kill()V
 
-    .line 10293
+    .line 10239
     const/4 v0, 0x0
 
-    .line 10294
+    .line 10240
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
     invoke-virtual {v1, v9, v0}, Lcom/android/server/wm/WindowAnimator;->setScreenRotationAnimationLocked(ILcom/android/server/wm/ScreenRotationAnimation;)V
 
-    .line 10295
+    .line 10241
     const/4 v11, 0x1
 
     goto :goto_1
 
-    .line 10298
+    .line 10244
     .end local v10           #displayInfo:Landroid/view/DisplayInfo;
     :cond_4
     if-eqz v0, :cond_5
 
-    .line 10299
+    .line 10245
     invoke-virtual {v0}, Lcom/android/server/wm/ScreenRotationAnimation;->kill()V
 
-    .line 10300
+    .line 10246
     const/4 v0, 0x0
 
-    .line 10301
+    .line 10247
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
     invoke-virtual {v1, v9, v0}, Lcom/android/server/wm/WindowAnimator;->setScreenRotationAnimationLocked(ILcom/android/server/wm/ScreenRotationAnimation;)V
 
-    .line 10303
+    .line 10249
     :cond_5
     const/4 v11, 0x1
 
@@ -14916,21 +14693,21 @@
     .prologue
     const/4 v5, 0x1
 
-    .line 4885
+    .line 4882
     iget-object v6, p1, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v6}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v0
 
-    .line 4886
+    .line 4883
     .local v0, NW:I
     if-lez v0, :cond_0
 
-    .line 4887
+    .line 4884
     iput-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 4889
+    .line 4886
     :cond_0
     const/4 v2, 0x0
 
@@ -14938,7 +14715,7 @@
     :goto_0
     if-ge v2, v0, :cond_2
 
-    .line 4890
+    .line 4887
     iget-object v6, p1, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v6, v2}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -14947,7 +14724,7 @@
 
     check-cast v4, Lcom/android/server/wm/WindowState;
 
-    .line 4892
+    .line 4889
     .local v4, win:Lcom/android/server/wm/WindowState;
     invoke-virtual {v4}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
@@ -14955,22 +14732,22 @@
 
     invoke-virtual {v6, v4}, Lcom/android/server/wm/WindowList;->remove(Ljava/lang/Object;)Z
 
-    .line 4893
+    .line 4890
     iget-object v6, v4, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v6}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v3
 
-    .line 4894
+    .line 4891
     .local v3, j:I
     :goto_1
     if-lez v3, :cond_1
 
-    .line 4895
+    .line 4892
     add-int/lit8 v3, v3, -0x1
 
-    .line 4896
+    .line 4893
     iget-object v6, v4, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v6, v3}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -14979,7 +14756,7 @@
 
     check-cast v1, Lcom/android/server/wm/WindowState;
 
-    .line 4899
+    .line 4896
     .local v1, cwin:Lcom/android/server/wm/WindowState;
     invoke-virtual {v1}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
@@ -14989,14 +14766,14 @@
 
     goto :goto_1
 
-    .line 4889
+    .line 4886
     .end local v1           #cwin:Lcom/android/server/wm/WindowState;
     :cond_1
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 4902
+    .line 4899
     .end local v3           #j:I
     .end local v4           #win:Lcom/android/server/wm/WindowState;
     :cond_2
@@ -15017,52 +14794,52 @@
     .parameter "win"
 
     .prologue
-    .line 1402
+    .line 1399
     invoke-virtual {p2}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v3
 
-    .line 1403
+    .line 1400
     .local v3, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v3, p2}, Lcom/android/server/wm/WindowList;->indexOf(Ljava/lang/Object;)I
 
     move-result v4
 
-    .line 1404
+    .line 1401
     .local v4, wpos:I
     if-ltz v4, :cond_3
 
-    .line 1405
+    .line 1402
     if-ge v4, p1, :cond_0
 
     add-int/lit8 p1, p1, -0x1
 
-    .line 1407
+    .line 1404
     :cond_0
     invoke-virtual {v3, v4}, Lcom/android/server/wm/WindowList;->remove(I)Ljava/lang/Object;
 
-    .line 1408
+    .line 1405
     const/4 v5, 0x1
 
     iput-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 1409
+    .line 1406
     iget-object v5, p2, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v5}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v0
 
-    .line 1410
+    .line 1407
     .local v0, NC:I
     :cond_1
     :goto_0
     if-lez v0, :cond_3
 
-    .line 1411
+    .line 1408
     add-int/lit8 v0, v0, -0x1
 
-    .line 1412
+    .line 1409
     iget-object v5, p2, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v5, v0}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -15071,28 +14848,28 @@
 
     check-cast v2, Lcom/android/server/wm/WindowState;
 
-    .line 1413
+    .line 1410
     .local v2, cw:Lcom/android/server/wm/WindowState;
     invoke-virtual {v3, v2}, Lcom/android/server/wm/WindowList;->indexOf(Ljava/lang/Object;)I
 
     move-result v1
 
-    .line 1414
+    .line 1411
     .local v1, cpos:I
     if-ltz v1, :cond_1
 
-    .line 1415
+    .line 1412
     if-ge v1, p1, :cond_2
 
     add-int/lit8 p1, p1, -0x1
 
-    .line 1418
+    .line 1415
     :cond_2
     invoke-virtual {v3, v1}, Lcom/android/server/wm/WindowList;->remove(I)Ljava/lang/Object;
 
     goto :goto_0
 
-    .line 1422
+    .line 1419
     .end local v0           #NC:I
     .end local v1           #cpos:I
     .end local v2           #cw:Lcom/android/server/wm/WindowState;
@@ -15105,7 +14882,7 @@
     .parameter "value"
 
     .prologue
-    .line 9728
+    .line 9674
     const/high16 v0, 0x437f
 
     mul-float/2addr v0, p1
@@ -15119,16 +14896,16 @@
     .locals 6
 
     .prologue
-    .line 9108
+    .line 9076
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
-    .line 9109
+    .line 9077
     .local v1, appTokens:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Lcom/android/server/wm/AppWindowToken;>;"
     invoke-virtual {v1}, Ljava/util/ArrayList;->size()I
 
     move-result v0
 
-    .line 9110
+    .line 9078
     .local v0, NT:I
     const/4 v2, 0x0
 
@@ -15136,23 +14913,23 @@
     :goto_0
     if-ge v2, v0, :cond_1
 
-    .line 9111
+    .line 9079
     invoke-virtual {v1, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
     move-result-object v4
 
     check-cast v4, Lcom/android/server/wm/AppWindowToken;
 
-    .line 9112
+    .line 9080
     .local v4, wtoken:Lcom/android/server/wm/AppWindowToken;
     iget-boolean v5, v4, Lcom/android/server/wm/AppWindowToken;->allDrawn:Z
 
     if-nez v5, :cond_0
 
-    .line 9113
+    .line 9081
     iget v3, v4, Lcom/android/server/wm/AppWindowToken;->numInterestingWindows:I
 
-    .line 9114
+    .line 9082
     .local v3, numInteresting:I
     if-lez v3, :cond_0
 
@@ -15160,168 +14937,22 @@
 
     if-lt v5, v3, :cond_0
 
-    .line 9119
+    .line 9087
     const/4 v5, 0x1
 
     iput-boolean v5, v4, Lcom/android/server/wm/AppWindowToken;->allDrawn:Z
 
-    .line 9110
+    .line 9078
     .end local v3           #numInteresting:I
     :cond_0
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 9123
+    .line 9091
     .end local v4           #wtoken:Lcom/android/server/wm/AppWindowToken;
     :cond_1
     return-void
-.end method
-
-.method private updateApplicationDisplayMetricsLocked(Lcom/android/server/wm/DisplayContent;)Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-    .locals 8
-    .parameter "displayContent"
-
-    .prologue
-    const/4 v1, 0x0
-
-    .line 6969
-    iget-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayReady:Z
-
-    if-nez v2, :cond_0
-
-    .line 6998
-    :goto_0
-    return-object v1
-
-    .line 6973
-    :cond_0
-    invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->calculateDisplayMetrics(Lcom/android/server/wm/DisplayContent;)Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-
-    move-result-object v1
-
-    .line 6974
-    .local v1, m:Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-    invoke-virtual {p1}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
-
-    move-result-object v0
-
-    .line 6976
-    .local v0, displayInfo:Landroid/view/DisplayInfo;
-    iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
-
-    iget v3, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dw:I
-
-    iget v4, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dh:I
-
-    iget v5, p0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
-
-    invoke-interface {v2, v3, v4, v5}, Landroid/view/WindowManagerPolicy;->getNonDecorDisplayWidth(III)I
-
-    move-result v2
-
-    iput v2, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->appWidth:I
-
-    .line 6977
-    iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
-
-    iget v3, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dw:I
-
-    iget v4, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dh:I
-
-    iget v5, p0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
-
-    invoke-interface {v2, v3, v4, v5}, Landroid/view/WindowManagerPolicy;->getNonDecorDisplayHeight(III)I
-
-    move-result v2
-
-    iput v2, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->appHeight:I
-
-    .line 6979
-    iget-object v3, p1, Lcom/android/server/wm/DisplayContent;->mDisplaySizeLock:Ljava/lang/Object;
-
-    monitor-enter v3
-
-    .line 6980
-    :try_start_0
-    iget v2, p0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
-
-    iput v2, v0, Landroid/view/DisplayInfo;->rotation:I
-
-    .line 6981
-    iget v2, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dw:I
-
-    iput v2, v0, Landroid/view/DisplayInfo;->logicalWidth:I
-
-    .line 6982
-    iget v2, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dh:I
-
-    iput v2, v0, Landroid/view/DisplayInfo;->logicalHeight:I
-
-    .line 6983
-    iget v2, p1, Lcom/android/server/wm/DisplayContent;->mBaseDisplayDensity:I
-
-    iput v2, v0, Landroid/view/DisplayInfo;->logicalDensityDpi:I
-
-    .line 6984
-    iget v2, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->appWidth:I
-
-    iput v2, v0, Landroid/view/DisplayInfo;->appWidth:I
-
-    .line 6985
-    iget v2, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->appHeight:I
-
-    iput v2, v0, Landroid/view/DisplayInfo;->appHeight:I
-
-    .line 6986
-    iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mRealDisplayMetrics:Landroid/util/DisplayMetrics;
-
-    const/4 v4, 0x0
-
-    invoke-virtual {v0, v2, v4}, Landroid/view/DisplayInfo;->getLogicalMetrics(Landroid/util/DisplayMetrics;Landroid/view/CompatibilityInfoHolder;)V
-
-    .line 6987
-    iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayMetrics:Landroid/util/DisplayMetrics;
-
-    const/4 v4, 0x0
-
-    invoke-virtual {v0, v2, v4}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/CompatibilityInfoHolder;)V
-
-    .line 6988
-    iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayManagerService:Lcom/android/server/display/DisplayManagerService;
-
-    invoke-virtual {p1}, Lcom/android/server/wm/DisplayContent;->getDisplayId()I
-
-    move-result v4
-
-    invoke-virtual {v2, v4, v0}, Lcom/android/server/display/DisplayManagerService;->setDisplayInfoOverrideFromWindowManager(ILandroid/view/DisplayInfo;)V
-
-    .line 6991
-    iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
-
-    iget v4, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dw:I
-
-    iget v5, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dh:I
-
-    iget v6, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->appWidth:I
-
-    iget v7, v1, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->appHeight:I
-
-    invoke-virtual {v2, v4, v5, v6, v7}, Lcom/android/server/wm/WindowAnimator;->setDisplayDimensions(IIII)V
-
-    .line 6992
-    monitor-exit v3
-
-    goto :goto_0
-
-    :catchall_0
-    move-exception v2
-
-    monitor-exit v3
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    throw v2
 .end method
 
 .method private updateFocusedWindowLocked(IZ)Z
@@ -15340,73 +14971,73 @@
 
     const/4 v6, 0x1
 
-    .line 10060
+    .line 10006
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->computeFocusedWindowLocked()Lcom/android/server/wm/WindowState;
 
     move-result-object v3
 
-    .line 10061
+    .line 10007
     .local v3, newFocus:Lcom/android/server/wm/WindowState;
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mCurrentFocus:Lcom/android/server/wm/WindowState;
 
     if-eq v7, v3, :cond_6
 
-    .line 10062
+    .line 10008
     const-string v7, "wmUpdateFocus"
 
     invoke-static {v10, v11, v7}, Landroid/os/Trace;->traceBegin(JLjava/lang/String;)V
 
-    .line 10065
+    .line 10011
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     invoke-virtual {v7, v8}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 10066
+    .line 10012
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     invoke-virtual {v7, v8}, Lcom/android/server/wm/WindowManagerService$H;->sendEmptyMessage(I)Z
 
-    .line 10069
+    .line 10015
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mCurrentFocus:Lcom/android/server/wm/WindowState;
 
-    .line 10070
+    .line 10016
     .local v4, oldFocus:Lcom/android/server/wm/WindowState;
     iput-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mCurrentFocus:Lcom/android/server/wm/WindowState;
 
-    .line 10071
+    .line 10017
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
     invoke-virtual {v7, v3}, Lcom/android/server/wm/WindowAnimator;->setCurrentFocus(Lcom/android/server/wm/WindowState;)V
 
-    .line 10072
+    .line 10018
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mLosingFocus:Ljava/util/ArrayList;
 
     invoke-virtual {v7, v3}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 10073
+    .line 10019
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v7, v4, v3}, Landroid/view/WindowManagerPolicy;->focusChangedLw(Landroid/view/WindowManagerPolicy$WindowState;Landroid/view/WindowManagerPolicy$WindowState;)I
 
     move-result v1
 
-    .line 10076
+    .line 10022
     .local v1, focusChanged:I
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 10078
+    .line 10024
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
-    .line 10079
+    .line 10025
     .local v2, imWindow:Lcom/android/server/wm/WindowState;
     if-eq v3, v2, :cond_2
 
     if-eq v4, v2, :cond_2
 
-    .line 10080
+    .line 10026
     if-eq p1, v6, :cond_0
 
     if-eq p1, v9, :cond_0
@@ -15420,47 +15051,47 @@
 
     if-eqz v5, :cond_1
 
-    .line 10083
+    .line 10029
     iput-boolean v6, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 10085
+    .line 10031
     :cond_1
     if-ne p1, v8, :cond_5
 
-    .line 10086
+    .line 10032
     invoke-direct {p0, v0, v6, p2}, Lcom/android/server/wm/WindowManagerService;->performLayoutLockedInner(Lcom/android/server/wm/DisplayContent;ZZ)V
 
-    .line 10087
+    .line 10033
     and-int/lit8 v1, v1, -0x2
 
-    .line 10095
+    .line 10041
     :cond_2
     :goto_0
     and-int/lit8 v5, v1, 0x1
 
     if-eqz v5, :cond_3
 
-    .line 10097
+    .line 10043
     iput-boolean v6, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 10098
+    .line 10044
     if-ne p1, v8, :cond_3
 
-    .line 10099
+    .line 10045
     invoke-direct {p0, v0, v6, p2}, Lcom/android/server/wm/WindowManagerService;->performLayoutLockedInner(Lcom/android/server/wm/DisplayContent;ZZ)V
 
-    .line 10103
+    .line 10049
     :cond_3
     if-eq p1, v6, :cond_4
 
-    .line 10106
+    .line 10052
     invoke-direct {p0, p2}, Lcom/android/server/wm/WindowManagerService;->finishUpdateFocusedWindowAfterAssignLayersLocked(Z)V
 
-    .line 10109
+    .line 10055
     :cond_4
     invoke-static {v10, v11}, Landroid/os/Trace;->traceEnd(J)V
 
-    .line 10112
+    .line 10058
     .end local v0           #displayContent:Lcom/android/server/wm/DisplayContent;
     .end local v1           #focusChanged:I
     .end local v2           #imWindow:Lcom/android/server/wm/WindowState;
@@ -15468,7 +15099,7 @@
     :goto_1
     return v6
 
-    .line 10088
+    .line 10034
     .restart local v0       #displayContent:Lcom/android/server/wm/DisplayContent;
     .restart local v1       #focusChanged:I
     .restart local v2       #imWindow:Lcom/android/server/wm/WindowState;
@@ -15476,7 +15107,7 @@
     :cond_5
     if-ne p1, v9, :cond_2
 
-    .line 10091
+    .line 10037
     invoke-virtual {v0}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v5
@@ -15492,7 +15123,7 @@
     :cond_6
     move v6, v5
 
-    .line 10112
+    .line 10058
     goto :goto_1
 .end method
 
@@ -15506,10 +15137,10 @@
 
     const/4 v4, 0x0
 
-    .line 3989
+    .line 3986
     const/4 v1, 0x0
 
-    .line 3991
+    .line 3988
     .local v1, config:Landroid/content/res/Configuration;
     invoke-virtual {p0, v4}, Lcom/android/server/wm/WindowManagerService;->updateOrientationFromAppTokensLocked(Z)Z
 
@@ -15517,52 +15148,52 @@
 
     if-eqz v2, :cond_2
 
-    .line 3992
+    .line 3989
     if-eqz p2, :cond_0
 
-    .line 3993
+    .line 3990
     invoke-virtual {p0, p2}, Lcom/android/server/wm/WindowManagerService;->findAppWindowToken(Landroid/os/IBinder;)Lcom/android/server/wm/AppWindowToken;
 
     move-result-object v0
 
-    .line 3995
+    .line 3992
     .local v0, atoken:Lcom/android/server/wm/AppWindowToken;
     if-eqz v0, :cond_0
 
-    .line 3996
+    .line 3993
     const/16 v2, 0x80
 
     invoke-virtual {p0, v0, v2}, Lcom/android/server/wm/WindowManagerService;->startAppFreezingScreenLocked(Lcom/android/server/wm/AppWindowToken;I)V
 
-    .line 4000
+    .line 3997
     .end local v0           #atoken:Lcom/android/server/wm/AppWindowToken;
     :cond_0
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->computeNewConfigurationLocked()Landroid/content/res/Configuration;
 
     move-result-object v1
 
-    .line 4019
+    .line 4016
     :cond_1
     :goto_0
     return-object v1
 
-    .line 4002
+    .line 3999
     :cond_2
     if-eqz p1, :cond_1
 
-    .line 4007
+    .line 4004
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mTempConfiguration:Landroid/content/res/Configuration;
 
     invoke-virtual {v2}, Landroid/content/res/Configuration;->setToDefaults()V
 
-    .line 4008
+    .line 4005
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mTempConfiguration:Landroid/content/res/Configuration;
 
     iget v3, p1, Landroid/content/res/Configuration;->fontScale:F
 
     iput v3, v2, Landroid/content/res/Configuration;->fontScale:F
 
-    .line 4009
+    .line 4006
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mTempConfiguration:Landroid/content/res/Configuration;
 
     invoke-virtual {p0, v2}, Lcom/android/server/wm/WindowManagerService;->computeScreenConfigurationLocked(Landroid/content/res/Configuration;)Z
@@ -15571,7 +15202,7 @@
 
     if-eqz v2, :cond_1
 
-    .line 4010
+    .line 4007
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mTempConfiguration:Landroid/content/res/Configuration;
 
     invoke-virtual {p1, v2}, Landroid/content/res/Configuration;->diff(Landroid/content/res/Configuration;)I
@@ -15580,20 +15211,20 @@
 
     if-eqz v2, :cond_1
 
-    .line 4011
+    .line 4008
     iput-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForConfig:Z
 
-    .line 4012
+    .line 4009
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v2
 
     iput-boolean v5, v2, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 4013
+    .line 4010
     invoke-direct {p0, v4, v4, v4}, Lcom/android/server/wm/WindowManagerService;->startFreezingDisplayLocked(ZII)V
 
-    .line 4014
+    .line 4011
     new-instance v1, Landroid/content/res/Configuration;
 
     .end local v1           #config:Landroid/content/res/Configuration;
@@ -15614,10 +15245,10 @@
 
     const/4 v4, 0x0
 
-    .line 8963
+    .line 8931
     iget-object v1, p1, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
-    .line 8964
+    .line 8932
     .local v1, winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     iget-boolean v2, p1, Lcom/android/server/wm/WindowState;->mHasSurface:Z
 
@@ -15629,7 +15260,7 @@
 
     if-ne v2, v5, :cond_2
 
-    .line 8965
+    .line 8933
     iget-boolean v5, p1, Lcom/android/server/wm/WindowState;->mContentInsetsChanged:Z
 
     iget-object v2, p1, Lcom/android/server/wm/WindowState;->mLastContentInsets:Landroid/graphics/Rect;
@@ -15649,7 +15280,7 @@
 
     iput-boolean v2, p1, Lcom/android/server/wm/WindowState;->mContentInsetsChanged:Z
 
-    .line 8967
+    .line 8935
     iget-boolean v5, p1, Lcom/android/server/wm/WindowState;->mVisibleInsetsChanged:Z
 
     iget-object v2, p1, Lcom/android/server/wm/WindowState;->mLastVisibleInsets:Landroid/graphics/Rect;
@@ -15669,12 +15300,12 @@
 
     iput-boolean v2, p1, Lcom/android/server/wm/WindowState;->mVisibleInsetsChanged:Z
 
-    .line 8969
+    .line 8937
     invoke-virtual {p1}, Lcom/android/server/wm/WindowState;->isConfigChanged()Z
 
     move-result v0
 
-    .line 8977
+    .line 8945
     .local v0, configChanged:Z
     iget-object v2, p1, Lcom/android/server/wm/WindowState;->mLastFrame:Landroid/graphics/Rect;
 
@@ -15682,7 +15313,7 @@
 
     invoke-virtual {v2, v5}, Landroid/graphics/Rect;->set(Landroid/graphics/Rect;)V
 
-    .line 8978
+    .line 8946
     iget-boolean v2, p1, Lcom/android/server/wm/WindowState;->mContentInsetsChanged:Z
 
     if-nez v2, :cond_0
@@ -15697,7 +15328,7 @@
 
     if-eqz v0, :cond_5
 
-    .line 8990
+    .line 8958
     :cond_0
     iget-object v2, p1, Lcom/android/server/wm/WindowState;->mLastContentInsets:Landroid/graphics/Rect;
 
@@ -15705,35 +15336,35 @@
 
     invoke-virtual {v2, v5}, Landroid/graphics/Rect;->set(Landroid/graphics/Rect;)V
 
-    .line 8991
+    .line 8959
     iget-object v2, p1, Lcom/android/server/wm/WindowState;->mLastVisibleInsets:Landroid/graphics/Rect;
 
     iget-object v5, p1, Lcom/android/server/wm/WindowState;->mVisibleInsets:Landroid/graphics/Rect;
 
     invoke-virtual {v2, v5}, Landroid/graphics/Rect;->set(Landroid/graphics/Rect;)V
 
-    .line 8992
+    .line 8960
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->makeWindowFreezingScreenIfNeededLocked(Lcom/android/server/wm/WindowState;)V
 
-    .line 8998
+    .line 8966
     iget-boolean v2, p1, Lcom/android/server/wm/WindowState;->mOrientationChanging:Z
 
     if-eqz v2, :cond_1
 
-    .line 9002
+    .line 8970
     iput v3, v1, Lcom/android/server/wm/WindowStateAnimator;->mDrawState:I
 
-    .line 9003
+    .line 8971
     iget-object v2, p1, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     if-eqz v2, :cond_1
 
-    .line 9004
+    .line 8972
     iget-object v2, p1, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     iput-boolean v4, v2, Lcom/android/server/wm/AppWindowToken;->allDrawn:Z
 
-    .line 9007
+    .line 8975
     :cond_1
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mResizingWindows:Ljava/util/ArrayList;
 
@@ -15743,12 +15374,12 @@
 
     if-nez v2, :cond_2
 
-    .line 9011
+    .line 8979
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mResizingWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v2, p1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 9022
+    .line 8990
     .end local v0           #configChanged:Z
     :cond_2
     :goto_2
@@ -15757,30 +15388,30 @@
     :cond_3
     move v2, v4
 
-    .line 8965
+    .line 8933
     goto :goto_0
 
     :cond_4
     move v2, v4
 
-    .line 8967
+    .line 8935
     goto :goto_1
 
-    .line 9013
+    .line 8981
     .restart local v0       #configChanged:Z
     :cond_5
     iget-boolean v2, p1, Lcom/android/server/wm/WindowState;->mOrientationChanging:Z
 
     if-eqz v2, :cond_2
 
-    .line 9014
+    .line 8982
     invoke-virtual {p1}, Lcom/android/server/wm/WindowState;->isDrawnLw()Z
 
     move-result v2
 
     if-eqz v2, :cond_2
 
-    .line 9018
+    .line 8986
     iput-boolean v4, p1, Lcom/android/server/wm/WindowState;->mOrientationChanging:Z
 
     goto :goto_2
@@ -15799,7 +15430,7 @@
     .parameter "showWhenLocked"
 
     .prologue
-    .line 3797
+    .line 3794
     const-string v4, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v5, "addAppToken()"
@@ -15810,7 +15441,7 @@
 
     if-nez v4, :cond_0
 
-    .line 3799
+    .line 3796
     new-instance v4, Ljava/lang/SecurityException;
 
     const-string v5, "Requires MANAGE_APP_TOKENS permission"
@@ -15819,7 +15450,7 @@
 
     throw v4
 
-    .line 3810
+    .line 3807
     :cond_0
     :try_start_0
     invoke-interface {p3}, Landroid/view/IApplicationToken;->getKeyDispatchingTimeout()J
@@ -15832,14 +15463,14 @@
 
     mul-long v2, v4, v6
 
-    .line 3816
+    .line 3813
     .local v2, inputDispatchingTimeoutNanos:J
     :goto_0
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v5
 
-    .line 3817
+    .line 3814
     :try_start_1
     invoke-interface {p3}, Landroid/view/IApplicationToken;->asBinder()Landroid/os/IBinder;
 
@@ -15849,11 +15480,11 @@
 
     move-result-object v0
 
-    .line 3818
+    .line 3815
     .local v0, atoken:Lcom/android/server/wm/AppWindowToken;
     if-eqz v0, :cond_1
 
-    .line 3819
+    .line 3816
     const-string v4, "WindowManager"
 
     new-instance v6, Ljava/lang/StringBuilder;
@@ -15876,22 +15507,22 @@
 
     invoke-static {v4, v6}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3820
+    .line 3817
     monitor-exit v5
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 3840
+    .line 3837
     :goto_1
     return-void
 
-    .line 3811
+    .line 3808
     .end local v0           #atoken:Lcom/android/server/wm/AppWindowToken;
     .end local v2           #inputDispatchingTimeoutNanos:J
     :catch_0
     move-exception v1
 
-    .line 3812
+    .line 3809
     .local v1, ex:Landroid/os/RemoteException;
     const-string v4, "WindowManager"
 
@@ -15899,13 +15530,13 @@
 
     invoke-static {v4, v5, v1}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 3813
+    .line 3810
     const-wide v2, 0x12a05f200L
 
     .restart local v2       #inputDispatchingTimeoutNanos:J
     goto :goto_0
 
-    .line 3822
+    .line 3819
     .end local v1           #ex:Landroid/os/RemoteException;
     .restart local v0       #atoken:Lcom/android/server/wm/AppWindowToken;
     :cond_1
@@ -15915,31 +15546,31 @@
     .end local v0           #atoken:Lcom/android/server/wm/AppWindowToken;
     invoke-direct {v0, p0, p2, p3}, Lcom/android/server/wm/AppWindowToken;-><init>(Lcom/android/server/wm/WindowManagerService;ILandroid/view/IApplicationToken;)V
 
-    .line 3823
+    .line 3820
     .restart local v0       #atoken:Lcom/android/server/wm/AppWindowToken;
     iput-wide v2, v0, Lcom/android/server/wm/AppWindowToken;->inputDispatchingTimeoutNanos:J
 
-    .line 3824
+    .line 3821
     iput p4, v0, Lcom/android/server/wm/AppWindowToken;->groupId:I
 
-    .line 3825
+    .line 3822
     iput-boolean p6, v0, Lcom/android/server/wm/AppWindowToken;->appFullscreen:Z
 
-    .line 3826
+    .line 3823
     iput-boolean p7, v0, Lcom/android/server/wm/AppWindowToken;->showWhenLocked:Z
 
-    .line 3827
+    .line 3824
     iput p5, v0, Lcom/android/server/wm/AppWindowToken;->requestedOrientation:I
 
-    .line 3830
+    .line 3827
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v4, p1, v0}, Ljava/util/ArrayList;->add(ILjava/lang/Object;)V
 
-    .line 3831
+    .line 3828
     invoke-direct {p0, p1, v0}, Lcom/android/server/wm/WindowManagerService;->addAppTokenToAnimating(ILcom/android/server/wm/AppWindowToken;)V
 
-    .line 3832
+    .line 3829
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
     invoke-interface {p3}, Landroid/view/IApplicationToken;->asBinder()Landroid/os/IBinder;
@@ -15948,17 +15579,17 @@
 
     invoke-virtual {v4, v6, v0}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 3835
+    .line 3832
     const/4 v4, 0x1
 
     iput-boolean v4, v0, Lcom/android/server/wm/AppWindowToken;->hidden:Z
 
-    .line 3836
+    .line 3833
     const/4 v4, 0x1
 
     iput-boolean v4, v0, Lcom/android/server/wm/AppWindowToken;->hiddenRequested:Z
 
-    .line 3839
+    .line 3836
     monitor-exit v5
 
     goto :goto_1
@@ -16064,12 +15695,12 @@
     .parameter "touchFullscreen"
 
     .prologue
-    .line 10445
+    .line 10391
     iget-object v11, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v11
 
-    .line 10446
+    .line 10392
     :try_start_0
     new-instance v0, Lcom/android/server/wm/FakeWindowImpl;
 
@@ -16093,11 +15724,11 @@
 
     invoke-direct/range {v0 .. v9}, Lcom/android/server/wm/FakeWindowImpl;-><init>(Lcom/android/server/wm/WindowManagerService;Landroid/os/Looper;Landroid/view/InputEventReceiver$Factory;Ljava/lang/String;IIZZZ)V
 
-    .line 10449
+    .line 10395
     .local v0, fw:Lcom/android/server/wm/FakeWindowImpl;
     const/4 v10, 0x0
 
-    .line 10450
+    .line 10396
     .local v10, i:I
     :cond_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mFakeWindows:Ljava/util/ArrayList;
@@ -16108,7 +15739,7 @@
 
     if-ge v10, v1, :cond_1
 
-    .line 10451
+    .line 10397
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mFakeWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v1, v10}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -16123,25 +15754,25 @@
 
     if-gt v1, v2, :cond_0
 
-    .line 10455
+    .line 10401
     :cond_1
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mFakeWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v1, v10, v0}, Ljava/util/ArrayList;->add(ILjava/lang/Object;)V
 
-    .line 10456
+    .line 10402
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     const/4 v2, 0x1
 
     invoke-virtual {v1, v2}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 10457
+    .line 10403
     monitor-exit v11
 
     return-object v0
 
-    .line 10458
+    .line 10404
     .end local v0           #fw:Lcom/android/server/wm/FakeWindowImpl;
     .end local v10           #i:I
     :catchall_0
@@ -16161,51 +15792,51 @@
     .prologue
     const/4 v2, 0x1
 
-    .line 1358
+    .line 1355
     invoke-virtual {p0, v2}, Lcom/android/server/wm/WindowManagerService;->findDesiredInputMethodWindowIndexLocked(Z)I
 
     move-result v0
 
-    .line 1359
+    .line 1356
     .local v0, pos:I
     if-ltz v0, :cond_0
 
-    .line 1360
+    .line 1357
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
 
     iget-object v1, v1, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     iput-object v1, p1, Lcom/android/server/wm/WindowState;->mTargetAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 1364
+    .line 1361
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
 
     move-result-object v1
 
     invoke-virtual {v1, v0, p1}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 1365
+    .line 1362
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 1366
+    .line 1363
     add-int/lit8 v1, v0, 0x1
 
     invoke-virtual {p0, v1}, Lcom/android/server/wm/WindowManagerService;->moveInputMethodDialogsLocked(I)V
 
-    .line 1372
+    .line 1369
     :goto_0
     return-void
 
-    .line 1369
+    .line 1366
     :cond_0
     const/4 v1, 0x0
 
     iput-object v1, p1, Lcom/android/server/wm/WindowState;->mTargetAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 1370
+    .line 1367
     invoke-direct {p0, p1, v2}, Lcom/android/server/wm/WindowManagerService;->addWindowToListInOrderLocked(Lcom/android/server/wm/WindowState;Z)V
 
-    .line 1371
+    .line 1368
     invoke-virtual {p0, v0}, Lcom/android/server/wm/WindowManagerService;->moveInputMethodDialogsLocked(I)V
 
     goto :goto_0
@@ -16223,7 +15854,7 @@
     .parameter "outInputChannel"
 
     .prologue
-    .line 2143
+    .line 2140
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -16234,29 +15865,29 @@
 
     move-result v21
 
-    .line 2144
+    .line 2141
     .local v21, res:I
     if-eqz v21, :cond_0
 
     move/from16 v3, v21
 
-    .line 2378
+    .line 2375
     :goto_0
     return v3
 
-    .line 2148
+    .line 2145
     :cond_0
     const/16 v20, 0x0
 
-    .line 2149
+    .line 2146
     .local v20, reportNewConfig:Z
     const/4 v7, 0x0
 
-    .line 2150
+    .line 2147
     .local v7, attachedWindow:Lcom/android/server/wm/WindowState;
     const/16 v23, 0x0
 
-    .line 2152
+    .line 2149
     .local v23, win:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, p4
 
@@ -16264,7 +15895,7 @@
 
     move/from16 v22, v0
 
-    .line 2154
+    .line 2151
     .local v22, type:I
     move-object/from16 v0, p0
 
@@ -16274,7 +15905,7 @@
 
     monitor-enter v24
 
-    .line 2155
+    .line 2152
     :try_start_0
     move-object/from16 v0, p0
 
@@ -16282,7 +15913,7 @@
 
     if-nez v3, :cond_1
 
-    .line 2156
+    .line 2153
     new-instance v3, Ljava/lang/IllegalStateException;
 
     const-string v4, "Display has not been initialialized"
@@ -16293,7 +15924,7 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 2370
+    .line 2367
     :catchall_0
     move-exception v3
 
@@ -16309,7 +15940,7 @@
 
     throw v3
 
-    .line 2159
+    .line 2156
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     .restart local v23       #win:Lcom/android/server/wm/WindowState;
     :cond_1
@@ -16322,18 +15953,18 @@
 
     move-result-object v11
 
-    .line 2160
+    .line 2157
     .local v11, displayContent:Lcom/android/server/wm/DisplayContent;
     if-nez v11, :cond_2
 
-    .line 2161
+    .line 2158
     const/16 v3, -0x9
 
     monitor-exit v24
 
     goto :goto_0
 
-    .line 2164
+    .line 2161
     :cond_2
     move-object/from16 v0, p0
 
@@ -16349,7 +15980,7 @@
 
     if-eqz v3, :cond_3
 
-    .line 2165
+    .line 2162
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -16380,14 +16011,14 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2166
+    .line 2163
     const/4 v3, -0x5
 
     monitor-exit v24
 
     goto :goto_0
 
-    .line 2169
+    .line 2166
     :cond_3
     const/16 v3, 0x3e8
 
@@ -16401,7 +16032,7 @@
 
     if-gt v0, v3, :cond_5
 
-    .line 2170
+    .line 2167
     const/4 v3, 0x0
 
     move-object/from16 v0, p4
@@ -16416,10 +16047,10 @@
 
     move-result-object v7
 
-    .line 2171
+    .line 2168
     if-nez v7, :cond_4
 
-    .line 2172
+    .line 2169
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -16452,14 +16083,14 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2174
+    .line 2171
     const/4 v3, -0x2
 
     monitor-exit v24
 
     goto/16 :goto_0
 
-    .line 2176
+    .line 2173
     :cond_4
     iget-object v3, v7, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
@@ -16477,7 +16108,7 @@
 
     if-gt v3, v4, :cond_5
 
-    .line 2178
+    .line 2175
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -16510,18 +16141,18 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2180
+    .line 2177
     const/4 v3, -0x2
 
     monitor-exit v24
 
     goto/16 :goto_0
 
-    .line 2184
+    .line 2181
     :cond_5
     const/4 v12, 0x0
 
-    .line 2185
+    .line 2182
     .local v12, addToken:Z
     move-object/from16 v0, p0
 
@@ -16537,11 +16168,11 @@
 
     check-cast v6, Lcom/android/server/wm/WindowToken;
 
-    .line 2186
+    .line 2183
     .local v6, token:Lcom/android/server/wm/WindowToken;
     if-nez v6, :cond_b
 
-    .line 2187
+    .line 2184
     const/4 v3, 0x1
 
     move/from16 v0, v22
@@ -16554,7 +16185,7 @@
 
     if-gt v0, v3, :cond_6
 
-    .line 2188
+    .line 2185
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -16587,14 +16218,14 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2190
+    .line 2187
     const/4 v3, -0x1
 
     monitor-exit v24
 
     goto/16 :goto_0
 
-    .line 2192
+    .line 2189
     :cond_6
     const/16 v3, 0x7db
 
@@ -16602,7 +16233,7 @@
 
     if-ne v0, v3, :cond_7
 
-    .line 2193
+    .line 2190
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -16635,14 +16266,14 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2195
+    .line 2192
     const/4 v3, -0x1
 
     monitor-exit v24
 
     goto/16 :goto_0
 
-    .line 2197
+    .line 2194
     :cond_7
     const/16 v3, 0x7dd
 
@@ -16650,7 +16281,7 @@
 
     if-ne v0, v3, :cond_8
 
-    .line 2198
+    .line 2195
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -16683,14 +16314,14 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2200
+    .line 2197
     const/4 v3, -0x1
 
     monitor-exit v24
 
     goto/16 :goto_0
 
-    .line 2202
+    .line 2199
     :cond_8
     const/16 v3, 0x7e7
 
@@ -16698,7 +16329,7 @@
 
     if-ne v0, v3, :cond_9
 
-    .line 2203
+    .line 2200
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -16731,14 +16362,14 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2205
+    .line 2202
     const/4 v3, -0x1
 
     monitor-exit v24
 
     goto/16 :goto_0
 
-    .line 2207
+    .line 2204
     :cond_9
     new-instance v6, Lcom/android/server/wm/WindowToken;
 
@@ -16755,11 +16386,11 @@
 
     invoke-direct {v6, v0, v3, v4, v5}, Lcom/android/server/wm/WindowToken;-><init>(Lcom/android/server/wm/WindowManagerService;Landroid/os/IBinder;IZ)V
 
-    .line 2208
+    .line 2205
     .restart local v6       #token:Lcom/android/server/wm/WindowToken;
     const/4 v12, 0x1
 
-    .line 2246
+    .line 2243
     :cond_a
     new-instance v2, Lcom/android/server/wm/WindowState;
 
@@ -16779,7 +16410,7 @@
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
-    .line 2248
+    .line 2245
     .end local v23           #win:Lcom/android/server/wm/WindowState;
     .restart local v2       #win:Lcom/android/server/wm/WindowState;
     :try_start_3
@@ -16787,7 +16418,7 @@
 
     if-nez v3, :cond_11
 
-    .line 2251
+    .line 2248
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -16820,7 +16451,7 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2253
+    .line 2250
     const/4 v3, -0x4
 
     monitor-exit v24
@@ -16829,7 +16460,7 @@
 
     goto/16 :goto_0
 
-    .line 2370
+    .line 2367
     .end local v6           #token:Lcom/android/server/wm/WindowToken;
     .end local v11           #displayContent:Lcom/android/server/wm/DisplayContent;
     .end local v12           #addToken:Z
@@ -16838,7 +16469,7 @@
 
     goto/16 :goto_1
 
-    .line 2209
+    .line 2206
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     .restart local v6       #token:Lcom/android/server/wm/WindowToken;
     .restart local v11       #displayContent:Lcom/android/server/wm/DisplayContent;
@@ -16857,15 +16488,15 @@
 
     if-gt v0, v3, :cond_e
 
-    .line 2210
+    .line 2207
     :try_start_4
     iget-object v13, v6, Lcom/android/server/wm/WindowToken;->appWindowToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 2211
+    .line 2208
     .local v13, atoken:Lcom/android/server/wm/AppWindowToken;
     if-nez v13, :cond_c
 
-    .line 2212
+    .line 2209
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -16894,20 +16525,20 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2214
+    .line 2211
     const/4 v3, -0x3
 
     monitor-exit v24
 
     goto/16 :goto_0
 
-    .line 2215
+    .line 2212
     :cond_c
     iget-boolean v3, v13, Lcom/android/server/wm/AppWindowToken;->removed:Z
 
     if-eqz v3, :cond_d
 
-    .line 2216
+    .line 2213
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -16936,14 +16567,14 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2218
+    .line 2215
     const/4 v3, -0x4
 
     monitor-exit v24
 
     goto/16 :goto_0
 
-    .line 2220
+    .line 2217
     :cond_d
     const/4 v3, 0x3
 
@@ -16955,14 +16586,14 @@
 
     if-eqz v3, :cond_a
 
-    .line 2224
+    .line 2221
     const/4 v3, -0x6
 
     monitor-exit v24
 
     goto/16 :goto_0
 
-    .line 2226
+    .line 2223
     .end local v13           #atoken:Lcom/android/server/wm/AppWindowToken;
     :cond_e
     const/16 v3, 0x7db
@@ -16971,14 +16602,14 @@
 
     if-ne v0, v3, :cond_f
 
-    .line 2227
+    .line 2224
     iget v3, v6, Lcom/android/server/wm/WindowToken;->windowType:I
 
     const/16 v4, 0x7db
 
     if-eq v3, v4, :cond_a
 
-    .line 2228
+    .line 2225
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -17011,14 +16642,14 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2230
+    .line 2227
     const/4 v3, -0x1
 
     monitor-exit v24
 
     goto/16 :goto_0
 
-    .line 2232
+    .line 2229
     :cond_f
     const/16 v3, 0x7dd
 
@@ -17026,14 +16657,14 @@
 
     if-ne v0, v3, :cond_10
 
-    .line 2233
+    .line 2230
     iget v3, v6, Lcom/android/server/wm/WindowToken;->windowType:I
 
     const/16 v4, 0x7dd
 
     if-eq v3, v4, :cond_a
 
-    .line 2234
+    .line 2231
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -17066,14 +16697,14 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2236
+    .line 2233
     const/4 v3, -0x1
 
     monitor-exit v24
 
     goto/16 :goto_0
 
-    .line 2238
+    .line 2235
     :cond_10
     const/16 v3, 0x7e7
 
@@ -17081,14 +16712,14 @@
 
     if-ne v0, v3, :cond_a
 
-    .line 2239
+    .line 2236
     iget v3, v6, Lcom/android/server/wm/WindowToken;->windowType:I
 
     const/16 v4, 0x7e7
 
     if-eq v3, v4, :cond_a
 
-    .line 2240
+    .line 2237
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -17121,7 +16752,7 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2242
+    .line 2239
     const/4 v3, -0x1
 
     monitor-exit v24
@@ -17130,7 +16761,7 @@
 
     goto/16 :goto_0
 
-    .line 2256
+    .line 2253
     .end local v23           #win:Lcom/android/server/wm/WindowState;
     .restart local v2       #win:Lcom/android/server/wm/WindowState;
     :cond_11
@@ -17143,7 +16774,7 @@
 
     invoke-interface {v3, v4}, Landroid/view/WindowManagerPolicy;->adjustWindowParamsLw(Landroid/view/WindowManager$LayoutParams;)V
 
-    .line 2257
+    .line 2254
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -17156,7 +16787,7 @@
 
     invoke-virtual {v2, v3}, Lcom/android/server/wm/WindowState;->setShowToOwnerOnlyLocked(Z)V
 
-    .line 2259
+    .line 2256
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -17167,17 +16798,17 @@
 
     move-result v21
 
-    .line 2260
+    .line 2257
     if-eqz v21, :cond_12
 
-    .line 2261
+    .line 2258
     monitor-exit v24
 
     move/from16 v3, v21
 
     goto/16 :goto_0
 
-    .line 2264
+    .line 2261
     :cond_12
     if-eqz p8, :cond_13
 
@@ -17189,18 +16820,18 @@
 
     if-nez v3, :cond_13
 
-    .line 2266
+    .line 2263
     invoke-virtual {v2}, Lcom/android/server/wm/WindowState;->makeInputChannelName()Ljava/lang/String;
 
     move-result-object v17
 
-    .line 2267
+    .line 2264
     .local v17, name:Ljava/lang/String;
     invoke-static/range {v17 .. v17}, Landroid/view/InputChannel;->openInputChannelPair(Ljava/lang/String;)[Landroid/view/InputChannel;
 
     move-result-object v16
 
-    .line 2268
+    .line 2265
     .local v16, inputChannels:[Landroid/view/InputChannel;
     const/4 v3, 0x0
 
@@ -17208,7 +16839,7 @@
 
     invoke-virtual {v2, v3}, Lcom/android/server/wm/WindowState;->setInputChannel(Landroid/view/InputChannel;)V
 
-    .line 2269
+    .line 2266
     const/4 v3, 0x1
 
     aget-object v3, v16, v3
@@ -17217,7 +16848,7 @@
 
     invoke-virtual {v3, v0}, Landroid/view/InputChannel;->transferTo(Landroid/view/InputChannel;)V
 
-    .line 2271
+    .line 2268
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
@@ -17228,22 +16859,22 @@
 
     invoke-virtual {v3, v4, v5}, Lcom/android/server/input/InputManagerService;->registerInputChannel(Landroid/view/InputChannel;Lcom/android/server/input/InputWindowHandle;)V
 
-    .line 2276
+    .line 2273
     .end local v16           #inputChannels:[Landroid/view/InputChannel;
     .end local v17           #name:Ljava/lang/String;
     :cond_13
     const/16 v21, 0x0
 
-    .line 2278
+    .line 2275
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v18
 
-    .line 2280
+    .line 2277
     .local v18, origId:J
     if-eqz v12, :cond_14
 
-    .line 2281
+    .line 2278
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
@@ -17254,11 +16885,11 @@
 
     invoke-virtual {v3, v4, v6}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 2283
+    .line 2280
     :cond_14
     invoke-virtual {v2}, Lcom/android/server/wm/WindowState;->attach()V
 
-    .line 2284
+    .line 2281
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
@@ -17269,7 +16900,7 @@
 
     invoke-virtual {v3, v4, v2}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 2286
+    .line 2283
     const/4 v3, 0x3
 
     move/from16 v0, v22
@@ -17280,16 +16911,16 @@
 
     if-eqz v3, :cond_15
 
-    .line 2287
+    .line 2284
     iget-object v3, v6, Lcom/android/server/wm/WindowToken;->appWindowToken:Lcom/android/server/wm/AppWindowToken;
 
     iput-object v2, v3, Lcom/android/server/wm/AppWindowToken;->startingWindow:Lcom/android/server/wm/WindowState;
 
-    .line 2292
+    .line 2289
     :cond_15
     const/4 v15, 0x1
 
-    .line 2294
+    .line 2291
     .local v15, imMayMove:Z
     const/16 v3, 0x7db
 
@@ -17297,25 +16928,25 @@
 
     if-ne v0, v3, :cond_1f
 
-    .line 2295
+    .line 2292
     const/4 v3, 0x1
 
     iput-boolean v3, v2, Lcom/android/server/wm/WindowState;->mGivenInsetsPending:Z
 
-    .line 2296
+    .line 2293
     move-object/from16 v0, p0
 
     iput-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
-    .line 2297
+    .line 2294
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v2}, Lcom/android/server/wm/WindowManagerService;->addInputMethodWindowToListLocked(Lcom/android/server/wm/WindowState;)V
 
-    .line 2298
+    .line 2295
     const/4 v15, 0x0
 
-    .line 2322
+    .line 2319
     :cond_16
     :goto_2
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
@@ -17324,12 +16955,12 @@
 
     iput-boolean v4, v3, Lcom/android/server/wm/WindowStateAnimator;->mEnterAnimationPending:Z
 
-    .line 2324
+    .line 2321
     iget-boolean v3, v11, Lcom/android/server/wm/DisplayContent;->isDefaultDisplay:Z
 
     if-eqz v3, :cond_23
 
-    .line 2325
+    .line 2322
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -17340,7 +16971,7 @@
 
     invoke-interface {v3, v0, v1}, Landroid/view/WindowManagerPolicy;->getContentInsetHintLw(Landroid/view/WindowManager$LayoutParams;Landroid/graphics/Rect;)V
 
-    .line 2330
+    .line 2327
     :goto_3
     move-object/from16 v0, p0
 
@@ -17348,10 +16979,10 @@
 
     if-eqz v3, :cond_17
 
-    .line 2331
+    .line 2328
     or-int/lit8 v21, v21, 0x1
 
-    .line 2333
+    .line 2330
     :cond_17
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
@@ -17363,11 +16994,11 @@
 
     if-nez v3, :cond_19
 
-    .line 2334
+    .line 2331
     :cond_18
     or-int/lit8 v21, v21, 0x2
 
-    .line 2337
+    .line 2334
     :cond_19
     move-object/from16 v0, p0
 
@@ -17375,10 +17006,10 @@
 
     invoke-virtual {v3}, Lcom/android/server/wm/InputMonitor;->setUpdateInputWindowsNeededLw()V
 
-    .line 2339
+    .line 2336
     const/4 v14, 0x0
 
-    .line 2340
+    .line 2337
     .local v14, focusChanged:Z
     invoke-virtual {v2}, Lcom/android/server/wm/WindowState;->canReceiveKeys()Z
 
@@ -17386,7 +17017,7 @@
 
     if-eqz v3, :cond_1a
 
-    .line 2341
+    .line 2338
     const/4 v3, 0x1
 
     const/4 v4, 0x0
@@ -17397,24 +17028,24 @@
 
     move-result v14
 
-    .line 2343
+    .line 2340
     if-eqz v14, :cond_1a
 
-    .line 2344
+    .line 2341
     const/4 v15, 0x0
 
-    .line 2348
+    .line 2345
     :cond_1a
     if-eqz v15, :cond_1b
 
-    .line 2349
+    .line 2346
     const/4 v3, 0x0
 
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v3}, Lcom/android/server/wm/WindowManagerService;->moveInputMethodWindowsIfNeededLocked(Z)Z
 
-    .line 2352
+    .line 2349
     :cond_1b
     invoke-virtual {v11}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
@@ -17424,17 +17055,17 @@
 
     invoke-direct {v0, v3}, Lcom/android/server/wm/WindowManagerService;->assignLayersLocked(Lcom/android/server/wm/WindowList;)V
 
-    .line 2358
+    .line 2355
     if-eqz v14, :cond_1c
 
-    .line 2359
+    .line 2356
     const/4 v3, 0x0
 
     move-object/from16 v0, p0
 
     invoke-direct {v0, v3}, Lcom/android/server/wm/WindowManagerService;->finishUpdateFocusedWindowAfterAssignLayersLocked(Z)V
 
-    .line 2361
+    .line 2358
     :cond_1c
     move-object/from16 v0, p0
 
@@ -17444,7 +17075,7 @@
 
     invoke-virtual {v3, v4}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 2367
+    .line 2364
     invoke-virtual {v2}, Lcom/android/server/wm/WindowState;->isVisibleOrAdding()Z
 
     move-result v3
@@ -17461,31 +17092,31 @@
 
     if-eqz v3, :cond_1d
 
-    .line 2368
+    .line 2365
     const/16 v20, 0x1
 
-    .line 2370
+    .line 2367
     :cond_1d
     monitor-exit v24
     :try_end_5
     .catchall {:try_start_5 .. :try_end_5} :catchall_1
 
-    .line 2372
+    .line 2369
     if-eqz v20, :cond_1e
 
-    .line 2373
+    .line 2370
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->sendNewConfiguration()V
 
-    .line 2376
+    .line 2373
     :cond_1e
     invoke-static/range {v18 .. v19}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     move/from16 v3, v21
 
-    .line 2378
+    .line 2375
     goto/16 :goto_0
 
-    .line 2299
+    .line 2296
     .end local v14           #focusChanged:Z
     :cond_1f
     const/16 v3, 0x7dc
@@ -17494,7 +17125,7 @@
 
     if-ne v0, v3, :cond_20
 
-    .line 2300
+    .line 2297
     :try_start_6
     move-object/from16 v0, p0
 
@@ -17502,22 +17133,22 @@
 
     invoke-virtual {v3, v2}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 2301
+    .line 2298
     const/4 v3, 0x1
 
     move-object/from16 v0, p0
 
     invoke-direct {v0, v2, v3}, Lcom/android/server/wm/WindowManagerService;->addWindowToListInOrderLocked(Lcom/android/server/wm/WindowState;Z)V
 
-    .line 2302
+    .line 2299
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->adjustInputMethodDialogsLocked()V
 
-    .line 2303
+    .line 2300
     const/4 v15, 0x0
 
     goto/16 :goto_2
 
-    .line 2305
+    .line 2302
     :cond_20
     const/4 v3, 0x1
 
@@ -17525,26 +17156,26 @@
 
     invoke-direct {v0, v2, v3}, Lcom/android/server/wm/WindowManagerService;->addWindowToListInOrderLocked(Lcom/android/server/wm/WindowState;Z)V
 
-    .line 2306
+    .line 2303
     const/16 v3, 0x7dd
 
     move/from16 v0, v22
 
     if-ne v0, v3, :cond_21
 
-    .line 2307
+    .line 2304
     const-wide/16 v3, 0x0
 
     move-object/from16 v0, p0
 
     iput-wide v3, v0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperTimeoutTime:J
 
-    .line 2308
+    .line 2305
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->adjustWallpaperWindowsLocked()I
 
     goto/16 :goto_2
 
-    .line 2309
+    .line 2306
     :cond_21
     move-object/from16 v0, p4
 
@@ -17556,12 +17187,12 @@
 
     if-eqz v3, :cond_22
 
-    .line 2310
+    .line 2307
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->adjustWallpaperWindowsLocked()I
 
     goto/16 :goto_2
 
-    .line 2311
+    .line 2308
     :cond_22
     move-object/from16 v0, p0
 
@@ -17579,12 +17210,12 @@
 
     if-lt v3, v4, :cond_16
 
-    .line 2318
+    .line 2315
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->adjustWallpaperWindowsLocked()I
 
     goto/16 :goto_2
 
-    .line 2327
+    .line 2324
     :cond_23
     invoke-virtual/range {p7 .. p7}, Landroid/graphics/Rect;->setEmpty()V
     :try_end_6
@@ -17632,7 +17263,7 @@
     .parameter "type"
 
     .prologue
-    .line 3699
+    .line 3696
     const-string v1, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v2, "addWindowToken()"
@@ -17643,7 +17274,7 @@
 
     if-nez v1, :cond_0
 
-    .line 3701
+    .line 3698
     new-instance v1, Ljava/lang/SecurityException;
 
     const-string v2, "Requires MANAGE_APP_TOKENS permission"
@@ -17652,13 +17283,13 @@
 
     throw v1
 
-    .line 3704
+    .line 3701
     :cond_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 3705
+    .line 3702
     :try_start_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
@@ -17668,11 +17299,11 @@
 
     check-cast v0, Lcom/android/server/wm/WindowToken;
 
-    .line 3706
+    .line 3703
     .local v0, wtoken:Lcom/android/server/wm/WindowToken;
     if-eqz v0, :cond_1
 
-    .line 3707
+    .line 3704
     const-string v1, "WindowManager"
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -17695,14 +17326,14 @@
 
     invoke-static {v1, v3}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3708
+    .line 3705
     monitor-exit v2
 
-    .line 3717
+    .line 3714
     :goto_0
     return-void
 
-    .line 3710
+    .line 3707
     :cond_1
     new-instance v0, Lcom/android/server/wm/WindowToken;
 
@@ -17711,26 +17342,26 @@
 
     invoke-direct {v0, p0, p1, p2, v1}, Lcom/android/server/wm/WindowToken;-><init>(Lcom/android/server/wm/WindowManagerService;Landroid/os/IBinder;IZ)V
 
-    .line 3711
+    .line 3708
     .restart local v0       #wtoken:Lcom/android/server/wm/WindowToken;
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
     invoke-virtual {v1, p1, v0}, Ljava/util/HashMap;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
 
-    .line 3712
+    .line 3709
     const/16 v1, 0x7dd
 
     if-ne p2, v1, :cond_2
 
-    .line 3713
+    .line 3710
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v1, v0}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 3714
+    .line 3711
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->updateLayoutToAnimWallpaperTokens()V
 
-    .line 3716
+    .line 3713
     :cond_2
     monitor-exit v2
 
@@ -17751,7 +17382,7 @@
     .locals 1
 
     .prologue
-    .line 1597
+    .line 1594
     const/4 v0, 0x1
 
     invoke-virtual {p0, v0}, Lcom/android/server/wm/WindowManagerService;->findDesiredInputMethodWindowIndexLocked(Z)I
@@ -17760,7 +17391,7 @@
 
     invoke-virtual {p0, v0}, Lcom/android/server/wm/WindowManagerService;->moveInputMethodDialogsLocked(I)V
 
-    .line 1598
+    .line 1595
     return-void
 .end method
 
@@ -17768,7 +17399,7 @@
     .locals 34
 
     .prologue
-    .line 1618
+    .line 1615
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -17783,14 +17414,14 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mWallpaperMayChange:Z
 
-    .line 1619
+    .line 1616
     const/4 v4, 0x0
 
-    .line 1620
+    .line 1617
     .local v4, changed:I
     const/16 v20, 0x0
 
-    .line 1623
+    .line 1620
     .local v20, targetChanged:Z
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
@@ -17800,64 +17431,64 @@
 
     move-result-object v8
 
-    .line 1624
+    .line 1621
     .local v8, displayInfo:Landroid/view/DisplayInfo;
     iget v9, v8, Landroid/view/DisplayInfo;->appWidth:I
 
-    .line 1625
+    .line 1622
     .local v9, dw:I
     iget v7, v8, Landroid/view/DisplayInfo;->appHeight:I
 
-    .line 1629
+    .line 1626
     .local v7, dh:I
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
 
     move-result-object v30
 
-    .line 1630
+    .line 1627
     .local v30, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual/range {v30 .. v30}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v3
 
-    .line 1631
+    .line 1628
     .local v3, N:I
     const/16 v26, 0x0
 
-    .line 1632
+    .line 1629
     .local v26, w:Lcom/android/server/wm/WindowState;
     const/4 v12, 0x0
 
-    .line 1633
+    .line 1630
     .local v12, foundW:Lcom/android/server/wm/WindowState;
     const/4 v11, 0x0
 
-    .line 1634
+    .line 1631
     .local v11, foundI:I
     const/16 v23, 0x0
 
-    .line 1635
+    .line 1632
     .local v23, topCurW:Lcom/android/server/wm/WindowState;
     const/16 v22, 0x0
 
-    .line 1636
+    .line 1633
     .local v22, topCurI:I
     const/16 v29, -0x1
 
-    .line 1637
+    .line 1634
     .local v29, windowDetachedI:I
     move v13, v3
 
-    .line 1638
+    .line 1635
     .local v13, i:I
     :cond_0
     :goto_0
     if-lez v13, :cond_4
 
-    .line 1639
+    .line 1636
     add-int/lit8 v13, v13, -0x1
 
-    .line 1640
+    .line 1637
     move-object/from16 v0, v30
 
     invoke-virtual {v0, v13}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -17867,7 +17498,7 @@
     .end local v26           #w:Lcom/android/server/wm/WindowState;
     check-cast v26, Lcom/android/server/wm/WindowState;
 
-    .line 1641
+    .line 1638
     .restart local v26       #w:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, v26
 
@@ -17889,22 +17520,22 @@
 
     if-ne v0, v1, :cond_1
 
-    .line 1642
+    .line 1639
     if-nez v23, :cond_0
 
-    .line 1643
+    .line 1640
     move-object/from16 v23, v26
 
-    .line 1644
+    .line 1641
     move/from16 v22, v13
 
     goto :goto_0
 
-    .line 1648
+    .line 1645
     :cond_1
     const/16 v23, 0x0
 
-    .line 1649
+    .line 1646
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mWindowDetachedWallpaper:Lcom/android/server/wm/WindowState;
@@ -17925,7 +17556,7 @@
 
     if-eqz v31, :cond_2
 
-    .line 1652
+    .line 1649
     move-object/from16 v0, v26
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
@@ -17960,7 +17591,7 @@
 
     if-eqz v31, :cond_0
 
-    .line 1660
+    .line 1657
     :cond_2
     move-object/from16 v0, v26
 
@@ -18004,14 +17635,14 @@
 
     if-eqz v31, :cond_6
 
-    .line 1664
+    .line 1661
     :cond_3
     move-object/from16 v12, v26
 
-    .line 1665
+    .line 1662
     move v11, v13
 
-    .line 1666
+    .line 1663
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -18036,19 +17667,19 @@
 
     if-nez v31, :cond_0
 
-    .line 1680
+    .line 1677
     :cond_4
     if-nez v12, :cond_5
 
     if-ltz v29, :cond_5
 
-    .line 1683
+    .line 1680
     move-object/from16 v12, v26
 
-    .line 1684
+    .line 1681
     move/from16 v11, v29
 
-    .line 1687
+    .line 1684
     :cond_5
     move-object/from16 v0, p0
 
@@ -18064,7 +17695,7 @@
 
     if-eq v0, v1, :cond_8
 
-    .line 1696
+    .line 1693
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -18087,14 +17718,14 @@
 
     if-eqz v31, :cond_7
 
-    .line 1699
+    .line 1696
     const/16 v31, 0x0
 
-    .line 1936
+    .line 1933
     :goto_1
     return v31
 
-    .line 1675
+    .line 1672
     :cond_6
     move-object/from16 v0, p0
 
@@ -18108,12 +17739,12 @@
 
     if-ne v0, v1, :cond_0
 
-    .line 1676
+    .line 1673
     move/from16 v29, v13
 
     goto/16 :goto_0
 
-    .line 1701
+    .line 1698
     :cond_7
     if-eqz v12, :cond_8
 
@@ -18123,12 +17754,12 @@
 
     if-eqz v31, :cond_8
 
-    .line 1704
+    .line 1701
     const/16 v31, 0x0
 
     goto :goto_1
 
-    .line 1708
+    .line 1705
     :cond_8
     move-object/from16 v0, p0
 
@@ -18158,7 +17789,7 @@
 
     if-eq v0, v12, :cond_18
 
-    .line 1715
+    .line 1712
     :cond_9
     const/16 v31, 0x0
 
@@ -18168,7 +17799,7 @@
 
     iput-object v0, v1, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1716
+    .line 1713
     const/16 v31, 0x0
 
     move-object/from16 v0, v31
@@ -18177,28 +17808,28 @@
 
     iput-object v0, v1, Lcom/android/server/wm/WindowManagerService;->mUpperWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1718
+    .line 1715
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     move-object/from16 v19, v0
 
-    .line 1719
+    .line 1716
     .local v19, oldW:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, p0
 
     iput-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1720
+    .line 1717
     const/16 v20, 0x1
 
-    .line 1724
+    .line 1721
     if-eqz v12, :cond_c
 
     if-eqz v19, :cond_c
 
-    .line 1725
+    .line 1722
     move-object/from16 v0, v19
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
@@ -18244,7 +17875,7 @@
     :cond_a
     const/16 v16, 0x1
 
-    .line 1728
+    .line 1725
     .local v16, oldAnim:Z
     :goto_2
     iget-object v0, v12, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
@@ -18286,14 +17917,14 @@
     :cond_b
     const/4 v10, 0x1
 
-    .line 1735
+    .line 1732
     .local v10, foundAnim:Z
     :goto_3
     if-eqz v10, :cond_c
 
     if-eqz v16, :cond_c
 
-    .line 1736
+    .line 1733
     move-object/from16 v0, v30
 
     move-object/from16 v1, v19
@@ -18302,11 +17933,11 @@
 
     move-result v17
 
-    .line 1740
+    .line 1737
     .local v17, oldI:I
     if-ltz v17, :cond_c
 
-    .line 1748
+    .line 1745
     iget-object v0, v12, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     move-object/from16 v31, v0
@@ -18325,20 +17956,20 @@
 
     if-eqz v31, :cond_16
 
-    .line 1752
+    .line 1749
     move-object/from16 v0, v19
 
     move-object/from16 v1, p0
 
     iput-object v0, v1, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1753
+    .line 1750
     move-object/from16 v12, v19
 
-    .line 1754
+    .line 1751
     move/from16 v11, v17
 
-    .line 1799
+    .line 1796
     .end local v10           #foundAnim:Z
     .end local v16           #oldAnim:Z
     .end local v17           #oldI:I
@@ -18349,19 +17980,19 @@
 
     const/16 v25, 0x1
 
-    .line 1800
+    .line 1797
     .local v25, visible:Z
     :goto_5
     if-eqz v25, :cond_e
 
-    .line 1803
+    .line 1800
     move-object/from16 v0, p0
 
     invoke-virtual {v0, v12}, Lcom/android/server/wm/WindowManagerService;->isWallpaperVisible(Lcom/android/server/wm/WindowState;)Z
 
     move-result v25
 
-    .line 1809
+    .line 1806
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -18399,7 +18030,7 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowManagerService;->mWallpaperAnimLayerAdjustment:I
 
-    .line 1813
+    .line 1810
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -18420,12 +18051,12 @@
 
     add-int/lit16 v15, v0, 0x3e8
 
-    .line 1821
+    .line 1818
     .local v15, maxLayer:I
     :goto_7
     if-lez v11, :cond_e
 
-    .line 1822
+    .line 1819
     add-int/lit8 v31, v11, -0x1
 
     invoke-virtual/range {v30 .. v31}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -18434,7 +18065,7 @@
 
     check-cast v28, Lcom/android/server/wm/WindowState;
 
-    .line 1823
+    .line 1820
     .local v28, wb:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, v28
 
@@ -18521,7 +18152,7 @@
 
     if-eq v0, v1, :cond_20
 
-    .line 1840
+    .line 1837
     .end local v15           #maxLayer:I
     .end local v28           #wb:Lcom/android/server/wm/WindowState;
     :cond_e
@@ -18529,17 +18160,17 @@
 
     if-eqz v23, :cond_21
 
-    .line 1843
+    .line 1840
     move-object/from16 v12, v23
 
-    .line 1844
+    .line 1841
     add-int/lit8 v11, v22, 0x1
 
-    .line 1851
+    .line 1848
     :goto_8
     if-eqz v25, :cond_10
 
-    .line 1852
+    .line 1849
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -18558,7 +18189,7 @@
 
     if-ltz v31, :cond_f
 
-    .line 1853
+    .line 1850
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -18577,7 +18208,7 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperX:F
 
-    .line 1854
+    .line 1851
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -18596,7 +18227,7 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperXStep:F
 
-    .line 1856
+    .line 1853
     :cond_f
     move-object/from16 v0, p0
 
@@ -18616,7 +18247,7 @@
 
     if-ltz v31, :cond_10
 
-    .line 1857
+    .line 1854
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -18635,7 +18266,7 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperY:F
 
-    .line 1858
+    .line 1855
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -18654,7 +18285,7 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperYStep:F
 
-    .line 1864
+    .line 1861
     :cond_10
     move-object/from16 v0, p0
 
@@ -18666,15 +18297,15 @@
 
     move-result v5
 
-    .line 1865
+    .line 1862
     .local v5, curTokenIndex:I
     :cond_11
     if-lez v5, :cond_27
 
-    .line 1866
+    .line 1863
     add-int/lit8 v5, v5, -0x1
 
-    .line 1867
+    .line 1864
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
@@ -18689,7 +18320,7 @@
 
     check-cast v21, Lcom/android/server/wm/WindowToken;
 
-    .line 1868
+    .line 1865
     .local v21, token:Lcom/android/server/wm/WindowToken;
     move-object/from16 v0, v21
 
@@ -18703,10 +18334,10 @@
 
     if-ne v0, v1, :cond_12
 
-    .line 1871
+    .line 1868
     or-int/lit8 v4, v4, 0x4
 
-    .line 1872
+    .line 1869
     if-nez v25, :cond_23
 
     const/16 v31, 0x1
@@ -18718,7 +18349,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowToken;->hidden:Z
 
-    .line 1875
+    .line 1872
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v31
@@ -18731,7 +18362,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 1878
+    .line 1875
     :cond_12
     move-object/from16 v0, v21
 
@@ -18743,15 +18374,15 @@
 
     move-result v6
 
-    .line 1879
+    .line 1876
     .local v6, curWallpaperIndex:I
     :goto_a
     if-lez v6, :cond_11
 
-    .line 1880
+    .line 1877
     add-int/lit8 v6, v6, -0x1
 
-    .line 1881
+    .line 1878
     move-object/from16 v0, v21
 
     iget-object v0, v0, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
@@ -18766,11 +18397,11 @@
 
     check-cast v27, Lcom/android/server/wm/WindowState;
 
-    .line 1883
+    .line 1880
     .local v27, wallpaper:Lcom/android/server/wm/WindowState;
     if-eqz v25, :cond_13
 
-    .line 1884
+    .line 1881
     const/16 v31, 0x0
 
     move-object/from16 v0, p0
@@ -18781,7 +18412,7 @@
 
     invoke-virtual {v0, v1, v9, v7, v2}, Lcom/android/server/wm/WindowManagerService;->updateWallpaperOffsetLocked(Lcom/android/server/wm/WindowState;IIZ)Z
 
-    .line 1889
+    .line 1886
     :cond_13
     move-object/from16 v0, p0
 
@@ -18791,7 +18422,7 @@
 
     invoke-virtual {v0, v1, v2}, Lcom/android/server/wm/WindowManagerService;->dispatchWallpaperVisibility(Lcom/android/server/wm/WindowState;Z)V
 
-    .line 1891
+    .line 1888
     move-object/from16 v0, v27
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
@@ -18818,15 +18449,15 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowStateAnimator;->mAnimLayer:I
 
-    .line 1897
+    .line 1894
     move-object/from16 v0, v27
 
     if-ne v0, v12, :cond_25
 
-    .line 1898
+    .line 1895
     add-int/lit8 v11, v11, -0x1
 
-    .line 1899
+    .line 1896
     if-lez v11, :cond_24
 
     add-int/lit8 v31, v11, -0x1
@@ -18839,11 +18470,11 @@
 
     move-object/from16 v12, v31
 
-    .line 1901
+    .line 1898
     :goto_b
     goto :goto_a
 
-    .line 1725
+    .line 1722
     .end local v5           #curTokenIndex:I
     .end local v6           #curWallpaperIndex:I
     .end local v21           #token:Lcom/android/server/wm/WindowToken;
@@ -18855,14 +18486,14 @@
 
     goto/16 :goto_2
 
-    .line 1728
+    .line 1725
     .restart local v16       #oldAnim:Z
     :cond_15
     const/4 v10, 0x0
 
     goto/16 :goto_3
 
-    .line 1759
+    .line 1756
     .restart local v10       #foundAnim:Z
     .restart local v17       #oldI:I
     :cond_16
@@ -18870,27 +18501,27 @@
 
     if-le v11, v0, :cond_17
 
-    .line 1764
+    .line 1761
     move-object/from16 v0, p0
 
     iput-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mUpperWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1765
+    .line 1762
     move-object/from16 v0, v19
 
     move-object/from16 v1, p0
 
     iput-object v0, v1, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1766
+    .line 1763
     move-object/from16 v12, v19
 
-    .line 1767
+    .line 1764
     move/from16 v11, v17
 
     goto/16 :goto_4
 
-    .line 1773
+    .line 1770
     :cond_17
     move-object/from16 v0, v19
 
@@ -18898,14 +18529,14 @@
 
     iput-object v0, v1, Lcom/android/server/wm/WindowManagerService;->mUpperWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1774
+    .line 1771
     move-object/from16 v0, p0
 
     iput-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     goto/16 :goto_4
 
-    .line 1780
+    .line 1777
     .end local v10           #foundAnim:Z
     .end local v16           #oldAnim:Z
     .end local v17           #oldI:I
@@ -18919,7 +18550,7 @@
 
     if-eqz v31, :cond_c
 
-    .line 1782
+    .line 1779
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -18983,7 +18614,7 @@
     :cond_19
     const/4 v14, 0x1
 
-    .line 1785
+    .line 1782
     .local v14, lowerAnimating:Z
     :goto_c
     move-object/from16 v0, p0
@@ -19049,14 +18680,14 @@
     :cond_1a
     const/16 v24, 0x1
 
-    .line 1788
+    .line 1785
     .local v24, upperAnimating:Z
     :goto_d
     if-eqz v14, :cond_1b
 
     if-nez v24, :cond_c
 
-    .line 1792
+    .line 1789
     :cond_1b
     const/16 v31, 0x0
 
@@ -19066,7 +18697,7 @@
 
     iput-object v0, v1, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1793
+    .line 1790
     const/16 v31, 0x0
 
     move-object/from16 v0, v31
@@ -19075,17 +18706,17 @@
 
     iput-object v0, v1, Lcom/android/server/wm/WindowManagerService;->mUpperWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1794
+    .line 1791
     move-object/from16 v0, p0
 
     iput-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1795
+    .line 1792
     const/16 v20, 0x1
 
     goto/16 :goto_4
 
-    .line 1782
+    .line 1779
     .end local v14           #lowerAnimating:Z
     .end local v24           #upperAnimating:Z
     :cond_1c
@@ -19093,40 +18724,40 @@
 
     goto :goto_c
 
-    .line 1785
+    .line 1782
     .restart local v14       #lowerAnimating:Z
     :cond_1d
     const/16 v24, 0x0
 
     goto :goto_d
 
-    .line 1799
+    .line 1796
     .end local v14           #lowerAnimating:Z
     :cond_1e
     const/16 v25, 0x0
 
     goto/16 :goto_5
 
-    .line 1809
+    .line 1806
     .restart local v25       #visible:Z
     :cond_1f
     const/16 v31, 0x0
 
     goto/16 :goto_6
 
-    .line 1833
+    .line 1830
     .restart local v15       #maxLayer:I
     .restart local v28       #wb:Lcom/android/server/wm/WindowState;
     :cond_20
     move-object/from16 v12, v28
 
-    .line 1834
+    .line 1831
     add-int/lit8 v11, v11, -0x1
 
-    .line 1835
+    .line 1832
     goto/16 :goto_7
 
-    .line 1848
+    .line 1845
     .end local v15           #maxLayer:I
     .end local v28           #wb:Lcom/android/server/wm/WindowState;
     :cond_21
@@ -19150,7 +18781,7 @@
 
     goto :goto_e
 
-    .line 1872
+    .line 1869
     .restart local v5       #curTokenIndex:I
     .restart local v21       #token:Lcom/android/server/wm/WindowToken;
     :cond_23
@@ -19158,7 +18789,7 @@
 
     goto/16 :goto_9
 
-    .line 1899
+    .line 1896
     .restart local v6       #curWallpaperIndex:I
     .restart local v27       #wallpaper:Lcom/android/server/wm/WindowState;
     :cond_24
@@ -19166,7 +18797,7 @@
 
     goto/16 :goto_b
 
-    .line 1907
+    .line 1904
     :cond_25
     move-object/from16 v0, v30
 
@@ -19176,18 +18807,18 @@
 
     move-result v18
 
-    .line 1908
+    .line 1905
     .local v18, oldIndex:I
     if-ltz v18, :cond_26
 
-    .line 1911
+    .line 1908
     move-object/from16 v0, v30
 
     move/from16 v1, v18
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowList;->remove(I)Ljava/lang/Object;
 
-    .line 1912
+    .line 1909
     const/16 v31, 0x1
 
     move/from16 v0, v31
@@ -19196,15 +18827,15 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 1913
+    .line 1910
     move/from16 v0, v18
 
     if-ge v0, v11, :cond_26
 
-    .line 1914
+    .line 1911
     add-int/lit8 v11, v11, -0x1
 
-    .line 1924
+    .line 1921
     :cond_26
     move-object/from16 v0, v30
 
@@ -19212,7 +18843,7 @@
 
     invoke-virtual {v0, v11, v1}, Lcom/android/server/wm/WindowList;->add(ILjava/lang/Object;)V
 
-    .line 1925
+    .line 1922
     const/16 v31, 0x1
 
     move/from16 v0, v31
@@ -19221,13 +18852,13 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 1926
+    .line 1923
     or-int/lit8 v4, v4, 0x2
 
-    .line 1927
+    .line 1924
     goto/16 :goto_a
 
-    .line 1930
+    .line 1927
     .end local v6           #curWallpaperIndex:I
     .end local v18           #oldIndex:I
     .end local v21           #token:Lcom/android/server/wm/WindowToken;
@@ -19238,7 +18869,7 @@
     :cond_28
     move/from16 v31, v4
 
-    .line 1936
+    .line 1933
     goto/16 :goto_1
 .end method
 
@@ -19250,7 +18881,7 @@
     .prologue
     const/4 v1, 0x1
 
-    .line 3669
+    .line 3666
     invoke-static {}, Landroid/os/Binder;->getCallingPid()I
 
     move-result v2
@@ -19261,12 +18892,12 @@
 
     if-ne v2, v3, :cond_1
 
-    .line 3682
+    .line 3679
     :cond_0
     :goto_0
     return v1
 
-    .line 3673
+    .line 3670
     :cond_1
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
@@ -19276,7 +18907,7 @@
 
     if-eqz v2, :cond_0
 
-    .line 3677
+    .line 3674
     new-instance v1, Ljava/lang/StringBuilder;
 
     invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
@@ -19333,13 +18964,13 @@
 
     move-result-object v0
 
-    .line 3681
+    .line 3678
     .local v0, msg:Ljava/lang/String;
     const-string v1, "WindowManager"
 
     invoke-static {v1, v0}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3682
+    .line 3679
     const/4 v1, 0x0
 
     goto :goto_0
@@ -19351,7 +18982,7 @@
     .prologue
     const/16 v6, 0x18
 
-    .line 9732
+    .line 9678
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForDrawn:Ljava/util/ArrayList;
 
     invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
@@ -19360,7 +18991,7 @@
 
     if-lez v3, :cond_3
 
-    .line 9733
+    .line 9679
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForDrawn:Ljava/util/ArrayList;
 
     invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
@@ -19373,7 +19004,7 @@
     :goto_0
     if-ltz v0, :cond_3
 
-    .line 9734
+    .line 9680
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForDrawn:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -19382,13 +19013,13 @@
 
     check-cast v1, Landroid/util/Pair;
 
-    .line 9735
+    .line 9681
     .local v1, pair:Landroid/util/Pair;,"Landroid/util/Pair<Lcom/android/server/wm/WindowState;Landroid/os/IRemoteCallback;>;"
     iget-object v2, v1, Landroid/util/Pair;->first:Ljava/lang/Object;
 
     check-cast v2, Lcom/android/server/wm/WindowState;
 
-    .line 9739
+    .line 9685
     .local v2, win:Lcom/android/server/wm/WindowState;
     iget-boolean v3, v2, Lcom/android/server/wm/WindowState;->mRemoved:Z
 
@@ -19400,7 +19031,7 @@
 
     if-nez v3, :cond_2
 
-    .line 9742
+    .line 9688
     :cond_0
     const-string v3, "WindowManager"
 
@@ -19426,7 +19057,7 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 9744
+    .line 9690
     :try_start_0
     iget-object v3, v1, Landroid/util/Pair;->second:Ljava/lang/Object;
 
@@ -19438,25 +19069,25 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_1
 
-    .line 9747
+    .line 9693
     :goto_1
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForDrawn:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v1}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 9748
+    .line 9694
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     invoke-virtual {v3, v6, v1}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(ILjava/lang/Object;)V
 
-    .line 9733
+    .line 9679
     :cond_1
     :goto_2
     add-int/lit8 v0, v0, -0x1
 
     goto :goto_0
 
-    .line 9749
+    .line 9695
     :cond_2
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
@@ -19464,7 +19095,7 @@
 
     if-eqz v3, :cond_1
 
-    .line 9752
+    .line 9698
     :try_start_1
     iget-object v3, v1, Landroid/util/Pair;->second:Ljava/lang/Object;
 
@@ -19476,27 +19107,27 @@
     :try_end_1
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
 
-    .line 9755
+    .line 9701
     :goto_3
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForDrawn:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v1}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 9756
+    .line 9702
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     invoke-virtual {v3, v6, v1}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(ILjava/lang/Object;)V
 
     goto :goto_2
 
-    .line 9760
+    .line 9706
     .end local v0           #j:I
     .end local v1           #pair:Landroid/util/Pair;,"Landroid/util/Pair<Lcom/android/server/wm/WindowState;Landroid/os/IRemoteCallback;>;"
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     :cond_3
     return-void
 
-    .line 9753
+    .line 9699
     .restart local v0       #j:I
     .restart local v1       #pair:Landroid/util/Pair;,"Landroid/util/Pair<Lcom/android/server/wm/WindowState;Landroid/os/IRemoteCallback;>;"
     .restart local v2       #win:Lcom/android/server/wm/WindowState;
@@ -19505,7 +19136,7 @@
 
     goto :goto_3
 
-    .line 9745
+    .line 9691
     :catch_1
     move-exception v3
 
@@ -19517,27 +19148,27 @@
     .parameter "displayId"
 
     .prologue
-    .line 8117
+    .line 8085
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 8118
+    .line 8086
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 8119
+    .line 8087
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     if-eqz v0, :cond_0
 
-    .line 8120
+    .line 8088
     iget v1, v0, Lcom/android/server/wm/DisplayContent;->mInitialDisplayDensity:I
 
     invoke-direct {p0, v0, v1}, Lcom/android/server/wm/WindowManagerService;->setForcedDisplayDensityLocked(Lcom/android/server/wm/DisplayContent;I)V
 
-    .line 8121
+    .line 8089
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     invoke-virtual {v1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
@@ -19550,14 +19181,14 @@
 
     invoke-static {v1, v3, v4}, Landroid/provider/Settings$Global;->putString(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;)Z
 
-    .line 8124
+    .line 8092
     :cond_0
     monitor-exit v2
 
-    .line 8125
+    .line 8093
     return-void
 
-    .line 8124
+    .line 8092
     .end local v0           #displayContent:Lcom/android/server/wm/DisplayContent;
     :catchall_0
     move-exception v1
@@ -19574,29 +19205,29 @@
     .parameter "displayId"
 
     .prologue
-    .line 8082
+    .line 8050
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 8083
+    .line 8051
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 8084
+    .line 8052
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     if-eqz v0, :cond_0
 
-    .line 8085
+    .line 8053
     iget v1, v0, Lcom/android/server/wm/DisplayContent;->mInitialDisplayWidth:I
 
     iget v3, v0, Lcom/android/server/wm/DisplayContent;->mInitialDisplayHeight:I
 
     invoke-direct {p0, v0, v1, v3}, Lcom/android/server/wm/WindowManagerService;->setForcedDisplaySizeLocked(Lcom/android/server/wm/DisplayContent;II)V
 
-    .line 8087
+    .line 8055
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     invoke-virtual {v1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
@@ -19609,14 +19240,14 @@
 
     invoke-static {v1, v3, v4}, Landroid/provider/Settings$Global;->putString(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;)Z
 
-    .line 8090
+    .line 8058
     :cond_0
     monitor-exit v2
 
-    .line 8091
+    .line 8059
     return-void
 
-    .line 8090
+    .line 8058
     .end local v0           #displayContent:Lcom/android/server/wm/DisplayContent;
     :catchall_0
     move-exception v1
@@ -19633,18 +19264,18 @@
     .parameter "reason"
 
     .prologue
-    .line 5368
+    .line 5365
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v3
 
-    .line 5369
+    .line 5366
     :try_start_0
     new-instance v0, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
 
     invoke-direct {v0, p0}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 5370
+    .line 5367
     .local v0, iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     :cond_0
     :goto_0
@@ -19654,12 +19285,12 @@
 
     if-eqz v2, :cond_1
 
-    .line 5371
+    .line 5368
     invoke-virtual {v0}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->next()Lcom/android/server/wm/WindowState;
 
     move-result-object v1
 
-    .line 5372
+    .line 5369
     .local v1, w:Lcom/android/server/wm/WindowState;
     iget-boolean v2, v1, Lcom/android/server/wm/WindowState;->mHasSurface:Z
     :try_end_0
@@ -19667,7 +19298,7 @@
 
     if-eqz v2, :cond_0
 
-    .line 5374
+    .line 5371
     :try_start_1
     iget-object v2, v1, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
 
@@ -19678,22 +19309,22 @@
 
     goto :goto_0
 
-    .line 5375
+    .line 5372
     :catch_0
     move-exception v2
 
     goto :goto_0
 
-    .line 5379
+    .line 5376
     .end local v1           #w:Lcom/android/server/wm/WindowState;
     :cond_1
     :try_start_2
     monitor-exit v3
 
-    .line 5380
+    .line 5377
     return-void
 
-    .line 5379
+    .line 5376
     .end local v0           #iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     :catchall_0
     move-exception v2
@@ -19709,23 +19340,23 @@
     .locals 2
 
     .prologue
-    .line 4059
+    .line 4056
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getOrientationFromWindowsLocked()I
 
     move-result v0
 
-    .line 4060
+    .line 4057
     .local v0, req:I
     const/4 v1, -0x1
 
     if-ne v0, v1, :cond_0
 
-    .line 4061
+    .line 4058
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getOrientationFromAppTokensLocked()I
 
     move-result v0
 
-    .line 4063
+    .line 4060
     :cond_0
     return v0
 .end method
@@ -19811,79 +19442,259 @@
 .end method
 
 .method computeScreenConfigurationLocked(Landroid/content/res/Configuration;)Z
-    .locals 22
+    .locals 27
     .parameter "config"
 
     .prologue
-    .line 7003
-    invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
-
-    move-result-object v13
-
-    .line 7006
-    .local v13, displayContent:Lcom/android/server/wm/DisplayContent;
+    .line 6929
     move-object/from16 v0, p0
 
-    invoke-direct {v0, v13}, Lcom/android/server/wm/WindowManagerService;->updateApplicationDisplayMetricsLocked(Lcom/android/server/wm/DisplayContent;)Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
+    iget-boolean v3, v0, Lcom/android/server/wm/WindowManagerService;->mDisplayReady:Z
 
-    move-result-object v10
+    if-nez v3, :cond_0
 
-    .line 7009
-    .local v10, appDm:Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-    if-nez v10, :cond_0
-
-    .line 7010
+    .line 6930
     const/4 v3, 0x0
 
-    .line 7104
+    .line 7072
     :goto_0
     return v3
 
-    .line 7013
+    .line 6934
     :cond_0
-    iget-boolean v5, v10, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->rotated:Z
+    invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
-    .line 7014
+    move-result-object v14
+
+    .line 6937
+    .local v14, displayContent:Lcom/android/server/wm/DisplayContent;
+    move-object/from16 v0, p0
+
+    iget v3, v0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
+
+    const/4 v8, 0x1
+
+    if-eq v3, v8, :cond_1
+
+    move-object/from16 v0, p0
+
+    iget v3, v0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
+
+    const/4 v8, 0x3
+
+    if-ne v3, v8, :cond_7
+
+    :cond_1
+    const/4 v5, 0x1
+
+    .line 6939
     .local v5, rotated:Z
-    iget v6, v10, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dw:I
+    :goto_1
+    if-eqz v5, :cond_8
 
-    .line 7015
+    iget v0, v14, Lcom/android/server/wm/DisplayContent;->mBaseDisplayHeight:I
+
+    move/from16 v25, v0
+
+    .line 6941
+    .local v25, realdw:I
+    :goto_2
+    if-eqz v5, :cond_9
+
+    iget v0, v14, Lcom/android/server/wm/DisplayContent;->mBaseDisplayWidth:I
+
+    move/from16 v24, v0
+
+    .line 6943
+    .local v24, realdh:I
+    :goto_3
+    move/from16 v6, v25
+
+    .line 6944
     .local v6, dw:I
-    iget v7, v10, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->dh:I
+    move/from16 v7, v24
 
-    .line 7017
+    .line 6946
     .local v7, dh:I
-    if-eqz p1, :cond_1
+    move-object/from16 v0, p0
 
-    .line 7018
-    if-gt v6, v7, :cond_5
+    iget-boolean v3, v0, Lcom/android/server/wm/WindowManagerService;->mAltOrientation:Z
 
+    if-eqz v3, :cond_2
+
+    .line 6947
+    move/from16 v0, v25
+
+    move/from16 v1, v24
+
+    if-le v0, v1, :cond_a
+
+    .line 6949
+    move/from16 v0, v24
+
+    int-to-float v3, v0
+
+    const v8, 0x3fa66666
+
+    div-float/2addr v3, v8
+
+    float-to-int v0, v3
+
+    move/from16 v21, v0
+
+    .line 6950
+    .local v21, maxw:I
+    move/from16 v0, v21
+
+    move/from16 v1, v25
+
+    if-ge v0, v1, :cond_2
+
+    .line 6951
+    move/from16 v6, v21
+
+    .line 6962
+    .end local v21           #maxw:I
+    :cond_2
+    :goto_4
+    if-eqz p1, :cond_3
+
+    .line 6963
+    if-gt v6, v7, :cond_b
+
+    .line 6964
     const/4 v3, 0x1
 
-    :goto_1
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->orientation:I
 
-    .line 7022
-    :cond_1
-    invoke-virtual {v13}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
+    .line 6965
+    const-string v3, "0"
+
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v3}, Lcom/android/server/wm/WindowManagerService;->setLandscapeProperty(Ljava/lang/String;)V
+
+    .line 6973
+    :cond_3
+    :goto_5
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
+
+    move-object/from16 v0, p0
+
+    iget v8, v0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
+
+    invoke-interface {v3, v6, v7, v8}, Landroid/view/WindowManagerPolicy;->getNonDecorDisplayWidth(III)I
+
+    move-result v11
+
+    .line 6974
+    .local v11, appWidth:I
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
+
+    move-object/from16 v0, p0
+
+    iget v8, v0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
+
+    invoke-interface {v3, v6, v7, v8}, Landroid/view/WindowManagerPolicy;->getNonDecorDisplayHeight(III)I
+
+    move-result v10
+
+    .line 6975
+    .local v10, appHeight:I
+    invoke-virtual {v14}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
 
     move-result-object v4
 
-    .line 7023
+    .line 6976
     .local v4, displayInfo:Landroid/view/DisplayInfo;
+    iget-object v8, v14, Lcom/android/server/wm/DisplayContent;->mDisplaySizeLock:Ljava/lang/Object;
+
+    monitor-enter v8
+
+    .line 6977
+    :try_start_0
     move-object/from16 v0, p0
 
-    iget-object v14, v0, Lcom/android/server/wm/WindowManagerService;->mDisplayMetrics:Landroid/util/DisplayMetrics;
+    iget v3, v0, Lcom/android/server/wm/WindowManagerService;->mRotation:I
 
-    .line 7024
-    .local v14, dm:Landroid/util/DisplayMetrics;
+    iput v3, v4, Landroid/view/DisplayInfo;->rotation:I
+
+    .line 6978
+    iput v6, v4, Landroid/view/DisplayInfo;->logicalWidth:I
+
+    .line 6979
+    iput v7, v4, Landroid/view/DisplayInfo;->logicalHeight:I
+
+    .line 6980
+    iget v3, v14, Lcom/android/server/wm/DisplayContent;->mBaseDisplayDensity:I
+
+    iput v3, v4, Landroid/view/DisplayInfo;->logicalDensityDpi:I
+
+    .line 6981
+    iput v11, v4, Landroid/view/DisplayInfo;->appWidth:I
+
+    .line 6982
+    iput v10, v4, Landroid/view/DisplayInfo;->appHeight:I
+
+    .line 6983
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mRealDisplayMetrics:Landroid/util/DisplayMetrics;
+
+    const/4 v9, 0x0
+
+    invoke-virtual {v4, v3, v9}, Landroid/view/DisplayInfo;->getLogicalMetrics(Landroid/util/DisplayMetrics;Landroid/view/CompatibilityInfoHolder;)V
+
+    .line 6984
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mDisplayMetrics:Landroid/util/DisplayMetrics;
+
+    const/4 v9, 0x0
+
+    invoke-virtual {v4, v3, v9}, Landroid/view/DisplayInfo;->getAppMetrics(Landroid/util/DisplayMetrics;Landroid/view/CompatibilityInfoHolder;)V
+
+    .line 6985
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mDisplayManagerService:Lcom/android/server/display/DisplayManagerService;
+
+    invoke-virtual {v14}, Lcom/android/server/wm/DisplayContent;->getDisplayId()I
+
+    move-result v9
+
+    invoke-virtual {v3, v9, v4}, Lcom/android/server/display/DisplayManagerService;->setDisplayInfoOverrideFromWindowManager(ILandroid/view/DisplayInfo;)V
+
+    .line 6988
+    move-object/from16 v0, p0
+
+    iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
+
+    invoke-virtual {v3, v6, v7, v11, v10}, Lcom/android/server/wm/WindowAnimator;->setDisplayDimensions(IIII)V
+
+    .line 6989
+    monitor-exit v8
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    .line 6994
+    move-object/from16 v0, p0
+
+    iget-object v15, v0, Lcom/android/server/wm/WindowManagerService;->mDisplayMetrics:Landroid/util/DisplayMetrics;
+
+    .line 6995
+    .local v15, dm:Landroid/util/DisplayMetrics;
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mCompatDisplayMetrics:Landroid/util/DisplayMetrics;
 
-    invoke-static {v14, v3}, Landroid/content/res/CompatibilityInfo;->computeCompatibleScaling(Landroid/util/DisplayMetrics;Landroid/util/DisplayMetrics;)F
+    invoke-static {v15, v3}, Landroid/content/res/CompatibilityInfo;->computeCompatibleScaling(Landroid/util/DisplayMetrics;Landroid/util/DisplayMetrics;)F
 
     move-result v3
 
@@ -19891,10 +19702,10 @@
 
     iput v3, v0, Lcom/android/server/wm/WindowManagerService;->mCompatibleScreenScale:F
 
-    .line 7027
-    if-eqz p1, :cond_d
+    .line 6998
+    if-eqz p1, :cond_12
 
-    .line 7028
+    .line 6999
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -19909,7 +19720,7 @@
 
     int-to-float v3, v3
 
-    iget v8, v14, Landroid/util/DisplayMetrics;->density:F
+    iget v8, v15, Landroid/util/DisplayMetrics;->density:F
 
     div-float/2addr v3, v8
 
@@ -19919,7 +19730,7 @@
 
     iput v3, v0, Landroid/content/res/Configuration;->screenWidthDp:I
 
-    .line 7030
+    .line 7001
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -19934,7 +19745,7 @@
 
     int-to-float v3, v3
 
-    iget v8, v14, Landroid/util/DisplayMetrics;->density:F
+    iget v8, v15, Landroid/util/DisplayMetrics;->density:F
 
     div-float/2addr v3, v8
 
@@ -19944,8 +19755,8 @@
 
     iput v3, v0, Landroid/content/res/Configuration;->screenHeightDp:I
 
-    .line 7032
-    iget v8, v14, Landroid/util/DisplayMetrics;->density:F
+    .line 7003
+    iget v8, v15, Landroid/util/DisplayMetrics;->density:F
 
     move-object/from16 v3, p0
 
@@ -19953,7 +19764,7 @@
 
     invoke-direct/range {v3 .. v9}, Lcom/android/server/wm/WindowManagerService;->computeSizeRangesAndScreenLayout(Landroid/view/DisplayInfo;ZIIFLandroid/content/res/Configuration;)V
 
-    .line 7034
+    .line 7005
     move-object/from16 v0, p1
 
     iget v3, v0, Landroid/content/res/Configuration;->screenWidthDp:I
@@ -19972,7 +19783,7 @@
 
     iput v3, v0, Landroid/content/res/Configuration;->compatScreenWidthDp:I
 
-    .line 7035
+    .line 7006
     move-object/from16 v0, p1
 
     iget v3, v0, Landroid/content/res/Configuration;->screenHeightDp:I
@@ -19991,10 +19802,10 @@
 
     iput v3, v0, Landroid/content/res/Configuration;->compatScreenHeightDp:I
 
-    .line 7036
+    .line 7007
     move-object/from16 v0, p0
 
-    invoke-direct {v0, v5, v14, v6, v7}, Lcom/android/server/wm/WindowManagerService;->computeCompatSmallestWidth(ZLandroid/util/DisplayMetrics;II)I
+    invoke-direct {v0, v5, v15, v6, v7}, Lcom/android/server/wm/WindowManagerService;->computeCompatSmallestWidth(ZLandroid/util/DisplayMetrics;II)I
 
     move-result v3
 
@@ -20002,219 +19813,305 @@
 
     iput v3, v0, Landroid/content/res/Configuration;->compatSmallestScreenWidthDp:I
 
-    .line 7037
-    iget v3, v13, Lcom/android/server/wm/DisplayContent;->mBaseDisplayDensity:I
+    .line 7008
+    iget v3, v14, Lcom/android/server/wm/DisplayContent;->mBaseDisplayDensity:I
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->densityDpi:I
 
-    .line 7041
+    .line 7012
     const/4 v3, 0x1
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->touchscreen:I
 
-    .line 7042
+    .line 7013
     const/4 v3, 0x1
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->keyboard:I
 
-    .line 7043
+    .line 7014
     const/4 v3, 0x1
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->navigation:I
 
-    .line 7045
-    const/16 v17, 0x0
+    .line 7016
+    const/16 v18, 0x0
 
-    .line 7046
-    .local v17, keyboardPresence:I
-    const/16 v19, 0x0
+    .line 7017
+    .local v18, keyboardPresence:I
+    const/16 v22, 0x0
 
-    .line 7047
-    .local v19, navigationPresence:I
+    .line 7018
+    .local v22, navigationPresence:I
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
 
     invoke-virtual {v3}, Lcom/android/server/input/InputManagerService;->getInputDevices()[Landroid/view/InputDevice;
 
-    move-result-object v12
+    move-result-object v13
 
-    .line 7048
-    .local v12, devices:[Landroid/view/InputDevice;
-    array-length v0, v12
+    .line 7019
+    .local v13, devices:[Landroid/view/InputDevice;
+    array-length v0, v13
 
-    move/from16 v18, v0
+    move/from16 v19, v0
 
-    .line 7049
-    .local v18, len:I
-    const/16 v16, 0x0
+    .line 7020
+    .local v19, len:I
+    const/16 v17, 0x0
 
-    .local v16, i:I
-    :goto_2
-    move/from16 v0, v16
+    .local v17, i:I
+    :goto_6
+    move/from16 v0, v17
 
-    move/from16 v1, v18
+    move/from16 v1, v19
 
-    if-ge v0, v1, :cond_9
+    if-ge v0, v1, :cond_f
 
-    .line 7050
-    aget-object v11, v12, v16
+    .line 7021
+    aget-object v12, v13, v17
 
-    .line 7051
-    .local v11, device:Landroid/view/InputDevice;
-    invoke-virtual {v11}, Landroid/view/InputDevice;->isVirtual()Z
-
-    move-result v3
-
-    if-nez v3, :cond_4
-
-    .line 7052
-    invoke-virtual {v11}, Landroid/view/InputDevice;->getSources()I
-
-    move-result v21
-
-    .line 7053
-    .local v21, sources:I
-    invoke-virtual {v11}, Landroid/view/InputDevice;->isExternal()Z
+    .line 7022
+    .local v12, device:Landroid/view/InputDevice;
+    invoke-virtual {v12}, Landroid/view/InputDevice;->isVirtual()Z
 
     move-result v3
 
-    if-eqz v3, :cond_6
+    if-nez v3, :cond_6
 
-    const/16 v20, 0x2
+    .line 7023
+    invoke-virtual {v12}, Landroid/view/InputDevice;->getSources()I
 
-    .line 7057
-    .local v20, presenceFlag:I
-    :goto_3
+    move-result v26
+
+    .line 7024
+    .local v26, sources:I
+    invoke-virtual {v12}, Landroid/view/InputDevice;->isExternal()Z
+
+    move-result v3
+
+    if-eqz v3, :cond_c
+
+    const/16 v23, 0x2
+
+    .line 7028
+    .local v23, presenceFlag:I
+    :goto_7
     move-object/from16 v0, p0
 
     iget-boolean v3, v0, Lcom/android/server/wm/WindowManagerService;->mIsTouchDevice:Z
 
-    if-eqz v3, :cond_7
+    if-eqz v3, :cond_d
 
-    .line 7058
-    move/from16 v0, v21
+    .line 7029
+    move/from16 v0, v26
 
     and-int/lit16 v3, v0, 0x1002
 
     const/16 v8, 0x1002
 
-    if-ne v3, v8, :cond_2
+    if-ne v3, v8, :cond_4
 
-    .line 7060
+    .line 7031
     const/4 v3, 0x3
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->touchscreen:I
 
-    .line 7066
-    :cond_2
-    :goto_4
+    .line 7037
+    :cond_4
+    :goto_8
     const v3, 0x10004
 
-    and-int v3, v3, v21
+    and-int v3, v3, v26
 
     const v8, 0x10004
 
-    if-ne v3, v8, :cond_8
+    if-ne v3, v8, :cond_e
 
-    .line 7067
+    .line 7038
     const/4 v3, 0x3
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->navigation:I
 
-    .line 7068
-    or-int v19, v19, v20
+    .line 7039
+    or-int v22, v22, v23
 
-    .line 7075
-    :cond_3
-    :goto_5
-    invoke-virtual {v11}, Landroid/view/InputDevice;->getKeyboardType()I
+    .line 7046
+    :cond_5
+    :goto_9
+    invoke-virtual {v12}, Landroid/view/InputDevice;->getKeyboardType()I
 
     move-result v3
 
     const/4 v8, 0x2
 
-    if-ne v3, v8, :cond_4
+    if-ne v3, v8, :cond_6
 
-    .line 7076
+    .line 7047
     const/4 v3, 0x2
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->keyboard:I
 
-    .line 7077
-    or-int v17, v17, v20
+    .line 7048
+    or-int v18, v18, v23
 
-    .line 7049
-    .end local v20           #presenceFlag:I
-    .end local v21           #sources:I
-    :cond_4
-    add-int/lit8 v16, v16, 0x1
+    .line 7020
+    .end local v23           #presenceFlag:I
+    .end local v26           #sources:I
+    :cond_6
+    add-int/lit8 v17, v17, 0x1
 
-    goto :goto_2
+    goto :goto_6
 
-    .line 7018
+    .line 6937
     .end local v4           #displayInfo:Landroid/view/DisplayInfo;
-    .end local v11           #device:Landroid/view/InputDevice;
-    .end local v12           #devices:[Landroid/view/InputDevice;
-    .end local v14           #dm:Landroid/util/DisplayMetrics;
-    .end local v16           #i:I
-    .end local v17           #keyboardPresence:I
-    .end local v18           #len:I
-    .end local v19           #navigationPresence:I
-    :cond_5
-    const/4 v3, 0x2
+    .end local v5           #rotated:Z
+    .end local v6           #dw:I
+    .end local v7           #dh:I
+    .end local v10           #appHeight:I
+    .end local v11           #appWidth:I
+    .end local v12           #device:Landroid/view/InputDevice;
+    .end local v13           #devices:[Landroid/view/InputDevice;
+    .end local v15           #dm:Landroid/util/DisplayMetrics;
+    .end local v17           #i:I
+    .end local v18           #keyboardPresence:I
+    .end local v19           #len:I
+    .end local v22           #navigationPresence:I
+    .end local v24           #realdh:I
+    .end local v25           #realdw:I
+    :cond_7
+    const/4 v5, 0x0
 
     goto/16 :goto_1
 
-    .line 7053
+    .line 6939
+    .restart local v5       #rotated:Z
+    :cond_8
+    iget v0, v14, Lcom/android/server/wm/DisplayContent;->mBaseDisplayWidth:I
+
+    move/from16 v25, v0
+
+    goto/16 :goto_2
+
+    .line 6941
+    .restart local v25       #realdw:I
+    :cond_9
+    iget v0, v14, Lcom/android/server/wm/DisplayContent;->mBaseDisplayHeight:I
+
+    move/from16 v24, v0
+
+    goto/16 :goto_3
+
+    .line 6955
+    .restart local v6       #dw:I
+    .restart local v7       #dh:I
+    .restart local v24       #realdh:I
+    :cond_a
+    move/from16 v0, v25
+
+    int-to-float v3, v0
+
+    const v8, 0x3fa66666
+
+    div-float/2addr v3, v8
+
+    float-to-int v0, v3
+
+    move/from16 v20, v0
+
+    .line 6956
+    .local v20, maxh:I
+    move/from16 v0, v20
+
+    move/from16 v1, v24
+
+    if-ge v0, v1, :cond_2
+
+    .line 6957
+    move/from16 v7, v20
+
+    goto/16 :goto_4
+
+    .line 6967
+    .end local v20           #maxh:I
+    :cond_b
+    const/4 v3, 0x2
+
+    move-object/from16 v0, p1
+
+    iput v3, v0, Landroid/content/res/Configuration;->orientation:I
+
+    .line 6968
+    const-string v3, "1"
+
+    move-object/from16 v0, p0
+
+    invoke-virtual {v0, v3}, Lcom/android/server/wm/WindowManagerService;->setLandscapeProperty(Ljava/lang/String;)V
+
+    goto/16 :goto_5
+
+    .line 6989
     .restart local v4       #displayInfo:Landroid/view/DisplayInfo;
-    .restart local v11       #device:Landroid/view/InputDevice;
-    .restart local v12       #devices:[Landroid/view/InputDevice;
-    .restart local v14       #dm:Landroid/util/DisplayMetrics;
-    .restart local v16       #i:I
-    .restart local v17       #keyboardPresence:I
-    .restart local v18       #len:I
-    .restart local v19       #navigationPresence:I
-    .restart local v21       #sources:I
-    :cond_6
-    const/16 v20, 0x1
+    .restart local v10       #appHeight:I
+    .restart local v11       #appWidth:I
+    :catchall_0
+    move-exception v3
 
-    goto :goto_3
+    :try_start_1
+    monitor-exit v8
+    :try_end_1
+    .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 7063
-    .restart local v20       #presenceFlag:I
-    :cond_7
+    throw v3
+
+    .line 7024
+    .restart local v12       #device:Landroid/view/InputDevice;
+    .restart local v13       #devices:[Landroid/view/InputDevice;
+    .restart local v15       #dm:Landroid/util/DisplayMetrics;
+    .restart local v17       #i:I
+    .restart local v18       #keyboardPresence:I
+    .restart local v19       #len:I
+    .restart local v22       #navigationPresence:I
+    .restart local v26       #sources:I
+    :cond_c
+    const/16 v23, 0x1
+
+    goto :goto_7
+
+    .line 7034
+    .restart local v23       #presenceFlag:I
+    :cond_d
     const/4 v3, 0x1
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->touchscreen:I
 
-    goto :goto_4
+    goto :goto_8
 
-    .line 7069
-    :cond_8
-    move/from16 v0, v21
+    .line 7040
+    :cond_e
+    move/from16 v0, v26
 
     and-int/lit16 v3, v0, 0x201
 
     const/16 v8, 0x201
 
-    if-ne v3, v8, :cond_3
+    if-ne v3, v8, :cond_5
 
     move-object/from16 v0, p1
 
@@ -20222,66 +20119,61 @@
 
     const/4 v8, 0x1
 
-    if-ne v3, v8, :cond_3
+    if-ne v3, v8, :cond_5
 
-    .line 7071
+    .line 7042
     const/4 v3, 0x2
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->navigation:I
 
-    .line 7072
-    or-int v19, v19, v20
+    .line 7043
+    or-int v22, v22, v23
 
-    goto :goto_5
+    goto :goto_9
 
-    .line 7083
-    .end local v11           #device:Landroid/view/InputDevice;
-    .end local v20           #presenceFlag:I
-    .end local v21           #sources:I
-    :cond_9
-    const/4 v15, 0x0
-
-    .line 7084
-    .local v15, hardKeyboardAvailable:Z
-    move-object/from16 v0, p0
-
-    iget-boolean v3, v0, Lcom/android/server/wm/WindowManagerService;->mForceDisableHardwareKeyboard:Z
-
-    if-nez v3, :cond_a
-
-    .line 7085
+    .line 7054
+    .end local v12           #device:Landroid/view/InputDevice;
+    .end local v23           #presenceFlag:I
+    .end local v26           #sources:I
+    :cond_f
     move-object/from16 v0, p1
 
     iget v3, v0, Landroid/content/res/Configuration;->keyboard:I
 
     const/4 v8, 0x1
 
-    if-eq v3, v8, :cond_e
+    if-eq v3, v8, :cond_13
 
-    const/4 v15, 0x1
+    const/16 v16, 0x1
 
-    .line 7087
-    :cond_a
-    :goto_6
+    .line 7055
+    .local v16, hardKeyboardAvailable:Z
+    :goto_a
     move-object/from16 v0, p0
 
     iget-boolean v3, v0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardAvailable:Z
 
-    if-eq v15, v3, :cond_b
+    move/from16 v0, v16
 
-    .line 7088
-    move-object/from16 v0, p0
+    if-eq v0, v3, :cond_10
 
-    iput-boolean v15, v0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardAvailable:Z
+    .line 7056
+    move/from16 v0, v16
 
-    .line 7089
-    move-object/from16 v0, p0
+    move-object/from16 v1, p0
 
-    iput-boolean v15, v0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardEnabled:Z
+    iput-boolean v0, v1, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardAvailable:Z
 
-    .line 7090
+    .line 7057
+    move/from16 v0, v16
+
+    move-object/from16 v1, p0
+
+    iput-boolean v0, v1, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardEnabled:Z
+
+    .line 7058
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -20290,7 +20182,7 @@
 
     invoke-virtual {v3, v8}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 7091
+    .line 7059
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -20299,79 +20191,78 @@
 
     invoke-virtual {v3, v8}, Lcom/android/server/wm/WindowManagerService$H;->sendEmptyMessage(I)Z
 
-    .line 7093
-    :cond_b
+    .line 7061
+    :cond_10
     move-object/from16 v0, p0
 
     iget-boolean v3, v0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardEnabled:Z
 
-    if-nez v3, :cond_c
+    if-nez v3, :cond_11
 
-    .line 7094
+    .line 7062
     const/4 v3, 0x1
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->keyboard:I
 
-    .line 7098
-    :cond_c
+    .line 7066
+    :cond_11
     const/4 v3, 0x1
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->keyboardHidden:I
 
-    .line 7099
+    .line 7067
     const/4 v3, 0x1
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->hardKeyboardHidden:I
 
-    .line 7100
+    .line 7068
     const/4 v3, 0x1
 
     move-object/from16 v0, p1
 
     iput v3, v0, Landroid/content/res/Configuration;->navigationHidden:I
 
-    .line 7101
+    .line 7069
     move-object/from16 v0, p0
 
     iget-object v3, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     move-object/from16 v0, p1
 
-    move/from16 v1, v17
+    move/from16 v1, v18
 
-    move/from16 v2, v19
+    move/from16 v2, v22
 
     invoke-interface {v3, v0, v1, v2}, Landroid/view/WindowManagerPolicy;->adjustConfigurationLw(Landroid/content/res/Configuration;II)V
 
-    .line 7104
-    .end local v12           #devices:[Landroid/view/InputDevice;
-    .end local v15           #hardKeyboardAvailable:Z
-    .end local v16           #i:I
-    .end local v17           #keyboardPresence:I
-    .end local v18           #len:I
-    .end local v19           #navigationPresence:I
-    :cond_d
+    .line 7072
+    .end local v13           #devices:[Landroid/view/InputDevice;
+    .end local v16           #hardKeyboardAvailable:Z
+    .end local v17           #i:I
+    .end local v18           #keyboardPresence:I
+    .end local v19           #len:I
+    .end local v22           #navigationPresence:I
+    :cond_12
     const/4 v3, 0x1
 
     goto/16 :goto_0
 
-    .line 7085
-    .restart local v12       #devices:[Landroid/view/InputDevice;
-    .restart local v15       #hardKeyboardAvailable:Z
-    .restart local v16       #i:I
-    .restart local v17       #keyboardPresence:I
-    .restart local v18       #len:I
-    .restart local v19       #navigationPresence:I
-    :cond_e
-    const/4 v15, 0x0
+    .line 7054
+    .restart local v13       #devices:[Landroid/view/InputDevice;
+    .restart local v17       #i:I
+    .restart local v18       #keyboardPresence:I
+    .restart local v19       #len:I
+    .restart local v22       #navigationPresence:I
+    :cond_13
+    const/16 v16, 0x0
 
-    goto :goto_6
+    goto :goto_a
 .end method
 
 .method public createDisplayContentLocked(Landroid/view/Display;)V
@@ -20379,10 +20270,10 @@
     .parameter "display"
 
     .prologue
-    .line 11155
+    .line 11071
     if-nez p1, :cond_0
 
-    .line 11156
+    .line 11072
     new-instance v1, Ljava/lang/IllegalArgumentException;
 
     const-string v2, "getDisplayContent: display must not be null"
@@ -20391,13 +20282,13 @@
 
     throw v1
 
-    .line 11158
+    .line 11074
     :cond_0
     new-instance v0, Lcom/android/server/wm/DisplayContent;
 
     invoke-direct {v0, p1}, Lcom/android/server/wm/DisplayContent;-><init>(Landroid/view/Display;)V
 
-    .line 11159
+    .line 11075
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayContents:Landroid/util/SparseArray;
 
@@ -20407,7 +20298,7 @@
 
     invoke-virtual {v1, v2, v0}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
 
-    .line 11160
+    .line 11076
     return-void
 .end method
 
@@ -20415,17 +20306,17 @@
     .locals 10
 
     .prologue
-    .line 10357
+    .line 10303
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mWatermark:Lcom/android/server/wm/Watermark;
 
     if-eqz v6, :cond_1
 
-    .line 10384
+    .line 10330
     :cond_0
     :goto_0
     return-void
 
-    .line 10361
+    .line 10307
     :cond_1
     new-instance v0, Ljava/io/File;
 
@@ -20433,11 +20324,11 @@
 
     invoke-direct {v0, v6}, Ljava/io/File;-><init>(Ljava/lang/String;)V
 
-    .line 10362
+    .line 10308
     .local v0, file:Ljava/io/File;
     const/4 v1, 0x0
 
-    .line 10364
+    .line 10310
     .local v1, in:Ljava/io/FileInputStream;
     :try_start_0
     new-instance v2, Ljava/io/FileInputStream;
@@ -20448,7 +20339,7 @@
     .catch Ljava/io/FileNotFoundException; {:try_start_0 .. :try_end_0} :catch_1
     .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_3
 
-    .line 10365
+    .line 10311
     .end local v1           #in:Ljava/io/FileInputStream;
     .local v2, in:Ljava/io/FileInputStream;
     :try_start_1
@@ -20456,24 +20347,24 @@
 
     invoke-direct {v3, v2}, Ljava/io/DataInputStream;-><init>(Ljava/io/InputStream;)V
 
-    .line 10366
+    .line 10312
     .local v3, ind:Ljava/io/DataInputStream;
     invoke-virtual {v3}, Ljava/io/DataInputStream;->readLine()Ljava/lang/String;
 
     move-result-object v4
 
-    .line 10367
+    .line 10313
     .local v4, line:Ljava/lang/String;
     if-eqz v4, :cond_2
 
-    .line 10368
+    .line 10314
     const-string v6, "%"
 
     invoke-virtual {v4, v6}, Ljava/lang/String;->split(Ljava/lang/String;)[Ljava/lang/String;
 
     move-result-object v5
 
-    .line 10369
+    .line 10315
     .local v5, toks:[Ljava/lang/String;
     if-eqz v5, :cond_2
 
@@ -20481,7 +20372,7 @@
 
     if-lez v6, :cond_2
 
-    .line 10370
+    .line 10316
     new-instance v6, Lcom/android/server/wm/Watermark;
 
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
@@ -20504,12 +20395,12 @@
     .catch Ljava/io/FileNotFoundException; {:try_start_1 .. :try_end_1} :catch_7
     .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_6
 
-    .line 10377
+    .line 10323
     .end local v5           #toks:[Ljava/lang/String;
     :cond_2
     if-eqz v2, :cond_4
 
-    .line 10379
+    .line 10325
     :try_start_2
     invoke-virtual {v2}, Ljava/io/FileInputStream;->close()V
     :try_end_2
@@ -20517,12 +20408,12 @@
 
     move-object v1, v2
 
-    .line 10381
+    .line 10327
     .end local v2           #in:Ljava/io/FileInputStream;
     .restart local v1       #in:Ljava/io/FileInputStream;
     goto :goto_0
 
-    .line 10380
+    .line 10326
     .end local v1           #in:Ljava/io/FileInputStream;
     .restart local v2       #in:Ljava/io/FileInputStream;
     :catch_0
@@ -20530,22 +20421,22 @@
 
     move-object v1, v2
 
-    .line 10381
+    .line 10327
     .end local v2           #in:Ljava/io/FileInputStream;
     .restart local v1       #in:Ljava/io/FileInputStream;
     goto :goto_0
 
-    .line 10374
+    .line 10320
     .end local v3           #ind:Ljava/io/DataInputStream;
     .end local v4           #line:Ljava/lang/String;
     :catch_1
     move-exception v6
 
-    .line 10377
+    .line 10323
     :goto_1
     if-eqz v1, :cond_0
 
-    .line 10379
+    .line 10325
     :try_start_3
     invoke-virtual {v1}, Ljava/io/FileInputStream;->close()V
     :try_end_3
@@ -20553,21 +20444,21 @@
 
     goto :goto_0
 
-    .line 10380
+    .line 10326
     :catch_2
     move-exception v6
 
     goto :goto_0
 
-    .line 10375
+    .line 10321
     :catch_3
     move-exception v6
 
-    .line 10377
+    .line 10323
     :goto_2
     if-eqz v1, :cond_0
 
-    .line 10379
+    .line 10325
     :try_start_4
     invoke-virtual {v1}, Ljava/io/FileInputStream;->close()V
     :try_end_4
@@ -20575,37 +20466,37 @@
 
     goto :goto_0
 
-    .line 10380
+    .line 10326
     :catch_4
     move-exception v6
 
     goto :goto_0
 
-    .line 10377
+    .line 10323
     :catchall_0
     move-exception v6
 
     :goto_3
     if-eqz v1, :cond_3
 
-    .line 10379
+    .line 10325
     :try_start_5
     invoke-virtual {v1}, Ljava/io/FileInputStream;->close()V
     :try_end_5
     .catch Ljava/io/IOException; {:try_start_5 .. :try_end_5} :catch_5
 
-    .line 10381
+    .line 10327
     :cond_3
     :goto_4
     throw v6
 
-    .line 10380
+    .line 10326
     :catch_5
     move-exception v7
 
     goto :goto_4
 
-    .line 10377
+    .line 10323
     .end local v1           #in:Ljava/io/FileInputStream;
     .restart local v2       #in:Ljava/io/FileInputStream;
     :catchall_1
@@ -20617,7 +20508,7 @@
     .restart local v1       #in:Ljava/io/FileInputStream;
     goto :goto_3
 
-    .line 10375
+    .line 10321
     .end local v1           #in:Ljava/io/FileInputStream;
     .restart local v2       #in:Ljava/io/FileInputStream;
     :catch_6
@@ -20629,7 +20520,7 @@
     .restart local v1       #in:Ljava/io/FileInputStream;
     goto :goto_2
 
-    .line 10374
+    .line 10320
     .end local v1           #in:Ljava/io/FileInputStream;
     .restart local v2       #in:Ljava/io/FileInputStream;
     :catch_7
@@ -20659,14 +20550,14 @@
     .parameter "pendingLayoutChanges"
 
     .prologue
-    .line 11148
+    .line 11064
     iget v0, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutRepeatCount:I
 
     const/4 v1, 0x4
 
     if-lt v0, v1, :cond_0
 
-    .line 11149
+    .line 11065
     const-string v0, "WindowManager"
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -20703,7 +20594,7 @@
 
     invoke-static {v0, v1}, Landroid/util/Slog;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 11152
+    .line 11068
     :cond_0
     return-void
 .end method
@@ -20720,7 +20611,7 @@
 
     const/4 v10, -0x1
 
-    .line 7279
+    .line 7247
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     const-wide/16 v8, 0x3e8
@@ -20731,14 +20622,14 @@
 
     if-nez v7, :cond_0
 
-    .line 7281
+    .line 7249
     const-string v7, "WindowManager"
 
     const-string v8, "Devices still not ready after waiting 1000 milliseconds before attempting to detect safe mode."
 
     invoke-static {v7, v8}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 7286
+    .line 7254
     :cond_0
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
 
@@ -20748,7 +20639,7 @@
 
     move-result v1
 
-    .line 7288
+    .line 7256
     .local v1, menuState:I
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
 
@@ -20758,7 +20649,7 @@
 
     move-result v2
 
-    .line 7289
+    .line 7257
     .local v2, sState:I
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
 
@@ -20770,7 +20661,7 @@
 
     move-result v0
 
-    .line 7291
+    .line 7259
     .local v0, dpadState:I
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
 
@@ -20782,7 +20673,7 @@
 
     move-result v3
 
-    .line 7293
+    .line 7261
     .local v3, trackballState:I
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
 
@@ -20792,7 +20683,7 @@
 
     move-result v4
 
-    .line 7295
+    .line 7263
     .local v4, volumeDownState:I
     if-gtz v1, :cond_1
 
@@ -20821,7 +20712,7 @@
     :cond_miui_0
     iput-boolean v6, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
 
-    .line 7298
+    .line 7266
     :try_start_0
     const-string v5, "persist.sys.safemode"
 
@@ -20833,12 +20724,12 @@
 
     if-eqz v5, :cond_3
 
-    .line 7299
+    .line 7267
     const/4 v5, 0x1
 
     iput-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
 
-    .line 7300
+    .line 7268
     const-string v5, "persist.sys.safemode"
 
     const-string v6, ""
@@ -20847,14 +20738,14 @@
     :try_end_0
     .catch Ljava/lang/IllegalArgumentException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 7304
+    .line 7272
     :cond_3
     :goto_0
     iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
 
     if-eqz v5, :cond_4
 
-    .line 7305
+    .line 7273
     const-string v5, "WindowManager"
 
     new-instance v6, Ljava/lang/StringBuilder;
@@ -20913,7 +20804,7 @@
 
     invoke-static {v5, v6}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 7310
+    .line 7278
     :goto_1
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
@@ -20921,12 +20812,12 @@
 
     invoke-interface {v5, v6}, Landroid/view/WindowManagerPolicy;->setSafeMode(Z)V
 
-    .line 7311
+    .line 7279
     iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
 
     return v5
 
-    .line 7308
+    .line 7276
     :cond_4
     const-string v5, "WindowManager"
 
@@ -20936,7 +20827,7 @@
 
     goto :goto_1
 
-    .line 7302
+    .line 7270
     :catch_0
     move-exception v5
 
@@ -20949,7 +20840,7 @@
     .parameter "tag"
 
     .prologue
-    .line 5306
+    .line 5303
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     const-string v1, "android.permission.DISABLE_KEYGUARD"
@@ -20960,7 +20851,7 @@
 
     if-eqz v0, :cond_0
 
-    .line 5308
+    .line 5305
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v1, "Requires DISABLE_KEYGUARD permission"
@@ -20969,7 +20860,7 @@
 
     throw v0
 
-    .line 5311
+    .line 5308
     :cond_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mKeyguardDisableHandler:Lcom/android/server/wm/KeyguardDisableHandler;
 
@@ -20987,7 +20878,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/KeyguardDisableHandler;->sendMessage(Landroid/os/Message;)Z
 
-    .line 5313
+    .line 5310
     return-void
 .end method
 
@@ -20995,7 +20886,7 @@
     .locals 2
 
     .prologue
-    .line 5358
+    .line 5355
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     const-string v1, "android.permission.DISABLE_KEYGUARD"
@@ -21006,7 +20897,7 @@
 
     if-eqz v0, :cond_0
 
-    .line 5360
+    .line 5357
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v1, "Requires DISABLE_KEYGUARD permission"
@@ -21015,25 +20906,25 @@
 
     throw v0
 
-    .line 5362
+    .line 5359
     :cond_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 5363
+    .line 5360
     :try_start_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v0}, Landroid/view/WindowManagerPolicy;->dismissKeyguardLw()V
 
-    .line 5364
+    .line 5361
     monitor-exit v1
 
-    .line 5365
+    .line 5362
     return-void
 
-    .line 5364
+    .line 5361
     :catchall_0
     move-exception v0
 
@@ -21050,15 +20941,15 @@
     .parameter "visible"
 
     .prologue
-    .line 2097
+    .line 2094
     iget-boolean v0, p1, Lcom/android/server/wm/WindowState;->mWallpaperVisible:Z
 
     if-eq v0, p2, :cond_0
 
-    .line 2098
+    .line 2095
     iput-boolean p2, p1, Lcom/android/server/wm/WindowState;->mWallpaperVisible:Z
 
-    .line 2103
+    .line 2100
     :try_start_0
     iget-object v0, p1, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
 
@@ -21066,12 +20957,12 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 2107
+    .line 2104
     :cond_0
     :goto_0
     return-void
 
-    .line 2104
+    .line 2101
     :catch_0
     move-exception v0
 
@@ -21082,32 +20973,32 @@
     .locals 8
 
     .prologue
-    .line 7315
+    .line 7283
     const/4 v2, 0x0
 
     invoke-direct {p0, v2}, Lcom/android/server/wm/WindowManagerService;->displayReady(I)V
 
-    .line 7317
+    .line 7285
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v3
 
-    .line 7318
+    .line 7286
     :try_start_0
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 7319
+    .line 7287
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-direct {p0, v0}, Lcom/android/server/wm/WindowManagerService;->readForcedDisplaySizeAndDensityLocked(Lcom/android/server/wm/DisplayContent;)V
 
-    .line 7321
+    .line 7289
     const/4 v2, 0x1
 
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayReady:Z
 
-    .line 7322
+    .line 7290
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     invoke-virtual {v2}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
@@ -21122,12 +21013,12 @@
 
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mIsTouchDevice:Z
 
-    .line 7325
+    .line 7293
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayInfoLocked()Landroid/view/DisplayInfo;
 
     move-result-object v1
 
-    .line 7326
+    .line 7294
     .local v1, displayInfo:Landroid/view/DisplayInfo;
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
@@ -21141,7 +21032,7 @@
 
     invoke-virtual {v2, v4, v5, v6, v7}, Lcom/android/server/wm/WindowAnimator;->setDisplayDimensions(IIII)V
 
-    .line 7330
+    .line 7298
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-virtual {v0}, Lcom/android/server/wm/DisplayContent;->getDisplay()Landroid/view/Display;
@@ -21156,12 +21047,12 @@
 
     invoke-interface {v2, v4, v5, v6, v7}, Landroid/view/WindowManagerPolicy;->setInitialDisplaySize(Landroid/view/Display;III)V
 
-    .line 7334
+    .line 7302
     monitor-exit v3
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 7337
+    .line 7305
     :try_start_1
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mActivityManager:Landroid/app/IActivityManager;
 
@@ -21171,11 +21062,11 @@
     :try_end_1
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
 
-    .line 7340
+    .line 7308
     :goto_0
     return-void
 
-    .line 7334
+    .line 7302
     .end local v0           #displayContent:Lcom/android/server/wm/DisplayContent;
     .end local v1           #displayInfo:Landroid/view/DisplayInfo;
     :catchall_0
@@ -21188,7 +21079,7 @@
 
     throw v2
 
-    .line 7338
+    .line 7306
     .restart local v0       #displayContent:Lcom/android/server/wm/DisplayContent;
     .restart local v1       #displayInfo:Landroid/view/DisplayInfo;
     :catch_0
@@ -21204,7 +21095,7 @@
     .parameter "args"
 
     .prologue
-    .line 11014
+    .line 10930
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     const-string v1, "android.permission.DUMP"
@@ -21215,7 +21106,7 @@
 
     if-eqz v0, :cond_1
 
-    .line 11016
+    .line 10932
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -21254,30 +21145,30 @@
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11136
+    .line 11052
     :cond_0
     :goto_0
     return-void
 
-    .line 11022
+    .line 10938
     :cond_1
     const/4 v5, 0x0
 
-    .line 11024
+    .line 10940
     .local v5, dumpAll:Z
     const/4 v4, 0x0
 
-    .line 11025
+    .line 10941
     .local v4, opti:I
     :goto_1
     array-length v0, p3
 
     if-ge v4, v0, :cond_2
 
-    .line 11026
+    .line 10942
     aget-object v6, p3, v4
 
-    .line 11027
+    .line 10943
     .local v6, opt:Ljava/lang/String;
     if-eqz v6, :cond_2
 
@@ -21297,21 +21188,21 @@
 
     if-eq v0, v1, :cond_4
 
-    .line 11056
+    .line 10972
     .end local v6           #opt:Ljava/lang/String;
     :cond_2
     array-length v0, p3
 
     if-ge v4, v0, :cond_14
 
-    .line 11057
+    .line 10973
     aget-object v2, p3, v4
 
-    .line 11058
+    .line 10974
     .local v2, cmd:Ljava/lang/String;
     add-int/lit8 v4, v4, 0x1
 
-    .line 11059
+    .line 10975
     const-string v0, "lastanr"
 
     invoke-virtual {v0, v2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -21328,17 +21219,17 @@
 
     if-eqz v0, :cond_7
 
-    .line 11060
+    .line 10976
     :cond_3
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 11061
+    .line 10977
     :try_start_0
     invoke-virtual {p0, p2}, Lcom/android/server/wm/WindowManagerService;->dumpLastANRLocked(Ljava/io/PrintWriter;)V
 
-    .line 11062
+    .line 10978
     monitor-exit v1
 
     goto :goto_0
@@ -21352,13 +21243,13 @@
 
     throw v0
 
-    .line 11030
+    .line 10946
     .end local v2           #cmd:Ljava/lang/String;
     .restart local v6       #opt:Ljava/lang/String;
     :cond_4
     add-int/lit8 v4, v4, 0x1
 
-    .line 11031
+    .line 10947
     const-string v0, "-a"
 
     invoke-virtual {v0, v6}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
@@ -21367,12 +21258,12 @@
 
     if-eqz v0, :cond_5
 
-    .line 11032
+    .line 10948
     const/4 v5, 0x1
 
     goto :goto_1
 
-    .line 11033
+    .line 10949
     :cond_5
     const-string v0, "-h"
 
@@ -21382,84 +21273,84 @@
 
     if-eqz v0, :cond_6
 
-    .line 11034
+    .line 10950
     const-string v0, "Window manager dump options:"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11035
+    .line 10951
     const-string v0, "  [-a] [-h] [cmd] ..."
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11036
+    .line 10952
     const-string v0, "  cmd may be one of:"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11037
+    .line 10953
     const-string v0, "    l[astanr]: last ANR information"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11038
+    .line 10954
     const-string v0, "    p[policy]: policy state"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11039
+    .line 10955
     const-string v0, "    a[animator]: animator state"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11040
+    .line 10956
     const-string v0, "    s[essions]: active sessions"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11041
+    .line 10957
     const-string v0, "    t[okens]: token list"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11042
+    .line 10958
     const-string v0, "    w[indows]: window list"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11043
+    .line 10959
     const-string v0, "  cmd may also be a NAME to dump windows.  NAME may"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11044
+    .line 10960
     const-string v0, "    be a partial substring in a window name, a"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11045
+    .line 10961
     const-string v0, "    Window hex object identifier, or"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11046
+    .line 10962
     const-string v0, "    \"all\" for all windows, or"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11047
+    .line 10963
     const-string v0, "    \"visible\" for the visible windows."
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11048
+    .line 10964
     const-string v0, "  -a: include all available server state."
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
     goto/16 :goto_0
 
-    .line 11051
+    .line 10967
     :cond_6
     new-instance v0, Ljava/lang/StringBuilder;
 
@@ -21489,7 +21380,7 @@
 
     goto/16 :goto_1
 
-    .line 11064
+    .line 10980
     .end local v6           #opt:Ljava/lang/String;
     .restart local v2       #cmd:Ljava/lang/String;
     :cond_7
@@ -21509,19 +21400,19 @@
 
     if-eqz v0, :cond_9
 
-    .line 11065
+    .line 10981
     :cond_8
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 11066
+    .line 10982
     const/4 v0, 0x1
 
     :try_start_1
     invoke-virtual {p0, p2, p3, v0}, Lcom/android/server/wm/WindowManagerService;->dumpPolicyLocked(Ljava/io/PrintWriter;[Ljava/lang/String;Z)V
 
-    .line 11067
+    .line 10983
     monitor-exit v1
 
     goto/16 :goto_0
@@ -21535,7 +21426,7 @@
 
     throw v0
 
-    .line 11069
+    .line 10985
     :cond_9
     const-string v0, "animator"
 
@@ -21553,19 +21444,19 @@
 
     if-eqz v0, :cond_b
 
-    .line 11070
+    .line 10986
     :cond_a
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 11071
+    .line 10987
     const/4 v0, 0x1
 
     :try_start_2
     invoke-virtual {p0, p2, p3, v0}, Lcom/android/server/wm/WindowManagerService;->dumpAnimatorLocked(Ljava/io/PrintWriter;[Ljava/lang/String;Z)V
 
-    .line 11072
+    .line 10988
     monitor-exit v1
 
     goto/16 :goto_0
@@ -21579,7 +21470,7 @@
 
     throw v0
 
-    .line 11074
+    .line 10990
     :cond_b
     const-string v0, "sessions"
 
@@ -21597,19 +21488,19 @@
 
     if-eqz v0, :cond_d
 
-    .line 11075
+    .line 10991
     :cond_c
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 11076
+    .line 10992
     const/4 v0, 0x1
 
     :try_start_3
     invoke-virtual {p0, p2, v0}, Lcom/android/server/wm/WindowManagerService;->dumpSessionsLocked(Ljava/io/PrintWriter;Z)V
 
-    .line 11077
+    .line 10993
     monitor-exit v1
 
     goto/16 :goto_0
@@ -21623,7 +21514,7 @@
 
     throw v0
 
-    .line 11079
+    .line 10995
     :cond_d
     const-string v0, "tokens"
 
@@ -21641,19 +21532,19 @@
 
     if-eqz v0, :cond_f
 
-    .line 11080
+    .line 10996
     :cond_e
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 11081
+    .line 10997
     const/4 v0, 0x1
 
     :try_start_4
     invoke-virtual {p0, p2, v0}, Lcom/android/server/wm/WindowManagerService;->dumpTokensLocked(Ljava/io/PrintWriter;Z)V
 
-    .line 11082
+    .line 10998
     monitor-exit v1
 
     goto/16 :goto_0
@@ -21667,7 +21558,7 @@
 
     throw v0
 
-    .line 11084
+    .line 11000
     :cond_f
     const-string v0, "windows"
 
@@ -21685,13 +21576,13 @@
 
     if-eqz v0, :cond_11
 
-    .line 11085
+    .line 11001
     :cond_10
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 11086
+    .line 11002
     const/4 v0, 0x1
 
     const/4 v3, 0x0
@@ -21699,7 +21590,7 @@
     :try_start_5
     invoke-virtual {p0, p2, v0, v3}, Lcom/android/server/wm/WindowManagerService;->dumpWindowsLocked(Ljava/io/PrintWriter;ZLjava/util/ArrayList;)V
 
-    .line 11087
+    .line 11003
     monitor-exit v1
 
     goto/16 :goto_0
@@ -21713,7 +21604,7 @@
 
     throw v0
 
-    .line 11089
+    .line 11005
     :cond_11
     const-string v0, "all"
 
@@ -21731,13 +21622,13 @@
 
     if-eqz v0, :cond_13
 
-    .line 11090
+    .line 11006
     :cond_12
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 11091
+    .line 11007
     const/4 v0, 0x1
 
     const/4 v3, 0x0
@@ -21745,7 +21636,7 @@
     :try_start_6
     invoke-virtual {p0, p2, v0, v3}, Lcom/android/server/wm/WindowManagerService;->dumpWindowsLocked(Ljava/io/PrintWriter;ZLjava/util/ArrayList;)V
 
-    .line 11092
+    .line 11008
     monitor-exit v1
 
     goto/16 :goto_0
@@ -21766,14 +21657,14 @@
 
     move-object v3, p3
 
-    .line 11096
+    .line 11012
     invoke-virtual/range {v0 .. v5}, Lcom/android/server/wm/WindowManagerService;->dumpWindows(Ljava/io/PrintWriter;Ljava/lang/String;[Ljava/lang/String;IZ)Z
 
     move-result v0
 
     if-nez v0, :cond_0
 
-    .line 11097
+    .line 11013
     new-instance v0, Ljava/lang/StringBuilder;
 
     invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
@@ -21794,114 +21685,114 @@
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11098
+    .line 11014
     const-string v0, "Use -h for help."
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
     goto/16 :goto_0
 
-    .line 11104
+    .line 11020
     .end local v2           #cmd:Ljava/lang/String;
     :cond_14
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 11105
+    .line 11021
     :try_start_7
     invoke-virtual {p2}, Ljava/io/PrintWriter;->println()V
 
-    .line 11106
+    .line 11022
     if-eqz v5, :cond_15
 
-    .line 11107
+    .line 11023
     const-string v0, "-------------------------------------------------------------------------------"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11109
+    .line 11025
     :cond_15
     invoke-virtual {p0, p2}, Lcom/android/server/wm/WindowManagerService;->dumpLastANRLocked(Ljava/io/PrintWriter;)V
 
-    .line 11110
+    .line 11026
     invoke-virtual {p2}, Ljava/io/PrintWriter;->println()V
 
-    .line 11111
+    .line 11027
     if-eqz v5, :cond_16
 
-    .line 11112
+    .line 11028
     const-string v0, "-------------------------------------------------------------------------------"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11114
+    .line 11030
     :cond_16
     invoke-virtual {p0, p2, p3, v5}, Lcom/android/server/wm/WindowManagerService;->dumpPolicyLocked(Ljava/io/PrintWriter;[Ljava/lang/String;Z)V
 
-    .line 11115
+    .line 11031
     invoke-virtual {p2}, Ljava/io/PrintWriter;->println()V
 
-    .line 11116
+    .line 11032
     if-eqz v5, :cond_17
 
-    .line 11117
+    .line 11033
     const-string v0, "-------------------------------------------------------------------------------"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11119
+    .line 11035
     :cond_17
     invoke-virtual {p0, p2, p3, v5}, Lcom/android/server/wm/WindowManagerService;->dumpAnimatorLocked(Ljava/io/PrintWriter;[Ljava/lang/String;Z)V
 
-    .line 11120
+    .line 11036
     invoke-virtual {p2}, Ljava/io/PrintWriter;->println()V
 
-    .line 11121
+    .line 11037
     if-eqz v5, :cond_18
 
-    .line 11122
+    .line 11038
     const-string v0, "-------------------------------------------------------------------------------"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11124
+    .line 11040
     :cond_18
     invoke-virtual {p0, p2, v5}, Lcom/android/server/wm/WindowManagerService;->dumpSessionsLocked(Ljava/io/PrintWriter;Z)V
 
-    .line 11125
+    .line 11041
     invoke-virtual {p2}, Ljava/io/PrintWriter;->println()V
 
-    .line 11126
+    .line 11042
     if-eqz v5, :cond_19
 
-    .line 11127
+    .line 11043
     const-string v0, "-------------------------------------------------------------------------------"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11129
+    .line 11045
     :cond_19
     invoke-virtual {p0, p2, v5}, Lcom/android/server/wm/WindowManagerService;->dumpTokensLocked(Ljava/io/PrintWriter;Z)V
 
-    .line 11130
+    .line 11046
     invoke-virtual {p2}, Ljava/io/PrintWriter;->println()V
 
-    .line 11131
+    .line 11047
     if-eqz v5, :cond_1a
 
-    .line 11132
+    .line 11048
     const-string v0, "-------------------------------------------------------------------------------"
 
     invoke-virtual {p2, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11134
+    .line 11050
     :cond_1a
     const/4 v0, 0x0
 
     invoke-virtual {p0, p2, v5, v0}, Lcom/android/server/wm/WindowManagerService;->dumpWindowsLocked(Ljava/io/PrintWriter;ZLjava/util/ArrayList;)V
 
-    .line 11135
+    .line 11051
     monitor-exit v1
 
     goto/16 :goto_0
@@ -21920,7 +21811,7 @@
     .locals 4
 
     .prologue
-    .line 4912
+    .line 4909
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v1}, Ljava/util/ArrayList;->size()I
@@ -21933,7 +21824,7 @@
     :goto_0
     if-ltz v0, :cond_0
 
-    .line 4913
+    .line 4910
     const-string v2, "WindowManager"
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -21976,12 +21867,12 @@
 
     invoke-static {v2, v1}, Landroid/util/Slog;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 4912
+    .line 4909
     add-int/lit8 v0, v0, -0x1
 
     goto :goto_0
 
-    .line 4915
+    .line 4912
     :cond_0
     return-void
 .end method
@@ -21993,19 +21884,19 @@
     .parameter "dumpAll"
 
     .prologue
-    .line 10540
+    .line 10456
     const-string v0, "WINDOW MANAGER ANIMATOR STATE (dumpsys window animator)"
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10541
+    .line 10457
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
 
     const-string v1, "    "
 
     invoke-virtual {v0, p1, v1, p3}, Lcom/android/server/wm/WindowAnimator;->dumpLocked(Ljava/io/PrintWriter;Ljava/lang/String;Z)V
 
-    .line 10542
+    .line 10458
     return-void
 .end method
 
@@ -22013,7 +21904,7 @@
     .locals 4
 
     .prologue
-    .line 4906
+    .line 4903
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v1}, Ljava/util/ArrayList;->size()I
@@ -22026,7 +21917,7 @@
     :goto_0
     if-ltz v0, :cond_0
 
-    .line 4907
+    .line 4904
     const-string v2, "WindowManager"
 
     new-instance v1, Ljava/lang/StringBuilder;
@@ -22069,12 +21960,12 @@
 
     invoke-static {v2, v1}, Landroid/util/Slog;->v(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 4906
+    .line 4903
     add-int/lit8 v0, v0, -0x1
 
     goto :goto_0
 
-    .line 4909
+    .line 4906
     :cond_0
     return-void
 .end method
@@ -22084,26 +21975,26 @@
     .parameter "pw"
 
     .prologue
-    .line 10980
+    .line 10896
     const-string v0, "WINDOW MANAGER LAST ANR (dumpsys window lastanr)"
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10981
+    .line 10897
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mLastANRState:Ljava/lang/String;
 
     if-nez v0, :cond_0
 
-    .line 10982
+    .line 10898
     const-string v0, "  <no ANR has occurred since boot>"
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10986
+    .line 10902
     :goto_0
     return-void
 
-    .line 10984
+    .line 10900
     :cond_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mLastANRState:Ljava/lang/String;
 
@@ -22119,19 +22010,19 @@
     .parameter "dumpAll"
 
     .prologue
-    .line 10535
+    .line 10451
     const-string v0, "WINDOW MANAGER POLICY STATE (dumpsys window policy)"
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10536
+    .line 10452
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     const-string v1, "    "
 
     invoke-interface {v0, v1, p1, p2}, Landroid/view/WindowManagerPolicy;->dump(Ljava/lang/String;Ljava/io/PrintWriter;[Ljava/lang/String;)V
 
-    .line 10537
+    .line 10453
     return-void
 .end method
 
@@ -22141,12 +22032,12 @@
     .parameter "dumpAll"
 
     .prologue
-    .line 10656
+    .line 10572
     const-string v2, "WINDOW MANAGER SESSIONS (dumpsys window sessions)"
 
     invoke-virtual {p1, v2}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10657
+    .line 10573
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mSessions:Ljava/util/HashSet;
 
     invoke-virtual {v2}, Ljava/util/HashSet;->size()I
@@ -22155,14 +22046,14 @@
 
     if-lez v2, :cond_0
 
-    .line 10658
+    .line 10574
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mSessions:Ljava/util/HashSet;
 
     invoke-virtual {v2}, Ljava/util/HashSet;->iterator()Ljava/util/Iterator;
 
     move-result-object v0
 
-    .line 10659
+    .line 10575
     .local v0, it:Ljava/util/Iterator;,"Ljava/util/Iterator<Lcom/android/server/wm/Session;>;"
     :goto_0
     invoke-interface {v0}, Ljava/util/Iterator;->hasNext()Z
@@ -22171,14 +22062,14 @@
 
     if-eqz v2, :cond_0
 
-    .line 10660
+    .line 10576
     invoke-interface {v0}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v1
 
     check-cast v1, Lcom/android/server/wm/Session;
 
-    .line 10661
+    .line 10577
     .local v1, s:Lcom/android/server/wm/Session;
     const-string v2, "  Session "
 
@@ -22190,14 +22081,14 @@
 
     invoke-virtual {p1, v2}, Ljava/io/PrintWriter;->println(C)V
 
-    .line 10662
+    .line 10578
     const-string v2, "    "
 
     invoke-virtual {v1, p1, v2}, Lcom/android/server/wm/Session;->dump(Ljava/io/PrintWriter;Ljava/lang/String;)V
 
     goto :goto_0
 
-    .line 10665
+    .line 10581
     .end local v0           #it:Ljava/util/Iterator;,"Ljava/util/Iterator<Lcom/android/server/wm/Session;>;"
     .end local v1           #s:Lcom/android/server/wm/Session;
     :cond_0
@@ -22214,12 +22105,12 @@
 
     const/16 v5, 0x20
 
-    .line 10545
+    .line 10461
     const-string v3, "WINDOW MANAGER TOKENS (dumpsys window tokens)"
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10546
+    .line 10462
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
     invoke-virtual {v3}, Ljava/util/HashMap;->size()I
@@ -22228,12 +22119,12 @@
 
     if-lez v3, :cond_1
 
-    .line 10547
+    .line 10463
     const-string v3, "  All tokens:"
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10548
+    .line 10464
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
     invoke-virtual {v3}, Ljava/util/HashMap;->values()Ljava/util/Collection;
@@ -22244,7 +22135,7 @@
 
     move-result-object v1
 
-    .line 10549
+    .line 10465
     .local v1, it:Ljava/util/Iterator;,"Ljava/util/Iterator<Lcom/android/server/wm/WindowToken;>;"
     :goto_0
     invoke-interface {v1}, Ljava/util/Iterator;->hasNext()Z
@@ -22253,14 +22144,14 @@
 
     if-eqz v3, :cond_1
 
-    .line 10550
+    .line 10466
     invoke-interface {v1}, Ljava/util/Iterator;->next()Ljava/lang/Object;
 
     move-result-object v2
 
     check-cast v2, Lcom/android/server/wm/WindowToken;
 
-    .line 10551
+    .line 10467
     .local v2, token:Lcom/android/server/wm/WindowToken;
     const-string v3, "  "
 
@@ -22268,26 +22159,26 @@
 
     invoke-virtual {p1, v2}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10552
+    .line 10468
     if-eqz p2, :cond_0
 
-    .line 10553
+    .line 10469
     invoke-virtual {p1, v6}, Ljava/io/PrintWriter;->println(C)V
 
-    .line 10554
+    .line 10470
     const-string v3, "    "
 
     invoke-virtual {v2, p1, v3}, Lcom/android/server/wm/WindowToken;->dump(Ljava/io/PrintWriter;Ljava/lang/String;)V
 
     goto :goto_0
 
-    .line 10556
+    .line 10472
     :cond_0
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
     goto :goto_0
 
-    .line 10560
+    .line 10476
     .end local v1           #it:Ljava/util/Iterator;,"Ljava/util/Iterator<Lcom/android/server/wm/WindowToken;>;"
     .end local v2           #token:Lcom/android/server/wm/WindowToken;
     :cond_1
@@ -22299,15 +22190,15 @@
 
     if-lez v3, :cond_3
 
-    .line 10561
+    .line 10477
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10562
+    .line 10478
     const-string v3, "  Wallpaper tokens:"
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10563
+    .line 10479
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
@@ -22320,7 +22211,7 @@
     :goto_1
     if-ltz v0, :cond_3
 
-    .line 10564
+    .line 10480
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -22329,7 +22220,7 @@
 
     check-cast v2, Lcom/android/server/wm/WindowToken;
 
-    .line 10565
+    .line 10481
     .restart local v2       #token:Lcom/android/server/wm/WindowToken;
     const-string v3, "  Wallpaper #"
 
@@ -22337,35 +22228,35 @@
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10566
+    .line 10482
     invoke-virtual {p1, v5}, Ljava/io/PrintWriter;->print(C)V
 
     invoke-virtual {p1, v2}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10567
+    .line 10483
     if-eqz p2, :cond_2
 
-    .line 10568
+    .line 10484
     invoke-virtual {p1, v6}, Ljava/io/PrintWriter;->println(C)V
 
-    .line 10569
+    .line 10485
     const-string v3, "    "
 
     invoke-virtual {v2, p1, v3}, Lcom/android/server/wm/WindowToken;->dump(Ljava/io/PrintWriter;Ljava/lang/String;)V
 
-    .line 10563
+    .line 10479
     :goto_2
     add-int/lit8 v0, v0, -0x1
 
     goto :goto_1
 
-    .line 10571
+    .line 10487
     :cond_2
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
     goto :goto_2
 
-    .line 10575
+    .line 10491
     .end local v0           #i:I
     .end local v2           #token:Lcom/android/server/wm/WindowToken;
     :cond_3
@@ -22377,15 +22268,15 @@
 
     if-lez v3, :cond_4
 
-    .line 10576
+    .line 10492
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10577
+    .line 10493
     const-string v3, "  Application tokens in Z order:"
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10578
+    .line 10494
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
@@ -22398,14 +22289,14 @@
     :goto_3
     if-ltz v0, :cond_4
 
-    .line 10579
+    .line 10495
     const-string v3, "  App #"
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10580
+    .line 10496
     invoke-virtual {p1, v5}, Ljava/io/PrintWriter;->print(C)V
 
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
@@ -22420,7 +22311,7 @@
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10581
+    .line 10497
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -22433,12 +22324,12 @@
 
     invoke-virtual {v3, p1, v4}, Lcom/android/server/wm/AppWindowToken;->dump(Ljava/io/PrintWriter;Ljava/lang/String;)V
 
-    .line 10578
+    .line 10494
     add-int/lit8 v0, v0, -0x1
 
     goto :goto_3
 
-    .line 10584
+    .line 10500
     .end local v0           #i:I
     :cond_4
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mFinishedStarting:Ljava/util/ArrayList;
@@ -22449,15 +22340,15 @@
 
     if-lez v3, :cond_6
 
-    .line 10585
+    .line 10501
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10586
+    .line 10502
     const-string v3, "  Finishing start of application tokens:"
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10587
+    .line 10503
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mFinishedStarting:Ljava/util/ArrayList;
 
     invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
@@ -22470,7 +22361,7 @@
     :goto_4
     if-ltz v0, :cond_6
 
-    .line 10588
+    .line 10504
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mFinishedStarting:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -22479,7 +22370,7 @@
 
     check-cast v2, Lcom/android/server/wm/WindowToken;
 
-    .line 10589
+    .line 10505
     .restart local v2       #token:Lcom/android/server/wm/WindowToken;
     const-string v3, "  Finished Starting #"
 
@@ -22487,35 +22378,35 @@
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10590
+    .line 10506
     invoke-virtual {p1, v5}, Ljava/io/PrintWriter;->print(C)V
 
     invoke-virtual {p1, v2}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10591
+    .line 10507
     if-eqz p2, :cond_5
 
-    .line 10592
+    .line 10508
     invoke-virtual {p1, v6}, Ljava/io/PrintWriter;->println(C)V
 
-    .line 10593
+    .line 10509
     const-string v3, "    "
 
     invoke-virtual {v2, p1, v3}, Lcom/android/server/wm/WindowToken;->dump(Ljava/io/PrintWriter;Ljava/lang/String;)V
 
-    .line 10587
+    .line 10503
     :goto_5
     add-int/lit8 v0, v0, -0x1
 
     goto :goto_4
 
-    .line 10595
+    .line 10511
     :cond_5
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
     goto :goto_5
 
-    .line 10599
+    .line 10515
     .end local v0           #i:I
     .end local v2           #token:Lcom/android/server/wm/WindowToken;
     :cond_6
@@ -22527,15 +22418,15 @@
 
     if-lez v3, :cond_8
 
-    .line 10600
+    .line 10516
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10601
+    .line 10517
     const-string v3, "  Exiting tokens:"
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10602
+    .line 10518
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mExitingTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
@@ -22548,7 +22439,7 @@
     :goto_6
     if-ltz v0, :cond_8
 
-    .line 10603
+    .line 10519
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mExitingTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -22557,7 +22448,7 @@
 
     check-cast v2, Lcom/android/server/wm/WindowToken;
 
-    .line 10604
+    .line 10520
     .restart local v2       #token:Lcom/android/server/wm/WindowToken;
     const-string v3, "  Exiting #"
 
@@ -22565,35 +22456,35 @@
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10605
+    .line 10521
     invoke-virtual {p1, v5}, Ljava/io/PrintWriter;->print(C)V
 
     invoke-virtual {p1, v2}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10606
+    .line 10522
     if-eqz p2, :cond_7
 
-    .line 10607
+    .line 10523
     invoke-virtual {p1, v6}, Ljava/io/PrintWriter;->println(C)V
 
-    .line 10608
+    .line 10524
     const-string v3, "    "
 
     invoke-virtual {v2, p1, v3}, Lcom/android/server/wm/WindowToken;->dump(Ljava/io/PrintWriter;Ljava/lang/String;)V
 
-    .line 10602
+    .line 10518
     :goto_7
     add-int/lit8 v0, v0, -0x1
 
     goto :goto_6
 
-    .line 10610
+    .line 10526
     :cond_7
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
     goto :goto_7
 
-    .line 10614
+    .line 10530
     .end local v0           #i:I
     .end local v2           #token:Lcom/android/server/wm/WindowToken;
     :cond_8
@@ -22605,15 +22496,15 @@
 
     if-lez v3, :cond_a
 
-    .line 10615
+    .line 10531
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10616
+    .line 10532
     const-string v3, "  Exiting application tokens:"
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10617
+    .line 10533
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mExitingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
@@ -22626,7 +22517,7 @@
     :goto_8
     if-ltz v0, :cond_a
 
-    .line 10618
+    .line 10534
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mExitingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -22635,7 +22526,7 @@
 
     check-cast v2, Lcom/android/server/wm/WindowToken;
 
-    .line 10619
+    .line 10535
     .restart local v2       #token:Lcom/android/server/wm/WindowToken;
     const-string v3, "  Exiting App #"
 
@@ -22643,35 +22534,35 @@
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10620
+    .line 10536
     invoke-virtual {p1, v5}, Ljava/io/PrintWriter;->print(C)V
 
     invoke-virtual {p1, v2}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10621
+    .line 10537
     if-eqz p2, :cond_9
 
-    .line 10622
+    .line 10538
     invoke-virtual {p1, v6}, Ljava/io/PrintWriter;->println(C)V
 
-    .line 10623
+    .line 10539
     const-string v3, "    "
 
     invoke-virtual {v2, p1, v3}, Lcom/android/server/wm/WindowToken;->dump(Ljava/io/PrintWriter;Ljava/lang/String;)V
 
-    .line 10617
+    .line 10533
     :goto_9
     add-int/lit8 v0, v0, -0x1
 
     goto :goto_8
 
-    .line 10625
+    .line 10541
     :cond_9
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
     goto :goto_9
 
-    .line 10629
+    .line 10545
     .end local v0           #i:I
     .end local v2           #token:Lcom/android/server/wm/WindowToken;
     :cond_a
@@ -22687,15 +22578,15 @@
 
     if-lez v3, :cond_c
 
-    .line 10630
+    .line 10546
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10631
+    .line 10547
     const-string v3, "  Application tokens during animation:"
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10632
+    .line 10548
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
@@ -22708,7 +22599,7 @@
     :goto_a
     if-ltz v0, :cond_c
 
-    .line 10633
+    .line 10549
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -22717,7 +22608,7 @@
 
     check-cast v2, Lcom/android/server/wm/WindowToken;
 
-    .line 10634
+    .line 10550
     .restart local v2       #token:Lcom/android/server/wm/WindowToken;
     const-string v3, "  App moving to bottom #"
 
@@ -22725,35 +22616,35 @@
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10635
+    .line 10551
     invoke-virtual {p1, v5}, Ljava/io/PrintWriter;->print(C)V
 
     invoke-virtual {p1, v2}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10636
+    .line 10552
     if-eqz p2, :cond_b
 
-    .line 10637
+    .line 10553
     invoke-virtual {p1, v6}, Ljava/io/PrintWriter;->println(C)V
 
-    .line 10638
+    .line 10554
     const-string v3, "    "
 
     invoke-virtual {v2, p1, v3}, Lcom/android/server/wm/WindowToken;->dump(Ljava/io/PrintWriter;Ljava/lang/String;)V
 
-    .line 10632
+    .line 10548
     :goto_b
     add-int/lit8 v0, v0, -0x1
 
     goto :goto_a
 
-    .line 10640
+    .line 10556
     :cond_b
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
     goto :goto_b
 
-    .line 10644
+    .line 10560
     .end local v0           #i:I
     .end local v2           #token:Lcom/android/server/wm/WindowToken;
     :cond_c
@@ -22773,11 +22664,11 @@
 
     if-lez v3, :cond_f
 
-    .line 10645
+    .line 10561
     :cond_d
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10646
+    .line 10562
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mOpeningApps:Ljava/util/ArrayList;
 
     invoke-virtual {v3}, Ljava/util/ArrayList;->size()I
@@ -22786,7 +22677,7 @@
 
     if-lez v3, :cond_e
 
-    .line 10647
+    .line 10563
     const-string v3, "  mOpeningApps="
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -22795,7 +22686,7 @@
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10649
+    .line 10565
     :cond_e
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mClosingApps:Ljava/util/ArrayList;
 
@@ -22805,7 +22696,7 @@
 
     if-lez v3, :cond_f
 
-    .line 10650
+    .line 10566
     const-string v3, "  mClosingApps="
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -22814,7 +22705,7 @@
 
     invoke-virtual {p1, v3}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10653
+    .line 10569
     :cond_f
     return-void
 .end method
@@ -22830,12 +22721,12 @@
     .prologue
     const/4 v4, 0x1
 
-    .line 10935
+    .line 10851
     new-instance v3, Lcom/android/server/wm/WindowList;
 
     invoke-direct {v3}, Lcom/android/server/wm/WindowList;-><init>()V
 
-    .line 10936
+    .line 10852
     .local v3, windows:Lcom/android/server/wm/WindowList;
     const-string v5, "visible"
 
@@ -22845,12 +22736,12 @@
 
     if-eqz v5, :cond_2
 
-    .line 10937
+    .line 10853
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v5
 
-    .line 10938
+    .line 10854
     :try_start_0
     new-instance v0, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
 
@@ -22858,7 +22749,7 @@
 
     invoke-direct {v0, p0, v6}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;Z)V
 
-    .line 10939
+    .line 10855
     .local v0, iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     :cond_0
     :goto_0
@@ -22868,12 +22759,12 @@
 
     if-eqz v6, :cond_1
 
-    .line 10940
+    .line 10856
     invoke-virtual {v0}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->next()Lcom/android/server/wm/WindowState;
 
     move-result-object v2
 
-    .line 10941
+    .line 10857
     .local v2, w:Lcom/android/server/wm/WindowState;
     iget-object v6, v2, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
@@ -22881,12 +22772,12 @@
 
     if-eqz v6, :cond_0
 
-    .line 10942
+    .line 10858
     invoke-virtual {v3, v2}, Lcom/android/server/wm/WindowList;->add(Ljava/lang/Object;)Z
 
     goto :goto_0
 
-    .line 10945
+    .line 10861
     .end local v0           #iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     .end local v2           #w:Lcom/android/server/wm/WindowState;
     :catchall_0
@@ -22905,7 +22796,7 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 10969
+    .line 10885
     :goto_1
     invoke-virtual {v3}, Lcom/android/server/wm/WindowList;->size()I
 
@@ -22913,19 +22804,19 @@
 
     if-gtz v5, :cond_6
 
-    .line 10970
+    .line 10886
     const/4 v4, 0x0
 
-    .line 10976
+    .line 10892
     :goto_2
     return v4
 
-    .line 10947
+    .line 10863
     .end local v0           #iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     :cond_2
     const/4 v1, 0x0
 
-    .line 10950
+    .line 10866
     .local v1, objectId:I
     const/16 v5, 0x10
 
@@ -22936,16 +22827,16 @@
 
     move-result v1
 
-    .line 10951
+    .line 10867
     const/4 p2, 0x0
 
-    .line 10954
+    .line 10870
     :goto_3
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v5
 
-    .line 10955
+    .line 10871
     :try_start_3
     new-instance v0, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
 
@@ -22953,7 +22844,7 @@
 
     invoke-direct {v0, p0, v6}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;Z)V
 
-    .line 10956
+    .line 10872
     .restart local v0       #iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     :cond_3
     :goto_4
@@ -22963,16 +22854,16 @@
 
     if-eqz v6, :cond_5
 
-    .line 10957
+    .line 10873
     invoke-virtual {v0}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->next()Lcom/android/server/wm/WindowState;
 
     move-result-object v2
 
-    .line 10958
+    .line 10874
     .restart local v2       #w:Lcom/android/server/wm/WindowState;
     if-eqz p2, :cond_4
 
-    .line 10959
+    .line 10875
     iget-object v6, v2, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
     invoke-virtual {v6}, Landroid/view/WindowManager$LayoutParams;->getTitle()Ljava/lang/CharSequence;
@@ -22989,12 +22880,12 @@
 
     if-eqz v6, :cond_3
 
-    .line 10960
+    .line 10876
     invoke-virtual {v3, v2}, Lcom/android/server/wm/WindowList;->add(Ljava/lang/Object;)Z
 
     goto :goto_4
 
-    .line 10966
+    .line 10882
     .end local v0           #iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     .end local v2           #w:Lcom/android/server/wm/WindowState;
     :catchall_1
@@ -23006,7 +22897,7 @@
 
     throw v4
 
-    .line 10962
+    .line 10878
     .restart local v0       #iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     .restart local v2       #w:Lcom/android/server/wm/WindowState;
     :cond_4
@@ -23017,12 +22908,12 @@
 
     if-ne v6, v1, :cond_3
 
-    .line 10963
+    .line 10879
     invoke-virtual {v3, v2}, Lcom/android/server/wm/WindowList;->add(Ljava/lang/Object;)Z
 
     goto :goto_4
 
-    .line 10966
+    .line 10882
     .end local v2           #w:Lcom/android/server/wm/WindowState;
     :cond_5
     monitor-exit v5
@@ -23031,18 +22922,18 @@
 
     goto :goto_1
 
-    .line 10973
+    .line 10889
     .end local v1           #objectId:I
     :cond_6
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v5
 
-    .line 10974
+    .line 10890
     :try_start_5
     invoke-virtual {p0, p1, p5, v3}, Lcom/android/server/wm/WindowManagerService;->dumpWindowsLocked(Ljava/io/PrintWriter;ZLjava/util/ArrayList;)V
 
-    .line 10975
+    .line 10891
     monitor-exit v5
 
     goto :goto_2
@@ -23056,7 +22947,7 @@
 
     throw v4
 
-    .line 10952
+    .line 10868
     .end local v0           #iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     .restart local v1       #objectId:I
     :catch_0
@@ -23069,10 +22960,10 @@
     .locals 7
 
     .prologue
-    .line 4918
+    .line 4915
     const/4 v0, 0x0
 
-    .line 4919
+    .line 4916
     .local v0, i:I
     new-instance v2, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
 
@@ -23080,7 +22971,7 @@
 
     invoke-direct {v2, p0, v4}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;Z)V
 
-    .line 4920
+    .line 4917
     .local v2, iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     :goto_0
     invoke-virtual {v2}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->hasNext()Z
@@ -23089,12 +22980,12 @@
 
     if-eqz v4, :cond_0
 
-    .line 4921
+    .line 4918
     invoke-virtual {v2}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->next()Lcom/android/server/wm/WindowState;
 
     move-result-object v3
 
-    .line 4922
+    .line 4919
     .local v3, w:Lcom/android/server/wm/WindowState;
     const-string v4, "WindowManager"
 
@@ -23134,12 +23025,12 @@
 
     move v0, v1
 
-    .line 4923
+    .line 4920
     .end local v1           #i:I
     .restart local v0       #i:I
     goto :goto_0
 
-    .line 4924
+    .line 4921
     .end local v3           #w:Lcom/android/server/wm/WindowState;
     :cond_0
     return-void
@@ -23163,16 +23054,16 @@
     .end annotation
 
     .prologue
-    .line 10669
+    .line 10585
     .local p3, windows:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Lcom/android/server/wm/WindowState;>;"
     const-string v0, "WINDOW MANAGER WINDOWS (dumpsys window windows)"
 
     invoke-virtual {p1, v0}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10670
+    .line 10586
     invoke-virtual {p0, p1, p2, p3}, Lcom/android/server/wm/WindowManagerService;->dumpWindowsNoHeaderLocked(Ljava/io/PrintWriter;ZLjava/util/ArrayList;)V
 
-    .line 10671
+    .line 10587
     return-void
 .end method
 
@@ -23194,11 +23085,11 @@
     .end annotation
 
     .prologue
-    .line 10675
+    .line 10591
     .local p3, windows:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Lcom/android/server/wm/WindowState;>;"
     const/4 v6, 0x0
 
-    .line 10676
+    .line 10592
     .local v6, j:I
     new-instance v5, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
 
@@ -23206,7 +23097,7 @@
 
     invoke-direct {v5, p0, v12}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;Z)V
 
-    .line 10677
+    .line 10593
     .local v5, iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     :cond_0
     :goto_0
@@ -23216,12 +23107,12 @@
 
     if-eqz v12, :cond_4
 
-    .line 10678
+    .line 10594
     invoke-virtual {v5}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->next()Lcom/android/server/wm/WindowState;
 
     move-result-object v9
 
-    .line 10679
+    .line 10595
     .local v9, w:Lcom/android/server/wm/WindowState;
     if-eqz p3, :cond_1
 
@@ -23233,7 +23124,7 @@
 
     if-eqz v12, :cond_0
 
-    .line 10680
+    .line 10596
     :cond_1
     const-string v12, "  Window #"
 
@@ -23249,14 +23140,14 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(C)V
 
-    .line 10681
+    .line 10597
     invoke-virtual {p1, v9}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
     const-string v12, ":"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10682
+    .line 10598
     const-string v13, "    "
 
     if-nez p2, :cond_2
@@ -23282,7 +23173,7 @@
 
     goto :goto_1
 
-    .line 10685
+    .line 10601
     .end local v7           #j:I
     .end local v9           #w:Lcom/android/server/wm/WindowState;
     .restart local v6       #j:I
@@ -23295,15 +23186,15 @@
 
     if-lez v12, :cond_7
 
-    .line 10686
+    .line 10602
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10687
+    .line 10603
     const-string v12, "  Input method dialogs:"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10688
+    .line 10604
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodDialogs:Ljava/util/ArrayList;
 
     invoke-virtual {v12}, Ljava/util/ArrayList;->size()I
@@ -23316,7 +23207,7 @@
     :goto_2
     if-ltz v4, :cond_7
 
-    .line 10689
+    .line 10605
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodDialogs:Ljava/util/ArrayList;
 
     invoke-virtual {v12, v4}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -23325,7 +23216,7 @@
 
     check-cast v9, Lcom/android/server/wm/WindowState;
 
-    .line 10690
+    .line 10606
     .restart local v9       #w:Lcom/android/server/wm/WindowState;
     if-eqz p3, :cond_5
 
@@ -23337,7 +23228,7 @@
 
     if-eqz v12, :cond_6
 
-    .line 10691
+    .line 10607
     :cond_5
     const-string v12, "  IM Dialog #"
 
@@ -23351,13 +23242,13 @@
 
     invoke-virtual {p1, v9}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10688
+    .line 10604
     :cond_6
     add-int/lit8 v4, v4, -0x1
 
     goto :goto_2
 
-    .line 10695
+    .line 10611
     .end local v4           #i:I
     .end local v9           #w:Lcom/android/server/wm/WindowState;
     :cond_7
@@ -23369,15 +23260,15 @@
 
     if-lez v12, :cond_b
 
-    .line 10696
+    .line 10612
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10697
+    .line 10613
     const-string v12, "  Remove pending for:"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10698
+    .line 10614
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mPendingRemove:Ljava/util/ArrayList;
 
     invoke-virtual {v12}, Ljava/util/ArrayList;->size()I
@@ -23390,7 +23281,7 @@
     :goto_3
     if-ltz v4, :cond_b
 
-    .line 10699
+    .line 10615
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mPendingRemove:Ljava/util/ArrayList;
 
     invoke-virtual {v12, v4}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -23399,7 +23290,7 @@
 
     check-cast v9, Lcom/android/server/wm/WindowState;
 
-    .line 10700
+    .line 10616
     .restart local v9       #w:Lcom/android/server/wm/WindowState;
     if-eqz p3, :cond_8
 
@@ -23411,7 +23302,7 @@
 
     if-eqz v12, :cond_9
 
-    .line 10701
+    .line 10617
     :cond_8
     const-string v12, "  Remove #"
 
@@ -23423,38 +23314,38 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(C)V
 
-    .line 10702
+    .line 10618
     invoke-virtual {p1, v9}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10703
+    .line 10619
     if-eqz p2, :cond_a
 
-    .line 10704
+    .line 10620
     const-string v12, ":"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10705
+    .line 10621
     const-string v12, "    "
 
     const/4 v13, 0x1
 
     invoke-virtual {v9, p1, v12, v13}, Lcom/android/server/wm/WindowState;->dump(Ljava/io/PrintWriter;Ljava/lang/String;Z)V
 
-    .line 10698
+    .line 10614
     :cond_9
     :goto_4
     add-int/lit8 v4, v4, -0x1
 
     goto :goto_3
 
-    .line 10707
+    .line 10623
     :cond_a
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
     goto :goto_4
 
-    .line 10712
+    .line 10628
     .end local v4           #i:I
     .end local v9           #w:Lcom/android/server/wm/WindowState;
     :cond_b
@@ -23470,15 +23361,15 @@
 
     if-lez v12, :cond_d
 
-    .line 10713
+    .line 10629
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10714
+    .line 10630
     const-string v12, "  Windows force removing:"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10715
+    .line 10631
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mForceRemoves:Ljava/util/ArrayList;
 
     invoke-virtual {v12}, Ljava/util/ArrayList;->size()I
@@ -23491,7 +23382,7 @@
     :goto_5
     if-ltz v4, :cond_d
 
-    .line 10716
+    .line 10632
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mForceRemoves:Ljava/util/ArrayList;
 
     invoke-virtual {v12, v4}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -23500,7 +23391,7 @@
 
     check-cast v9, Lcom/android/server/wm/WindowState;
 
-    .line 10717
+    .line 10633
     .restart local v9       #w:Lcom/android/server/wm/WindowState;
     const-string v12, "  Removing #"
 
@@ -23512,37 +23403,37 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(C)V
 
-    .line 10718
+    .line 10634
     invoke-virtual {p1, v9}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10719
+    .line 10635
     if-eqz p2, :cond_c
 
-    .line 10720
+    .line 10636
     const-string v12, ":"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10721
+    .line 10637
     const-string v12, "    "
 
     const/4 v13, 0x1
 
     invoke-virtual {v9, p1, v12, v13}, Lcom/android/server/wm/WindowState;->dump(Ljava/io/PrintWriter;Ljava/lang/String;Z)V
 
-    .line 10715
+    .line 10631
     :goto_6
     add-int/lit8 v4, v4, -0x1
 
     goto :goto_5
 
-    .line 10723
+    .line 10639
     :cond_c
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
     goto :goto_6
 
-    .line 10727
+    .line 10643
     .end local v4           #i:I
     .end local v9           #w:Lcom/android/server/wm/WindowState;
     :cond_d
@@ -23554,15 +23445,15 @@
 
     if-lez v12, :cond_11
 
-    .line 10728
+    .line 10644
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10729
+    .line 10645
     const-string v12, "  Windows waiting to destroy their surface:"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10730
+    .line 10646
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mDestroySurface:Ljava/util/ArrayList;
 
     invoke-virtual {v12}, Ljava/util/ArrayList;->size()I
@@ -23575,7 +23466,7 @@
     :goto_7
     if-ltz v4, :cond_11
 
-    .line 10731
+    .line 10647
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mDestroySurface:Ljava/util/ArrayList;
 
     invoke-virtual {v12, v4}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -23584,7 +23475,7 @@
 
     check-cast v9, Lcom/android/server/wm/WindowState;
 
-    .line 10732
+    .line 10648
     .restart local v9       #w:Lcom/android/server/wm/WindowState;
     if-eqz p3, :cond_e
 
@@ -23596,7 +23487,7 @@
 
     if-eqz v12, :cond_f
 
-    .line 10733
+    .line 10649
     :cond_e
     const-string v12, "  Destroy #"
 
@@ -23608,38 +23499,38 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(C)V
 
-    .line 10734
+    .line 10650
     invoke-virtual {p1, v9}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10735
+    .line 10651
     if-eqz p2, :cond_10
 
-    .line 10736
+    .line 10652
     const-string v12, ":"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10737
+    .line 10653
     const-string v12, "    "
 
     const/4 v13, 0x1
 
     invoke-virtual {v9, p1, v12, v13}, Lcom/android/server/wm/WindowState;->dump(Ljava/io/PrintWriter;Ljava/lang/String;Z)V
 
-    .line 10730
+    .line 10646
     :cond_f
     :goto_8
     add-int/lit8 v4, v4, -0x1
 
     goto :goto_7
 
-    .line 10739
+    .line 10655
     :cond_10
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
     goto :goto_8
 
-    .line 10744
+    .line 10660
     .end local v4           #i:I
     .end local v9           #w:Lcom/android/server/wm/WindowState;
     :cond_11
@@ -23651,15 +23542,15 @@
 
     if-lez v12, :cond_15
 
-    .line 10745
+    .line 10661
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10746
+    .line 10662
     const-string v12, "  Windows losing focus:"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10747
+    .line 10663
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mLosingFocus:Ljava/util/ArrayList;
 
     invoke-virtual {v12}, Ljava/util/ArrayList;->size()I
@@ -23672,7 +23563,7 @@
     :goto_9
     if-ltz v4, :cond_15
 
-    .line 10748
+    .line 10664
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mLosingFocus:Ljava/util/ArrayList;
 
     invoke-virtual {v12, v4}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -23681,7 +23572,7 @@
 
     check-cast v9, Lcom/android/server/wm/WindowState;
 
-    .line 10749
+    .line 10665
     .restart local v9       #w:Lcom/android/server/wm/WindowState;
     if-eqz p3, :cond_12
 
@@ -23693,7 +23584,7 @@
 
     if-eqz v12, :cond_13
 
-    .line 10750
+    .line 10666
     :cond_12
     const-string v12, "  Losing #"
 
@@ -23705,38 +23596,38 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(C)V
 
-    .line 10751
+    .line 10667
     invoke-virtual {p1, v9}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10752
+    .line 10668
     if-eqz p2, :cond_14
 
-    .line 10753
+    .line 10669
     const-string v12, ":"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10754
+    .line 10670
     const-string v12, "    "
 
     const/4 v13, 0x1
 
     invoke-virtual {v9, p1, v12, v13}, Lcom/android/server/wm/WindowState;->dump(Ljava/io/PrintWriter;Ljava/lang/String;Z)V
 
-    .line 10747
+    .line 10663
     :cond_13
     :goto_a
     add-int/lit8 v4, v4, -0x1
 
     goto :goto_9
 
-    .line 10756
+    .line 10672
     :cond_14
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
     goto :goto_a
 
-    .line 10761
+    .line 10677
     .end local v4           #i:I
     .end local v9           #w:Lcom/android/server/wm/WindowState;
     :cond_15
@@ -23748,15 +23639,15 @@
 
     if-lez v12, :cond_19
 
-    .line 10762
+    .line 10678
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10763
+    .line 10679
     const-string v12, "  Windows waiting to resize:"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10764
+    .line 10680
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mResizingWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v12}, Ljava/util/ArrayList;->size()I
@@ -23769,7 +23660,7 @@
     :goto_b
     if-ltz v4, :cond_19
 
-    .line 10765
+    .line 10681
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mResizingWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v12, v4}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -23778,7 +23669,7 @@
 
     check-cast v9, Lcom/android/server/wm/WindowState;
 
-    .line 10766
+    .line 10682
     .restart local v9       #w:Lcom/android/server/wm/WindowState;
     if-eqz p3, :cond_16
 
@@ -23790,7 +23681,7 @@
 
     if-eqz v12, :cond_17
 
-    .line 10767
+    .line 10683
     :cond_16
     const-string v12, "  Resizing #"
 
@@ -23802,38 +23693,38 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(C)V
 
-    .line 10768
+    .line 10684
     invoke-virtual {p1, v9}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10769
+    .line 10685
     if-eqz p2, :cond_18
 
-    .line 10770
+    .line 10686
     const-string v12, ":"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10771
+    .line 10687
     const-string v12, "    "
 
     const/4 v13, 0x1
 
     invoke-virtual {v9, p1, v12, v13}, Lcom/android/server/wm/WindowState;->dump(Ljava/io/PrintWriter;Ljava/lang/String;Z)V
 
-    .line 10764
+    .line 10680
     :cond_17
     :goto_c
     add-int/lit8 v4, v4, -0x1
 
     goto :goto_b
 
-    .line 10773
+    .line 10689
     :cond_18
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
     goto :goto_c
 
-    .line 10778
+    .line 10694
     .end local v4           #i:I
     .end local v9           #w:Lcom/android/server/wm/WindowState;
     :cond_19
@@ -23845,15 +23736,15 @@
 
     if-lez v12, :cond_1a
 
-    .line 10779
+    .line 10695
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10780
+    .line 10696
     const-string v12, "  Clients waiting for these windows to be drawn:"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10781
+    .line 10697
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForDrawn:Ljava/util/ArrayList;
 
     invoke-virtual {v12}, Ljava/util/ArrayList;->size()I
@@ -23866,7 +23757,7 @@
     :goto_d
     if-ltz v4, :cond_1a
 
-    .line 10782
+    .line 10698
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForDrawn:Ljava/util/ArrayList;
 
     invoke-virtual {v12, v4}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -23875,7 +23766,7 @@
 
     check-cast v8, Landroid/util/Pair;
 
-    .line 10783
+    .line 10699
     .local v8, pair:Landroid/util/Pair;,"Landroid/util/Pair<Lcom/android/server/wm/WindowState;Landroid/os/IRemoteCallback;>;"
     const-string v12, "  Waiting #"
 
@@ -23891,7 +23782,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10784
+    .line 10700
     const-string v12, ": "
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -23900,33 +23791,33 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10781
+    .line 10697
     add-int/lit8 v4, v4, -0x1
 
     goto :goto_d
 
-    .line 10787
+    .line 10703
     .end local v4           #i:I
     .end local v8           #pair:Landroid/util/Pair;,"Landroid/util/Pair<Lcom/android/server/wm/WindowState;Landroid/os/IRemoteCallback;>;"
     :cond_1a
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10788
+    .line 10704
     const-string v12, "  DisplayContents:"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10789
+    .line 10705
     iget-boolean v12, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayReady:Z
 
     if-eqz v12, :cond_1b
 
-    .line 10790
+    .line 10706
     new-instance v1, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
 
     invoke-direct {v1, p0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 10791
+    .line 10707
     .local v1, dCIterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :goto_e
     invoke-virtual {v1}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->hasNext()Z
@@ -23935,7 +23826,7 @@
 
     if-eqz v12, :cond_1c
 
-    .line 10792
+    .line 10708
     invoke-virtual {v1}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v12
@@ -23946,14 +23837,14 @@
 
     goto :goto_e
 
-    .line 10795
+    .line 10711
     .end local v1           #dCIterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :cond_1b
     const-string v12, "  NO DISPLAY"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10797
+    .line 10713
     :cond_1c
     const-string v12, "  mCurConfiguration="
 
@@ -23963,7 +23854,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10798
+    .line 10714
     const-string v12, "  mCurrentFocus="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -23972,14 +23863,14 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10799
+    .line 10715
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mLastFocus:Lcom/android/server/wm/WindowState;
 
     iget-object v13, p0, Lcom/android/server/wm/WindowManagerService;->mCurrentFocus:Lcom/android/server/wm/WindowState;
 
     if-eq v12, v13, :cond_1d
 
-    .line 10800
+    .line 10716
     const-string v12, "  mLastFocus="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -23988,7 +23879,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10802
+    .line 10718
     :cond_1d
     const-string v12, "  mFocusedApp="
 
@@ -23998,12 +23889,12 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10803
+    .line 10719
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
 
     if-eqz v12, :cond_1e
 
-    .line 10804
+    .line 10720
     const-string v12, "  mInputMethodTarget="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24012,7 +23903,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10806
+    .line 10722
     :cond_1e
     const-string v12, "  mInTouchMode="
 
@@ -24022,7 +23913,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Z)V
 
-    .line 10807
+    .line 10723
     const-string v12, " mLayoutSeq="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24031,10 +23922,10 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(I)V
 
-    .line 10808
+    .line 10724
     if-eqz p2, :cond_2e
 
-    .line 10809
+    .line 10725
     const-string v12, "  mSystemDecorRect="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24047,7 +23938,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10810
+    .line 10726
     const-string v12, " mSystemDecorLayer="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24056,7 +23947,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10811
+    .line 10727
     const-string v12, " mScreenRecr="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24069,17 +23960,17 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10812
+    .line 10728
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mLastStatusBarVisibility:I
 
     if-eqz v12, :cond_1f
 
-    .line 10813
+    .line 10729
     const-string v12, "  mLastStatusBarVisibility=0x"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10814
+    .line 10730
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mLastStatusBarVisibility:I
 
     invoke-static {v12}, Ljava/lang/Integer;->toHexString(I)Ljava/lang/String;
@@ -24088,13 +23979,13 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10816
+    .line 10732
     :cond_1f
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
     if-eqz v12, :cond_20
 
-    .line 10817
+    .line 10733
     const-string v12, "  mInputMethodWindow="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24103,7 +23994,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10819
+    .line 10735
     :cond_20
     const-string v12, "  mWallpaperTarget="
 
@@ -24113,7 +24004,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10820
+    .line 10736
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     if-nez v12, :cond_21
@@ -24122,7 +24013,7 @@
 
     if-eqz v12, :cond_22
 
-    .line 10821
+    .line 10737
     :cond_21
     const-string v12, "  mLowerWallpaperTarget="
 
@@ -24132,7 +24023,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10822
+    .line 10738
     const-string v12, "  mUpperWallpaperTarget="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24141,7 +24032,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10824
+    .line 10740
     :cond_22
     const-string v12, "  mLastWallpaperX="
 
@@ -24151,7 +24042,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(F)V
 
-    .line 10825
+    .line 10741
     const-string v12, " mLastWallpaperY="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24160,7 +24051,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(F)V
 
-    .line 10826
+    .line 10742
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodAnimLayerAdjustment:I
 
     if-nez v12, :cond_23
@@ -24169,28 +24060,28 @@
 
     if-eqz v12, :cond_24
 
-    .line 10828
+    .line 10744
     :cond_23
     const-string v12, "  mInputMethodAnimLayerAdjustment="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10829
+    .line 10745
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodAnimLayerAdjustment:I
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10830
+    .line 10746
     const-string v12, "  mWallpaperAnimLayerAdjustment="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10831
+    .line 10747
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperAnimLayerAdjustment:I
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(I)V
 
-    .line 10833
+    .line 10749
     :cond_24
     const-string v12, "  mSystemBooted="
 
@@ -24200,7 +24091,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Z)V
 
-    .line 10834
+    .line 10750
     const-string v12, " mDisplayEnabled="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24209,24 +24100,24 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Z)V
 
-    .line 10835
+    .line 10751
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->needsLayout()Z
 
     move-result v12
 
     if-eqz v12, :cond_27
 
-    .line 10836
+    .line 10752
     const-string v12, "  layoutNeeded on displays="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10837
+    .line 10753
     new-instance v2, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
 
     invoke-direct {v2, p0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 10838
+    .line 10754
     .local v2, dcIterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :cond_25
     :goto_f
@@ -24236,18 +24127,18 @@
 
     if-eqz v12, :cond_26
 
-    .line 10839
+    .line 10755
     invoke-virtual {v2}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v3
 
-    .line 10840
+    .line 10756
     .local v3, displayContent:Lcom/android/server/wm/DisplayContent;
     iget-boolean v12, v3, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
     if-eqz v12, :cond_25
 
-    .line 10841
+    .line 10757
     invoke-virtual {v3}, Lcom/android/server/wm/DisplayContent;->getDisplayId()I
 
     move-result v12
@@ -24256,12 +24147,12 @@
 
     goto :goto_f
 
-    .line 10844
+    .line 10760
     .end local v3           #displayContent:Lcom/android/server/wm/DisplayContent;
     :cond_26
     invoke-virtual {p1}, Ljava/io/PrintWriter;->println()V
 
-    .line 10846
+    .line 10762
     .end local v2           #dcIterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :cond_27
     const-string v12, "  mTransactionSequence="
@@ -24272,7 +24163,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(I)V
 
-    .line 10847
+    .line 10763
     const-string v12, "  mDisplayFrozen="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24281,7 +24172,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Z)V
 
-    .line 10848
+    .line 10764
     const-string v12, " windows="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24290,7 +24181,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Z)V
 
-    .line 10849
+    .line 10765
     const-string v12, " client="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24299,7 +24190,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Z)V
 
-    .line 10850
+    .line 10766
     const-string v12, " apps="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24308,7 +24199,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10851
+    .line 10767
     const-string v12, " waitingForConfig="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24317,7 +24208,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Z)V
 
-    .line 10852
+    .line 10768
     const-string v12, "  mRotation="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24326,7 +24217,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10853
+    .line 10769
     const-string v12, " mAltOrientation="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24335,7 +24226,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Z)V
 
-    .line 10854
+    .line 10770
     const-string v12, "  mLastWindowForcedOrientation="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24344,7 +24235,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10855
+    .line 10771
     const-string v12, " mForcedAppOrientation="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24353,7 +24244,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(I)V
 
-    .line 10856
+    .line 10772
     const-string v12, "  mDeferredRotationPauseCount="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24362,7 +24253,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(I)V
 
-    .line 10857
+    .line 10773
     const-string v12, "  mWindowAnimationScale="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24371,7 +24262,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(F)V
 
-    .line 10858
+    .line 10774
     const-string v12, " mTransitionWindowAnimationScale="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24380,7 +24271,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(F)V
 
-    .line 10859
+    .line 10775
     const-string v12, " mAnimatorDurationScale="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24389,7 +24280,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(F)V
 
-    .line 10860
+    .line 10776
     const-string v12, "  mTraversalScheduled="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24398,12 +24289,12 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Z)V
 
-    .line 10861
+    .line 10777
     const-string v12, " mNextAppTransition=0x"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10862
+    .line 10778
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
     invoke-static {v12}, Ljava/lang/Integer;->toHexString(I)Ljava/lang/String;
@@ -24412,7 +24303,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10863
+    .line 10779
     const-string v12, " mAppTransitionReady="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24421,7 +24312,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Z)V
 
-    .line 10864
+    .line 10780
     const-string v12, "  mAppTransitionRunning="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24430,7 +24321,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Z)V
 
-    .line 10865
+    .line 10781
     const-string v12, " mAppTransitionTimeout="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24439,12 +24330,12 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Z)V
 
-    .line 10866
+    .line 10782
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
 
     if-eqz v12, :cond_28
 
-    .line 10867
+    .line 10783
     const-string v12, "  mNextAppTransitionType="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24453,29 +24344,29 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(I)V
 
-    .line 10869
+    .line 10785
     :cond_28
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
 
     packed-switch v12, :pswitch_data_0
 
-    .line 10898
+    .line 10814
     :goto_10
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionCallback:Landroid/os/IRemoteCallback;
 
     if-eqz v12, :cond_29
 
-    .line 10899
+    .line 10815
     const-string v12, "  mNextAppTransitionCallback="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10900
+    .line 10816
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionCallback:Landroid/os/IRemoteCallback;
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10902
+    .line 10818
     :cond_29
     const-string v12, "  mStartingIconInTransition="
 
@@ -24485,7 +24376,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Z)V
 
-    .line 10903
+    .line 10819
     const-string v12, " mSkipAppTransitionAnimation="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24494,12 +24385,12 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Z)V
 
-    .line 10904
+    .line 10820
     const-string v12, "  mLayoutToAnim:"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10905
+    .line 10821
     const-string v12, "    mParamsModified="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24510,7 +24401,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Z)V
 
-    .line 10906
+    .line 10822
     const-string v12, " mAnimationScheduled="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24521,12 +24412,12 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Z)V
 
-    .line 10907
+    .line 10823
     const-string v12, " mChanges=0x"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10908
+    .line 10824
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
     iget-wide v12, v12, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mChanges:J
@@ -24537,7 +24428,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10909
+    .line 10825
     const-string v12, "    mWallpaperTarget="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24548,7 +24439,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10910
+    .line 10826
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
     iget-object v12, v12, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -24561,32 +24452,32 @@
 
     if-eqz v12, :cond_2b
 
-    .line 10912
+    .line 10828
     :cond_2a
     const-string v12, "    mLowerWallpaperTarget="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10913
+    .line 10829
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
     iget-object v12, v12, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10914
+    .line 10830
     const-string v12, "    mUpperWallpaperTarget="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10915
+    .line 10831
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
     iget-object v12, v12, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mUpperWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10917
+    .line 10833
     :cond_2b
     const/4 v4, 0x0
 
@@ -24602,12 +24493,12 @@
 
     if-ge v4, v12, :cond_2d
 
-    .line 10918
+    .line 10834
     const-string v12, "    Win Animator List #"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10919
+    .line 10835
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
     iget-object v12, v12, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mWinAnimatorLists:Landroid/util/SparseArray;
@@ -24622,7 +24513,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10920
+    .line 10836
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
     iget-object v12, v12, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mWinAnimatorLists:Landroid/util/SparseArray;
@@ -24633,7 +24524,7 @@
 
     check-cast v10, Lcom/android/server/wm/WinAnimatorList;
 
-    .line 10921
+    .line 10837
     .local v10, wanim:Lcom/android/server/wm/WinAnimatorList;
     const/4 v11, 0x0
 
@@ -24645,7 +24536,7 @@
 
     if-ge v11, v12, :cond_2c
 
-    .line 10922
+    .line 10838
     const-string v12, "      "
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24656,12 +24547,12 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10921
+    .line 10837
     add-int/lit8 v11, v11, 0x1
 
     goto :goto_12
 
-    .line 10871
+    .line 10787
     .end local v4           #i:I
     .end local v10           #wanim:Lcom/android/server/wm/WinAnimatorList;
     .end local v11           #wi:I
@@ -24670,17 +24561,17 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10872
+    .line 10788
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionPackage:Ljava/lang/String;
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 10873
+    .line 10789
     const-string v12, "  mNextAppTransitionEnter=0x"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10874
+    .line 10790
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionEnter:I
 
     invoke-static {v12}, Ljava/lang/Integer;->toHexString(I)Ljava/lang/String;
@@ -24689,12 +24580,12 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10875
+    .line 10791
     const-string v12, " mNextAppTransitionExit=0x"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10876
+    .line 10792
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionExit:I
 
     invoke-static {v12}, Ljava/lang/Integer;->toHexString(I)Ljava/lang/String;
@@ -24705,7 +24596,7 @@
 
     goto/16 :goto_10
 
-    .line 10879
+    .line 10795
     :pswitch_1
     const-string v12, "  mNextAppTransitionStartX="
 
@@ -24715,70 +24606,70 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10880
+    .line 10796
     const-string v12, " mNextAppTransitionStartY="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10881
+    .line 10797
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartY:I
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(I)V
 
-    .line 10882
+    .line 10798
     const-string v12, "  mNextAppTransitionStartWidth="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10883
+    .line 10799
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartWidth:I
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10884
+    .line 10800
     const-string v12, " mNextAppTransitionStartHeight="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10885
+    .line 10801
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartHeight:I
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(I)V
 
     goto/16 :goto_10
 
-    .line 10889
+    .line 10805
     :pswitch_2
     const-string v12, "  mNextAppTransitionThumbnail="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10890
+    .line 10806
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionThumbnail:Landroid/graphics/Bitmap;
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/Object;)V
 
-    .line 10891
+    .line 10807
     const-string v12, " mNextAppTransitionStartX="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10892
+    .line 10808
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartX:I
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(I)V
 
-    .line 10893
+    .line 10809
     const-string v12, " mNextAppTransitionStartY="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10894
+    .line 10810
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartY:I
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(I)V
 
-    .line 10895
+    .line 10811
     const-string v12, "  mNextAppTransitionScaleUp="
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24789,7 +24680,7 @@
 
     goto/16 :goto_10
 
-    .line 10917
+    .line 10833
     .restart local v4       #i:I
     .restart local v10       #wanim:Lcom/android/server/wm/WinAnimatorList;
     .restart local v11       #wi:I
@@ -24798,7 +24689,7 @@
 
     goto/16 :goto_11
 
-    .line 10925
+    .line 10841
     .end local v10           #wanim:Lcom/android/server/wm/WinAnimatorList;
     .end local v11           #wi:I
     :cond_2d
@@ -24815,7 +24706,7 @@
 
     if-ge v4, v12, :cond_2e
 
-    .line 10926
+    .line 10842
     const-string v12, "    Wallpaper Token #"
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
@@ -24826,7 +24717,7 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->print(Ljava/lang/String;)V
 
-    .line 10927
+    .line 10843
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
     iget-object v12, v12, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mWallpaperTokens:Ljava/util/ArrayList;
@@ -24837,17 +24728,17 @@
 
     invoke-virtual {p1, v12}, Ljava/io/PrintWriter;->println(Ljava/lang/Object;)V
 
-    .line 10925
+    .line 10841
     add-int/lit8 v4, v4, 0x1
 
     goto :goto_13
 
-    .line 10931
+    .line 10847
     .end local v4           #i:I
     :cond_2e
     return-void
 
-    .line 10869
+    .line 10785
     :pswitch_data_0
     .packed-switch 0x1
         :pswitch_0
@@ -24861,34 +24752,34 @@
     .locals 5
 
     .prologue
-    .line 5526
+    .line 5523
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 5535
+    .line 5532
     :try_start_0
     iget-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mSystemBooted:Z
 
     if-eqz v1, :cond_0
 
-    .line 5536
+    .line 5533
     monitor-exit v2
 
-    .line 5549
+    .line 5546
     :goto_0
     return-void
 
-    .line 5538
+    .line 5535
     :cond_0
     const/4 v1, 0x1
 
     iput-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mSystemBooted:Z
 
-    .line 5539
+    .line 5536
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->hideBootMessagesLocked()V
 
-    .line 5542
+    .line 5539
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/16 v3, 0x17
@@ -24897,7 +24788,7 @@
 
     move-result-object v0
 
-    .line 5543
+    .line 5540
     .local v0, msg:Landroid/os/Message;
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
@@ -24905,22 +24796,22 @@
 
     invoke-virtual {v1, v0, v3, v4}, Lcom/android/server/wm/WindowManagerService$H;->sendMessageDelayed(Landroid/os/Message;J)Z
 
-    .line 5544
+    .line 5541
     monitor-exit v2
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 5546
+    .line 5543
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v1}, Landroid/view/WindowManagerPolicy;->systemBooted()V
 
-    .line 5548
+    .line 5545
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->performEnableScreen()V
 
     goto :goto_0
 
-    .line 5544
+    .line 5541
     .end local v0           #msg:Landroid/os/Message;
     :catchall_0
     move-exception v1
@@ -24937,17 +24828,17 @@
     .locals 3
 
     .prologue
-    .line 5560
+    .line 5557
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayEnabled:Z
 
     if-eqz v0, :cond_1
 
-    .line 5567
+    .line 5564
     :cond_0
     :goto_0
     return-void
 
-    .line 5563
+    .line 5560
     :cond_1
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mSystemBooted:Z
 
@@ -24957,7 +24848,7 @@
 
     if-eqz v0, :cond_0
 
-    .line 5566
+    .line 5563
     :cond_2
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
@@ -24978,7 +24869,7 @@
     .locals 5
 
     .prologue
-    .line 4257
+    .line 4254
     const-string v2, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v3, "executeAppTransition()"
@@ -24989,7 +24880,7 @@
 
     if-nez v2, :cond_0
 
-    .line 4259
+    .line 4256
     new-instance v2, Ljava/lang/SecurityException;
 
     const-string v3, "Requires MANAGE_APP_TOKENS permission"
@@ -24998,13 +24889,13 @@
 
     throw v2
 
-    .line 4262
+    .line 4259
     :cond_0
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v3
 
-    .line 4269
+    .line 4266
     :try_start_0
     iget v2, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
@@ -25012,32 +24903,32 @@
 
     if-eq v2, v4, :cond_1
 
-    .line 4270
+    .line 4267
     const/4 v2, 0x1
 
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionReady:Z
 
-    .line 4271
+    .line 4268
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v0
 
-    .line 4272
+    .line 4269
     .local v0, origId:J
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 4273
+    .line 4270
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 4275
+    .line 4272
     .end local v0           #origId:J
     :cond_1
     monitor-exit v3
 
-    .line 4276
+    .line 4273
     return-void
 
-    .line 4275
+    .line 4272
     :catchall_0
     move-exception v2
 
@@ -25053,7 +24944,7 @@
     .parameter "callback"
 
     .prologue
-    .line 5330
+    .line 5327
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     const-string v1, "android.permission.DISABLE_KEYGUARD"
@@ -25064,7 +24955,7 @@
 
     if-eqz v0, :cond_0
 
-    .line 5332
+    .line 5329
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v1, "Requires DISABLE_KEYGUARD permission"
@@ -25073,7 +24964,7 @@
 
     throw v0
 
-    .line 5334
+    .line 5331
     :cond_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
@@ -25083,7 +24974,7 @@
 
     invoke-interface {v0, v1}, Landroid/view/WindowManagerPolicy;->exitKeyguardSecurely(Landroid/view/WindowManagerPolicy$OnKeyguardExitResult;)V
 
-    .line 5343
+    .line 5340
     return-void
 .end method
 
@@ -25092,7 +24983,7 @@
     .parameter "token"
 
     .prologue
-    .line 3690
+    .line 3687
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
     invoke-virtual {v1, p1}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
@@ -25101,14 +24992,14 @@
 
     check-cast v0, Lcom/android/server/wm/WindowToken;
 
-    .line 3691
+    .line 3688
     .local v0, wtoken:Lcom/android/server/wm/WindowToken;
     if-nez v0, :cond_0
 
-    .line 3692
+    .line 3689
     const/4 v1, 0x0
 
-    .line 3694
+    .line 3691
     :goto_0
     return-object v1
 
@@ -25123,34 +25014,34 @@
     .parameter "willMove"
 
     .prologue
-    .line 1224
+    .line 1221
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
 
     move-result-object v11
 
-    .line 1225
+    .line 1222
     .local v11, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v11}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v0
 
-    .line 1226
+    .line 1223
     .local v0, N:I
     const/4 v8, 0x0
 
-    .line 1227
+    .line 1224
     .local v8, w:Lcom/android/server/wm/WindowState;
     move v5, v0
 
-    .line 1228
+    .line 1225
     .local v5, i:I
     :cond_0
     if-lez v5, :cond_1
 
-    .line 1229
+    .line 1226
     add-int/lit8 v5, v5, -0x1
 
-    .line 1230
+    .line 1227
     invoke-virtual {v11, v5}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v8
@@ -25158,7 +25049,7 @@
     .end local v8           #w:Lcom/android/server/wm/WindowState;
     check-cast v8, Lcom/android/server/wm/WindowState;
 
-    .line 1234
+    .line 1231
     .restart local v8       #w:Lcom/android/server/wm/WindowState;
     invoke-static {v8}, Lcom/android/server/wm/WindowManagerService;->canBeImeTarget(Lcom/android/server/wm/WindowState;)Z
 
@@ -25166,7 +25057,7 @@
 
     if-eqz v12, :cond_0
 
-    .line 1242
+    .line 1239
     if-nez p1, :cond_1
 
     iget-object v12, v8, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
@@ -25179,7 +25070,7 @@
 
     if-lez v5, :cond_1
 
-    .line 1245
+    .line 1242
     add-int/lit8 v12, v5, -0x1
 
     invoke-virtual {v11, v12}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -25188,7 +25079,7 @@
 
     check-cast v9, Lcom/android/server/wm/WindowState;
 
-    .line 1246
+    .line 1243
     .local v9, wb:Lcom/android/server/wm/WindowState;
     iget-object v12, v9, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
@@ -25202,18 +25093,18 @@
 
     if-eqz v12, :cond_1
 
-    .line 1247
+    .line 1244
     add-int/lit8 v5, v5, -0x1
 
-    .line 1248
+    .line 1245
     move-object v8, v9
 
-    .line 1265
+    .line 1262
     .end local v9           #wb:Lcom/android/server/wm/WindowState;
     :cond_1
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1266
+    .line 1263
     .local v1, curTarget:Lcom/android/server/wm/WindowState;
     if-eqz v1, :cond_2
 
@@ -25241,41 +25132,41 @@
 
     if-le v12, v13, :cond_2
 
-    .line 1271
+    .line 1268
     invoke-virtual {v11, v1}, Lcom/android/server/wm/WindowList;->indexOf(Ljava/lang/Object;)I
 
     move-result v12
 
     add-int/lit8 v12, v12, 0x1
 
-    .line 1354
+    .line 1351
     :goto_0
     return v12
 
-    .line 1277
+    .line 1274
     :cond_2
     if-eqz p1, :cond_a
 
     if-eqz v8, :cond_a
 
-    .line 1278
+    .line 1275
     if-nez v1, :cond_5
 
     const/4 v7, 0x0
 
-    .line 1279
+    .line 1276
     .local v7, token:Lcom/android/server/wm/AppWindowToken;
     :goto_1
     if-eqz v7, :cond_a
 
-    .line 1285
+    .line 1282
     const/4 v4, 0x0
 
-    .line 1286
+    .line 1283
     .local v4, highestTarget:Lcom/android/server/wm/WindowState;
     const/4 v3, 0x0
 
-    .line 1287
+    .line 1284
     .local v3, highestPos:I
     iget-object v12, v7, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
@@ -25289,64 +25180,64 @@
 
     if-eqz v12, :cond_4
 
-    .line 1288
+    .line 1285
     :cond_3
     invoke-virtual {v1}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v2
 
-    .line 1289
+    .line 1286
     .local v2, curWindows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v2, v1}, Lcom/android/server/wm/WindowList;->indexOf(Ljava/lang/Object;)I
 
     move-result v6
 
-    .line 1290
+    .line 1287
     .local v6, pos:I
     :goto_2
     if-ltz v6, :cond_4
 
-    .line 1291
+    .line 1288
     invoke-virtual {v2, v6}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v10
 
     check-cast v10, Lcom/android/server/wm/WindowState;
 
-    .line 1292
+    .line 1289
     .local v10, win:Lcom/android/server/wm/WindowState;
     iget-object v12, v10, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     if-eq v12, v7, :cond_6
 
-    .line 1306
+    .line 1303
     .end local v2           #curWindows:Lcom/android/server/wm/WindowList;
     .end local v6           #pos:I
     .end local v10           #win:Lcom/android/server/wm/WindowState;
     :cond_4
     if-eqz v4, :cond_a
 
-    .line 1313
+    .line 1310
     iget v12, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
     const/4 v13, -0x1
 
     if-eq v12, v13, :cond_9
 
-    .line 1316
+    .line 1313
     const/4 v12, 0x1
 
     iput-boolean v12, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTargetWaitingAnim:Z
 
-    .line 1317
+    .line 1314
     iput-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1318
+    .line 1315
     add-int/lit8 v12, v3, 0x1
 
     goto :goto_0
 
-    .line 1278
+    .line 1275
     .end local v3           #highestPos:I
     .end local v4           #highestTarget:Lcom/android/server/wm/WindowState;
     .end local v7           #token:Lcom/android/server/wm/AppWindowToken;
@@ -25355,7 +25246,7 @@
 
     goto :goto_1
 
-    .line 1295
+    .line 1292
     .restart local v2       #curWindows:Lcom/android/server/wm/WindowList;
     .restart local v3       #highestPos:I
     .restart local v4       #highestTarget:Lcom/android/server/wm/WindowState;
@@ -25367,7 +25258,7 @@
 
     if-nez v12, :cond_8
 
-    .line 1296
+    .line 1293
     if-eqz v4, :cond_7
 
     iget-object v12, v10, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
@@ -25380,21 +25271,21 @@
 
     if-le v12, v13, :cond_8
 
-    .line 1298
+    .line 1295
     :cond_7
     move-object v4, v10
 
-    .line 1299
+    .line 1296
     move v3, v6
 
-    .line 1302
+    .line 1299
     :cond_8
     add-int/lit8 v6, v6, -0x1
 
-    .line 1303
+    .line 1300
     goto :goto_2
 
-    .line 1319
+    .line 1316
     .end local v2           #curWindows:Lcom/android/server/wm/WindowList;
     .end local v6           #pos:I
     .end local v10           #win:Lcom/android/server/wm/WindowState;
@@ -25417,43 +25308,43 @@
 
     if-le v12, v13, :cond_a
 
-    .line 1325
+    .line 1322
     const/4 v12, 0x1
 
     iput-boolean v12, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTargetWaitingAnim:Z
 
-    .line 1326
+    .line 1323
     iput-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1327
+    .line 1324
     add-int/lit8 v12, v3, 0x1
 
     goto :goto_0
 
-    .line 1334
+    .line 1331
     .end local v3           #highestPos:I
     .end local v4           #highestTarget:Lcom/android/server/wm/WindowState;
     .end local v7           #token:Lcom/android/server/wm/AppWindowToken;
     :cond_a
     if-eqz v8, :cond_d
 
-    .line 1335
+    .line 1332
     if-eqz p1, :cond_b
 
-    .line 1338
+    .line 1335
     iput-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1339
+    .line 1336
     const/4 v12, 0x0
 
     iput-boolean v12, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTargetWaitingAnim:Z
 
-    .line 1340
+    .line 1337
     iget-object v12, v8, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     if-eqz v12, :cond_c
 
-    .line 1341
+    .line 1338
     iget-object v12, v8, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     iget-object v12, v12, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
@@ -25462,14 +25353,14 @@
 
     invoke-virtual {p0, v12}, Lcom/android/server/wm/WindowManagerService;->setInputMethodAnimLayerAdjustment(I)V
 
-    .line 1346
+    .line 1343
     :cond_b
     :goto_3
     add-int/lit8 v12, v5, 0x1
 
     goto/16 :goto_0
 
-    .line 1343
+    .line 1340
     :cond_c
     const/4 v12, 0x0
 
@@ -25477,21 +25368,21 @@
 
     goto :goto_3
 
-    .line 1348
+    .line 1345
     :cond_d
     if-eqz p1, :cond_e
 
-    .line 1351
+    .line 1348
     const/4 v12, 0x0
 
     iput-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
 
-    .line 1352
+    .line 1349
     const/4 v12, 0x0
 
     invoke-virtual {p0, v12}, Lcom/android/server/wm/WindowManagerService;->setInputMethodAnimLayerAdjustment(I)V
 
-    .line 1354
+    .line 1351
     :cond_e
     const/4 v12, -0x1
 
@@ -25504,18 +25395,18 @@
     .parameter "client"
 
     .prologue
-    .line 3115
+    .line 3112
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v0
 
-    .line 3116
+    .line 3113
     .local v0, origId:J
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v4
 
-    .line 3117
+    .line 3114
     const/4 v3, 0x0
 
     :try_start_0
@@ -25523,7 +25414,7 @@
 
     move-result-object v2
 
-    .line 3118
+    .line 3115
     .local v2, win:Lcom/android/server/wm/WindowState;
     if-eqz v2, :cond_1
 
@@ -25535,7 +25426,7 @@
 
     if-eqz v3, :cond_1
 
-    .line 3119
+    .line 3116
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
     iget v3, v3, Landroid/view/WindowManager$LayoutParams;->flags:I
@@ -25546,10 +25437,10 @@
 
     if-eqz v3, :cond_0
 
-    .line 3120
+    .line 3117
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->adjustWallpaperWindowsLocked()I
 
-    .line 3122
+    .line 3119
     :cond_0
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
@@ -25557,22 +25448,22 @@
 
     iput-boolean v5, v3, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 3123
+    .line 3120
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 3125
+    .line 3122
     :cond_1
     monitor-exit v4
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 3126
+    .line 3123
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 3127
+    .line 3124
     return-void
 
-    .line 3125
+    .line 3122
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     :catchall_0
     move-exception v3
@@ -25658,34 +25549,34 @@
     .parameter "which"
 
     .prologue
-    .line 5435
+    .line 5432
     packed-switch p1, :pswitch_data_0
 
-    .line 5440
+    .line 5437
     const/4 v0, 0x0
 
     :goto_0
     return v0
 
-    .line 5436
+    .line 5433
     :pswitch_0
     iget v0, p0, Lcom/android/server/wm/WindowManagerService;->mWindowAnimationScale:F
 
     goto :goto_0
 
-    .line 5437
+    .line 5434
     :pswitch_1
     iget v0, p0, Lcom/android/server/wm/WindowManagerService;->mTransitionAnimationScale:F
 
     goto :goto_0
 
-    .line 5438
+    .line 5435
     :pswitch_2
     iget v0, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatorDurationScale:F
 
     goto :goto_0
 
-    .line 5435
+    .line 5432
     :pswitch_data_0
     .packed-switch 0x0
         :pswitch_0
@@ -25698,7 +25589,7 @@
     .locals 3
 
     .prologue
-    .line 5444
+    .line 5441
     const/4 v0, 0x3
 
     new-array v0, v0, [F
@@ -25729,12 +25620,12 @@
     .parameter "token"
 
     .prologue
-    .line 4100
+    .line 4097
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 4101
+    .line 4098
     :try_start_0
     invoke-interface {p1}, Landroid/view/IApplicationToken;->asBinder()Landroid/os/IBinder;
 
@@ -25744,16 +25635,16 @@
 
     move-result-object v0
 
-    .line 4102
+    .line 4099
     .local v0, wtoken:Lcom/android/server/wm/AppWindowToken;
     if-nez v0, :cond_0
 
-    .line 4103
+    .line 4100
     const/4 v1, -0x1
 
     monitor-exit v2
 
-    .line 4106
+    .line 4103
     :goto_0
     return v1
 
@@ -25764,7 +25655,7 @@
 
     goto :goto_0
 
-    .line 4107
+    .line 4104
     .end local v0           #wtoken:Lcom/android/server/wm/AppWindowToken;
     :catchall_0
     move-exception v1
@@ -25780,7 +25671,7 @@
     .locals 1
 
     .prologue
-    .line 11263
+    .line 11179
     const/4 v0, 0x0
 
     invoke-virtual {p0, v0}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
@@ -25794,7 +25685,7 @@
     .locals 1
 
     .prologue
-    .line 11271
+    .line 11187
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
@@ -25810,7 +25701,7 @@
     .locals 1
 
     .prologue
-    .line 11267
+    .line 11183
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
@@ -25827,7 +25718,7 @@
     .parameter "displayId"
 
     .prologue
-    .line 11169
+    .line 11085
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayContents:Landroid/util/SparseArray;
 
     invoke-virtual {v2, p1}, Landroid/util/SparseArray;->get(I)Ljava/lang/Object;
@@ -25836,34 +25727,34 @@
 
     check-cast v1, Lcom/android/server/wm/DisplayContent;
 
-    .line 11170
+    .line 11086
     .local v1, displayContent:Lcom/android/server/wm/DisplayContent;
     if-nez v1, :cond_0
 
-    .line 11171
+    .line 11087
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayManager:Landroid/hardware/display/DisplayManager;
 
     invoke-virtual {v2, p1}, Landroid/hardware/display/DisplayManager;->getDisplay(I)Landroid/view/Display;
 
     move-result-object v0
 
-    .line 11172
+    .line 11088
     .local v0, display:Landroid/view/Display;
     if-eqz v0, :cond_0
 
-    .line 11173
+    .line 11089
     new-instance v1, Lcom/android/server/wm/DisplayContent;
 
     .end local v1           #displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-direct {v1, v0}, Lcom/android/server/wm/DisplayContent;-><init>(Landroid/view/Display;)V
 
-    .line 11174
+    .line 11090
     .restart local v1       #displayContent:Lcom/android/server/wm/DisplayContent;
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayContents:Landroid/util/SparseArray;
 
     invoke-virtual {v2, p1, v1}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
 
-    .line 11177
+    .line 11093
     .end local v0           #display:Landroid/view/Display;
     :cond_0
     return-object v1
@@ -25874,32 +25765,32 @@
     .parameter "displayId"
 
     .prologue
-    .line 3208
+    .line 3205
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 3209
+    .line 3206
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     if-eqz v0, :cond_1
 
-    .line 3210
+    .line 3207
     iget-object v1, v0, Lcom/android/server/wm/DisplayContent;->mMagnificationSpec:Lcom/android/server/wm/MagnificationSpec;
 
     if-nez v1, :cond_0
 
-    .line 3211
+    .line 3208
     new-instance v1, Lcom/android/server/wm/MagnificationSpec;
 
     invoke-direct {v1}, Lcom/android/server/wm/MagnificationSpec;-><init>()V
 
     iput-object v1, v0, Lcom/android/server/wm/DisplayContent;->mMagnificationSpec:Lcom/android/server/wm/MagnificationSpec;
 
-    .line 3213
+    .line 3210
     :cond_0
     iget-object v1, v0, Lcom/android/server/wm/DisplayContent;->mMagnificationSpec:Lcom/android/server/wm/MagnificationSpec;
 
-    .line 3215
+    .line 3212
     :goto_0
     return-object v1
 
@@ -25913,7 +25804,7 @@
     .locals 3
 
     .prologue
-    .line 7255
+    .line 7223
     const-string v1, "android.permission.RETRIEVE_WINDOW_INFO"
 
     const-string v2, "getFocusedWindowToken()"
@@ -25924,7 +25815,7 @@
 
     if-nez v1, :cond_0
 
-    .line 7257
+    .line 7225
     new-instance v1, Ljava/lang/SecurityException;
 
     const-string v2, "Requires RETRIEVE_WINDOW_INFO permission."
@@ -25933,23 +25824,23 @@
 
     throw v1
 
-    .line 7259
+    .line 7227
     :cond_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 7260
+    .line 7228
     :try_start_0
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->getFocusedWindowLocked()Lcom/android/server/wm/WindowState;
 
     move-result-object v0
 
-    .line 7261
+    .line 7229
     .local v0, windowState:Lcom/android/server/wm/WindowState;
     if-eqz v0, :cond_1
 
-    .line 7262
+    .line 7230
     iget-object v1, v0, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
 
     invoke-interface {v1}, Landroid/view/IWindow;->asBinder()Landroid/os/IBinder;
@@ -25958,7 +25849,7 @@
 
     monitor-exit v2
 
-    .line 7264
+    .line 7232
     :goto_0
     return-object v1
 
@@ -25969,7 +25860,7 @@
 
     goto :goto_0
 
-    .line 7265
+    .line 7233
     .end local v0           #windowState:Lcom/android/server/wm/WindowState;
     :catchall_0
     move-exception v1
@@ -25987,39 +25878,39 @@
     .parameter "size"
 
     .prologue
-    .line 8000
+    .line 7968
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 8001
+    .line 7969
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     if-eqz v0, :cond_0
 
-    .line 8002
+    .line 7970
     iget-object v2, v0, Lcom/android/server/wm/DisplayContent;->mDisplaySizeLock:Ljava/lang/Object;
 
     monitor-enter v2
 
-    .line 8003
+    .line 7971
     :try_start_0
     iget v1, v0, Lcom/android/server/wm/DisplayContent;->mInitialDisplayWidth:I
 
     iput v1, p2, Landroid/graphics/Point;->x:I
 
-    .line 8004
+    .line 7972
     iget v1, v0, Lcom/android/server/wm/DisplayContent;->mInitialDisplayHeight:I
 
     iput v1, p2, Landroid/graphics/Point;->y:I
 
-    .line 8005
+    .line 7973
     monitor-exit v2
 
-    .line 8007
+    .line 7975
     :cond_0
     return-void
 
-    .line 8005
+    .line 7973
     :catchall_0
     move-exception v1
 
@@ -26034,7 +25925,7 @@
     .locals 1
 
     .prologue
-    .line 882
+    .line 879
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     return-object v0
@@ -26048,7 +25939,7 @@
 
     const/4 v2, -0x1
 
-    .line 5451
+    .line 5448
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
 
     const/16 v4, -0x100
@@ -26057,19 +25948,19 @@
 
     move-result v0
 
-    .line 5453
+    .line 5450
     .local v0, sw:I
     if-lez v0, :cond_0
 
-    .line 5461
+    .line 5458
     :goto_0
     return v1
 
-    .line 5456
+    .line 5453
     :cond_0
     if-nez v0, :cond_1
 
-    .line 5458
+    .line 5455
     const/4 v1, 0x1
 
     goto :goto_0
@@ -26077,7 +25968,7 @@
     :cond_1
     move v1, v2
 
-    .line 5461
+    .line 5458
     goto :goto_0
 .end method
 
@@ -26091,26 +25982,26 @@
 
     const/4 v11, 0x3
 
-    .line 3896
+    .line 3893
     const/4 v1, 0x0
 
-    .line 3897
+    .line 3894
     .local v1, curGroup:I
     const/4 v5, -0x1
 
-    .line 3898
+    .line 3895
     .local v5, lastOrientation:I
     const/4 v2, 0x0
 
-    .line 3899
+    .line 3896
     .local v2, findingBehind:Z
     const/4 v3, 0x0
 
-    .line 3900
+    .line 3897
     .local v3, haveGroup:Z
     const/4 v4, 0x0
 
-    .line 3901
+    .line 3898
     .local v4, lastFullscreen:Z
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
@@ -26124,7 +26015,7 @@
     :goto_0
     if-ltz v7, :cond_8
 
-    .line 3902
+    .line 3899
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v8, v7}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -26133,7 +26024,7 @@
 
     check-cast v0, Lcom/android/server/wm/AppWindowToken;
 
-    .line 3908
+    .line 3905
     .local v0, atoken:Lcom/android/server/wm/AppWindowToken;
     if-nez v2, :cond_1
 
@@ -26145,14 +26036,14 @@
 
     if-eqz v8, :cond_1
 
-    .line 3901
+    .line 3898
     :cond_0
     :goto_1
     add-int/lit8 v7, v7, -0x1
 
     goto :goto_0
 
-    .line 3915
+    .line 3912
     :cond_1
     if-ne v3, v9, :cond_3
 
@@ -26160,20 +26051,20 @@
 
     if-eq v1, v8, :cond_3
 
-    .line 3921
+    .line 3918
     if-eq v5, v11, :cond_3
 
     if-eqz v4, :cond_3
 
     move v6, v5
 
-    .line 3964
+    .line 3961
     .end local v0           #atoken:Lcom/android/server/wm/AppWindowToken;
     :cond_2
     :goto_2
     return v6
 
-    .line 3930
+    .line 3927
     .restart local v0       #atoken:Lcom/android/server/wm/AppWindowToken;
     :cond_3
     iget-boolean v8, v0, Lcom/android/server/wm/AppWindowToken;->hiddenRequested:Z
@@ -26184,38 +26075,38 @@
 
     if-nez v8, :cond_0
 
-    .line 3936
+    .line 3933
     if-nez v3, :cond_4
 
-    .line 3937
+    .line 3934
     const/4 v3, 0x1
 
-    .line 3938
+    .line 3935
     iget v1, v0, Lcom/android/server/wm/AppWindowToken;->groupId:I
 
-    .line 3939
+    .line 3936
     iget v5, v0, Lcom/android/server/wm/AppWindowToken;->requestedOrientation:I
 
-    .line 3942
+    .line 3939
     :cond_4
     iget v6, v0, Lcom/android/server/wm/AppWindowToken;->requestedOrientation:I
 
-    .line 3946
+    .line 3943
     .local v6, or:I
     iget-boolean v4, v0, Lcom/android/server/wm/AppWindowToken;->appFullscreen:Z
 
-    .line 3947
+    .line 3944
     if-eqz v4, :cond_5
 
     if-ne v6, v11, :cond_2
 
-    .line 3955
+    .line 3952
     :cond_5
     if-eq v6, v10, :cond_6
 
     if-ne v6, v11, :cond_2
 
-    .line 3961
+    .line 3958
     :cond_6
     if-ne v6, v11, :cond_7
 
@@ -26236,7 +26127,7 @@
     :cond_8
     move v6, v10
 
-    .line 3964
+    .line 3961
     goto :goto_2
 .end method
 
@@ -26246,7 +26137,7 @@
     .prologue
     const/4 v4, -0x1
 
-    .line 3860
+    .line 3857
     iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayFrozen:Z
 
     if-nez v5, :cond_0
@@ -26267,21 +26158,21 @@
 
     if-lez v5, :cond_1
 
-    .line 3866
+    .line 3863
     :cond_0
     iget v1, p0, Lcom/android/server/wm/WindowManagerService;->mLastWindowForcedOrientation:I
 
-    .line 3892
+    .line 3889
     :goto_0
     return v1
 
-    .line 3870
+    .line 3867
     :cond_1
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
 
     move-result-object v3
 
-    .line 3871
+    .line 3868
     .local v3, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v3}, Lcom/android/server/wm/WindowList;->size()I
 
@@ -26289,35 +26180,35 @@
 
     add-int/lit8 v0, v5, -0x1
 
-    .line 3872
+    .line 3869
     .local v0, pos:I
     :cond_2
     if-ltz v0, :cond_4
 
-    .line 3873
+    .line 3870
     invoke-virtual {v3, v0}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v2
 
     check-cast v2, Lcom/android/server/wm/WindowState;
 
-    .line 3874
+    .line 3871
     .local v2, win:Lcom/android/server/wm/WindowState;
     add-int/lit8 v0, v0, -0x1
 
-    .line 3875
+    .line 3872
     iget-object v5, v2, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     if-eqz v5, :cond_3
 
-    .line 3878
+    .line 3875
     iput v4, p0, Lcom/android/server/wm/WindowManagerService;->mLastWindowForcedOrientation:I
 
     move v1, v4
 
     goto :goto_0
 
-    .line 3880
+    .line 3877
     :cond_3
     invoke-virtual {v2}, Lcom/android/server/wm/WindowState;->isVisibleLw()Z
 
@@ -26329,12 +26220,12 @@
 
     if-eqz v5, :cond_2
 
-    .line 3883
+    .line 3880
     iget-object v5, v2, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
     iget v1, v5, Landroid/view/WindowManager$LayoutParams;->screenOrientation:I
 
-    .line 3884
+    .line 3881
     .local v1, req:I
     if-eq v1, v4, :cond_2
 
@@ -26342,12 +26233,12 @@
 
     if-eq v1, v5, :cond_2
 
-    .line 3890
+    .line 3887
     iput v1, p0, Lcom/android/server/wm/WindowManagerService;->mLastWindowForcedOrientation:I
 
     goto :goto_0
 
-    .line 3892
+    .line 3889
     .end local v1           #req:I
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     :cond_4
@@ -26362,7 +26253,7 @@
     .locals 1
 
     .prologue
-    .line 4190
+    .line 4187
     iget v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
     return v0
@@ -26518,12 +26409,12 @@
     .parameter "displayContent"
 
     .prologue
-    .line 940
+    .line 937
     new-instance v3, Lcom/android/server/wm/WindowList;
 
     invoke-direct {v3}, Lcom/android/server/wm/WindowList;-><init>()V
 
-    .line 941
+    .line 938
     .local v3, windowList:Lcom/android/server/wm/WindowList;
     iget-object v4, p1, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
@@ -26531,7 +26422,7 @@
 
     move-result v0
 
-    .line 942
+    .line 939
     .local v0, count:I
     const/4 v1, 0x0
 
@@ -26539,7 +26430,7 @@
     :goto_0
     if-ge v1, v0, :cond_1
 
-    .line 943
+    .line 940
     iget-object v4, p1, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v4, v1}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -26548,22 +26439,22 @@
 
     check-cast v2, Lcom/android/server/wm/WindowState;
 
-    .line 944
+    .line 941
     .local v2, win:Lcom/android/server/wm/WindowState;
     iget-object v4, v2, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
     if-ne v4, p2, :cond_0
 
-    .line 945
+    .line 942
     invoke-virtual {v3, v2}, Lcom/android/server/wm/WindowList;->add(Ljava/lang/Object;)Z
 
-    .line 942
+    .line 939
     :cond_0
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 948
+    .line 945
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     :cond_1
     return-object v3
@@ -26584,7 +26475,7 @@
     .end annotation
 
     .prologue
-    .line 3158
+    .line 3155
     .local p2, outInfos:Ljava/util/List;,"Ljava/util/List<Landroid/view/WindowInfo;>;"
     const-string v6, "android.permission.RETRIEVE_WINDOW_INFO"
 
@@ -26596,7 +26487,7 @@
 
     if-nez v6, :cond_0
 
-    .line 3160
+    .line 3157
     new-instance v6, Ljava/lang/SecurityException;
 
     const-string v7, "Requires RETRIEVE_WINDOW_INFO permission."
@@ -26605,42 +26496,42 @@
 
     throw v6
 
-    .line 3162
+    .line 3159
     :cond_0
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v7
 
-    .line 3163
+    .line 3160
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 3164
+    .line 3161
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     if-nez v0, :cond_1
 
-    .line 3165
+    .line 3162
     monitor-exit v7
 
-    .line 3177
+    .line 3174
     :goto_0
     return-void
 
-    .line 3167
+    .line 3164
     :cond_1
     invoke-virtual {v0}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v5
 
-    .line 3168
+    .line 3165
     .local v5, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v5}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v4
 
-    .line 3169
+    .line 3166
     .local v4, windowCount:I
     const/4 v1, 0x0
 
@@ -26648,14 +26539,14 @@
     :goto_1
     if-ge v1, v4, :cond_4
 
-    .line 3170
+    .line 3167
     invoke-virtual {v5, v1}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v3
 
     check-cast v3, Lcom/android/server/wm/WindowState;
 
-    .line 3171
+    .line 3168
     .local v3, window:Lcom/android/server/wm/WindowState;
     invoke-virtual {v3}, Lcom/android/server/wm/WindowState;->isVisibleLw()Z
 
@@ -26671,24 +26562,24 @@
 
     if-ne v6, v8, :cond_3
 
-    .line 3172
+    .line 3169
     :cond_2
     invoke-direct {p0, v3}, Lcom/android/server/wm/WindowManagerService;->getWindowInfoForWindowStateLocked(Lcom/android/server/wm/WindowState;)Landroid/view/WindowInfo;
 
     move-result-object v2
 
-    .line 3173
+    .line 3170
     .local v2, info:Landroid/view/WindowInfo;
     invoke-interface {p2, v2}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    .line 3169
+    .line 3166
     .end local v2           #info:Landroid/view/WindowInfo;
     :cond_3
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_1
 
-    .line 3176
+    .line 3173
     .end local v3           #window:Lcom/android/server/wm/WindowState;
     :cond_4
     monitor-exit v7
@@ -26714,7 +26605,7 @@
     .parameter "windowToken"
 
     .prologue
-    .line 3131
+    .line 3128
     const-string v1, "android.permission.RETRIEVE_WINDOW_INFO"
 
     const-string v2, "getWindowCompatibilityScale()"
@@ -26725,7 +26616,7 @@
 
     if-nez v1, :cond_0
 
-    .line 3133
+    .line 3130
     new-instance v1, Ljava/lang/SecurityException;
 
     const-string v2, "Requires RETRIEVE_WINDOW_INFO permission."
@@ -26734,13 +26625,13 @@
 
     throw v1
 
-    .line 3135
+    .line 3132
     :cond_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 3136
+    .line 3133
     :try_start_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
@@ -26750,7 +26641,7 @@
 
     check-cast v0, Lcom/android/server/wm/WindowState;
 
-    .line 3137
+    .line 3134
     .local v0, windowState:Lcom/android/server/wm/WindowState;
     if-eqz v0, :cond_1
 
@@ -26766,7 +26657,7 @@
 
     goto :goto_0
 
-    .line 3138
+    .line 3135
     .end local v0           #windowState:Lcom/android/server/wm/WindowState;
     :catchall_0
     move-exception v1
@@ -26785,12 +26676,12 @@
     .parameter "outDisplayFrame"
 
     .prologue
-    .line 2634
+    .line 2631
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 2635
+    .line 2632
     const/4 v1, 0x0
 
     :try_start_0
@@ -26798,27 +26689,27 @@
 
     move-result-object v0
 
-    .line 2636
+    .line 2633
     .local v0, win:Lcom/android/server/wm/WindowState;
     if-nez v0, :cond_0
 
-    .line 2637
+    .line 2634
     invoke-virtual {p3}, Landroid/graphics/Rect;->setEmpty()V
 
-    .line 2638
+    .line 2635
     monitor-exit v2
 
-    .line 2642
+    .line 2639
     :goto_0
     return-void
 
-    .line 2640
+    .line 2637
     :cond_0
     iget-object v1, v0, Lcom/android/server/wm/WindowState;->mDisplayFrame:Landroid/graphics/Rect;
 
     invoke-virtual {p3, v1}, Landroid/graphics/Rect;->set(Landroid/graphics/Rect;)V
 
-    .line 2641
+    .line 2638
     monitor-exit v2
 
     goto :goto_0
@@ -26839,7 +26730,7 @@
     .parameter "token"
 
     .prologue
-    .line 3143
+    .line 3140
     const-string v1, "android.permission.RETRIEVE_WINDOW_INFO"
 
     const-string v2, "getWindowInfo()"
@@ -26850,7 +26741,7 @@
 
     if-nez v1, :cond_0
 
-    .line 3145
+    .line 3142
     new-instance v1, Ljava/lang/SecurityException;
 
     const-string v2, "Requires RETRIEVE_WINDOW_INFO permission."
@@ -26859,13 +26750,13 @@
 
     throw v1
 
-    .line 3147
+    .line 3144
     :cond_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 3148
+    .line 3145
     :try_start_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
@@ -26875,18 +26766,18 @@
 
     check-cast v0, Lcom/android/server/wm/WindowState;
 
-    .line 3149
+    .line 3146
     .local v0, window:Lcom/android/server/wm/WindowState;
     if-eqz v0, :cond_1
 
-    .line 3150
+    .line 3147
     invoke-direct {p0, v0}, Lcom/android/server/wm/WindowManagerService;->getWindowInfoForWindowStateLocked(Lcom/android/server/wm/WindowState;)Landroid/view/WindowInfo;
 
     move-result-object v1
 
     monitor-exit v2
 
-    .line 3152
+    .line 3149
     :goto_0
     return-object v1
 
@@ -26897,7 +26788,7 @@
 
     goto :goto_0
 
-    .line 3153
+    .line 3150
     .end local v0           #window:Lcom/android/server/wm/WindowState;
     :catchall_0
     move-exception v1
@@ -26914,7 +26805,7 @@
     .parameter "display"
 
     .prologue
-    .line 11280
+    .line 11196
     invoke-virtual {p1}, Landroid/view/Display;->getDisplayId()I
 
     move-result v1
@@ -26923,7 +26814,7 @@
 
     move-result-object v0
 
-    .line 11281
+    .line 11197
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     if-eqz v0, :cond_0
 
@@ -26945,10 +26836,10 @@
     .parameter "windows"
 
     .prologue
-    .line 8634
+    .line 8602
     const/16 v21, 0x0
 
-    .line 8636
+    .line 8604
     .local v21, changes:I
     move-object/from16 v0, p0
 
@@ -26958,11 +26849,11 @@
 
     move-result v16
 
-    .line 8637
+    .line 8605
     .local v16, NN:I
     const/16 v29, 0x1
 
-    .line 8642
+    .line 8610
     .local v29, goodToGo:Z
     move-object/from16 v0, p0
 
@@ -26976,7 +26867,7 @@
 
     if-nez v2, :cond_1
 
-    .line 8646
+    .line 8614
     const/16 v30, 0x0
 
     .local v30, i:I
@@ -26989,7 +26880,7 @@
 
     if-eqz v29, :cond_1
 
-    .line 8647
+    .line 8615
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mOpeningApps:Ljava/util/ArrayList;
@@ -27002,7 +26893,7 @@
 
     check-cast v3, Lcom/android/server/wm/AppWindowToken;
 
-    .line 8653
+    .line 8621
     .local v3, wtoken:Lcom/android/server/wm/AppWindowToken;
     iget-boolean v2, v3, Lcom/android/server/wm/AppWindowToken;->allDrawn:Z
 
@@ -27016,27 +26907,27 @@
 
     if-nez v2, :cond_0
 
-    .line 8655
+    .line 8623
     const/16 v29, 0x0
 
-    .line 8646
+    .line 8614
     :cond_0
     add-int/lit8 v30, v30, 0x1
 
     goto :goto_0
 
-    .line 8659
+    .line 8627
     .end local v3           #wtoken:Lcom/android/server/wm/AppWindowToken;
     .end local v30           #i:I
     :cond_1
     if-eqz v29, :cond_17
 
-    .line 8661
+    .line 8629
     move-object/from16 v0, p0
 
     iget v6, v0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
-    .line 8662
+    .line 8630
     .local v6, transit:I
     move-object/from16 v0, p0
 
@@ -27044,10 +26935,10 @@
 
     if-eqz v2, :cond_2
 
-    .line 8663
+    .line 8631
     const/4 v6, -0x1
 
-    .line 8665
+    .line 8633
     :cond_2
     const/4 v2, -0x1
 
@@ -27055,42 +26946,42 @@
 
     iput v2, v0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
-    .line 8666
+    .line 8634
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionReady:Z
 
-    .line 8667
+    .line 8635
     const/4 v2, 0x1
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionRunning:Z
 
-    .line 8668
+    .line 8636
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionTimeout:Z
 
-    .line 8669
+    .line 8637
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mStartingIconInTransition:Z
 
-    .line 8670
+    .line 8638
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mSkipAppTransitionAnimation:Z
 
-    .line 8672
+    .line 8640
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -27099,10 +26990,10 @@
 
     invoke-virtual {v2, v5}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 8674
+    .line 8642
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->rebuildAppWindowListLocked()V
 
-    .line 8677
+    .line 8645
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -27135,12 +27026,12 @@
 
     const/16 v34, 0x0
 
-    .line 8682
+    .line 8650
     .local v34, oldWallpaper:Lcom/android/server/wm/WindowState;
     :goto_1
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->adjustWallpaperWindowsLocked()I
 
-    .line 8683
+    .line 8651
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
@@ -27149,22 +27040,22 @@
 
     iput-boolean v5, v2, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mWallpaperMayChange:Z
 
-    .line 8687
+    .line 8655
     const/4 v4, 0x0
 
-    .line 8688
+    .line 8656
     .local v4, animLp:Landroid/view/WindowManager$LayoutParams;
     const/16 v19, -0x1
 
-    .line 8689
+    .line 8657
     .local v19, bestAnimLayer:I
     const/16 v28, 0x0
 
-    .line 8696
+    .line 8664
     .local v28, fullscreenAnim:Z
     const/16 v27, 0x0
 
-    .line 8707
+    .line 8675
     .local v27, foundWallpapers:I
     move-object/from16 v0, p0
 
@@ -27174,7 +27065,7 @@
 
     move-result v15
 
-    .line 8708
+    .line 8676
     .local v15, NC:I
     move-object/from16 v0, p0
 
@@ -27186,7 +27077,7 @@
 
     add-int v16, v15, v2
 
-    .line 8709
+    .line 8677
     const/16 v30, 0x0
 
     .restart local v30       #i:I
@@ -27197,12 +27088,12 @@
 
     if-ge v0, v1, :cond_9
 
-    .line 8712
+    .line 8680
     move/from16 v0, v30
 
     if-ge v0, v15, :cond_7
 
-    .line 8713
+    .line 8681
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mClosingApps:Ljava/util/ArrayList;
@@ -27215,11 +27106,11 @@
 
     check-cast v3, Lcom/android/server/wm/AppWindowToken;
 
-    .line 8714
+    .line 8682
     .restart local v3       #wtoken:Lcom/android/server/wm/AppWindowToken;
     const/16 v33, 0x1
 
-    .line 8719
+    .line 8687
     .local v33, mode:I
     :goto_3
     move-object/from16 v0, p0
@@ -27228,7 +27119,7 @@
 
     if-eqz v2, :cond_4
 
-    .line 8720
+    .line 8688
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
@@ -27245,41 +27136,41 @@
 
     if-ne v2, v3, :cond_4
 
-    .line 8722
+    .line 8690
     :cond_3
     or-int v27, v27, v33
 
-    .line 8725
+    .line 8693
     :cond_4
     iget-boolean v2, v3, Lcom/android/server/wm/AppWindowToken;->appFullscreen:Z
 
     if-eqz v2, :cond_8
 
-    .line 8726
+    .line 8694
     invoke-virtual {v3}, Lcom/android/server/wm/AppWindowToken;->findMainWindow()Lcom/android/server/wm/WindowState;
 
     move-result-object v38
 
-    .line 8727
+    .line 8695
     .local v38, ws:Lcom/android/server/wm/WindowState;
     if-eqz v38, :cond_5
 
-    .line 8728
+    .line 8696
     move-object/from16 v0, v38
 
     iget-object v4, v0, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
-    .line 8729
+    .line 8697
     move-object/from16 v0, v38
 
     iget v0, v0, Lcom/android/server/wm/WindowState;->mLayer:I
 
     move/from16 v19, v0
 
-    .line 8730
+    .line 8698
     const/16 v28, 0x1
 
-    .line 8709
+    .line 8677
     .end local v38           #ws:Lcom/android/server/wm/WindowState;
     :cond_5
     :goto_4
@@ -27287,7 +27178,7 @@
 
     goto :goto_2
 
-    .line 8677
+    .line 8645
     .end local v3           #wtoken:Lcom/android/server/wm/AppWindowToken;
     .end local v4           #animLp:Landroid/view/WindowManager$LayoutParams;
     .end local v15           #NC:I
@@ -27306,7 +27197,7 @@
 
     goto :goto_1
 
-    .line 8716
+    .line 8684
     .restart local v4       #animLp:Landroid/view/WindowManager$LayoutParams;
     .restart local v15       #NC:I
     .restart local v19       #bestAnimLayer:I
@@ -27327,27 +27218,27 @@
 
     check-cast v3, Lcom/android/server/wm/AppWindowToken;
 
-    .line 8717
+    .line 8685
     .restart local v3       #wtoken:Lcom/android/server/wm/AppWindowToken;
     const/16 v33, 0x2
 
     .restart local v33       #mode:I
     goto :goto_3
 
-    .line 8732
+    .line 8700
     :cond_8
     if-nez v28, :cond_5
 
-    .line 8733
+    .line 8701
     invoke-virtual {v3}, Lcom/android/server/wm/AppWindowToken;->findMainWindow()Lcom/android/server/wm/WindowState;
 
     move-result-object v38
 
-    .line 8734
+    .line 8702
     .restart local v38       #ws:Lcom/android/server/wm/WindowState;
     if-eqz v38, :cond_5
 
-    .line 8735
+    .line 8703
     move-object/from16 v0, v38
 
     iget v2, v0, Lcom/android/server/wm/WindowState;->mLayer:I
@@ -27356,12 +27247,12 @@
 
     if-le v2, v0, :cond_5
 
-    .line 8736
+    .line 8704
     move-object/from16 v0, v38
 
     iget-object v4, v0, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
-    .line 8737
+    .line 8705
     move-object/from16 v0, v38
 
     iget v0, v0, Lcom/android/server/wm/WindowState;->mLayer:I
@@ -27370,7 +27261,7 @@
 
     goto :goto_4
 
-    .line 8743
+    .line 8711
     .end local v3           #wtoken:Lcom/android/server/wm/AppWindowToken;
     .end local v33           #mode:I
     .end local v38           #ws:Lcom/android/server/wm/WindowState;
@@ -27381,10 +27272,10 @@
 
     if-ne v0, v2, :cond_c
 
-    .line 8746
+    .line 8714
     sparse-switch v6, :sswitch_data_0
 
-    .line 8778
+    .line 8746
     :cond_a
     :goto_5
     move-object/from16 v0, p0
@@ -27397,18 +27288,18 @@
 
     if-nez v2, :cond_b
 
-    .line 8779
+    .line 8747
     const/4 v4, 0x0
 
-    .line 8782
+    .line 8750
     :cond_b
     const/16 v35, 0x0
 
-    .line 8783
+    .line 8751
     .local v35, topOpeningApp:Lcom/android/server/wm/AppWindowToken;
     const/16 v36, 0x0
 
-    .line 8785
+    .line 8753
     .local v36, topOpeningLayer:I
     move-object/from16 v0, p0
 
@@ -27418,7 +27309,7 @@
 
     move-result v16
 
-    .line 8786
+    .line 8754
     const/16 v30, 0x0
 
     :goto_6
@@ -27428,7 +27319,7 @@
 
     if-ge v0, v1, :cond_13
 
-    .line 8787
+    .line 8755
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mOpeningApps:Ljava/util/ArrayList;
@@ -27441,34 +27332,34 @@
 
     check-cast v3, Lcom/android/server/wm/AppWindowToken;
 
-    .line 8788
+    .line 8756
     .restart local v3       #wtoken:Lcom/android/server/wm/AppWindowToken;
     iget-object v0, v3, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     move-object/from16 v18, v0
 
-    .line 8790
+    .line 8758
     .local v18, appAnimator:Lcom/android/server/wm/AppWindowAnimator;
     invoke-virtual/range {v18 .. v18}, Lcom/android/server/wm/AppWindowAnimator;->clearThumbnail()V
 
-    .line 8791
+    .line 8759
     const/4 v2, 0x0
 
     iput-boolean v2, v3, Lcom/android/server/wm/AppWindowToken;->reportedVisible:Z
 
-    .line 8792
+    .line 8760
     const/4 v2, 0x0
 
     iput-boolean v2, v3, Lcom/android/server/wm/AppWindowToken;->inPendingTransaction:Z
 
-    .line 8793
+    .line 8761
     const/4 v2, 0x0
 
     move-object/from16 v0, v18
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowAnimator;->animation:Landroid/view/animation/Animation;
 
-    .line 8794
+    .line 8762
     const/4 v5, 0x1
 
     const/4 v7, 0x0
@@ -27477,29 +27368,29 @@
 
     invoke-virtual/range {v2 .. v7}, Lcom/android/server/wm/WindowManagerService;->setTokenVisibilityLocked(Lcom/android/server/wm/AppWindowToken;Landroid/view/WindowManager$LayoutParams;ZIZ)Z
 
-    .line 8795
+    .line 8763
     invoke-virtual {v3}, Lcom/android/server/wm/AppWindowToken;->updateReportedVisibilityLocked()V
 
-    .line 8796
+    .line 8764
     const/4 v2, 0x0
 
     iput-boolean v2, v3, Lcom/android/server/wm/AppWindowToken;->waitingToShow:Z
 
-    .line 8798
+    .line 8766
     move-object/from16 v0, v18
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowAnimator;->mAllAppWinAnimators:Ljava/util/ArrayList;
 
     invoke-virtual {v2}, Ljava/util/ArrayList;->clear()V
 
-    .line 8799
+    .line 8767
     iget-object v2, v3, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v2}, Ljava/util/ArrayList;->size()I
 
     move-result v14
 
-    .line 8800
+    .line 8768
     .local v14, N:I
     const/16 v31, 0x0
 
@@ -27509,7 +27400,7 @@
 
     if-ge v0, v14, :cond_e
 
-    .line 8801
+    .line 8769
     move-object/from16 v0, v18
 
     iget-object v5, v0, Lcom/android/server/wm/AppWindowAnimator;->mAllAppWinAnimators:Ljava/util/ArrayList;
@@ -27528,12 +27419,12 @@
 
     invoke-virtual {v5, v2}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 8800
+    .line 8768
     add-int/lit8 v31, v31, 0x1
 
     goto :goto_7
 
-    .line 8750
+    .line 8718
     .end local v3           #wtoken:Lcom/android/server/wm/AppWindowToken;
     .end local v14           #N:I
     .end local v18           #appAnimator:Lcom/android/server/wm/AppWindowAnimator;
@@ -27543,16 +27434,16 @@
     :sswitch_0
     const/16 v6, 0x100e
 
-    .line 8751
+    .line 8719
     goto :goto_5
 
-    .line 8755
+    .line 8723
     :sswitch_1
     const/16 v6, 0x200f
 
     goto :goto_5
 
-    .line 8760
+    .line 8728
     :cond_c
     if-eqz v34, :cond_d
 
@@ -27570,12 +27461,12 @@
 
     if-nez v2, :cond_d
 
-    .line 8763
+    .line 8731
     const/16 v6, 0x200c
 
     goto/16 :goto_5
 
-    .line 8766
+    .line 8734
     :cond_d
     move-object/from16 v0, p0
 
@@ -27593,12 +27484,12 @@
 
     if-eqz v2, :cond_a
 
-    .line 8769
+    .line 8737
     const/16 v6, 0x100d
 
     goto/16 :goto_5
 
-    .line 8803
+    .line 8771
     .restart local v3       #wtoken:Lcom/android/server/wm/AppWindowToken;
     .restart local v14       #N:I
     .restart local v18       #appAnimator:Lcom/android/server/wm/AppWindowAnimator;
@@ -27620,13 +27511,13 @@
 
     iput-boolean v5, v2, Lcom/android/server/wm/WindowAnimator;->mAnimating:Z
 
-    .line 8805
+    .line 8773
     if-eqz v4, :cond_12
 
-    .line 8806
+    .line 8774
     const/16 v32, -0x1
 
-    .line 8807
+    .line 8775
     .local v32, layer:I
     const/16 v31, 0x0
 
@@ -27641,7 +27532,7 @@
 
     if-ge v0, v2, :cond_10
 
-    .line 8808
+    .line 8776
     iget-object v2, v3, Lcom/android/server/wm/AppWindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     move/from16 v0, v31
@@ -27652,7 +27543,7 @@
 
     check-cast v37, Lcom/android/server/wm/WindowState;
 
-    .line 8809
+    .line 8777
     .local v37, win:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, v37
 
@@ -27664,7 +27555,7 @@
 
     if-le v2, v0, :cond_f
 
-    .line 8810
+    .line 8778
     move-object/from16 v0, v37
 
     iget-object v2, v0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
@@ -27673,13 +27564,13 @@
 
     move/from16 v32, v0
 
-    .line 8807
+    .line 8775
     :cond_f
     add-int/lit8 v31, v31, 0x1
 
     goto :goto_8
 
-    .line 8813
+    .line 8781
     .end local v37           #win:Lcom/android/server/wm/WindowState;
     :cond_10
     if-eqz v35, :cond_11
@@ -27690,21 +27581,21 @@
 
     if-le v0, v1, :cond_12
 
-    .line 8814
+    .line 8782
     :cond_11
     move-object/from16 v35, v3
 
-    .line 8815
+    .line 8783
     move/from16 v36, v32
 
-    .line 8786
+    .line 8754
     .end local v32           #layer:I
     :cond_12
     add-int/lit8 v30, v30, 0x1
 
     goto/16 :goto_6
 
-    .line 8819
+    .line 8787
     .end local v3           #wtoken:Lcom/android/server/wm/AppWindowToken;
     .end local v14           #N:I
     .end local v18           #appAnimator:Lcom/android/server/wm/AppWindowAnimator;
@@ -27718,7 +27609,7 @@
 
     move-result v16
 
-    .line 8820
+    .line 8788
     const/16 v30, 0x0
 
     :goto_9
@@ -27728,7 +27619,7 @@
 
     if-ge v0, v1, :cond_14
 
-    .line 8821
+    .line 8789
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mClosingApps:Ljava/util/ArrayList;
@@ -27741,25 +27632,25 @@
 
     check-cast v3, Lcom/android/server/wm/AppWindowToken;
 
-    .line 8824
+    .line 8792
     .restart local v3       #wtoken:Lcom/android/server/wm/AppWindowToken;
     iget-object v2, v3, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     invoke-virtual {v2}, Lcom/android/server/wm/AppWindowAnimator;->clearThumbnail()V
 
-    .line 8825
+    .line 8793
     const/4 v2, 0x0
 
     iput-boolean v2, v3, Lcom/android/server/wm/AppWindowToken;->inPendingTransaction:Z
 
-    .line 8826
+    .line 8794
     iget-object v2, v3, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     const/4 v5, 0x0
 
     iput-object v5, v2, Lcom/android/server/wm/AppWindowAnimator;->animation:Landroid/view/animation/Animation;
 
-    .line 8827
+    .line 8795
     const/4 v5, 0x0
 
     const/4 v7, 0x0
@@ -27768,25 +27659,25 @@
 
     invoke-virtual/range {v2 .. v7}, Lcom/android/server/wm/WindowManagerService;->setTokenVisibilityLocked(Lcom/android/server/wm/AppWindowToken;Landroid/view/WindowManager$LayoutParams;ZIZ)Z
 
-    .line 8829
+    .line 8797
     invoke-virtual {v3}, Lcom/android/server/wm/AppWindowToken;->updateReportedVisibilityLocked()V
 
-    .line 8830
+    .line 8798
     const/4 v2, 0x0
 
     iput-boolean v2, v3, Lcom/android/server/wm/AppWindowToken;->waitingToHide:Z
 
-    .line 8834
+    .line 8802
     const/4 v2, 0x1
 
     iput-boolean v2, v3, Lcom/android/server/wm/AppWindowToken;->allDrawn:Z
 
-    .line 8820
+    .line 8788
     add-int/lit8 v30, v30, 0x1
 
     goto :goto_9
 
-    .line 8837
+    .line 8805
     .end local v3           #wtoken:Lcom/android/server/wm/AppWindowToken;
     :cond_14
     move-object/from16 v0, p0
@@ -27805,7 +27696,7 @@
 
     if-eqz v2, :cond_15
 
-    .line 8841
+    .line 8809
     new-instance v22, Landroid/graphics/Rect;
 
     const/4 v2, 0x0
@@ -27832,20 +27723,20 @@
 
     invoke-direct {v0, v2, v5, v8, v9}, Landroid/graphics/Rect;-><init>(IIII)V
 
-    .line 8845
+    .line 8813
     .local v22, dirty:Landroid/graphics/Rect;
     :try_start_0
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v24
 
-    .line 8846
+    .line 8814
     .local v24, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-virtual/range {v24 .. v24}, Lcom/android/server/wm/DisplayContent;->getDisplay()Landroid/view/Display;
 
     move-result-object v23
 
-    .line 8847
+    .line 8815
     .local v23, display:Landroid/view/Display;
     new-instance v7, Landroid/view/Surface;
 
@@ -27869,7 +27760,7 @@
 
     invoke-direct/range {v7 .. v13}, Landroid/view/Surface;-><init>(Landroid/view/SurfaceSession;Ljava/lang/String;IIII)V
 
-    .line 8851
+    .line 8819
     .local v7, surface:Landroid/view/Surface;
     invoke-virtual/range {v23 .. v23}, Landroid/view/Display;->getLayerStack()I
 
@@ -27877,25 +27768,25 @@
 
     invoke-virtual {v7, v2}, Landroid/view/Surface;->setLayerStack(I)V
 
-    .line 8852
+    .line 8820
     move-object/from16 v0, v35
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     iput-object v7, v2, Lcom/android/server/wm/AppWindowAnimator;->thumbnail:Landroid/view/Surface;
 
-    .line 8855
+    .line 8823
     new-instance v25, Landroid/view/Surface;
 
     invoke-direct/range {v25 .. v25}, Landroid/view/Surface;-><init>()V
 
-    .line 8856
+    .line 8824
     .local v25, drawSurface:Landroid/view/Surface;
     move-object/from16 v0, v25
 
     invoke-virtual {v0, v7}, Landroid/view/Surface;->copyFrom(Landroid/view/Surface;)V
 
-    .line 8857
+    .line 8825
     move-object/from16 v0, v25
 
     move-object/from16 v1, v22
@@ -27904,7 +27795,7 @@
 
     move-result-object v20
 
-    .line 8858
+    .line 8826
     .local v20, c:Landroid/graphics/Canvas;
     move-object/from16 v0, p0
 
@@ -27920,17 +27811,17 @@
 
     invoke-virtual {v0, v2, v5, v8, v9}, Landroid/graphics/Canvas;->drawBitmap(Landroid/graphics/Bitmap;FFLandroid/graphics/Paint;)V
 
-    .line 8859
+    .line 8827
     move-object/from16 v0, v25
 
     move-object/from16 v1, v20
 
     invoke-virtual {v0, v1}, Landroid/view/Surface;->unlockCanvasAndPost(Landroid/graphics/Canvas;)V
 
-    .line 8860
+    .line 8828
     invoke-virtual/range {v25 .. v25}, Landroid/view/Surface;->release()V
 
-    .line 8861
+    .line 8829
     move-object/from16 v0, v35
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
@@ -27939,7 +27830,7 @@
 
     iput v0, v2, Lcom/android/server/wm/AppWindowAnimator;->thumbnailLayer:I
 
-    .line 8862
+    .line 8830
     const/4 v2, 0x1
 
     const/4 v5, 0x1
@@ -27954,7 +27845,7 @@
 
     move-result-object v17
 
-    .line 8864
+    .line 8832
     .local v17, anim:Landroid/view/animation/Animation;
     move-object/from16 v0, v35
 
@@ -27964,14 +27855,14 @@
 
     iput-object v0, v2, Lcom/android/server/wm/AppWindowAnimator;->thumbnailAnimation:Landroid/view/animation/Animation;
 
-    .line 8865
+    .line 8833
     const-wide/16 v8, 0x2710
 
     move-object/from16 v0, v17
 
     invoke-virtual {v0, v8, v9}, Landroid/view/animation/Animation;->restrictDuration(J)V
 
-    .line 8866
+    .line 8834
     move-object/from16 v0, p0
 
     iget v2, v0, Lcom/android/server/wm/WindowManagerService;->mTransitionAnimationScale:F
@@ -27980,7 +27871,7 @@
 
     invoke-virtual {v0, v2}, Landroid/view/animation/Animation;->scaleCurrentDuration(F)V
 
-    .line 8867
+    .line 8835
     move-object/from16 v0, v35
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
@@ -27991,7 +27882,7 @@
 
     iput v5, v2, Lcom/android/server/wm/AppWindowAnimator;->thumbnailX:I
 
-    .line 8868
+    .line 8836
     move-object/from16 v0, v35
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
@@ -28004,7 +27895,7 @@
     :try_end_0
     .catch Landroid/view/Surface$OutOfResourcesException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 8876
+    .line 8844
     .end local v7           #surface:Landroid/view/Surface;
     .end local v17           #anim:Landroid/view/animation/Animation;
     .end local v20           #c:Landroid/graphics/Canvas;
@@ -28020,21 +27911,21 @@
 
     iput v2, v0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
 
-    .line 8877
+    .line 8845
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionPackage:Ljava/lang/String;
 
-    .line 8878
+    .line 8846
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionThumbnail:Landroid/graphics/Bitmap;
 
-    .line 8879
+    .line 8847
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionCallback:Landroid/os/IRemoteCallback;
@@ -28043,31 +27934,31 @@
 
     invoke-direct {v0, v2}, Lcom/android/server/wm/WindowManagerService;->scheduleAnimationCallback(Landroid/os/IRemoteCallback;)V
 
-    .line 8880
+    .line 8848
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionCallback:Landroid/os/IRemoteCallback;
 
-    .line 8882
+    .line 8850
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mOpeningApps:Ljava/util/ArrayList;
 
     invoke-virtual {v2}, Ljava/util/ArrayList;->clear()V
 
-    .line 8883
+    .line 8851
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mClosingApps:Ljava/util/ArrayList;
 
     invoke-virtual {v2}, Ljava/util/ArrayList;->clear()V
 
-    .line 8887
+    .line 8855
     or-int/lit8 v21, v21, 0x3
 
-    .line 8889
+    .line 8857
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v2
@@ -28076,7 +27967,7 @@
 
     iput-boolean v5, v2, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 8892
+    .line 8860
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
 
     move-result-object v2
@@ -28095,10 +27986,10 @@
 
     if-nez v2, :cond_16
 
-    .line 8894
+    .line 8862
     invoke-direct/range {p0 .. p1}, Lcom/android/server/wm/WindowManagerService;->assignLayersLocked(Lcom/android/server/wm/WindowList;)V
 
-    .line 8896
+    .line 8864
     :cond_16
     const/4 v2, 0x2
 
@@ -28108,14 +27999,14 @@
 
     invoke-direct {v0, v2, v5}, Lcom/android/server/wm/WindowManagerService;->updateFocusedWindowLocked(IZ)Z
 
-    .line 8897
+    .line 8865
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mFocusMayChange:Z
 
-    .line 8900
+    .line 8868
     .end local v4           #animLp:Landroid/view/WindowManager$LayoutParams;
     .end local v6           #transit:I
     .end local v15           #NC:I
@@ -28129,7 +28020,7 @@
     :cond_17
     return v21
 
-    .line 8869
+    .line 8837
     .restart local v4       #animLp:Landroid/view/WindowManager$LayoutParams;
     .restart local v6       #transit:I
     .restart local v15       #NC:I
@@ -28144,7 +28035,7 @@
     :catch_0
     move-exception v26
 
-    .line 8870
+    .line 8838
     .local v26, e:Landroid/view/Surface$OutOfResourcesException;
     const-string v2, "WindowManager"
 
@@ -28188,7 +28079,7 @@
 
     invoke-static {v2, v5, v0}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 8872
+    .line 8840
     move-object/from16 v0, v35
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
@@ -28197,7 +28088,7 @@
 
     goto/16 :goto_a
 
-    .line 8746
+    .line 8714
     :sswitch_data_0
     .sparse-switch
         0x1006 -> :sswitch_0
@@ -28209,25 +28100,11 @@
     .end sparse-switch
 .end method
 
-.method public hasMenuKeyEnabled()Z
-    .locals 1
-
-    .prologue
-    .line 10489
-    iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
-
-    invoke-interface {v0}, Landroid/view/WindowManagerPolicy;->hasMenuKeyEnabled()Z
-
-    move-result v0
-
-    return v0
-.end method
-
 .method public hasNavigationBar()Z
     .locals 1
 
     .prologue
-    .line 10484
+    .line 10430
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v0}, Landroid/view/WindowManagerPolicy;->hasNavigationBar()Z
@@ -28241,7 +28118,7 @@
     .locals 1
 
     .prologue
-    .line 8156
+    .line 8124
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v0}, Landroid/view/WindowManagerPolicy;->hasSystemNavBar()Z
@@ -28255,22 +28132,22 @@
     .locals 1
 
     .prologue
-    .line 5737
+    .line 5734
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mShowingBootMessages:Z
 
     if-eqz v0, :cond_0
 
-    .line 5738
+    .line 5735
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mShowingBootMessages:Z
 
-    .line 5739
+    .line 5736
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v0}, Landroid/view/WindowManagerPolicy;->hideBootMessages()V
 
-    .line 5741
+    .line 5738
     :cond_0
     return-void
 .end method
@@ -28279,7 +28156,7 @@
     .locals 1
 
     .prologue
-    .line 5346
+    .line 5343
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v0}, Landroid/view/WindowManagerPolicy;->inKeyguardRestrictedKeyInputMode()Z
@@ -28298,12 +28175,12 @@
 
     const/4 v5, 0x0
 
-    .line 7938
+    .line 7906
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v6
 
-    .line 7941
+    .line 7909
     const/4 v7, 0x0
 
     :try_start_0
@@ -28311,11 +28188,11 @@
 
     move-result v1
 
-    .line 7942
+    .line 7910
     .local v1, idx:I
     if-lez v1, :cond_2
 
-    .line 7944
+    .line 7912
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
 
     move-result-object v7
@@ -28328,11 +28205,11 @@
 
     check-cast v2, Lcom/android/server/wm/WindowState;
 
-    .line 7950
+    .line 7918
     .local v2, imFocus:Lcom/android/server/wm/WindowState;
     if-eqz v2, :cond_2
 
-    .line 7953
+    .line 7921
     iget-object v7, v2, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
     iget v7, v7, Landroid/view/WindowManager$LayoutParams;->type:I
@@ -28345,7 +28222,7 @@
 
     if-eqz v7, :cond_0
 
-    .line 7957
+    .line 7925
     const/4 v0, 0x0
 
     .local v0, i:I
@@ -28360,7 +28237,7 @@
 
     if-ge v0, v7, :cond_0
 
-    .line 7958
+    .line 7926
     iget-object v7, v2, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     iget-object v7, v7, Lcom/android/server/wm/AppWindowToken;->windows:Lcom/android/server/wm/WindowList;
@@ -28371,11 +28248,11 @@
 
     check-cast v3, Lcom/android/server/wm/WindowState;
 
-    .line 7959
+    .line 7927
     .local v3, w:Lcom/android/server/wm/WindowState;
     if-eq v3, v2, :cond_1
 
-    .line 7960
+    .line 7928
     const-string v7, "WindowManager"
 
     new-instance v8, Ljava/lang/StringBuilder;
@@ -28398,10 +28275,10 @@
 
     invoke-static {v7, v8}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 7961
+    .line 7929
     move-object v2, v3
 
-    .line 7974
+    .line 7942
     .end local v0           #i:I
     .end local v3           #w:Lcom/android/server/wm/WindowState;
     :cond_0
@@ -28425,15 +28302,15 @@
 
     if-ne v7, v8, :cond_2
 
-    .line 7976
+    .line 7944
     monitor-exit v6
 
-    .line 7994
+    .line 7962
     .end local v2           #imFocus:Lcom/android/server/wm/WindowState;
     :goto_1
     return v4
 
-    .line 7957
+    .line 7925
     .restart local v0       #i:I
     .restart local v2       #imFocus:Lcom/android/server/wm/WindowState;
     .restart local v3       #w:Lcom/android/server/wm/WindowState;
@@ -28442,7 +28319,7 @@
 
     goto :goto_0
 
-    .line 7989
+    .line 7957
     .end local v0           #i:I
     .end local v2           #imFocus:Lcom/android/server/wm/WindowState;
     .end local v3           #w:Lcom/android/server/wm/WindowState;
@@ -28475,12 +28352,12 @@
 
     if-ne v7, v8, :cond_3
 
-    .line 7991
+    .line 7959
     monitor-exit v6
 
     goto :goto_1
 
-    .line 7993
+    .line 7961
     .end local v1           #idx:I
     :catchall_0
     move-exception v4
@@ -28500,7 +28377,7 @@
 
     move v4, v5
 
-    .line 7994
+    .line 7962
     goto :goto_1
 .end method
 
@@ -28508,12 +28385,12 @@
     .locals 2
 
     .prologue
-    .line 7108
+    .line 7076
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 7109
+    .line 7077
     :try_start_0
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardAvailable:Z
 
@@ -28521,7 +28398,7 @@
 
     return v0
 
-    .line 7110
+    .line 7078
     :catchall_0
     move-exception v0
 
@@ -28536,12 +28413,12 @@
     .locals 2
 
     .prologue
-    .line 7114
+    .line 7082
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 7115
+    .line 7083
     :try_start_0
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardEnabled:Z
 
@@ -28549,7 +28426,7 @@
 
     return v0
 
-    .line 7116
+    .line 7084
     :catchall_0
     move-exception v0
 
@@ -28564,7 +28441,7 @@
     .locals 1
 
     .prologue
-    .line 5350
+    .line 5347
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v0}, Landroid/view/WindowManagerPolicy;->isKeyguardLocked()Z
@@ -28578,7 +28455,7 @@
     .locals 1
 
     .prologue
-    .line 5354
+    .line 5351
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v0}, Landroid/view/WindowManagerPolicy;->isKeyguardSecure()Z
@@ -28592,7 +28469,7 @@
     .locals 1
 
     .prologue
-    .line 10497
+    .line 10438
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mSafeMode:Z
 
     return v0
@@ -28651,7 +28528,7 @@
     .parameter "wallpaperTarget"
 
     .prologue
-    .line 1607
+    .line 1604
     if-eqz p1, :cond_0
 
     iget-boolean v0, p1, Lcom/android/server/wm/WindowState;->mObscured:Z
@@ -28698,30 +28575,30 @@
     .parameter "animAttr"
 
     .prologue
-    .line 3269
+    .line 3266
     const/4 v0, 0x0
 
-    .line 3270
+    .line 3267
     .local v0, anim:I
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
-    .line 3271
+    .line 3268
     .local v1, context:Landroid/content/Context;
     if-ltz p3, :cond_0
 
-    .line 3272
+    .line 3269
     invoke-direct {p0, p1, p2}, Lcom/android/server/wm/WindowManagerService;->getCachedAnimations(ILandroid/view/WindowManager$LayoutParams;)Lcom/android/server/AttributeCache$Entry;
 
     move-result-object v2
 
-    .line 3273
+    .line 3270
     .local v2, ent:Lcom/android/server/AttributeCache$Entry;
     if-eqz v2, :cond_0
 
-    .line 3274
+    .line 3271
     iget-object v1, v2, Lcom/android/server/AttributeCache$Entry;->context:Landroid/content/Context;
 
-    .line 3275
+    .line 3272
     iget-object v3, v2, Lcom/android/server/AttributeCache$Entry;->array:Landroid/content/res/TypedArray;
 
     const/4 v4, 0x0
@@ -28730,17 +28607,17 @@
 
     move-result v0
 
-    .line 3278
+    .line 3275
     .end local v2           #ent:Lcom/android/server/AttributeCache$Entry;
     :cond_0
     if-eqz v0, :cond_1
 
-    .line 3279
+    .line 3276
     invoke-static {v1, v0}, Landroid/view/animation/AnimationUtils;->loadAnimation(Landroid/content/Context;I)Landroid/view/animation/Animation;
 
     move-result-object v3
 
-    .line 3281
+    .line 3278
     :goto_0
     return-object v3
 
@@ -28755,12 +28632,12 @@
     .parameter "options"
 
     .prologue
-    .line 10493
+    .line 10434
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v0, p1}, Landroid/view/WindowManagerPolicy;->lockNow(Landroid/os/Bundle;)V
 
-    .line 10494
+    .line 10435
     return-void
 .end method
 
@@ -28770,20 +28647,20 @@
     .parameter "prefix"
 
     .prologue
-    .line 1441
+    .line 1438
     invoke-virtual {p1}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v0
 
-    .line 1442
+    .line 1439
     .local v0, N:I
     :goto_0
     if-lez v0, :cond_0
 
-    .line 1443
+    .line 1440
     add-int/lit8 v0, v0, -0x1
 
-    .line 1444
+    .line 1441
     const-string v1, "WindowManager"
 
     new-instance v2, Ljava/lang/StringBuilder;
@@ -28826,7 +28703,7 @@
 
     goto :goto_0
 
-    .line 1446
+    .line 1443
     :cond_0
     return-void
 .end method
@@ -28843,7 +28720,7 @@
 
     const/4 v3, 0x1
 
-    .line 3181
+    .line 3178
     const-string v4, "android.permission.MAGNIFY_DISPLAY"
 
     const-string v5, "magnifyDisplay()"
@@ -28854,7 +28731,7 @@
 
     if-nez v4, :cond_0
 
-    .line 3183
+    .line 3180
     new-instance v3, Ljava/lang/SecurityException;
 
     const-string v4, "Requires MAGNIFY_DISPLAY permission"
@@ -28863,23 +28740,23 @@
 
     throw v3
 
-    .line 3185
+    .line 3182
     :cond_0
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v4
 
-    .line 3186
+    .line 3183
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayMagnificationSpecLocked(I)Lcom/android/server/wm/MagnificationSpec;
 
     move-result-object v2
 
-    .line 3187
+    .line 3184
     .local v2, spec:Lcom/android/server/wm/MagnificationSpec;
     if-eqz v2, :cond_6
 
-    .line 3188
+    .line 3185
     iget v5, v2, Lcom/android/server/wm/MagnificationSpec;->mScale:F
 
     cmpl-float v5, v5, p2
@@ -28888,7 +28765,7 @@
 
     move v1, v3
 
-    .line 3189
+    .line 3186
     .local v1, scaleChanged:Z
     :goto_0
     iget v5, v2, Lcom/android/server/wm/MagnificationSpec;->mOffsetX:F
@@ -28906,17 +28783,17 @@
     :cond_1
     move v0, v3
 
-    .line 3190
+    .line 3187
     .local v0, offsetChanged:Z
     :cond_2
     if-nez v1, :cond_4
 
     if-nez v0, :cond_4
 
-    .line 3191
+    .line 3188
     monitor-exit v4
 
-    .line 3205
+    .line 3202
     .end local v0           #offsetChanged:Z
     .end local v1           #scaleChanged:Z
     :goto_1
@@ -28925,33 +28802,33 @@
     :cond_3
     move v1, v0
 
-    .line 3188
+    .line 3185
     goto :goto_0
 
-    .line 3193
+    .line 3190
     .restart local v0       #offsetChanged:Z
     .restart local v1       #scaleChanged:Z
     :cond_4
     invoke-virtual {v2, p2, p3, p4}, Lcom/android/server/wm/MagnificationSpec;->initialize(FFF)V
 
-    .line 3196
+    .line 3193
     if-eqz v0, :cond_5
 
-    .line 3198
+    .line 3195
     if-nez p1, :cond_5
 
-    .line 3199
+    .line 3196
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     const/4 v5, 0x1
 
     invoke-virtual {v3, v5}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 3202
+    .line 3199
     :cond_5
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->scheduleAnimationLocked()V
 
-    .line 3204
+    .line 3201
     .end local v0           #offsetChanged:Z
     .end local v1           #scaleChanged:Z
     :cond_6
@@ -28979,37 +28856,37 @@
 
     const/4 v2, 0x1
 
-    .line 8612
+    .line 8580
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->okToDisplay()Z
 
     move-result v0
 
     if-nez v0, :cond_0
 
-    .line 8615
+    .line 8583
     iput-boolean v2, p1, Lcom/android/server/wm/WindowState;->mOrientationChanging:Z
 
-    .line 8616
+    .line 8584
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     const/4 v1, 0x0
 
     iput-boolean v1, v0, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mOrientationChangeComplete:Z
 
-    .line 8617
+    .line 8585
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsFreezingScreen:Z
 
     if-nez v0, :cond_0
 
-    .line 8618
+    .line 8586
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowsFreezingScreen:Z
 
-    .line 8621
+    .line 8589
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     invoke-virtual {v0, v3}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 8622
+    .line 8590
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -29022,7 +28899,7 @@
 
     invoke-virtual {v0, v1, v2, v3}, Lcom/android/server/wm/WindowManagerService$H;->sendMessageDelayed(Landroid/os/Message;J)Z
 
-    .line 8626
+    .line 8594
     :cond_0
     return-void
 .end method
@@ -29031,7 +28908,7 @@
     .locals 2
 
     .prologue
-    .line 11140
+    .line 11056
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
@@ -29039,10 +28916,10 @@
     :try_start_0
     monitor-exit v1
 
-    .line 11141
+    .line 11057
     return-void
 
-    .line 11140
+    .line 11056
     :catchall_0
     move-exception v0
 
@@ -29058,7 +28935,7 @@
     .parameter "inputChannelName"
 
     .prologue
-    .line 5468
+    .line 5465
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
 
     invoke-virtual {v0, p1}, Lcom/android/server/input/InputManagerService;->monitorInput(Ljava/lang/String;)Landroid/view/InputChannel;
@@ -29076,7 +28953,7 @@
     .prologue
     const/4 v12, -0x1
 
-    .line 5027
+    .line 5024
     const-string v9, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v10, "moveAppToken()"
@@ -29087,7 +28964,7 @@
 
     if-nez v9, :cond_0
 
-    .line 5029
+    .line 5026
     new-instance v9, Ljava/lang/SecurityException;
 
     const-string v10, "Requires MANAGE_APP_TOKENS permission"
@@ -29096,19 +28973,19 @@
 
     throw v9
 
-    .line 5032
+    .line 5029
     :cond_0
     iget-object v10, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v10
 
-    .line 5035
+    .line 5032
     :try_start_0
     invoke-virtual {p0, p2}, Lcom/android/server/wm/WindowManagerService;->findAppWindowToken(Landroid/os/IBinder;)Lcom/android/server/wm/AppWindowToken;
 
     move-result-object v8
 
-    .line 5036
+    .line 5033
     .local v8, wtoken:Lcom/android/server/wm/AppWindowToken;
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
@@ -29116,7 +28993,7 @@
 
     move-result v3
 
-    .line 5040
+    .line 5037
     .local v3, oldIndex:I
     if-le v3, p1, :cond_1
 
@@ -29128,19 +29005,19 @@
 
     if-nez v9, :cond_1
 
-    .line 5043
+    .line 5040
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v9}, Ljava/util/ArrayList;->clear()V
 
-    .line 5044
+    .line 5041
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     iget-object v11, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v9, v11}, Ljava/util/ArrayList;->addAll(Ljava/util/Collection;)Z
 
-    .line 5046
+    .line 5043
     :cond_1
     if-eqz v8, :cond_2
 
@@ -29152,7 +29029,7 @@
 
     if-nez v9, :cond_3
 
-    .line 5047
+    .line 5044
     :cond_2
     const-string v9, "WindowManager"
 
@@ -29192,20 +29069,20 @@
 
     invoke-static {v9, v11}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 5049
+    .line 5046
     monitor-exit v10
 
-    .line 5088
+    .line 5085
     :goto_0
     return-void
 
-    .line 5051
+    .line 5048
     :cond_3
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v9, p1, v8}, Ljava/util/ArrayList;->add(ILjava/lang/Object;)V
 
-    .line 5055
+    .line 5052
     iget v9, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
     if-ne v9, v12, :cond_7
@@ -29214,24 +29091,24 @@
 
     if-nez v9, :cond_7
 
-    .line 5057
+    .line 5054
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v9}, Ljava/util/ArrayList;->clear()V
 
-    .line 5058
+    .line 5055
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     iget-object v11, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v9, v11}, Ljava/util/ArrayList;->addAll(Ljava/util/Collection;)Z
 
-    .line 5061
+    .line 5058
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v4
 
-    .line 5064
+    .line 5061
     .local v4, origId:J
     invoke-direct {p0, v8}, Lcom/android/server/wm/WindowManagerService;->tmpRemoveAppWindowsLocked(Lcom/android/server/wm/WindowToken;)Z
 
@@ -29239,12 +29116,12 @@
 
     if-eqz v9, :cond_6
 
-    .line 5067
+    .line 5064
     new-instance v1, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
 
     invoke-direct {v1, p0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 5068
+    .line 5065
     .local v1, iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :cond_4
     :goto_1
@@ -29254,41 +29131,41 @@
 
     if-eqz v9, :cond_5
 
-    .line 5069
+    .line 5066
     invoke-virtual {v1}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 5070
+    .line 5067
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-virtual {v0}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v7
 
-    .line 5071
+    .line 5068
     .local v7, windows:Lcom/android/server/wm/WindowList;
     invoke-direct {p0, v7, p1}, Lcom/android/server/wm/WindowManagerService;->findWindowOffsetLocked(Lcom/android/server/wm/WindowList;I)I
 
     move-result v6
 
-    .line 5072
+    .line 5069
     .local v6, pos:I
     invoke-direct {p0, v0, v6, v8}, Lcom/android/server/wm/WindowManagerService;->reAddAppWindowsLocked(Lcom/android/server/wm/DisplayContent;ILcom/android/server/wm/WindowToken;)I
 
     move-result v2
 
-    .line 5073
+    .line 5070
     .local v2, newPos:I
     if-eq v6, v2, :cond_4
 
-    .line 5074
+    .line 5071
     const/4 v9, 0x1
 
     iput-boolean v9, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
     goto :goto_1
 
-    .line 5087
+    .line 5084
     .end local v0           #displayContent:Lcom/android/server/wm/DisplayContent;
     .end local v1           #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     .end local v2           #newPos:I
@@ -29306,7 +29183,7 @@
 
     throw v9
 
-    .line 5079
+    .line 5076
     .restart local v1       #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     .restart local v3       #oldIndex:I
     .restart local v4       #origId:J
@@ -29319,27 +29196,27 @@
     :try_start_1
     invoke-direct {p0, v9, v11}, Lcom/android/server/wm/WindowManagerService;->updateFocusedWindowLocked(IZ)Z
 
-    .line 5081
+    .line 5078
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v9}, Lcom/android/server/wm/InputMonitor;->setUpdateInputWindowsNeededLw()V
 
-    .line 5082
+    .line 5079
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 5083
+    .line 5080
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     const/4 v11, 0x0
 
     invoke-virtual {v9, v11}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 5085
+    .line 5082
     .end local v1           #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :cond_6
     invoke-static {v4, v5}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 5087
+    .line 5084
     .end local v4           #origId:J
     :cond_7
     monitor-exit v10
@@ -29363,7 +29240,7 @@
     .end annotation
 
     .prologue
-    .line 5220
+    .line 5217
     .local p1, tokens:Ljava/util/List;,"Ljava/util/List<Landroid/os/IBinder;>;"
     const-string v6, "android.permission.MANAGE_APP_TOKENS"
 
@@ -29375,7 +29252,7 @@
 
     if-nez v6, :cond_0
 
-    .line 5222
+    .line 5219
     new-instance v6, Ljava/lang/SecurityException;
 
     const-string v7, "Requires MANAGE_APP_TOKENS permission"
@@ -29384,25 +29261,25 @@
 
     throw v6
 
-    .line 5225
+    .line 5222
     :cond_0
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v2
 
-    .line 5226
+    .line 5223
     .local v2, origId:J
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v7
 
-    .line 5227
+    .line 5224
     :try_start_0
     invoke-interface {p1}, Ljava/util/List;->size()I
 
     move-result v0
 
-    .line 5228
+    .line 5225
     .local v0, N:I
     if-lez v0, :cond_1
 
@@ -29410,26 +29287,26 @@
 
     if-nez v6, :cond_1
 
-    .line 5230
+    .line 5227
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v6}, Ljava/util/ArrayList;->clear()V
 
-    .line 5231
+    .line 5228
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v6, v8}, Ljava/util/ArrayList;->addAll(Ljava/util/Collection;)Z
 
-    .line 5233
+    .line 5230
     :cond_1
     invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->removeAppTokensLocked(Ljava/util/List;)V
 
-    .line 5234
+    .line 5231
     const/4 v4, 0x0
 
-    .line 5235
+    .line 5232
     .local v4, pos:I
     const/4 v1, 0x0
 
@@ -29437,7 +29314,7 @@
     :goto_0
     if-ge v1, v0, :cond_4
 
-    .line 5236
+    .line 5233
     invoke-interface {p1, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object v6
@@ -29448,74 +29325,74 @@
 
     move-result-object v5
 
-    .line 5237
+    .line 5234
     .local v5, wt:Lcom/android/server/wm/AppWindowToken;
     if-eqz v5, :cond_3
 
-    .line 5240
+    .line 5237
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v6, v4, v5}, Ljava/util/ArrayList;->add(ILjava/lang/Object;)V
 
-    .line 5241
+    .line 5238
     iget v6, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
     const/4 v8, -0x1
 
     if-eq v6, v8, :cond_2
 
-    .line 5242
+    .line 5239
     const/4 v6, 0x1
 
     iput-boolean v6, v5, Lcom/android/server/wm/AppWindowToken;->sendingToBottom:Z
 
-    .line 5244
+    .line 5241
     :cond_2
     add-int/lit8 v4, v4, 0x1
 
-    .line 5235
+    .line 5232
     :cond_3
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 5248
+    .line 5245
     .end local v5           #wt:Lcom/android/server/wm/AppWindowToken;
     :cond_4
     iget-boolean v6, p0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionRunning:Z
 
     if-nez v6, :cond_5
 
-    .line 5249
+    .line 5246
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v6}, Ljava/util/ArrayList;->clear()V
 
-    .line 5250
+    .line 5247
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v6, v8}, Ljava/util/ArrayList;->addAll(Ljava/util/Collection;)Z
 
-    .line 5251
+    .line 5248
     const/4 v6, 0x0
 
     invoke-direct {p0, p1, v6}, Lcom/android/server/wm/WindowManagerService;->moveAppWindowsLocked(Ljava/util/List;I)V
 
-    .line 5253
+    .line 5250
     :cond_5
     monitor-exit v7
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 5254
+    .line 5251
     invoke-static {v2, v3}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 5255
+    .line 5252
     return-void
 
-    .line 5253
+    .line 5250
     .end local v0           #N:I
     .end local v1           #i:I
     .end local v4           #pos:I
@@ -29544,7 +29421,7 @@
     .end annotation
 
     .prologue
-    .line 5188
+    .line 5185
     .local p1, tokens:Ljava/util/List;,"Ljava/util/List<Landroid/os/IBinder;>;"
     const-string v5, "android.permission.MANAGE_APP_TOKENS"
 
@@ -29556,7 +29433,7 @@
 
     if-nez v5, :cond_0
 
-    .line 5190
+    .line 5187
     new-instance v5, Ljava/lang/SecurityException;
 
     const-string v6, "Requires MANAGE_APP_TOKENS permission"
@@ -29565,28 +29442,28 @@
 
     throw v5
 
-    .line 5193
+    .line 5190
     :cond_0
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v2
 
-    .line 5194
+    .line 5191
     .local v2, origId:J
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v6
 
-    .line 5195
+    .line 5192
     :try_start_0
     invoke-direct {p0, p1}, Lcom/android/server/wm/WindowManagerService;->removeAppTokensLocked(Ljava/util/List;)V
 
-    .line 5196
+    .line 5193
     invoke-interface {p1}, Ljava/util/List;->size()I
 
     move-result v0
 
-    .line 5197
+    .line 5194
     .local v0, N:I
     const/4 v1, 0x0
 
@@ -29594,7 +29471,7 @@
     :goto_0
     if-ge v1, v0, :cond_2
 
-    .line 5198
+    .line 5195
     invoke-interface {p1, v1}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
     move-result-object v5
@@ -29605,53 +29482,53 @@
 
     move-result-object v4
 
-    .line 5199
+    .line 5196
     .local v4, wt:Lcom/android/server/wm/AppWindowToken;
     if-eqz v4, :cond_1
 
-    .line 5202
+    .line 5199
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v5, v4}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 5203
+    .line 5200
     iget v5, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
     const/4 v7, -0x1
 
     if-eq v5, v7, :cond_1
 
-    .line 5204
+    .line 5201
     const/4 v5, 0x0
 
     iput-boolean v5, v4, Lcom/android/server/wm/AppWindowToken;->sendingToBottom:Z
 
-    .line 5197
+    .line 5194
     :cond_1
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 5209
+    .line 5206
     .end local v4           #wt:Lcom/android/server/wm/AppWindowToken;
     :cond_2
     iget-boolean v5, p0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionRunning:Z
 
     if-nez v5, :cond_3
 
-    .line 5210
+    .line 5207
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v5}, Ljava/util/ArrayList;->clear()V
 
-    .line 5211
+    .line 5208
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v5, v7}, Ljava/util/ArrayList;->addAll(Ljava/util/Collection;)Z
 
-    .line 5212
+    .line 5209
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v5}, Ljava/util/ArrayList;->size()I
@@ -29660,19 +29537,19 @@
 
     invoke-direct {p0, p1, v5}, Lcom/android/server/wm/WindowManagerService;->moveAppWindowsLocked(Ljava/util/List;I)V
 
-    .line 5214
+    .line 5211
     :cond_3
     monitor-exit v6
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 5215
+    .line 5212
     invoke-static {v2, v3}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 5216
+    .line 5213
     return-void
 
-    .line 5214
+    .line 5211
     .end local v0           #N:I
     .end local v1           #i:I
     :catchall_0
@@ -29691,22 +29568,22 @@
     .parameter "pos"
 
     .prologue
-    .line 1449
+    .line 1446
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodDialogs:Ljava/util/ArrayList;
 
-    .line 1452
+    .line 1449
     .local v1, dialogs:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Lcom/android/server/wm/WindowState;>;"
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
 
     move-result-object v5
 
-    .line 1453
+    .line 1450
     .local v5, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v1}, Ljava/util/ArrayList;->size()I
 
     move-result v0
 
-    .line 1455
+    .line 1452
     .local v0, N:I
     const/4 v2, 0x0
 
@@ -29714,7 +29591,7 @@
     :goto_0
     if-ge v2, v0, :cond_0
 
-    .line 1456
+    .line 1453
     invoke-virtual {v1, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
     move-result-object v7
@@ -29725,21 +29602,21 @@
 
     move-result p1
 
-    .line 1455
+    .line 1452
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_0
 
-    .line 1463
+    .line 1460
     :cond_0
     if-ltz p1, :cond_2
 
-    .line 1464
+    .line 1461
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
 
     iget-object v3, v7, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 1465
+    .line 1462
     .local v3, targetAppToken:Lcom/android/server/wm/AppWindowToken;
     invoke-virtual {v5}, Lcom/android/server/wm/WindowList;->size()I
 
@@ -29747,23 +29624,23 @@
 
     if-ge p1, v7, :cond_1
 
-    .line 1466
+    .line 1463
     invoke-virtual {v5, p1}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v6
 
     check-cast v6, Lcom/android/server/wm/WindowState;
 
-    .line 1467
+    .line 1464
     .local v6, wp:Lcom/android/server/wm/WindowState;
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
     if-ne v6, v7, :cond_1
 
-    .line 1468
+    .line 1465
     add-int/lit8 p1, p1, 0x1
 
-    .line 1472
+    .line 1469
     .end local v6           #wp:Lcom/android/server/wm/WindowState;
     :cond_1
     const/4 v2, 0x0
@@ -29771,28 +29648,28 @@
     :goto_1
     if-ge v2, v0, :cond_3
 
-    .line 1473
+    .line 1470
     invoke-virtual {v1, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
     move-result-object v4
 
     check-cast v4, Lcom/android/server/wm/WindowState;
 
-    .line 1474
+    .line 1471
     .local v4, win:Lcom/android/server/wm/WindowState;
     iput-object v3, v4, Lcom/android/server/wm/WindowState;->mTargetAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 1475
+    .line 1472
     invoke-direct {p0, p1, v4}, Lcom/android/server/wm/WindowManagerService;->reAddWindowLocked(ILcom/android/server/wm/WindowState;)I
 
     move-result p1
 
-    .line 1472
+    .line 1469
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_1
 
-    .line 1483
+    .line 1480
     .end local v3           #targetAppToken:Lcom/android/server/wm/AppWindowToken;
     .end local v4           #win:Lcom/android/server/wm/WindowState;
     :cond_2
@@ -29801,28 +29678,28 @@
     :goto_2
     if-ge v2, v0, :cond_3
 
-    .line 1484
+    .line 1481
     invoke-virtual {v1, v2}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
 
     move-result-object v4
 
     check-cast v4, Lcom/android/server/wm/WindowState;
 
-    .line 1485
+    .line 1482
     .restart local v4       #win:Lcom/android/server/wm/WindowState;
     const/4 v7, 0x0
 
     iput-object v7, v4, Lcom/android/server/wm/WindowState;->mTargetAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 1486
+    .line 1483
     invoke-direct {p0, v4}, Lcom/android/server/wm/WindowManagerService;->reAddWindowToListInOrderLocked(Lcom/android/server/wm/WindowState;)V
 
-    .line 1483
+    .line 1480
     add-int/lit8 v2, v2, 0x1
 
     goto :goto_2
 
-    .line 1492
+    .line 1489
     .end local v4           #win:Lcom/android/server/wm/WindowState;
     :cond_3
     return-void
@@ -29841,10 +29718,10 @@
 
     const/4 v10, 0x0
 
-    .line 1495
+    .line 1492
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
-    .line 1496
+    .line 1493
     .local v6, imWin:Lcom/android/server/wm/WindowState;
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodDialogs:Ljava/util/ArrayList;
 
@@ -29852,7 +29729,7 @@
 
     move-result v0
 
-    .line 1497
+    .line 1494
     .local v0, DN:I
     if-nez v6, :cond_0
 
@@ -29860,32 +29737,32 @@
 
     move v9, v10
 
-    .line 1593
+    .line 1590
     :goto_0
     return v9
 
-    .line 1502
+    .line 1499
     :cond_0
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
 
     move-result-object v8
 
-    .line 1504
+    .line 1501
     .local v8, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {p0, v11}, Lcom/android/server/wm/WindowManagerService;->findDesiredInputMethodWindowIndexLocked(Z)I
 
     move-result v5
 
-    .line 1505
+    .line 1502
     .local v5, imPos:I
     if-ltz v5, :cond_c
 
-    .line 1511
+    .line 1508
     invoke-virtual {v8}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v1
 
-    .line 1512
+    .line 1509
     .local v1, N:I
     if-ge v5, v1, :cond_1
 
@@ -29897,14 +29774,14 @@
 
     move-object v4, v9
 
-    .line 1517
+    .line 1514
     .local v4, firstImWin:Lcom/android/server/wm/WindowState;
     :cond_1
     if-eqz v6, :cond_5
 
     move-object v2, v6
 
-    .line 1519
+    .line 1516
     .local v2, baseImWin:Lcom/android/server/wm/WindowState;
     :goto_1
     iget-object v9, v2, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
@@ -29915,7 +29792,7 @@
 
     if-lez v9, :cond_2
 
-    .line 1520
+    .line 1517
     iget-object v9, v2, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v9, v10}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -29924,7 +29801,7 @@
 
     check-cast v3, Lcom/android/server/wm/WindowState;
 
-    .line 1521
+    .line 1518
     .local v3, cw:Lcom/android/server/wm/WindowState;
     iget v9, v3, Lcom/android/server/wm/WindowState;->mSubLayer:I
 
@@ -29932,20 +29809,20 @@
 
     move-object v2, v3
 
-    .line 1524
+    .line 1521
     .end local v3           #cw:Lcom/android/server/wm/WindowState;
     :cond_2
     if-ne v4, v2, :cond_8
 
-    .line 1527
+    .line 1524
     add-int/lit8 v7, v5, 0x1
 
-    .line 1528
+    .line 1525
     .local v7, pos:I
     :goto_2
     if-ge v7, v1, :cond_3
 
-    .line 1529
+    .line 1526
     invoke-virtual {v8, v7}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v9
@@ -29956,15 +29833,15 @@
 
     if-nez v9, :cond_6
 
-    .line 1534
+    .line 1531
     :cond_3
     add-int/lit8 v7, v7, 0x1
 
-    .line 1536
+    .line 1533
     :goto_3
     if-ge v7, v1, :cond_4
 
-    .line 1537
+    .line 1534
     invoke-virtual {v8, v7}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v9
@@ -29975,16 +29852,16 @@
 
     if-eqz v9, :cond_7
 
-    .line 1542
+    .line 1539
     :cond_4
     if-lt v7, v1, :cond_8
 
     move v9, v10
 
-    .line 1544
+    .line 1541
     goto :goto_0
 
-    .line 1517
+    .line 1514
     .end local v2           #baseImWin:Lcom/android/server/wm/WindowState;
     .end local v7           #pos:I
     :cond_5
@@ -30000,7 +29877,7 @@
 
     goto :goto_1
 
-    .line 1532
+    .line 1529
     .restart local v2       #baseImWin:Lcom/android/server/wm/WindowState;
     .restart local v7       #pos:I
     :cond_6
@@ -30008,40 +29885,40 @@
 
     goto :goto_2
 
-    .line 1540
+    .line 1537
     :cond_7
     add-int/lit8 v7, v7, 0x1
 
     goto :goto_3
 
-    .line 1548
+    .line 1545
     .end local v7           #pos:I
     :cond_8
     if-eqz v6, :cond_b
 
-    .line 1553
+    .line 1550
     invoke-direct {p0, v5, v6}, Lcom/android/server/wm/WindowManagerService;->tmpRemoveWindowLocked(ILcom/android/server/wm/WindowState;)I
 
     move-result v5
 
-    .line 1558
+    .line 1555
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
 
     iget-object v9, v9, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     iput-object v9, v6, Lcom/android/server/wm/WindowState;->mTargetAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 1559
+    .line 1556
     invoke-direct {p0, v5, v6}, Lcom/android/server/wm/WindowManagerService;->reAddWindowLocked(ILcom/android/server/wm/WindowState;)I
 
-    .line 1564
+    .line 1561
     if-lez v0, :cond_9
 
     add-int/lit8 v9, v5, 0x1
 
     invoke-virtual {p0, v9}, Lcom/android/server/wm/WindowManagerService;->moveInputMethodDialogsLocked(I)V
 
-    .line 1589
+    .line 1586
     .end local v1           #N:I
     .end local v2           #baseImWin:Lcom/android/server/wm/WindowState;
     .end local v4           #firstImWin:Lcom/android/server/wm/WindowState;
@@ -30049,16 +29926,16 @@
     :goto_4
     if-eqz p1, :cond_a
 
-    .line 1590
+    .line 1587
     invoke-direct {p0, v8}, Lcom/android/server/wm/WindowManagerService;->assignLayersLocked(Lcom/android/server/wm/WindowList;)V
 
     :cond_a
     move v9, v11
 
-    .line 1593
+    .line 1590
     goto :goto_0
 
-    .line 1566
+    .line 1563
     .restart local v1       #N:I
     .restart local v2       #baseImWin:Lcom/android/server/wm/WindowState;
     .restart local v4       #firstImWin:Lcom/android/server/wm/WindowState;
@@ -30067,30 +29944,30 @@
 
     goto :goto_4
 
-    .line 1573
+    .line 1570
     .end local v1           #N:I
     .end local v2           #baseImWin:Lcom/android/server/wm/WindowState;
     .end local v4           #firstImWin:Lcom/android/server/wm/WindowState;
     :cond_c
     if-eqz v6, :cond_d
 
-    .line 1575
+    .line 1572
     invoke-direct {p0, v10, v6}, Lcom/android/server/wm/WindowManagerService;->tmpRemoveWindowLocked(ILcom/android/server/wm/WindowState;)I
 
-    .line 1576
+    .line 1573
     iput-object v4, v6, Lcom/android/server/wm/WindowState;->mTargetAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 1577
+    .line 1574
     invoke-direct {p0, v6}, Lcom/android/server/wm/WindowManagerService;->reAddWindowToListInOrderLocked(Lcom/android/server/wm/WindowState;)V
 
-    .line 1582
+    .line 1579
     if-lez v0, :cond_9
 
     invoke-virtual {p0, v12}, Lcom/android/server/wm/WindowManagerService;->moveInputMethodDialogsLocked(I)V
 
     goto :goto_4
 
-    .line 1584
+    .line 1581
     :cond_d
     invoke-virtual {p0, v12}, Lcom/android/server/wm/WindowManagerService;->moveInputMethodDialogsLocked(I)V
 
@@ -30101,40 +29978,40 @@
     .locals 5
 
     .prologue
-    .line 7138
+    .line 7106
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v4
 
-    .line 7139
+    .line 7107
     :try_start_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardStatusChangeListener:Lcom/android/server/wm/WindowManagerService$OnHardKeyboardStatusChangeListener;
 
-    .line 7140
+    .line 7108
     .local v2, listener:Lcom/android/server/wm/WindowManagerService$OnHardKeyboardStatusChangeListener;
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardAvailable:Z
 
-    .line 7141
+    .line 7109
     .local v0, available:Z
     iget-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardEnabled:Z
 
-    .line 7142
+    .line 7110
     .local v1, enabled:Z
     monitor-exit v4
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 7143
+    .line 7111
     if-eqz v2, :cond_0
 
-    .line 7144
+    .line 7112
     invoke-interface {v2, v0, v1}, Lcom/android/server/wm/WindowManagerService$OnHardKeyboardStatusChangeListener;->onHardKeyboardStatusChange(ZZ)V
 
-    .line 7146
+    .line 7114
     :cond_0
     return-void
 
-    .line 7142
+    .line 7110
     .end local v0           #available:Z
     .end local v1           #enabled:Z
     .end local v2           #listener:Lcom/android/server/wm/WindowManagerService$OnHardKeyboardStatusChangeListener;
@@ -30153,7 +30030,7 @@
     .locals 1
 
     .prologue
-    .line 3686
+    .line 3683
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayFrozen:Z
 
     if-nez v0, :cond_0
@@ -30186,7 +30063,7 @@
     .parameter "displayId"
 
     .prologue
-    .line 11286
+    .line 11202
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -30201,7 +30078,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowManagerService$H;->sendMessage(Landroid/os/Message;)Z
 
-    .line 11287
+    .line 11203
     return-void
 .end method
 
@@ -30210,7 +30087,7 @@
     .parameter "displayId"
 
     .prologue
-    .line 11317
+    .line 11233
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -30225,7 +30102,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowManagerService$H;->sendMessage(Landroid/os/Message;)Z
 
-    .line 11318
+    .line 11234
     return-void
 .end method
 
@@ -30234,7 +30111,7 @@
     .parameter "displayId"
 
     .prologue
-    .line 11299
+    .line 11215
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -30249,7 +30126,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowManagerService$H;->sendMessage(Landroid/os/Message;)Z
 
-    .line 11300
+    .line 11216
     return-void
 .end method
 
@@ -30260,12 +30137,12 @@
     .parameter "immediate"
 
     .prologue
-    .line 2723
+    .line 2720
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 2724
+    .line 2721
     :try_start_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
@@ -30275,21 +30152,21 @@
 
     check-cast v0, Lcom/android/server/wm/WindowState;
 
-    .line 2725
+    .line 2722
     .local v0, window:Lcom/android/server/wm/WindowState;
     if-eqz v0, :cond_0
 
-    .line 2726
+    .line 2723
     invoke-direct {p0, v0, p2, p3}, Lcom/android/server/wm/WindowManagerService;->scheduleNotifyRectangleOnScreenRequestedIfNeededLocked(Lcom/android/server/wm/WindowState;Landroid/graphics/Rect;Z)V
 
-    .line 2729
+    .line 2726
     :cond_0
     monitor-exit v2
 
-    .line 2730
+    .line 2727
     return-void
 
-    .line 2729
+    .line 2726
     .end local v0           #window:Lcom/android/server/wm/WindowState;
     :catchall_0
     move-exception v1
@@ -30314,7 +30191,7 @@
     .end annotation
 
     .prologue
-    .line 889
+    .line 886
     :try_start_0
     invoke-super {p0, p1, p2, p3, p4}, Landroid/view/IWindowManager$Stub;->onTransact(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z
     :try_end_0
@@ -30324,24 +30201,24 @@
 
     return v1
 
-    .line 890
+    .line 887
     :catch_0
     move-exception v0
 
-    .line 893
+    .line 890
     .local v0, e:Ljava/lang/RuntimeException;
     instance-of v1, v0, Ljava/lang/SecurityException;
 
     if-nez v1, :cond_0
 
-    .line 894
+    .line 891
     const-string v1, "WindowManager"
 
     const-string v2, "Window Manager Crash"
 
     invoke-static {v1, v2, v0}, Landroid/util/Log;->wtf(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 896
+    .line 893
     :cond_0
     throw v0
 .end method
@@ -30352,7 +30229,7 @@
     .parameter "inputContext"
 
     .prologue
-    .line 7930
+    .line 7898
     if-nez p1, :cond_0
 
     new-instance v1, Ljava/lang/IllegalArgumentException;
@@ -30363,7 +30240,7 @@
 
     throw v1
 
-    .line 7931
+    .line 7899
     :cond_0
     if-nez p2, :cond_1
 
@@ -30375,13 +30252,13 @@
 
     throw v1
 
-    .line 7932
+    .line 7900
     :cond_1
     new-instance v0, Lcom/android/server/wm/Session;
 
     invoke-direct {v0, p0, p1, p2}, Lcom/android/server/wm/Session;-><init>(Lcom/android/server/wm/WindowManagerService;Lcom/android/internal/view/IInputMethodClient;Lcom/android/internal/view/IInputContext;)V
 
-    .line 7933
+    .line 7901
     .local v0, session:Lcom/android/server/wm/Session;
     return-object v0
 .end method
@@ -30394,12 +30271,12 @@
     .prologue
     const/4 v3, 0x0
 
-    .line 3099
+    .line 3096
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v0
 
-    .line 3102
+    .line 3099
     .local v0, origId:J
     :try_start_0
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
@@ -30408,7 +30285,7 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_1
 
-    .line 3103
+    .line 3100
     const/4 v5, 0x0
 
     :try_start_1
@@ -30416,22 +30293,22 @@
 
     move-result-object v2
 
-    .line 3104
+    .line 3101
     .local v2, win:Lcom/android/server/wm/WindowState;
     if-nez v2, :cond_0
 
-    .line 3105
+    .line 3102
     monitor-exit v4
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 3110
+    .line 3107
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     :goto_0
     return v3
 
-    .line 3107
+    .line 3104
     :cond_0
     :try_start_2
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
@@ -30448,12 +30325,12 @@
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
-    .line 3110
+    .line 3107
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     goto :goto_0
 
-    .line 3108
+    .line 3105
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     :catchall_0
     move-exception v3
@@ -30468,7 +30345,7 @@
     :try_end_4
     .catchall {:try_start_4 .. :try_end_4} :catchall_1
 
-    .line 3110
+    .line 3107
     :catchall_1
     move-exception v3
 
@@ -30485,12 +30362,12 @@
     .parameter "startedCallback"
 
     .prologue
-    .line 4202
+    .line 4199
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 4203
+    .line 4200
     :try_start_0
     iget v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
@@ -30498,47 +30375,47 @@
 
     if-eq v0, v2, :cond_0
 
-    .line 4204
+    .line 4201
     const/4 v0, 0x1
 
     iput v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
 
-    .line 4205
+    .line 4202
     iput-object p1, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionPackage:Ljava/lang/String;
 
-    .line 4206
+    .line 4203
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionThumbnail:Landroid/graphics/Bitmap;
 
-    .line 4207
+    .line 4204
     iput p2, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionEnter:I
 
-    .line 4208
+    .line 4205
     iput p3, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionExit:I
 
-    .line 4209
+    .line 4206
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionCallback:Landroid/os/IRemoteCallback;
 
     invoke-direct {p0, v0}, Lcom/android/server/wm/WindowManagerService;->scheduleAnimationCallback(Landroid/os/IRemoteCallback;)V
 
-    .line 4210
+    .line 4207
     iput-object p4, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionCallback:Landroid/os/IRemoteCallback;
 
-    .line 4214
+    .line 4211
     :goto_0
     monitor-exit v1
 
-    .line 4215
+    .line 4212
     return-void
 
-    .line 4212
+    .line 4209
     :cond_0
     invoke-direct {p0, p4}, Lcom/android/server/wm/WindowManagerService;->scheduleAnimationCallback(Landroid/os/IRemoteCallback;)V
 
     goto :goto_0
 
-    .line 4214
+    .line 4211
     :catchall_0
     move-exception v0
 
@@ -30557,12 +30434,12 @@
     .parameter "startHeight"
 
     .prologue
-    .line 4220
+    .line 4217
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 4221
+    .line 4218
     :try_start_0
     iget v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
@@ -30570,51 +30447,51 @@
 
     if-eq v0, v2, :cond_0
 
-    .line 4222
+    .line 4219
     const/4 v0, 0x2
 
     iput v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
 
-    .line 4223
+    .line 4220
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionPackage:Ljava/lang/String;
 
-    .line 4224
+    .line 4221
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionThumbnail:Landroid/graphics/Bitmap;
 
-    .line 4225
+    .line 4222
     iput p1, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartX:I
 
-    .line 4226
+    .line 4223
     iput p2, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartY:I
 
-    .line 4227
+    .line 4224
     iput p3, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartWidth:I
 
-    .line 4228
+    .line 4225
     iput p4, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartHeight:I
 
-    .line 4229
+    .line 4226
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionCallback:Landroid/os/IRemoteCallback;
 
     invoke-direct {p0, v0}, Lcom/android/server/wm/WindowManagerService;->scheduleAnimationCallback(Landroid/os/IRemoteCallback;)V
 
-    .line 4230
+    .line 4227
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionCallback:Landroid/os/IRemoteCallback;
 
-    .line 4232
+    .line 4229
     :cond_0
     monitor-exit v1
 
-    .line 4233
+    .line 4230
     return-void
 
-    .line 4232
+    .line 4229
     :catchall_0
     move-exception v0
 
@@ -30634,12 +30511,12 @@
     .parameter "scaleUp"
 
     .prologue
-    .line 4238
+    .line 4235
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 4239
+    .line 4236
     :try_start_0
     iget v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
@@ -30647,7 +30524,7 @@
 
     if-eq v0, v2, :cond_1
 
-    .line 4240
+    .line 4237
     if-eqz p5, :cond_0
 
     const/4 v0, 0x3
@@ -30655,51 +30532,51 @@
     :goto_0
     iput v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionType:I
 
-    .line 4242
+    .line 4239
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionPackage:Ljava/lang/String;
 
-    .line 4243
+    .line 4240
     iput-object p1, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionThumbnail:Landroid/graphics/Bitmap;
 
-    .line 4244
+    .line 4241
     iput-boolean p5, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionScaleUp:Z
 
-    .line 4245
+    .line 4242
     iput p2, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartX:I
 
-    .line 4246
+    .line 4243
     iput p3, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionStartY:I
 
-    .line 4247
+    .line 4244
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionCallback:Landroid/os/IRemoteCallback;
 
     invoke-direct {p0, v0}, Lcom/android/server/wm/WindowManagerService;->scheduleAnimationCallback(Landroid/os/IRemoteCallback;)V
 
-    .line 4248
+    .line 4245
     iput-object p4, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransitionCallback:Landroid/os/IRemoteCallback;
 
-    .line 4252
+    .line 4249
     :goto_1
     monitor-exit v1
 
-    .line 4253
+    .line 4250
     return-void
 
-    .line 4240
+    .line 4237
     :cond_0
     const/4 v0, 0x4
 
     goto :goto_0
 
-    .line 4250
+    .line 4247
     :cond_1
     invoke-direct {p0, p4}, Lcom/android/server/wm/WindowManagerService;->scheduleAnimationCallback(Landroid/os/IRemoteCallback;)V
 
     goto :goto_1
 
-    .line 4252
+    .line 4249
     :catchall_0
     move-exception v0
 
@@ -30715,7 +30592,7 @@
     .parameter "_token"
 
     .prologue
-    .line 7212
+    .line 7180
     const-string v1, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v2, "pauseKeyDispatching()"
@@ -30726,7 +30603,7 @@
 
     if-nez v1, :cond_0
 
-    .line 7214
+    .line 7182
     new-instance v1, Ljava/lang/SecurityException;
 
     const-string v2, "Requires MANAGE_APP_TOKENS permission"
@@ -30735,13 +30612,13 @@
 
     throw v1
 
-    .line 7217
+    .line 7185
     :cond_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 7218
+    .line 7186
     :try_start_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
@@ -30751,23 +30628,23 @@
 
     check-cast v0, Lcom/android/server/wm/WindowToken;
 
-    .line 7219
+    .line 7187
     .local v0, token:Lcom/android/server/wm/WindowToken;
     if-eqz v0, :cond_1
 
-    .line 7220
+    .line 7188
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v1, v0}, Lcom/android/server/wm/InputMonitor;->pauseDispatchingLw(Lcom/android/server/wm/WindowToken;)V
 
-    .line 7222
+    .line 7190
     :cond_1
     monitor-exit v2
 
-    .line 7223
+    .line 7191
     return-void
 
-    .line 7222
+    .line 7190
     .end local v0           #token:Lcom/android/server/wm/WindowToken;
     :catchall_0
     move-exception v1
@@ -30798,12 +30675,12 @@
     .locals 3
 
     .prologue
-    .line 5570
+    .line 5567
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 5571
+    .line 5568
     :try_start_0
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayEnabled:Z
 
@@ -30813,15 +30690,15 @@
 
     if-eqz v0, :cond_1
 
-    .line 5572
+    .line 5569
     :cond_0
     monitor-exit v1
 
-    .line 5578
+    .line 5575
     :goto_0
     return-void
 
-    .line 5574
+    .line 5571
     :cond_1
     const-string v0, "WindowManager"
 
@@ -30829,22 +30706,22 @@
 
     invoke-static {v0, v2}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 5575
+    .line 5572
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mForceDisplayEnabled:Z
 
-    .line 5576
+    .line 5573
     monitor-exit v1
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 5577
+    .line 5574
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->performEnableScreen()V
 
     goto :goto_0
 
-    .line 5576
+    .line 5573
     :catchall_0
     move-exception v0
 
@@ -30862,12 +30739,12 @@
     .parameter "client"
 
     .prologue
-    .line 3083
+    .line 3080
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v0
 
-    .line 3086
+    .line 3083
     .local v0, origId:J
     :try_start_0
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
@@ -30876,7 +30753,7 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_1
 
-    .line 3087
+    .line 3084
     const/4 v3, 0x0
 
     :try_start_1
@@ -30884,23 +30761,23 @@
 
     move-result-object v2
 
-    .line 3088
+    .line 3085
     .local v2, win:Lcom/android/server/wm/WindowState;
     if-nez v2, :cond_0
 
-    .line 3089
+    .line 3086
     monitor-exit v4
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 3094
+    .line 3091
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 3096
+    .line 3093
     :goto_0
     return-void
 
-    .line 3091
+    .line 3088
     :cond_0
     :try_start_2
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
@@ -30909,17 +30786,17 @@
 
     invoke-virtual {v3, v5}, Lcom/android/server/wm/WindowStateAnimator;->destroyDeferredSurfaceLocked(Z)V
 
-    .line 3092
+    .line 3089
     monitor-exit v4
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
 
-    .line 3094
+    .line 3091
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     goto :goto_0
 
-    .line 3092
+    .line 3089
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     :catchall_0
     move-exception v3
@@ -30934,7 +30811,7 @@
     :try_end_4
     .catchall {:try_start_4 .. :try_end_4} :catchall_1
 
-    .line 3094
+    .line 3091
     :catchall_1
     move-exception v3
 
@@ -30947,7 +30824,7 @@
     .locals 19
 
     .prologue
-    .line 5581
+    .line 5578
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
@@ -30956,7 +30833,7 @@
 
     monitor-enter v16
 
-    .line 5591
+    .line 5588
     :try_start_0
     move-object/from16 v0, p0
 
@@ -30964,14 +30841,14 @@
 
     if-eqz v15, :cond_0
 
-    .line 5592
+    .line 5589
     monitor-exit v16
 
-    .line 5695
+    .line 5692
     :goto_0
     return-void
 
-    .line 5594
+    .line 5591
     :cond_0
     move-object/from16 v0, p0
 
@@ -30985,12 +30862,12 @@
 
     if-nez v15, :cond_1
 
-    .line 5595
+    .line 5592
     monitor-exit v16
 
     goto :goto_0
 
-    .line 5689
+    .line 5686
     :catchall_0
     move-exception v15
 
@@ -31000,7 +30877,7 @@
 
     throw v15
 
-    .line 5598
+    .line 5595
     :cond_1
     :try_start_1
     move-object/from16 v0, p0
@@ -31009,18 +30886,18 @@
 
     if-nez v15, :cond_f
 
-    .line 5601
+    .line 5598
     const/4 v6, 0x0
 
-    .line 5602
+    .line 5599
     .local v6, haveBootMsg:Z
     const/4 v5, 0x0
 
-    .line 5605
+    .line 5602
     .local v5, haveApp:Z
     const/4 v8, 0x0
 
-    .line 5606
+    .line 5603
     .local v8, haveWallpaper:Z
     move-object/from16 v0, p0
 
@@ -31030,7 +30907,7 @@
 
     move-result-object v15
 
-    const v17, 0x1110031
+    const v17, 0x111002d
 
     move/from16 v0, v17
 
@@ -31048,24 +30925,24 @@
 
     const/4 v13, 0x1
 
-    .line 5609
+    .line 5606
     .local v13, wallpaperEnabled:Z
     :goto_1
     const/4 v7, 0x1
 
-    .line 5611
+    .line 5608
     .local v7, haveKeyguard:Z
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
 
     move-result-object v14
 
-    .line 5612
+    .line 5609
     .local v14, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v14}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v2
 
-    .line 5613
+    .line 5610
     .local v2, N:I
     const/4 v9, 0x0
 
@@ -31073,14 +30950,14 @@
     :goto_2
     if-ge v9, v2, :cond_b
 
-    .line 5614
+    .line 5611
     invoke-virtual {v14, v9}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v12
 
     check-cast v12, Lcom/android/server/wm/WindowState;
 
-    .line 5615
+    .line 5612
     .local v12, w:Lcom/android/server/wm/WindowState;
     iget-object v15, v12, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
@@ -31092,7 +30969,7 @@
 
     if-ne v15, v0, :cond_2
 
-    .line 5623
+    .line 5620
     iget v15, v12, Lcom/android/server/wm/WindowState;->mViewVisibility:I
 
     if-nez v15, :cond_4
@@ -31103,14 +30980,14 @@
 
     const/4 v11, 0x1
 
-    .line 5625
+    .line 5622
     .local v11, vis:Z
     :goto_3
     if-nez v11, :cond_5
 
     const/4 v7, 0x1
 
-    .line 5627
+    .line 5624
     .end local v11           #vis:Z
     :cond_2
     :goto_4
@@ -31130,12 +31007,12 @@
 
     if-nez v15, :cond_6
 
-    .line 5628
+    .line 5625
     monitor-exit v16
 
     goto :goto_0
 
-    .line 5606
+    .line 5603
     .end local v2           #N:I
     .end local v7           #haveKeyguard:Z
     .end local v9           #i:I
@@ -31147,7 +31024,7 @@
 
     goto :goto_1
 
-    .line 5623
+    .line 5620
     .restart local v2       #N:I
     .restart local v7       #haveKeyguard:Z
     .restart local v9       #i:I
@@ -31159,14 +31036,14 @@
 
     goto :goto_3
 
-    .line 5625
+    .line 5622
     .restart local v11       #vis:Z
     :cond_5
     const/4 v7, 0x0
 
     goto :goto_4
 
-    .line 5630
+    .line 5627
     .end local v11           #vis:Z
     :cond_6
     invoke-virtual {v12}, Lcom/android/server/wm/WindowState;->isDrawnLw()Z
@@ -31175,7 +31052,7 @@
 
     if-eqz v15, :cond_7
 
-    .line 5631
+    .line 5628
     iget-object v15, v12, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
     iget v15, v15, Landroid/view/WindowManager$LayoutParams;->type:I
@@ -31186,17 +31063,17 @@
 
     if-ne v15, v0, :cond_8
 
-    .line 5632
+    .line 5629
     const/4 v6, 0x1
 
-    .line 5613
+    .line 5610
     :cond_7
     :goto_5
     add-int/lit8 v9, v9, 0x1
 
     goto :goto_2
 
-    .line 5633
+    .line 5630
     :cond_8
     iget-object v15, v12, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
@@ -31208,12 +31085,12 @@
 
     if-ne v15, v0, :cond_9
 
-    .line 5634
+    .line 5631
     const/4 v5, 0x1
 
     goto :goto_5
 
-    .line 5635
+    .line 5632
     :cond_9
     iget-object v15, v12, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
@@ -31225,12 +31102,12 @@
 
     if-ne v15, v0, :cond_a
 
-    .line 5636
+    .line 5633
     const/4 v8, 0x1
 
     goto :goto_5
 
-    .line 5637
+    .line 5634
     :cond_a
     iget-object v15, v12, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
@@ -31242,12 +31119,12 @@
 
     if-ne v15, v0, :cond_7
 
-    .line 5638
+    .line 5635
     const/4 v7, 0x1
 
     goto :goto_5
 
-    .line 5652
+    .line 5649
     .end local v12           #w:Lcom/android/server/wm/WindowState;
     :cond_b
     move-object/from16 v0, p0
@@ -31258,12 +31135,12 @@
 
     if-nez v6, :cond_c
 
-    .line 5653
+    .line 5650
     monitor-exit v16
 
     goto/16 :goto_0
 
-    .line 5659
+    .line 5656
     :cond_c
     move-object/from16 v0, p0
 
@@ -31280,13 +31157,13 @@
 
     if-nez v8, :cond_f
 
-    .line 5661
+    .line 5658
     :cond_e
     monitor-exit v16
 
     goto/16 :goto_0
 
-    .line 5665
+    .line 5662
     .end local v2           #N:I
     .end local v5           #haveApp:Z
     .end local v6           #haveBootMsg:Z
@@ -31304,7 +31181,7 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 5674
+    .line 5671
     :try_start_2
     const-string v15, "SurfaceFlinger"
 
@@ -31312,22 +31189,22 @@
 
     move-result-object v10
 
-    .line 5675
+    .line 5672
     .local v10, surfaceFlinger:Landroid/os/IBinder;
     if-eqz v10, :cond_10
 
-    .line 5677
+    .line 5674
     invoke-static {}, Landroid/os/Parcel;->obtain()Landroid/os/Parcel;
 
     move-result-object v3
 
-    .line 5678
+    .line 5675
     .local v3, data:Landroid/os/Parcel;
     const-string v15, "android.ui.ISurfaceComposer"
 
     invoke-virtual {v3, v15}, Landroid/os/Parcel;->writeInterfaceToken(Ljava/lang/String;)V
 
-    .line 5679
+    .line 5676
     const/4 v15, 0x1
 
     const/16 v17, 0x0
@@ -31340,13 +31217,13 @@
 
     invoke-interface {v10, v15, v3, v0, v1}, Landroid/os/IBinder;->transact(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z
 
-    .line 5681
+    .line 5678
     invoke-virtual {v3}, Landroid/os/Parcel;->recycle()V
     :try_end_2
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_0
 
-    .line 5688
+    .line 5685
     .end local v3           #data:Landroid/os/Parcel;
     .end local v10           #surfaceFlinger:Landroid/os/IBinder;
     :cond_10
@@ -31366,19 +31243,19 @@
 
     invoke-virtual {v15, v0}, Lcom/android/server/wm/InputMonitor;->setEventDispatchingLw(Z)V
 
-    .line 5689
+    .line 5686
     monitor-exit v16
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_0
 
-    .line 5691
+    .line 5688
     move-object/from16 v0, p0
 
     iget-object v15, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v15}, Landroid/view/WindowManagerPolicy;->enableScreenAfterBoot()V
 
-    .line 5694
+    .line 5691
     const/4 v15, 0x0
 
     const/16 v16, 0x0
@@ -31391,11 +31268,11 @@
 
     goto/16 :goto_0
 
-    .line 5683
+    .line 5680
     :catch_0
     move-exception v4
 
-    .line 5684
+    .line 5681
     .local v4, ex:Landroid/os/RemoteException;
     :try_start_4
     const-string v15, "WindowManager"
@@ -31417,7 +31294,7 @@
     .parameter "alwaysKeepCurrent"
 
     .prologue
-    .line 4151
+    .line 4148
     const-string v0, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v1, "prepareAppTransition()"
@@ -31428,7 +31305,7 @@
 
     if-nez v0, :cond_0
 
-    .line 4153
+    .line 4150
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v1, "Requires MANAGE_APP_TOKENS permission"
@@ -31437,13 +31314,13 @@
 
     throw v0
 
-    .line 4156
+    .line 4153
     :cond_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 4162
+    .line 4159
     :try_start_0
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->okToDisplay()Z
 
@@ -31451,7 +31328,7 @@
 
     if-eqz v0, :cond_3
 
-    .line 4163
+    .line 4160
     iget v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
     const/4 v2, -0x1
@@ -31462,40 +31339,40 @@
 
     if-nez v0, :cond_4
 
-    .line 4165
+    .line 4162
     :cond_1
     iput p1, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
-    .line 4177
+    .line 4174
     :cond_2
     :goto_0
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionReady:Z
 
-    .line 4178
+    .line 4175
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mAppTransitionTimeout:Z
 
-    .line 4179
+    .line 4176
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mStartingIconInTransition:Z
 
-    .line 4180
+    .line 4177
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mSkipAppTransitionAnimation:Z
 
-    .line 4181
+    .line 4178
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/16 v2, 0xd
 
     invoke-virtual {v0, v2}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 4182
+    .line 4179
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -31510,18 +31387,18 @@
 
     invoke-virtual {v0, v2, v3, v4}, Lcom/android/server/wm/WindowManagerService$H;->sendMessageDelayed(Landroid/os/Message;J)Z
 
-    .line 4185
+    .line 4182
     :cond_3
     monitor-exit v1
 
-    .line 4186
+    .line 4183
     return-void
 
-    .line 4166
+    .line 4163
     :cond_4
     if-nez p2, :cond_2
 
-    .line 4167
+    .line 4164
     const/16 v0, 0x1008
 
     if-ne p1, v0, :cond_5
@@ -31532,12 +31409,12 @@
 
     if-ne v0, v2, :cond_5
 
-    .line 4170
+    .line 4167
     iput p1, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
     goto :goto_0
 
-    .line 4185
+    .line 4182
     :catchall_0
     move-exception v0
 
@@ -31547,7 +31424,7 @@
 
     throw v0
 
-    .line 4171
+    .line 4168
     :cond_5
     const/16 v0, 0x1006
 
@@ -31560,7 +31437,7 @@
 
     if-ne v0, v2, :cond_2
 
-    .line 4174
+    .line 4171
     iput p1, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
@@ -31578,22 +31455,22 @@
     .parameter "outSurface"
 
     .prologue
-    .line 7160
+    .line 7128
     invoke-static {}, Landroid/os/Binder;->getCallingPid()I
 
     move-result v8
 
-    .line 7161
+    .line 7129
     .local v8, callerPid:I
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v13
 
-    .line 7162
+    .line 7130
     .local v13, origId:J
     const/4 v15, 0x0
 
-    .line 7165
+    .line 7133
     .local v15, token:Landroid/os/IBinder;
     :try_start_0
     move-object/from16 v0, p0
@@ -31606,7 +31483,7 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_2
 
-    .line 7167
+    .line 7135
     :try_start_1
     move-object/from16 v0, p0
 
@@ -31614,18 +31491,18 @@
 
     if-nez v2, :cond_1
 
-    .line 7169
+    .line 7137
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v10
 
-    .line 7170
+    .line 7138
     .local v10, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-virtual {v10}, Lcom/android/server/wm/DisplayContent;->getDisplay()Landroid/view/Display;
 
     move-result-object v9
 
-    .line 7171
+    .line 7139
     .local v9, display:Landroid/view/Display;
     new-instance v1, Landroid/view/Surface;
 
@@ -31643,7 +31520,7 @@
 
     invoke-direct/range {v1 .. v7}, Landroid/view/Surface;-><init>(Landroid/view/SurfaceSession;Ljava/lang/String;IIII)V
 
-    .line 7173
+    .line 7141
     .local v1, surface:Landroid/view/Surface;
     invoke-virtual {v9}, Landroid/view/Display;->getLayerStack()I
 
@@ -31651,17 +31528,17 @@
 
     invoke-virtual {v1, v2}, Landroid/view/Surface;->setLayerStack(I)V
 
-    .line 7176
+    .line 7144
     move-object/from16 v0, p6
 
     invoke-virtual {v0, v1}, Landroid/view/Surface;->copyFrom(Landroid/view/Surface;)V
 
-    .line 7177
+    .line 7145
     invoke-interface/range {p1 .. p1}, Landroid/view/IWindow;->asBinder()Landroid/os/IBinder;
 
     move-result-object v7
 
-    .line 7178
+    .line 7146
     .local v7, winBinder:Landroid/os/IBinder;
     new-instance v4, Landroid/os/Binder;
 
@@ -31670,7 +31547,7 @@
     .catchall {:try_start_1 .. :try_end_1} :catchall_3
     .catch Landroid/view/Surface$OutOfResourcesException; {:try_start_1 .. :try_end_1} :catch_0
 
-    .line 7179
+    .line 7147
     .end local v15           #token:Landroid/os/IBinder;
     .local v4, token:Landroid/os/IBinder;
     :try_start_2
@@ -31688,7 +31565,7 @@
 
     iput-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mDragState:Lcom/android/server/wm/DragState;
 
-    .line 7180
+    .line 7148
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mDragState:Lcom/android/server/wm/DragState;
@@ -31702,7 +31579,7 @@
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
     .catch Landroid/view/Surface$OutOfResourcesException; {:try_start_2 .. :try_end_2} :catch_1
 
-    .line 7183
+    .line 7151
     .end local v4           #token:Landroid/os/IBinder;
     .restart local v15       #token:Landroid/os/IBinder;
     :try_start_3
@@ -31714,7 +31591,7 @@
 
     invoke-virtual {v2, v3, v7}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(ILjava/lang/Object;)V
 
-    .line 7184
+    .line 7152
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -31725,7 +31602,7 @@
 
     move-result-object v12
 
-    .line 7185
+    .line 7153
     .local v12, msg:Landroid/os/Message;
     move-object/from16 v0, p0
 
@@ -31740,7 +31617,7 @@
 
     move-object v4, v15
 
-    .line 7196
+    .line 7164
     .end local v1           #surface:Landroid/view/Surface;
     .end local v7           #winBinder:Landroid/os/IBinder;
     .end local v9           #display:Landroid/view/Display;
@@ -31755,13 +31632,13 @@
     :try_end_4
     .catchall {:try_start_4 .. :try_end_4} :catchall_0
 
-    .line 7198
+    .line 7166
     invoke-static {v13, v14}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 7201
+    .line 7169
     return-object v4
 
-    .line 7187
+    .line 7155
     .end local v4           #token:Landroid/os/IBinder;
     .restart local v15       #token:Landroid/os/IBinder;
     :cond_1
@@ -31781,7 +31658,7 @@
     .restart local v4       #token:Landroid/os/IBinder;
     goto :goto_0
 
-    .line 7189
+    .line 7157
     .end local v4           #token:Landroid/os/IBinder;
     .restart local v15       #token:Landroid/os/IBinder;
     :catch_0
@@ -31789,7 +31666,7 @@
 
     move-object v4, v15
 
-    .line 7190
+    .line 7158
     .end local v15           #token:Landroid/os/IBinder;
     .restart local v4       #token:Landroid/os/IBinder;
     .local v11, e:Landroid/view/Surface$OutOfResourcesException;
@@ -31831,21 +31708,21 @@
 
     invoke-static {v2, v3, v11}, Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 
-    .line 7191
+    .line 7159
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mDragState:Lcom/android/server/wm/DragState;
 
     if-eqz v2, :cond_0
 
-    .line 7192
+    .line 7160
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mDragState:Lcom/android/server/wm/DragState;
 
     invoke-virtual {v2}, Lcom/android/server/wm/DragState;->reset()V
 
-    .line 7193
+    .line 7161
     const/4 v2, 0x0
 
     move-object/from16 v0, p0
@@ -31854,7 +31731,7 @@
 
     goto :goto_0
 
-    .line 7196
+    .line 7164
     .end local v11           #e:Landroid/view/Surface$OutOfResourcesException;
     :catchall_0
     move-exception v2
@@ -31869,7 +31746,7 @@
     :try_end_7
     .catchall {:try_start_7 .. :try_end_7} :catchall_1
 
-    .line 7198
+    .line 7166
     :catchall_1
     move-exception v2
 
@@ -31889,7 +31766,7 @@
     .restart local v4       #token:Landroid/os/IBinder;
     goto :goto_3
 
-    .line 7196
+    .line 7164
     .end local v4           #token:Landroid/os/IBinder;
     .restart local v15       #token:Landroid/os/IBinder;
     :catchall_3
@@ -31901,7 +31778,7 @@
     .restart local v4       #token:Landroid/os/IBinder;
     goto :goto_2
 
-    .line 7189
+    .line 7157
     .restart local v1       #surface:Landroid/view/Surface;
     .restart local v7       #winBinder:Landroid/os/IBinder;
     .restart local v9       #display:Landroid/view/Display;
@@ -31912,22 +31789,21 @@
     goto :goto_1
 .end method
 
-.method public reboot()V
-    .locals 3
+.method public reboot(Ljava/lang/String;)V
+    .locals 2
+    .parameter "reason"
 
     .prologue
-    .line 5499
+    .line 5489
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->getUiContext()Landroid/content/Context;
 
     move-result-object v0
 
-    const/4 v1, 0x0
+    const/4 v1, 0x1
 
-    const/4 v2, 0x1
+    invoke-static {v0, p1, v1}, Lcom/android/server/power/ShutdownThread;->reboot(Landroid/content/Context;Ljava/lang/String;Z)V
 
-    invoke-static {v0, v1, v2}, Lcom/android/server/power/ShutdownThread;->reboot(Landroid/content/Context;Ljava/lang/String;Z)V
-
-    .line 5500
+    .line 5490
     return-void
 .end method
 
@@ -31947,14 +31823,14 @@
     .parameter "confirm"
 
     .prologue
-    .line 5486
+    .line 5483
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->getUiContext()Landroid/content/Context;
 
     move-result-object v0
 
     invoke-static {v0, p1}, Lcom/android/server/power/ShutdownThread;->rebootSafeMode(Landroid/content/Context;Z)V
 
-    .line 5487
+    .line 5484
     return-void
 .end method
 
@@ -31962,12 +31838,12 @@
     .locals 2
 
     .prologue
-    .line 8197
+    .line 8165
     new-instance v0, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
 
     invoke-direct {v0, p0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 8198
+    .line 8166
     .local v0, iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :goto_0
     invoke-virtual {v0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->hasNext()Z
@@ -31976,7 +31852,7 @@
 
     if-eqz v1, :cond_0
 
-    .line 8199
+    .line 8167
     invoke-virtual {v0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v1
@@ -31985,7 +31861,7 @@
 
     goto :goto_0
 
-    .line 8201
+    .line 8169
     :cond_0
     return-void
 .end method
@@ -31997,20 +31873,20 @@
     .parameter "secure"
 
     .prologue
-    .line 9956
+    .line 9902
     move-object/from16 v0, p1
 
     iget-object v9, v0, Lcom/android/server/wm/WindowStateAnimator;->mSurface:Landroid/view/Surface;
 
-    .line 9957
+    .line 9903
     .local v9, surface:Landroid/view/Surface;
     const/4 v6, 0x0
 
-    .line 9958
+    .line 9904
     .local v6, leakedSurface:Z
     const/4 v5, 0x0
 
-    .line 9960
+    .line 9906
     .local v5, killedApps:Z
     const/16 v12, 0x7918
 
@@ -32050,14 +31926,14 @@
 
     invoke-static {v12, v13}, Landroid/util/EventLog;->writeEvent(I[Ljava/lang/Object;)I
 
-    .line 9963
+    .line 9909
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mForceRemoves:Ljava/util/ArrayList;
 
     if-nez v12, :cond_0
 
-    .line 9964
+    .line 9910
     new-instance v12, Ljava/util/ArrayList;
 
     invoke-direct {v12}, Ljava/util/ArrayList;-><init>()V
@@ -32066,13 +31942,13 @@
 
     iput-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mForceRemoves:Ljava/util/ArrayList;
 
-    .line 9967
+    .line 9913
     :cond_0
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v1
 
-    .line 9973
+    .line 9919
     .local v1, callingIdentity:J
     :try_start_0
     new-instance v4, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
@@ -32081,7 +31957,7 @@
 
     invoke-direct {v4, v0}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 9974
+    .line 9920
     .local v4, iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     const-string v12, "WindowManager"
 
@@ -32089,7 +31965,7 @@
 
     invoke-static {v12, v13}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 9975
+    .line 9921
     :cond_1
     :goto_0
     invoke-virtual {v4}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->hasNext()Z
@@ -32098,22 +31974,22 @@
 
     if-eqz v12, :cond_3
 
-    .line 9976
+    .line 9922
     invoke-virtual {v4}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->next()Lcom/android/server/wm/WindowState;
 
     move-result-object v10
 
-    .line 9977
+    .line 9923
     .local v10, ws:Lcom/android/server/wm/WindowState;
     iget-object v11, v10, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
-    .line 9978
+    .line 9924
     .local v11, wsa:Lcom/android/server/wm/WindowStateAnimator;
     iget-object v12, v11, Lcom/android/server/wm/WindowStateAnimator;->mSurface:Landroid/view/Surface;
 
     if-eqz v12, :cond_1
 
-    .line 9979
+    .line 9925
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mSessions:Ljava/util/HashSet;
@@ -32126,7 +32002,7 @@
 
     if-nez v12, :cond_2
 
-    .line 9980
+    .line 9926
     const-string v12, "WindowManager"
 
     new-instance v13, Ljava/lang/StringBuilder;
@@ -32201,39 +32077,39 @@
 
     invoke-static {v12, v13}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 9986
+    .line 9932
     iget-object v12, v11, Lcom/android/server/wm/WindowStateAnimator;->mSurface:Landroid/view/Surface;
 
     invoke-virtual {v12}, Landroid/view/Surface;->destroy()V
 
-    .line 9987
+    .line 9933
     const/4 v12, 0x0
 
     iput-boolean v12, v11, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceShown:Z
 
-    .line 9988
+    .line 9934
     const/4 v12, 0x0
 
     iput-object v12, v11, Lcom/android/server/wm/WindowStateAnimator;->mSurface:Landroid/view/Surface;
 
-    .line 9989
+    .line 9935
     const/4 v12, 0x0
 
     iput-boolean v12, v10, Lcom/android/server/wm/WindowState;->mHasSurface:Z
 
-    .line 9990
+    .line 9936
     move-object/from16 v0, p0
 
     iget-object v12, v0, Lcom/android/server/wm/WindowManagerService;->mForceRemoves:Ljava/util/ArrayList;
 
     invoke-virtual {v12, v10}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 9991
+    .line 9937
     const/4 v6, 0x1
 
     goto :goto_0
 
-    .line 9992
+    .line 9938
     :cond_2
     iget-object v12, v10, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
@@ -32245,7 +32121,7 @@
 
     if-eqz v12, :cond_1
 
-    .line 9993
+    .line 9939
     const-string v12, "WindowManager"
 
     new-instance v13, Ljava/lang/StringBuilder;
@@ -32292,50 +32168,50 @@
 
     invoke-static {v12, v13}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 9997
+    .line 9943
     iget-object v12, v11, Lcom/android/server/wm/WindowStateAnimator;->mSurface:Landroid/view/Surface;
 
     invoke-virtual {v12}, Landroid/view/Surface;->destroy()V
 
-    .line 9998
+    .line 9944
     const/4 v12, 0x0
 
     iput-boolean v12, v11, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceShown:Z
 
-    .line 9999
+    .line 9945
     const/4 v12, 0x0
 
     iput-object v12, v11, Lcom/android/server/wm/WindowStateAnimator;->mSurface:Landroid/view/Surface;
 
-    .line 10000
+    .line 9946
     const/4 v12, 0x0
 
     iput-boolean v12, v10, Lcom/android/server/wm/WindowState;->mHasSurface:Z
 
-    .line 10001
+    .line 9947
     const/4 v6, 0x1
 
     goto/16 :goto_0
 
-    .line 10006
+    .line 9952
     .end local v10           #ws:Lcom/android/server/wm/WindowState;
     .end local v11           #wsa:Lcom/android/server/wm/WindowStateAnimator;
     :cond_3
     if-nez v6, :cond_7
 
-    .line 10007
+    .line 9953
     const-string v12, "WindowManager"
 
     const-string v13, "No leaked surfaces; killing applicatons!"
 
     invoke-static {v12, v13}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 10008
+    .line 9954
     new-instance v7, Landroid/util/SparseIntArray;
 
     invoke-direct {v7}, Landroid/util/SparseIntArray;-><init>()V
 
-    .line 10009
+    .line 9955
     .local v7, pidCandidates:Landroid/util/SparseIntArray;
     new-instance v4, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
 
@@ -32344,7 +32220,7 @@
 
     invoke-direct {v4, v0}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 10010
+    .line 9956
     .restart local v4       #iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     :cond_4
     :goto_1
@@ -32354,12 +32230,12 @@
 
     if-eqz v12, :cond_5
 
-    .line 10011
+    .line 9957
     invoke-virtual {v4}, Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;->next()Lcom/android/server/wm/WindowState;
 
     move-result-object v10
 
-    .line 10012
+    .line 9958
     .restart local v10       #ws:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, p0
 
@@ -32371,16 +32247,16 @@
 
     if-nez v12, :cond_4
 
-    .line 10015
+    .line 9961
     iget-object v11, v10, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
-    .line 10016
+    .line 9962
     .restart local v11       #wsa:Lcom/android/server/wm/WindowStateAnimator;
     iget-object v12, v11, Lcom/android/server/wm/WindowStateAnimator;->mSurface:Landroid/view/Surface;
 
     if-eqz v12, :cond_4
 
-    .line 10017
+    .line 9963
     iget-object v12, v11, Lcom/android/server/wm/WindowStateAnimator;->mSession:Lcom/android/server/wm/Session;
 
     iget v12, v12, Lcom/android/server/wm/Session;->mPid:I
@@ -32395,7 +32271,7 @@
 
     goto :goto_1
 
-    .line 10053
+    .line 9999
     .end local v4           #iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     .end local v7           #pidCandidates:Landroid/util/SparseIntArray;
     .end local v10           #ws:Lcom/android/server/wm/WindowState;
@@ -32407,7 +32283,7 @@
 
     throw v12
 
-    .line 10020
+    .line 9966
     .restart local v4       #iterator:Lcom/android/server/wm/WindowManagerService$AllWindowsIterator;
     .restart local v7       #pidCandidates:Landroid/util/SparseIntArray;
     :cond_5
@@ -32418,14 +32294,14 @@
 
     if-lez v12, :cond_7
 
-    .line 10021
+    .line 9967
     invoke-virtual {v7}, Landroid/util/SparseIntArray;->size()I
 
     move-result v12
 
     new-array v8, v12, [I
 
-    .line 10022
+    .line 9968
     .local v8, pids:[I
     const/4 v3, 0x0
 
@@ -32435,7 +32311,7 @@
 
     if-ge v3, v12, :cond_6
 
-    .line 10023
+    .line 9969
     invoke-virtual {v7, v3}, Landroid/util/SparseIntArray;->keyAt(I)I
 
     move-result v12
@@ -32444,12 +32320,12 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 10022
+    .line 9968
     add-int/lit8 v3, v3, 0x1
 
     goto :goto_2
 
-    .line 10026
+    .line 9972
     :cond_6
     :try_start_2
     move-object/from16 v0, p0
@@ -32469,10 +32345,10 @@
 
     if-eqz v12, :cond_7
 
-    .line 10027
+    .line 9973
     const/4 v5, 0x1
 
-    .line 10034
+    .line 9980
     .end local v3           #i:I
     .end local v7           #pidCandidates:Landroid/util/SparseIntArray;
     .end local v8           #pids:[I
@@ -32482,7 +32358,7 @@
 
     if-eqz v5, :cond_a
 
-    .line 10037
+    .line 9983
     :cond_8
     :try_start_3
     const-string v12, "WindowManager"
@@ -32491,27 +32367,27 @@
 
     invoke-static {v12, v13}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 10038
+    .line 9984
     if-eqz v9, :cond_9
 
-    .line 10041
+    .line 9987
     invoke-virtual {v9}, Landroid/view/Surface;->destroy()V
 
-    .line 10042
+    .line 9988
     const/4 v12, 0x0
 
     move-object/from16 v0, p1
 
     iput-boolean v12, v0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceShown:Z
 
-    .line 10043
+    .line 9989
     const/4 v12, 0x0
 
     move-object/from16 v0, p1
 
     iput-object v12, v0, Lcom/android/server/wm/WindowStateAnimator;->mSurface:Landroid/view/Surface;
 
-    .line 10044
+    .line 9990
     move-object/from16 v0, p1
 
     iget-object v12, v0, Lcom/android/server/wm/WindowStateAnimator;->mWin:Lcom/android/server/wm/WindowState;
@@ -32522,7 +32398,7 @@
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_0
 
-    .line 10048
+    .line 9994
     :cond_9
     :try_start_4
     move-object/from16 v0, p1
@@ -32536,12 +32412,12 @@
     .catchall {:try_start_4 .. :try_end_4} :catchall_0
     .catch Landroid/os/RemoteException; {:try_start_4 .. :try_end_4} :catch_0
 
-    .line 10053
+    .line 9999
     :cond_a
     :goto_4
     invoke-static {v1, v2}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 10056
+    .line 10002
     if-nez v6, :cond_b
 
     if-eqz v5, :cond_c
@@ -32557,13 +32433,13 @@
 
     goto :goto_5
 
-    .line 10049
+    .line 9995
     :catch_0
     move-exception v12
 
     goto :goto_4
 
-    .line 10029
+    .line 9975
     .restart local v3       #i:I
     .restart local v7       #pidCandidates:Landroid/util/SparseIntArray;
     .restart local v8       #pids:[I
@@ -32578,7 +32454,7 @@
     .parameter "token"
 
     .prologue
-    .line 5317
+    .line 5314
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     const-string v1, "android.permission.DISABLE_KEYGUARD"
@@ -32589,7 +32465,7 @@
 
     if-eqz v0, :cond_0
 
-    .line 5319
+    .line 5316
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v1, "Requires DISABLE_KEYGUARD permission"
@@ -32598,7 +32474,7 @@
 
     throw v0
 
-    .line 5322
+    .line 5319
     :cond_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mKeyguardDisableHandler:Lcom/android/server/wm/KeyguardDisableHandler;
 
@@ -32612,7 +32488,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/KeyguardDisableHandler;->sendMessage(Landroid/os/Message;)Z
 
-    .line 5324
+    .line 5321
     return-void
 .end method
 
@@ -32620,12 +32496,12 @@
     .locals 4
 
     .prologue
-    .line 10433
+    .line 10379
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 10434
+    .line 10380
     :try_start_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
@@ -32635,20 +32511,20 @@
 
     move-result v0
 
-    .line 10435
+    .line 10381
     .local v0, visibility:I
     invoke-virtual {p0, v0}, Lcom/android/server/wm/WindowManagerService;->updateStatusBarVisibilityLocked(I)V
 
-    .line 10436
+    .line 10382
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 10437
+    .line 10383
     monitor-exit v2
 
-    .line 10438
+    .line 10384
     return-void
 
-    .line 10437
+    .line 10383
     .end local v0           #visibility:I
     :catchall_0
     move-exception v1
@@ -32677,22 +32553,22 @@
     .parameter "outSurface"
 
     .prologue
-    .line 2775
+    .line 2772
     const/16 v25, 0x0
 
-    .line 2778
+    .line 2775
     .local v25, toBeDisplayed:Z
     const/16 v23, 0x0
 
-    .line 2782
+    .line 2779
     .local v23, surfaceChanged:Z
     const/16 v24, 0x0
 
-    .line 2783
+    .line 2780
     .local v24, systemUiVisibility:I
     if-eqz p4, :cond_0
 
-    .line 2784
+    .line 2781
     move-object/from16 v0, p4
 
     iget v0, v0, Landroid/view/WindowManager$LayoutParams;->systemUiVisibility:I
@@ -32707,14 +32583,14 @@
 
     or-int v24, v30, v31
 
-    .line 2785
+    .line 2782
     const/high16 v30, 0x3ff
 
     and-int v30, v30, v24
 
     if-eqz v30, :cond_0
 
-    .line 2786
+    .line 2783
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
@@ -32729,18 +32605,18 @@
 
     if-eqz v30, :cond_0
 
-    .line 2788
+    .line 2785
     const v30, -0x3ff0001
 
     and-int v24, v24, v30
 
-    .line 2792
+    .line 2789
     :cond_0
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v18
 
-    .line 2794
+    .line 2791
     .local v18, origId:J
     move-object/from16 v0, p0
 
@@ -32750,7 +32626,7 @@
 
     monitor-enter v31
 
-    .line 2796
+    .line 2793
     const/16 v30, 0x0
 
     :try_start_0
@@ -32766,20 +32642,20 @@
 
     move-result-object v28
 
-    .line 2797
+    .line 2794
     .local v28, win:Lcom/android/server/wm/WindowState;
     if-nez v28, :cond_1
 
-    .line 2798
+    .line 2795
     const/16 v30, 0x0
 
     monitor-exit v31
 
-    .line 3076
+    .line 3073
     :goto_0
     return v30
 
-    .line 2800
+    .line 2797
     :cond_1
     invoke-static/range {v28 .. v28}, Lcom/android/server/wm/WindowManagerService$Injector;->restoreFloatingWindowState(Lcom/android/server/wm/WindowState;)V
 
@@ -32789,7 +32665,7 @@
 
     move-object/from16 v29, v0
 
-    .line 2801
+    .line 2798
     .local v29, winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     move-object/from16 v0, v28
 
@@ -32815,7 +32691,7 @@
 
     if-eq v0, v1, :cond_3
 
-    .line 2803
+    .line 2800
     :cond_2
     const/16 v30, 0x1
 
@@ -32825,21 +32701,21 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mLayoutNeeded:Z
 
-    .line 2804
+    .line 2801
     move/from16 v0, p5
 
     move-object/from16 v1, v28
 
     iput v0, v1, Lcom/android/server/wm/WindowState;->mRequestedWidth:I
 
-    .line 2805
+    .line 2802
     move/from16 v0, p6
 
     move-object/from16 v1, v28
 
     iput v0, v1, Lcom/android/server/wm/WindowState;->mRequestedHeight:I
 
-    .line 2807
+    .line 2804
     :cond_3
     if-eqz p4, :cond_4
 
@@ -32855,18 +32731,18 @@
 
     if-ne v0, v1, :cond_4
 
-    .line 2808
+    .line 2805
     move/from16 v0, v24
 
     move-object/from16 v1, v28
 
     iput v0, v1, Lcom/android/server/wm/WindowState;->mSystemUiVisibility:I
 
-    .line 2811
+    .line 2808
     :cond_4
     if-eqz p4, :cond_5
 
-    .line 2812
+    .line 2809
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
@@ -32879,7 +32755,7 @@
 
     invoke-interface {v0, v1}, Landroid/view/WindowManagerPolicy;->adjustWindowParamsLw(Landroid/view/WindowManager$LayoutParams;)V
 
-    .line 2815
+    .line 2812
     :cond_5
     and-int/lit8 v30, p8, 0x2
 
@@ -32894,18 +32770,18 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceDestroyDeferred:Z
 
-    .line 2818
+    .line 2815
     const/4 v7, 0x0
 
-    .line 2819
+    .line 2816
     .local v7, attrChanges:I
     const/4 v11, 0x0
 
-    .line 2820
+    .line 2817
     .local v11, flagChanges:I
     if-eqz p4, :cond_8
 
-    .line 2821
+    .line 2818
     move-object/from16 v0, v28
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
@@ -32930,7 +32806,7 @@
 
     if-eq v0, v1, :cond_7
 
-    .line 2822
+    .line 2819
     new-instance v30, Ljava/lang/IllegalArgumentException;
 
     const-string v32, "Window type can not be changed after the window is added."
@@ -32943,7 +32819,7 @@
 
     throw v30
 
-    .line 3068
+    .line 3065
     .end local v7           #attrChanges:I
     .end local v11           #flagChanges:I
     .end local v28           #win:Lcom/android/server/wm/WindowState;
@@ -32957,7 +32833,7 @@
 
     throw v30
 
-    .line 2815
+    .line 2812
     .restart local v28       #win:Lcom/android/server/wm/WindowState;
     .restart local v29       #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     :cond_6
@@ -32965,7 +32841,7 @@
 
     goto :goto_1
 
-    .line 2825
+    .line 2822
     .restart local v7       #attrChanges:I
     .restart local v11       #flagChanges:I
     :cond_7
@@ -32994,7 +32870,7 @@
 
     iput v11, v0, Landroid/view/WindowManager$LayoutParams;->flags:I
 
-    .line 2826
+    .line 2823
     move-object/from16 v0, v28
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
@@ -33009,14 +32885,14 @@
 
     move-result v7
 
-    .line 2827
+    .line 2824
     and-int/lit16 v0, v7, 0x2001
 
     move/from16 v30, v0
 
     if-eqz v30, :cond_8
 
-    .line 2829
+    .line 2826
     const/16 v30, 0x1
 
     move/from16 v0, v30
@@ -33025,7 +32901,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mLayoutNeeded:Z
 
-    .line 2836
+    .line 2833
     :cond_8
     move-object/from16 v0, v28
 
@@ -33054,14 +32930,14 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mEnforceSizeCompat:Z
 
-    .line 2838
+    .line 2835
     and-int/lit16 v0, v7, 0x80
 
     move/from16 v30, v0
 
     if-eqz v30, :cond_9
 
-    .line 2839
+    .line 2836
     move-object/from16 v0, p4
 
     iget v0, v0, Landroid/view/WindowManager$LayoutParams;->alpha:F
@@ -33074,7 +32950,7 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowStateAnimator;->mAlpha:F
 
-    .line 2842
+    .line 2839
     :cond_9
     move-object/from16 v0, v28
 
@@ -33098,12 +32974,12 @@
 
     const/16 v21, 0x1
 
-    .line 2845
+    .line 2842
     .local v21, scaledWindow:Z
     :goto_3
     if-eqz v21, :cond_24
 
-    .line 2848
+    .line 2845
     move-object/from16 v0, p4
 
     iget v0, v0, Landroid/view/WindowManager$LayoutParams;->width:I
@@ -33143,7 +33019,7 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowState;->mHScale:F
 
-    .line 2850
+    .line 2847
     move-object/from16 v0, p4
 
     iget v0, v0, Landroid/view/WindowManager$LayoutParams;->height:I
@@ -33183,7 +33059,7 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowState;->mVScale:F
 
-    .line 2856
+    .line 2853
     :goto_6
     const v30, 0x20008
 
@@ -33193,14 +33069,14 @@
 
     const/4 v13, 0x1
 
-    .line 2858
+    .line 2855
     .local v13, imMayMove:Z
     :goto_7
     invoke-virtual/range {v28 .. v28}, Lcom/android/server/wm/WindowState;->isDefaultDisplay()Z
 
     move-result v15
 
-    .line 2859
+    .line 2856
     .local v15, isDefaultDisplay:Z
     if-eqz v15, :cond_26
 
@@ -33231,7 +33107,7 @@
     :cond_a
     const/4 v12, 0x1
 
-    .line 2863
+    .line 2860
     .local v12, focusMayChange:Z
     :goto_8
     move-object/from16 v0, v28
@@ -33266,7 +33142,7 @@
 
     const/16 v27, 0x1
 
-    .line 2865
+    .line 2862
     .local v27, wallpaperMayMove:Z
     :goto_9
     const/high16 v30, 0x10
@@ -33280,7 +33156,7 @@
     :goto_a
     or-int v27, v27, v30
 
-    .line 2867
+    .line 2864
     const/16 v30, 0x1
 
     move/from16 v0, v30
@@ -33289,14 +33165,14 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mRelayoutCalled:Z
 
-    .line 2868
+    .line 2865
     move-object/from16 v0, v28
 
     iget v0, v0, Lcom/android/server/wm/WindowState;->mViewVisibility:I
 
     move/from16 v17, v0
 
-    .line 2869
+    .line 2866
     .local v17, oldVisibility:I
     move/from16 v0, p7
 
@@ -33304,7 +33180,7 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowState;->mViewVisibility:I
 
-    .line 2876
+    .line 2873
     if-nez p7, :cond_2b
 
     move-object/from16 v0, v28
@@ -33329,7 +33205,7 @@
 
     if-nez v30, :cond_2b
 
-    .line 2878
+    .line 2875
     :cond_b
     invoke-virtual/range {v28 .. v28}, Lcom/android/server/wm/WindowState;->isVisibleLw()Z
 
@@ -33339,7 +33215,7 @@
 
     const/16 v25, 0x1
 
-    .line 2879
+    .line 2876
     :goto_b
     move-object/from16 v0, v28
 
@@ -33349,10 +33225,10 @@
 
     if-eqz v30, :cond_c
 
-    .line 2880
+    .line 2877
     invoke-virtual/range {v29 .. v29}, Lcom/android/server/wm/WindowStateAnimator;->cancelExitAnimationForNextAnimationLocked()V
 
-    .line 2881
+    .line 2878
     const/16 v30, 0x0
 
     move/from16 v0, v30
@@ -33361,7 +33237,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mExiting:Z
 
-    .line 2883
+    .line 2880
     :cond_c
     move-object/from16 v0, v28
 
@@ -33371,7 +33247,7 @@
 
     if-eqz v30, :cond_d
 
-    .line 2884
+    .line 2881
     const/16 v30, 0x0
 
     move/from16 v0, v30
@@ -33380,7 +33256,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mDestroying:Z
 
-    .line 2885
+    .line 2882
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mDestroySurface:Ljava/util/ArrayList;
@@ -33393,7 +33269,7 @@
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 2887
+    .line 2884
     :cond_d
     const/16 v30, 0x8
 
@@ -33403,7 +33279,7 @@
 
     if-ne v0, v1, :cond_e
 
-    .line 2888
+    .line 2885
     const/16 v30, 0x1
 
     move/from16 v0, v30
@@ -33412,11 +33288,11 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowStateAnimator;->mEnterAnimationPending:Z
 
-    .line 2890
+    .line 2887
     :cond_e
     if-eqz v25, :cond_11
 
-    .line 2891
+    .line 2888
     invoke-virtual/range {v28 .. v28}, Lcom/android/server/wm/WindowState;->isDrawnLw()Z
 
     move-result v30
@@ -33429,10 +33305,10 @@
 
     if-eqz v30, :cond_f
 
-    .line 2892
+    .line 2889
     invoke-virtual/range {v29 .. v29}, Lcom/android/server/wm/WindowStateAnimator;->applyEnterAnimationLocked()V
 
-    .line 2894
+    .line 2891
     :cond_f
     move-object/from16 v0, v28
 
@@ -33452,7 +33328,7 @@
 
     if-eqz v30, :cond_10
 
-    .line 2898
+    .line 2895
     const/16 v30, 0x1
 
     move/from16 v0, v30
@@ -33461,7 +33337,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mTurnOnScreen:Z
 
-    .line 2900
+    .line 2897
     :cond_10
     invoke-virtual/range {v28 .. v28}, Lcom/android/server/wm/WindowState;->isConfigChanged()Z
 
@@ -33469,7 +33345,7 @@
 
     if-eqz v30, :cond_11
 
-    .line 2903
+    .line 2900
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mCurConfiguration:Landroid/content/res/Configuration;
@@ -33482,26 +33358,26 @@
 
     invoke-virtual {v0, v1}, Landroid/content/res/Configuration;->setTo(Landroid/content/res/Configuration;)V
 
-    .line 2906
+    .line 2903
     :cond_11
     and-int/lit8 v30, v7, 0x8
 
     if-eqz v30, :cond_12
 
-    .line 2908
+    .line 2905
     const/16 v30, 0x0
 
     invoke-virtual/range {v29 .. v30}, Lcom/android/server/wm/WindowStateAnimator;->destroySurfaceLocked(Z)V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 2909
+    .line 2906
     const/16 v25, 0x1
 
-    .line 2910
+    .line 2907
     const/16 v23, 0x1
 
-    .line 2913
+    .line 2910
     :cond_12
     :try_start_2
     move-object/from16 v0, v28
@@ -33512,20 +33388,20 @@
 
     if-nez v30, :cond_13
 
-    .line 2914
+    .line 2911
     const/16 v23, 0x1
 
-    .line 2916
+    .line 2913
     :cond_13
     invoke-virtual/range {v29 .. v29}, Lcom/android/server/wm/WindowStateAnimator;->createSurfaceLocked()Landroid/view/Surface;
 
     move-result-object v22
 
-    .line 2917
+    .line 2914
     .local v22, surface:Landroid/view/Surface;
     if-eqz v22, :cond_2a
 
-    .line 2918
+    .line 2915
     move-object/from16 v0, p13
 
     move-object/from16 v1, v22
@@ -33535,14 +33411,14 @@
     .catchall {:try_start_2 .. :try_end_2} :catchall_0
     .catch Ljava/lang/Exception; {:try_start_2 .. :try_end_2} :catch_0
 
-    .line 2935
+    .line 2932
     :goto_c
     if-eqz v25, :cond_14
 
-    .line 2936
+    .line 2933
     move v12, v15
 
-    .line 2938
+    .line 2935
     :cond_14
     :try_start_3
     move-object/from16 v0, v28
@@ -33573,17 +33449,17 @@
 
     if-nez v30, :cond_15
 
-    .line 2940
+    .line 2937
     move-object/from16 v0, v28
 
     move-object/from16 v1, p0
 
     iput-object v0, v1, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
-    .line 2941
+    .line 2938
     const/4 v13, 0x1
 
-    .line 2943
+    .line 2940
     :cond_15
     move-object/from16 v0, v28
 
@@ -33627,10 +33503,10 @@
 
     if-eqz v30, :cond_16
 
-    .line 2949
+    .line 2946
     const v16, 0x480001
 
-    .line 2953
+    .line 2950
     .local v16, mask:I
     move-object/from16 v0, v28
 
@@ -33650,7 +33526,7 @@
 
     move-object/from16 v20, v0
 
-    .line 2954
+    .line 2951
     .local v20, sa:Landroid/view/WindowManager$LayoutParams;
     move-object/from16 v0, v20
 
@@ -33686,7 +33562,7 @@
 
     iput v0, v1, Landroid/view/WindowManager$LayoutParams;->flags:I
 
-    .line 2999
+    .line 2996
     .end local v16           #mask:I
     .end local v20           #sa:Landroid/view/WindowManager$LayoutParams;
     .end local v22           #surface:Landroid/view/Surface;
@@ -33694,7 +33570,7 @@
     :goto_d
     if-eqz v12, :cond_17
 
-    .line 3001
+    .line 2998
     const/16 v30, 0x3
 
     const/16 v32, 0x0
@@ -33711,18 +33587,18 @@
 
     if-eqz v30, :cond_17
 
-    .line 3003
+    .line 3000
     const/4 v13, 0x0
 
-    .line 3010
+    .line 3007
     :cond_17
     const/4 v6, 0x0
 
-    .line 3012
+    .line 3009
     .local v6, assignLayers:Z
     if-eqz v13, :cond_19
 
-    .line 3013
+    .line 3010
     const/16 v30, 0x0
 
     move-object/from16 v0, p0
@@ -33737,15 +33613,15 @@
 
     if-eqz v25, :cond_19
 
-    .line 3019
+    .line 3016
     :cond_18
     const/4 v6, 0x1
 
-    .line 3022
+    .line 3019
     :cond_19
     if-eqz v27, :cond_1a
 
-    .line 3023
+    .line 3020
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->adjustWallpaperWindowsLocked()I
 
     move-result v30
@@ -33754,10 +33630,10 @@
 
     if-eqz v30, :cond_1a
 
-    .line 3024
+    .line 3021
     const/4 v6, 0x1
 
-    .line 3028
+    .line 3025
     :cond_1a
     move-object/from16 v0, v28
 
@@ -33773,7 +33649,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 3029
+    .line 3026
     and-int/lit8 v30, p8, 0x1
 
     if-eqz v30, :cond_32
@@ -33787,10 +33663,10 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mGivenInsetsPending:Z
 
-    .line 3030
+    .line 3027
     if-eqz v6, :cond_1b
 
-    .line 3031
+    .line 3028
     invoke-virtual/range {v28 .. v28}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v30
@@ -33801,7 +33677,7 @@
 
     invoke-direct {v0, v1}, Lcom/android/server/wm/WindowManagerService;->assignLayersLocked(Lcom/android/server/wm/WindowList;)V
 
-    .line 3033
+    .line 3030
     :cond_1b
     const/16 v30, 0x0
 
@@ -33813,11 +33689,11 @@
 
     move-result v8
 
-    .line 3034
+    .line 3031
     .local v8, configChanged:Z
     invoke-direct/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 3035
+    .line 3032
     if-eqz v25, :cond_1c
 
     move-object/from16 v0, v28
@@ -33828,12 +33704,12 @@
 
     if-eqz v30, :cond_1c
 
-    .line 3036
+    .line 3033
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayInfoLocked()Landroid/view/DisplayInfo;
 
     move-result-object v9
 
-    .line 3037
+    .line 3034
     .local v9, displayInfo:Landroid/view/DisplayInfo;
     iget v0, v9, Landroid/view/DisplayInfo;->appWidth:I
 
@@ -33857,7 +33733,7 @@
 
     invoke-virtual {v0, v1, v2, v3, v4}, Lcom/android/server/wm/WindowManagerService;->updateWallpaperOffsetLocked(Lcom/android/server/wm/WindowState;IIZ)Z
 
-    .line 3040
+    .line 3037
     .end local v9           #displayInfo:Landroid/view/DisplayInfo;
     :cond_1c
     move-object/from16 v0, v28
@@ -33868,7 +33744,7 @@
 
     if-eqz v30, :cond_1d
 
-    .line 3041
+    .line 3038
     move-object/from16 v0, v28
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
@@ -33877,7 +33753,7 @@
 
     invoke-virtual/range {v30 .. v30}, Lcom/android/server/wm/AppWindowToken;->updateReportedVisibilityLocked()V
 
-    .line 3043
+    .line 3040
     :cond_1d
     move-object/from16 v0, v28
 
@@ -33891,7 +33767,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Rect;->set(Landroid/graphics/Rect;)V
 
-    .line 3044
+    .line 3041
     move-object/from16 v0, v28
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mContentInsets:Landroid/graphics/Rect;
@@ -33904,7 +33780,7 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Rect;->set(Landroid/graphics/Rect;)V
 
-    .line 3045
+    .line 3042
     move-object/from16 v0, v28
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mVisibleInsets:Landroid/graphics/Rect;
@@ -33917,12 +33793,12 @@
 
     invoke-virtual {v0, v1}, Landroid/graphics/Rect;->set(Landroid/graphics/Rect;)V
 
-    .line 3057
+    .line 3054
     move-object/from16 v0, p0
 
     iget-boolean v14, v0, Lcom/android/server/wm/WindowManagerService;->mInTouchMode:Z
 
-    .line 3058
+    .line 3055
     .local v14, inTouchMode:Z
     move-object/from16 v0, p0
 
@@ -33934,7 +33810,7 @@
 
     iget-boolean v5, v0, Lcom/android/server/wm/WindowAnimator;->mAnimating:Z
 
-    .line 3059
+    .line 3056
     .local v5, animating:Z
     if-eqz v5, :cond_1e
 
@@ -33954,7 +33830,7 @@
 
     if-nez v30, :cond_1e
 
-    .line 3060
+    .line 3057
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mRelayoutWhileAnimating:Ljava/util/ArrayList;
@@ -33967,7 +33843,7 @@
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 3063
+    .line 3060
     :cond_1e
     move-object/from16 v0, p0
 
@@ -33985,22 +33861,22 @@
 
     invoke-static/range {v28 .. v28}, Lcom/android/server/wm/WindowManagerService$Injector;->saveFloatingWindowState(Lcom/android/server/wm/WindowState;)V
 
-    .line 3068
+    .line 3065
     monitor-exit v31
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_0
 
-    .line 3070
+    .line 3067
     if-eqz v8, :cond_1f
 
-    .line 3071
+    .line 3068
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->sendNewConfiguration()V
 
-    .line 3074
+    .line 3071
     :cond_1f
     invoke-static/range {v18 .. v19}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 3076
+    .line 3073
     if-eqz v14, :cond_33
 
     const/16 v30, 0x1
@@ -34031,7 +33907,7 @@
 
     goto/16 :goto_0
 
-    .line 2836
+    .line 2833
     .end local v5           #animating:Z
     .end local v6           #assignLayers:Z
     .end local v8           #configChanged:Z
@@ -34047,26 +33923,26 @@
 
     goto/16 :goto_2
 
-    .line 2842
+    .line 2839
     :cond_21
     const/16 v21, 0x0
 
     goto/16 :goto_3
 
-    .line 2848
+    .line 2845
     .restart local v21       #scaledWindow:Z
     :cond_22
     const/high16 v30, 0x3f80
 
     goto/16 :goto_4
 
-    .line 2850
+    .line 2847
     :cond_23
     const/high16 v30, 0x3f80
 
     goto/16 :goto_5
 
-    .line 2853
+    .line 2850
     :cond_24
     const/high16 v30, 0x3f80
 
@@ -34087,13 +33963,13 @@
 
     goto/16 :goto_6
 
-    .line 2856
+    .line 2853
     :cond_25
     const/4 v13, 0x0
 
     goto/16 :goto_7
 
-    .line 2859
+    .line 2856
     .restart local v13       #imMayMove:Z
     .restart local v15       #isDefaultDisplay:Z
     :cond_26
@@ -34101,28 +33977,28 @@
 
     goto/16 :goto_8
 
-    .line 2863
+    .line 2860
     .restart local v12       #focusMayChange:Z
     :cond_27
     const/16 v27, 0x0
 
     goto/16 :goto_9
 
-    .line 2865
+    .line 2862
     .restart local v27       #wallpaperMayMove:Z
     :cond_28
     const/16 v30, 0x0
 
     goto/16 :goto_a
 
-    .line 2878
+    .line 2875
     .restart local v17       #oldVisibility:I
     :cond_29
     const/16 v25, 0x0
 
     goto/16 :goto_b
 
-    .line 2924
+    .line 2921
     .restart local v22       #surface:Landroid/view/Surface;
     :cond_2a
     :try_start_5
@@ -34133,12 +34009,12 @@
 
     goto/16 :goto_c
 
-    .line 2926
+    .line 2923
     .end local v22           #surface:Landroid/view/Surface;
     :catch_0
     move-exception v10
 
-    .line 2927
+    .line 2924
     .local v10, e:Ljava/lang/Exception;
     :try_start_6
     move-object/from16 v0, p0
@@ -34155,7 +34031,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 2929
+    .line 2926
     const-string v30, "WindowManager"
 
     new-instance v32, Ljava/lang/StringBuilder;
@@ -34232,7 +34108,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowStateAnimator;->mEnterAnimationPending:Z
 
-    .line 2958
+    .line 2955
     move-object/from16 v0, v29
 
     iget-object v0, v0, Lcom/android/server/wm/WindowStateAnimator;->mSurface:Landroid/view/Surface;
@@ -34241,7 +34117,7 @@
 
     if-eqz v30, :cond_2d
 
-    .line 2963
+    .line 2960
     move-object/from16 v0, v28
 
     iget-boolean v0, v0, Lcom/android/server/wm/WindowState;->mExiting:Z
@@ -34250,13 +34126,13 @@
 
     if-nez v30, :cond_2d
 
-    .line 2964
+    .line 2961
     const/16 v23, 0x1
 
-    .line 2967
+    .line 2964
     const/16 v26, 0x2002
 
-    .line 2968
+    .line 2965
     .local v26, transit:I
     move-object/from16 v0, v28
 
@@ -34278,10 +34154,10 @@
 
     if-ne v0, v1, :cond_2c
 
-    .line 2969
+    .line 2966
     const/16 v26, 0x5
 
-    .line 2971
+    .line 2968
     :cond_2c
     invoke-virtual/range {v28 .. v28}, Lcom/android/server/wm/WindowState;->isWinVisibleLw()Z
 
@@ -34303,10 +34179,10 @@
 
     if-eqz v30, :cond_2e
 
-    .line 2973
+    .line 2970
     move v12, v15
 
-    .line 2974
+    .line 2971
     const/16 v30, 0x1
 
     move/from16 v0, v30
@@ -34315,7 +34191,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mExiting:Z
 
-    .line 2991
+    .line 2988
     :goto_13
     move-object/from16 v0, p0
 
@@ -34325,14 +34201,14 @@
 
     invoke-virtual {v0, v1, v2}, Lcom/android/server/wm/WindowManagerService;->scheduleNotifyWindowTranstionIfNeededLocked(Lcom/android/server/wm/WindowState;I)V
 
-    .line 2995
+    .line 2992
     .end local v26           #transit:I
     :cond_2d
     invoke-virtual/range {p13 .. p13}, Landroid/view/Surface;->release()V
 
     goto/16 :goto_d
 
-    .line 2975
+    .line 2972
     .restart local v26       #transit:I
     :cond_2e
     move-object/from16 v0, v28
@@ -34347,7 +34223,7 @@
 
     if-eqz v30, :cond_2f
 
-    .line 2978
+    .line 2975
     const/16 v30, 0x1
 
     move/from16 v0, v30
@@ -34358,7 +34234,7 @@
 
     goto :goto_13
 
-    .line 2979
+    .line 2976
     :cond_2f
     move-object/from16 v0, p0
 
@@ -34372,7 +34248,7 @@
 
     if-ne v0, v1, :cond_30
 
-    .line 2983
+    .line 2980
     const/16 v30, 0x1
 
     move/from16 v0, v30
@@ -34381,7 +34257,7 @@
 
     iput-boolean v0, v1, Lcom/android/server/wm/WindowState;->mExiting:Z
 
-    .line 2984
+    .line 2981
     move-object/from16 v0, v28
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
@@ -34398,7 +34274,7 @@
 
     goto :goto_13
 
-    .line 2986
+    .line 2983
     :cond_30
     move-object/from16 v0, p0
 
@@ -34412,7 +34288,7 @@
 
     if-ne v0, v1, :cond_31
 
-    .line 2987
+    .line 2984
     const/16 v30, 0x0
 
     move-object/from16 v0, v30
@@ -34421,7 +34297,7 @@
 
     iput-object v0, v1, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
-    .line 2989
+    .line 2986
     :cond_31
     const/16 v30, 0x0
 
@@ -34431,7 +34307,7 @@
 
     goto :goto_13
 
-    .line 3029
+    .line 3026
     .end local v26           #transit:I
     .restart local v6       #assignLayers:Z
     :cond_32
@@ -34439,7 +34315,7 @@
 
     goto/16 :goto_e
 
-    .line 3076
+    .line 3073
     .restart local v5       #animating:Z
     .restart local v8       #configChanged:Z
     .restart local v14       #inTouchMode:Z
@@ -34473,7 +34349,7 @@
     .prologue
     const/4 v13, -0x1
 
-    .line 4809
+    .line 4806
     const-string v0, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v2, "removeAppToken()"
@@ -34484,7 +34360,7 @@
 
     if-nez v0, :cond_0
 
-    .line 4811
+    .line 4808
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v2, "Requires MANAGE_APP_TOKENS permission"
@@ -34493,31 +34369,31 @@
 
     throw v0
 
-    .line 4814
+    .line 4811
     :cond_0
     const/4 v1, 0x0
 
-    .line 4815
+    .line 4812
     .local v1, wtoken:Lcom/android/server/wm/AppWindowToken;
     const/4 v11, 0x0
 
-    .line 4816
+    .line 4813
     .local v11, startingToken:Lcom/android/server/wm/AppWindowToken;
     const/4 v7, 0x0
 
-    .line 4818
+    .line 4815
     .local v7, delayed:Z
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v9
 
-    .line 4819
+    .line 4816
     .local v9, origId:J
     iget-object v12, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v12
 
-    .line 4820
+    .line 4817
     :try_start_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
@@ -34527,7 +34403,7 @@
 
     check-cast v6, Lcom/android/server/wm/WindowToken;
 
-    .line 4821
+    .line 4818
     .local v6, basewtoken:Lcom/android/server/wm/WindowToken;
     if-eqz v6, :cond_8
 
@@ -34535,7 +34411,7 @@
 
     if-eqz v1, :cond_8
 
-    .line 4823
+    .line 4820
     const/4 v2, 0x0
 
     const/4 v3, 0x0
@@ -34550,22 +34426,22 @@
 
     move-result v7
 
-    .line 4825
+    .line 4822
     const/4 v0, 0x0
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->inPendingTransaction:Z
 
-    .line 4826
+    .line 4823
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mOpeningApps:Ljava/util/ArrayList;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 4827
+    .line 4824
     const/4 v0, 0x0
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->waitingToShow:Z
 
-    .line 4828
+    .line 4825
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mClosingApps:Ljava/util/ArrayList;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->contains(Ljava/lang/Object;)Z
@@ -34574,44 +34450,44 @@
 
     if-eqz v0, :cond_6
 
-    .line 4829
+    .line 4826
     const/4 v7, 0x1
 
-    .line 4839
+    .line 4836
     :cond_1
     :goto_0
     if-eqz v7, :cond_7
 
-    .line 4843
+    .line 4840
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mExitingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 4853
+    .line 4850
     :goto_1
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 4854
+    .line 4851
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 4855
+    .line 4852
     const/4 v0, 0x1
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->removed:Z
 
-    .line 4856
+    .line 4853
     iget-object v0, v1, Lcom/android/server/wm/AppWindowToken;->startingData:Lcom/android/server/wm/StartingData;
 
     if-eqz v0, :cond_2
 
-    .line 4857
+    .line 4854
     move-object v11, v1
 
-    .line 4859
+    .line 4856
     :cond_2
     const/4 v0, 0x1
 
@@ -34619,53 +34495,53 @@
 
     invoke-virtual {p0, v1, v0, v2}, Lcom/android/server/wm/WindowManagerService;->unsetAppFreezingScreenLocked(Lcom/android/server/wm/AppWindowToken;ZZ)V
 
-    .line 4860
+    .line 4857
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mFocusedApp:Lcom/android/server/wm/AppWindowToken;
 
     if-ne v0, v1, :cond_3
 
-    .line 4862
+    .line 4859
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mFocusedApp:Lcom/android/server/wm/AppWindowToken;
 
-    .line 4863
+    .line 4860
     const/4 v0, 0x0
 
     const/4 v2, 0x1
 
     invoke-direct {p0, v0, v2}, Lcom/android/server/wm/WindowManagerService;->updateFocusedWindowLocked(IZ)Z
 
-    .line 4864
+    .line 4861
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     const/4 v2, 0x0
 
     invoke-virtual {v0, v2}, Lcom/android/server/wm/InputMonitor;->setFocusedAppLw(Lcom/android/server/wm/AppWindowToken;)V
 
-    .line 4870
+    .line 4867
     :cond_3
     :goto_2
     if-nez v7, :cond_4
 
     if-eqz v1, :cond_4
 
-    .line 4871
+    .line 4868
     invoke-virtual {v1}, Lcom/android/server/wm/AppWindowToken;->updateReportedVisibilityLocked()V
 
-    .line 4873
+    .line 4870
     :cond_4
     monitor-exit v12
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 4874
+    .line 4871
     invoke-static {v9, v10}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 4876
+    .line 4873
     if-eqz v11, :cond_5
 
-    .line 4879
+    .line 4876
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/4 v2, 0x6
@@ -34674,46 +34550,46 @@
 
     move-result-object v8
 
-    .line 4880
+    .line 4877
     .local v8, m:Landroid/os/Message;
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     invoke-virtual {v0, v8}, Lcom/android/server/wm/WindowManagerService$H;->sendMessage(Landroid/os/Message;)Z
 
-    .line 4882
+    .line 4879
     .end local v8           #m:Landroid/os/Message;
     :cond_5
     return-void
 
-    .line 4830
+    .line 4827
     :cond_6
     :try_start_1
     iget v0, p0, Lcom/android/server/wm/WindowManagerService;->mNextAppTransition:I
 
     if-eq v0, v13, :cond_1
 
-    .line 4831
+    .line 4828
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mClosingApps:Ljava/util/ArrayList;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 4832
+    .line 4829
     const/4 v0, 0x1
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->waitingToHide:Z
 
-    .line 4833
+    .line 4830
     const/4 v7, 0x1
 
     goto :goto_0
 
-    .line 4848
+    .line 4845
     :cond_7
     iget-object v0, v1, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     invoke-virtual {v0}, Lcom/android/server/wm/AppWindowAnimator;->clearAnimation()V
 
-    .line 4849
+    .line 4846
     iget-object v0, v1, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     const/4 v2, 0x0
@@ -34722,7 +34598,7 @@
 
     goto :goto_1
 
-    .line 4873
+    .line 4870
     .end local v6           #basewtoken:Lcom/android/server/wm/WindowToken;
     :catchall_0
     move-exception v0
@@ -34733,7 +34609,7 @@
 
     throw v0
 
-    .line 4867
+    .line 4864
     .restart local v6       #basewtoken:Lcom/android/server/wm/WindowToken;
     :cond_8
     :try_start_2
@@ -34856,12 +34732,12 @@
     .prologue
     const/4 v0, 0x1
 
-    .line 10462
+    .line 10408
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 10463
+    .line 10409
     :try_start_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mFakeWindows:Ljava/util/ArrayList;
 
@@ -34871,17 +34747,17 @@
 
     if-eqz v2, :cond_0
 
-    .line 10464
+    .line 10410
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     const/4 v3, 0x1
 
     invoke-virtual {v2, v3}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 10465
+    .line 10411
     monitor-exit v1
 
-    .line 10467
+    .line 10413
     :goto_0
     return v0
 
@@ -34892,7 +34768,7 @@
 
     goto :goto_0
 
-    .line 10468
+    .line 10414
     :catchall_0
     move-exception v0
 
@@ -34909,12 +34785,12 @@
     .parameter "client"
 
     .prologue
-    .line 2382
+    .line 2379
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 2383
+    .line 2380
     const/4 v1, 0x0
 
     :try_start_0
@@ -34922,22 +34798,22 @@
 
     move-result-object v0
 
-    .line 2384
+    .line 2381
     .local v0, win:Lcom/android/server/wm/WindowState;
     if-nez v0, :cond_0
 
-    .line 2385
+    .line 2382
     monitor-exit v2
 
-    .line 2389
+    .line 2386
     :goto_0
     return-void
 
-    .line 2387
+    .line 2384
     :cond_0
     invoke-virtual {p0, p1, v0}, Lcom/android/server/wm/WindowManagerService;->removeWindowLocked(Lcom/android/server/wm/Session;Lcom/android/server/wm/WindowState;)V
 
-    .line 2388
+    .line 2385
     monitor-exit v2
 
     goto :goto_0
@@ -34998,19 +34874,19 @@
 
     const/4 v6, 0x0
 
-    .line 2399
+    .line 2396
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v0
 
-    .line 2401
+    .line 2398
     .local v0, origId:J
     invoke-virtual {p2}, Lcom/android/server/wm/WindowState;->disposeInputChannel()V
 
-    .line 2413
+    .line 2410
     const/4 v3, 0x0
 
-    .line 2418
+    .line 2415
     .local v3, wasVisible:Z
     iget-boolean v4, p2, Lcom/android/server/wm/WindowState;->mHasSurface:Z
 
@@ -35022,18 +34898,18 @@
 
     if-eqz v4, :cond_5
 
-    .line 2421
+    .line 2418
     invoke-virtual {p2}, Lcom/android/server/wm/WindowState;->isWinVisibleLw()Z
 
     move-result v3
 
-    .line 2422
+    .line 2419
     if-eqz v3, :cond_2
 
-    .line 2424
+    .line 2421
     const/16 v2, 0x2002
 
-    .line 2425
+    .line 2422
     .local v2, transit:I
     iget-object v4, p2, Lcom/android/server/wm/WindowState;->mAttrs:Landroid/view/WindowManager$LayoutParams;
 
@@ -35041,10 +34917,10 @@
 
     if-ne v4, v5, :cond_0
 
-    .line 2426
+    .line 2423
     const/4 v2, 0x5
 
-    .line 2429
+    .line 2426
     :cond_0
     iget-object v4, p2, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
@@ -35054,14 +34930,14 @@
 
     if-eqz v4, :cond_1
 
-    .line 2430
+    .line 2427
     iput-boolean v7, p2, Lcom/android/server/wm/WindowState;->mExiting:Z
 
-    .line 2432
+    .line 2429
     :cond_1
     invoke-virtual {p0, p2, v2}, Lcom/android/server/wm/WindowManagerService;->scheduleNotifyWindowTranstionIfNeededLocked(Lcom/android/server/wm/WindowState;I)V
 
-    .line 2434
+    .line 2431
     .end local v2           #transit:I
     :cond_2
     iget-boolean v4, p2, Lcom/android/server/wm/WindowState;->mExiting:Z
@@ -35076,52 +34952,52 @@
 
     if-eqz v4, :cond_5
 
-    .line 2437
+    .line 2434
     :cond_3
     iput-boolean v7, p2, Lcom/android/server/wm/WindowState;->mExiting:Z
 
-    .line 2438
+    .line 2435
     iput-boolean v7, p2, Lcom/android/server/wm/WindowState;->mRemoveOnExit:Z
 
-    .line 2439
+    .line 2436
     iget-object v4, p2, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
     iput-boolean v7, v4, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 2440
+    .line 2437
     invoke-direct {p0, v5, v6}, Lcom/android/server/wm/WindowManagerService;->updateFocusedWindowLocked(IZ)Z
 
-    .line 2442
+    .line 2439
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 2443
+    .line 2440
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v4, v6}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 2444
+    .line 2441
     iget-object v4, p2, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     if-eqz v4, :cond_4
 
-    .line 2445
+    .line 2442
     iget-object v4, p2, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
     invoke-virtual {v4}, Lcom/android/server/wm/AppWindowToken;->updateReportedVisibilityLocked()V
 
-    .line 2448
+    .line 2445
     :cond_4
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 2463
+    .line 2460
     :goto_0
     return-void
 
-    .line 2453
+    .line 2450
     :cond_5
     invoke-direct {p0, p1, p2}, Lcom/android/server/wm/WindowManagerService;->removeWindowInnerLocked(Lcom/android/server/wm/Session;Lcom/android/server/wm/WindowState;)V
 
-    .line 2456
+    .line 2453
     if-eqz v3, :cond_6
 
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->computeForcedAppOrientationLocked()I
@@ -35138,18 +35014,18 @@
 
     if-eqz v4, :cond_6
 
-    .line 2459
+    .line 2456
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/16 v5, 0x12
 
     invoke-virtual {v4, v5}, Lcom/android/server/wm/WindowManagerService$H;->sendEmptyMessage(I)Z
 
-    .line 2461
+    .line 2458
     :cond_6
     invoke-direct {p0, v6, v7}, Lcom/android/server/wm/WindowManagerService;->updateFocusedWindowLocked(IZ)Z
 
-    .line 2462
+    .line 2459
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     goto :goto_0
@@ -35160,7 +35036,7 @@
     .parameter "token"
 
     .prologue
-    .line 3721
+    .line 3718
     const-string v8, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v9, "removeWindowToken()"
@@ -35171,7 +35047,7 @@
 
     if-nez v8, :cond_0
 
-    .line 3723
+    .line 3720
     new-instance v8, Ljava/lang/SecurityException;
 
     const-string v9, "Requires MANAGE_APP_TOKENS permission"
@@ -35180,19 +35056,19 @@
 
     throw v8
 
-    .line 3726
+    .line 3723
     :cond_0
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v4
 
-    .line 3727
+    .line 3724
     .local v4, origId:J
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v9
 
-    .line 3728
+    .line 3725
     :try_start_0
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
@@ -35202,31 +35078,31 @@
 
     check-cast v7, Lcom/android/server/wm/WindowToken;
 
-    .line 3729
+    .line 3726
     .local v7, wtoken:Lcom/android/server/wm/WindowToken;
     if-eqz v7, :cond_7
 
-    .line 3730
+    .line 3727
     const/4 v2, 0x0
 
-    .line 3731
+    .line 3728
     .local v2, delayed:Z
     iget-boolean v8, v7, Lcom/android/server/wm/WindowToken;->hidden:Z
 
     if-nez v8, :cond_5
 
-    .line 3732
+    .line 3729
     iget-object v8, v7, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v8}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v0
 
-    .line 3733
+    .line 3730
     .local v0, N:I
     const/4 v1, 0x0
 
-    .line 3735
+    .line 3732
     .local v1, changed:Z
     const/4 v3, 0x0
 
@@ -35234,7 +35110,7 @@
     :goto_0
     if-ge v3, v0, :cond_3
 
-    .line 3736
+    .line 3733
     iget-object v8, v7, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v8, v3}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -35243,7 +35119,7 @@
 
     check-cast v6, Lcom/android/server/wm/WindowState;
 
-    .line 3738
+    .line 3735
     .local v6, win:Lcom/android/server/wm/WindowState;
     iget-object v8, v6, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
@@ -35253,10 +35129,10 @@
 
     if-eqz v8, :cond_1
 
-    .line 3739
+    .line 3736
     const/4 v2, 0x1
 
-    .line 3742
+    .line 3739
     :cond_1
     invoke-virtual {v6}, Lcom/android/server/wm/WindowState;->isVisibleNow()Z
 
@@ -35264,7 +35140,7 @@
 
     if-eqz v8, :cond_2
 
-    .line 3743
+    .line 3740
     iget-object v8, v6, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
     const/16 v10, 0x2002
@@ -35273,57 +35149,57 @@
 
     invoke-virtual {v8, v10, v11}, Lcom/android/server/wm/WindowStateAnimator;->applyAnimationLocked(IZ)Z
 
-    .line 3745
+    .line 3742
     const/16 v8, 0x2002
 
     invoke-virtual {p0, v6, v8}, Lcom/android/server/wm/WindowManagerService;->scheduleNotifyWindowTranstionIfNeededLocked(Lcom/android/server/wm/WindowState;I)V
 
-    .line 3747
+    .line 3744
     const/4 v1, 0x1
 
-    .line 3748
+    .line 3745
     iget-object v8, v6, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
     const/4 v10, 0x1
 
     iput-boolean v10, v8, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 3735
+    .line 3732
     :cond_2
     add-int/lit8 v3, v3, 0x1
 
     goto :goto_0
 
-    .line 3752
+    .line 3749
     .end local v6           #win:Lcom/android/server/wm/WindowState;
     :cond_3
     const/4 v8, 0x1
 
     iput-boolean v8, v7, Lcom/android/server/wm/WindowToken;->hidden:Z
 
-    .line 3754
+    .line 3751
     if-eqz v1, :cond_4
 
-    .line 3755
+    .line 3752
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 3756
+    .line 3753
     const/4 v8, 0x0
 
     const/4 v10, 0x0
 
     invoke-direct {p0, v8, v10}, Lcom/android/server/wm/WindowManagerService;->updateFocusedWindowLocked(IZ)Z
 
-    .line 3760
+    .line 3757
     :cond_4
     if-eqz v2, :cond_6
 
-    .line 3761
+    .line 3758
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mExitingTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v8, v7}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 3768
+    .line 3765
     .end local v0           #N:I
     .end local v1           #changed:Z
     .end local v3           #i:I
@@ -35335,20 +35211,20 @@
 
     invoke-virtual {v8, v10}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 3772
+    .line 3769
     .end local v2           #delayed:Z
     :goto_2
     monitor-exit v9
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 3773
+    .line 3770
     invoke-static {v4, v5}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 3774
+    .line 3771
     return-void
 
-    .line 3762
+    .line 3759
     .restart local v0       #N:I
     .restart local v1       #changed:Z
     .restart local v2       #delayed:Z
@@ -35361,17 +35237,17 @@
 
     if-ne v8, v10, :cond_5
 
-    .line 3763
+    .line 3760
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v8, v7}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 3764
+    .line 3761
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->updateLayoutToAnimWallpaperTokens()V
 
     goto :goto_1
 
-    .line 3772
+    .line 3769
     .end local v0           #N:I
     .end local v1           #changed:Z
     .end local v2           #delayed:Z
@@ -35386,7 +35262,7 @@
 
     throw v8
 
-    .line 3770
+    .line 3767
     .restart local v7       #wtoken:Lcom/android/server/wm/WindowToken;
     :cond_7
     :try_start_2
@@ -35421,22 +35297,22 @@
     .locals 2
 
     .prologue
-    .line 9802
+    .line 9748
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 9803
+    .line 9749
     :try_start_0
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->requestTraversalLocked()V
 
-    .line 9804
+    .line 9750
     monitor-exit v1
 
-    .line 9805
+    .line 9751
     return-void
 
-    .line 9804
+    .line 9750
     :catchall_0
     move-exception v0
 
@@ -35451,24 +35327,24 @@
     .locals 2
 
     .prologue
-    .line 9808
+    .line 9754
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mTraversalScheduled:Z
 
     if-nez v0, :cond_0
 
-    .line 9809
+    .line 9755
     const/4 v0, 0x1
 
     iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mTraversalScheduled:Z
 
-    .line 9810
+    .line 9756
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/4 v1, 0x4
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowManagerService$H;->sendEmptyMessage(I)Z
 
-    .line 9812
+    .line 9758
     :cond_0
     return-void
 .end method
@@ -35478,7 +35354,7 @@
     .parameter "_token"
 
     .prologue
-    .line 7226
+    .line 7194
     const-string v1, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v2, "resumeKeyDispatching()"
@@ -35489,7 +35365,7 @@
 
     if-nez v1, :cond_0
 
-    .line 7228
+    .line 7196
     new-instance v1, Ljava/lang/SecurityException;
 
     const-string v2, "Requires MANAGE_APP_TOKENS permission"
@@ -35498,13 +35374,13 @@
 
     throw v1
 
-    .line 7231
+    .line 7199
     :cond_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 7232
+    .line 7200
     :try_start_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mTokenMap:Ljava/util/HashMap;
 
@@ -35514,23 +35390,23 @@
 
     check-cast v0, Lcom/android/server/wm/WindowToken;
 
-    .line 7233
+    .line 7201
     .local v0, token:Lcom/android/server/wm/WindowToken;
     if-eqz v0, :cond_1
 
-    .line 7234
+    .line 7202
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v1, v0}, Lcom/android/server/wm/InputMonitor;->resumeDispatchingLw(Lcom/android/server/wm/WindowToken;)V
 
-    .line 7236
+    .line 7204
     :cond_1
     monitor-exit v2
 
-    .line 7237
+    .line 7205
     return-void
 
-    .line 7236
+    .line 7204
     .end local v0           #token:Lcom/android/server/wm/WindowToken;
     :catchall_0
     move-exception v1
@@ -35593,18 +35469,18 @@
     .parameter "windowState"
 
     .prologue
-    .line 10997
+    .line 10913
     new-instance v1, Ljava/io/StringWriter;
 
     invoke-direct {v1}, Ljava/io/StringWriter;-><init>()V
 
-    .line 10998
+    .line 10914
     .local v1, sw:Ljava/io/StringWriter;
     new-instance v0, Ljava/io/PrintWriter;
 
     invoke-direct {v0, v1}, Ljava/io/PrintWriter;-><init>(Ljava/io/Writer;)V
 
-    .line 10999
+    .line 10915
     .local v0, pw:Ljava/io/PrintWriter;
     new-instance v2, Ljava/lang/StringBuilder;
 
@@ -35638,10 +35514,10 @@
 
     invoke-virtual {v0, v2}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11000
+    .line 10916
     if-eqz p1, :cond_0
 
-    .line 11001
+    .line 10917
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
@@ -35664,11 +35540,11 @@
 
     invoke-virtual {v0, v2}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11003
+    .line 10919
     :cond_0
     if-eqz p2, :cond_1
 
-    .line 11004
+    .line 10920
     new-instance v2, Ljava/lang/StringBuilder;
 
     invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
@@ -35695,28 +35571,28 @@
 
     invoke-virtual {v0, v2}, Ljava/io/PrintWriter;->println(Ljava/lang/String;)V
 
-    .line 11006
+    .line 10922
     :cond_1
     invoke-virtual {v0}, Ljava/io/PrintWriter;->println()V
 
-    .line 11007
+    .line 10923
     const/4 v2, 0x1
 
     const/4 v3, 0x0
 
     invoke-virtual {p0, v0, v2, v3}, Lcom/android/server/wm/WindowManagerService;->dumpWindowsNoHeaderLocked(Ljava/io/PrintWriter;ZLjava/util/ArrayList;)V
 
-    .line 11008
+    .line 10924
     invoke-virtual {v0}, Ljava/io/PrintWriter;->close()V
 
-    .line 11009
+    .line 10925
     invoke-virtual {v1}, Ljava/io/StringWriter;->toString()Ljava/lang/String;
 
     move-result-object v2
 
     iput-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mLastANRState:Ljava/lang/String;
 
-    .line 11010
+    .line 10926
     return-void
 .end method
 
@@ -35724,24 +35600,24 @@
     .locals 5
 
     .prologue
-    .line 10473
+    .line 10419
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 10475
+    .line 10421
     :try_start_0
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 10476
+    .line 10422
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
     if-eqz v1, :cond_0
 
-    .line 10477
+    .line 10423
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
@@ -35750,14 +35626,14 @@
 
     invoke-interface {v1, v3, v4}, Landroid/view/WindowManagerPolicy;->setLastInputMethodWindowLw(Landroid/view/WindowManagerPolicy$WindowState;Landroid/view/WindowManagerPolicy$WindowState;)V
 
-    .line 10479
+    .line 10425
     :cond_0
     monitor-exit v2
 
-    .line 10480
+    .line 10426
     return-void
 
-    .line 10479
+    .line 10425
     .end local v0           #displayContent:Lcom/android/server/wm/DisplayContent;
     :catchall_0
     move-exception v1
@@ -35775,19 +35651,19 @@
     .prologue
     const/4 v4, 0x1
 
-    .line 9816
+    .line 9762
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
-    .line 9817
+    .line 9763
     .local v0, layoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
     iget-boolean v1, v0, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mAnimationScheduled:Z
 
     if-nez v1, :cond_0
 
-    .line 9818
+    .line 9764
     iput-boolean v4, v0, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mAnimationScheduled:Z
 
-    .line 9819
+    .line 9765
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mChoreographer:Landroid/view/Choreographer;
 
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mAnimator:Lcom/android/server/wm/WindowAnimator;
@@ -35798,7 +35674,7 @@
 
     invoke-virtual {v1, v4, v2, v3}, Landroid/view/Choreographer;->postCallback(ILjava/lang/Runnable;Ljava/lang/Object;)V
 
-    .line 9822
+    .line 9768
     :cond_0
     return-void
 .end method
@@ -35851,7 +35727,7 @@
     .parameter "height"
 
     .prologue
-    .line 5812
+    .line 5815
     const-string v36, "android.permission.READ_FRAME_BUFFER"
 
     const-string v37, "screenshotApplications()"
@@ -35868,7 +35744,7 @@
 
     if-nez v36, :cond_0
 
-    .line 5814
+    .line 5817
     new-instance v36, Ljava/lang/SecurityException;
 
     const-string v37, "Requires READ_FRAME_BUFFER permission"
@@ -35877,17 +35753,17 @@
 
     throw v36
 
-    .line 5819
+    .line 5822
     :cond_0
     const/16 v22, 0x0
 
-    .line 5820
+    .line 5823
     .local v22, maxLayer:I
     new-instance v13, Landroid/graphics/Rect;
 
     invoke-direct {v13}, Landroid/graphics/Rect;-><init>()V
 
-    .line 5826
+    .line 5829
     .local v13, frame:Landroid/graphics/Rect;
     move-object/from16 v0, p0
 
@@ -35897,13 +35773,13 @@
 
     monitor-enter v37
 
-    .line 5827
+    .line 5830
     :try_start_0
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v16
 
-    .line 5829
+    .line 5832
     .local v16, ident:J
     move-object/from16 v0, p0
 
@@ -35913,11 +35789,11 @@
 
     move-result-object v9
 
-    .line 5830
+    .line 5833
     .local v9, displayContent:Lcom/android/server/wm/DisplayContent;
     if-nez v9, :cond_1
 
-    .line 5831
+    .line 5834
     const/4 v4, 0x0
 
     monitor-exit v37
@@ -35926,21 +35802,21 @@
     :goto_0
     return-object v4
 
-    .line 5833
+    .line 5836
     :cond_1
     invoke-virtual {v9}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
 
     move-result-object v10
 
-    .line 5834
+    .line 5837
     .local v10, displayInfo:Landroid/view/DisplayInfo;
     iget v11, v10, Landroid/view/DisplayInfo;->logicalWidth:I
 
-    .line 5835
+    .line 5838
     .local v11, dw:I
     iget v8, v10, Landroid/view/DisplayInfo;->logicalHeight:I
 
-    .line 5837
+    .line 5840
     .local v8, dh:I
     move-object/from16 v0, p0
 
@@ -35968,11 +35844,11 @@
 
     add-int/lit16 v3, v0, 0x3e8
 
-    .line 5839
+    .line 5842
     .local v3, aboveAppLayer:I
     add-int/lit16 v3, v3, 0x2710
 
-    .line 5841
+    .line 5844
     move-object/from16 v0, p0
 
     iget-object v0, v0, Lcom/android/server/wm/WindowManagerService;->mInputMethodTarget:Lcom/android/server/wm/WindowState;
@@ -36045,12 +35921,12 @@
 
     const/16 v19, 0x1
 
-    .line 5847
+    .line 5850
     .local v19, isImeTarget:Z
     :goto_1
     const/16 v18, 0x0
 
-    .line 5848
+    .line 5851
     .local v18, including:Z
     invoke-virtual {v9}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
     :try_end_0
@@ -36058,12 +35934,12 @@
 
     move-result-object v34
 
-    .line 5850
+    .line 5853
     .local v34, windows:Lcom/android/server/wm/WindowList;
     :try_start_1
     invoke-static {}, Landroid/view/Surface;->openTransaction()V
 
-    .line 5851
+    .line 5854
     invoke-virtual/range {v34 .. v34}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v36
@@ -36074,7 +35950,7 @@
     :goto_2
     if-ltz v15, :cond_9
 
-    .line 5852
+    .line 5855
     move-object/from16 v0, v34
 
     invoke-virtual {v0, v15}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -36083,7 +35959,7 @@
 
     check-cast v35, Lcom/android/server/wm/WindowState;
 
-    .line 5853
+    .line 5856
     .local v35, ws:Lcom/android/server/wm/WindowState;
     move-object/from16 v0, v35
 
@@ -36093,14 +35969,14 @@
 
     if-nez v36, :cond_4
 
-    .line 5851
+    .line 5854
     :cond_2
     :goto_3
     add-int/lit8 v15, v15, -0x1
 
     goto :goto_2
 
-    .line 5841
+    .line 5844
     .end local v15           #i:I
     .end local v18           #including:Z
     .end local v19           #isImeTarget:Z
@@ -36111,7 +35987,7 @@
 
     goto :goto_1
 
-    .line 5856
+    .line 5859
     .restart local v15       #i:I
     .restart local v18       #including:Z
     .restart local v19       #isImeTarget:Z
@@ -36128,12 +36004,12 @@
 
     if-ge v0, v3, :cond_2
 
-    .line 5862
+    .line 5865
     if-nez v18, :cond_6
 
     if-eqz p1, :cond_6
 
-    .line 5866
+    .line 5869
     move-object/from16 v0, v35
 
     iget-boolean v0, v0, Lcom/android/server/wm/WindowState;->mIsImWindow:Z
@@ -36144,7 +36020,7 @@
 
     if-nez v19, :cond_6
 
-    .line 5869
+    .line 5872
     :cond_5
     move-object/from16 v0, v35
 
@@ -36172,7 +36048,7 @@
 
     if-ne v0, v1, :cond_2
 
-    .line 5877
+    .line 5880
     :cond_6
     move-object/from16 v0, v35
 
@@ -36192,7 +36068,7 @@
 
     const/16 v18, 0x1
 
-    .line 5879
+    .line 5882
     :goto_4
     move-object/from16 v0, v35
 
@@ -36200,7 +36076,7 @@
 
     move-object/from16 v33, v0
 
-    .line 5884
+    .line 5887
     .local v33, winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     move-object/from16 v0, v33
 
@@ -36208,7 +36084,7 @@
 
     move-object/from16 v27, v0
 
-    .line 5885
+    .line 5888
     .local v27, surface:Landroid/view/Surface;
     invoke-virtual/range {v27 .. v27}, Landroid/view/Surface;->getWidth()I
 
@@ -36226,7 +36102,7 @@
 
     invoke-virtual {v0, v1, v2}, Landroid/view/Surface;->setSize(II)V
 
-    .line 5888
+    .line 5891
     move-object/from16 v0, v33
 
     iget v0, v0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceLayer:I
@@ -36239,14 +36115,14 @@
 
     if-ge v0, v1, :cond_7
 
-    .line 5889
+    .line 5892
     move-object/from16 v0, v33
 
     iget v0, v0, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceLayer:I
 
     move/from16 v22, v0
 
-    .line 5893
+    .line 5896
     :cond_7
     move-object/from16 v0, v35
 
@@ -36256,20 +36132,20 @@
 
     if-nez v36, :cond_2
 
-    .line 5894
+    .line 5897
     move-object/from16 v0, v35
 
     iget-object v0, v0, Lcom/android/server/wm/WindowState;->mFrame:Landroid/graphics/Rect;
 
     move-object/from16 v32, v0
 
-    .line 5895
+    .line 5898
     .local v32, wf:Landroid/graphics/Rect;
     move-object/from16 v0, v35
 
     iget-object v7, v0, Lcom/android/server/wm/WindowState;->mContentInsets:Landroid/graphics/Rect;
 
-    .line 5896
+    .line 5899
     .local v7, cr:Landroid/graphics/Rect;
     move-object/from16 v0, v32
 
@@ -36283,7 +36159,7 @@
 
     add-int v20, v36, v38
 
-    .line 5897
+    .line 5900
     .local v20, left:I
     move-object/from16 v0, v32
 
@@ -36297,7 +36173,7 @@
 
     add-int v31, v36, v38
 
-    .line 5898
+    .line 5901
     .local v31, top:I
     move-object/from16 v0, v32
 
@@ -36311,7 +36187,7 @@
 
     sub-int v24, v36, v38
 
-    .line 5899
+    .line 5902
     .local v24, right:I
     move-object/from16 v0, v32
 
@@ -36325,7 +36201,7 @@
 
     sub-int v5, v36, v38
 
-    .line 5900
+    .line 5903
     .local v5, bottom:I
     move/from16 v0, v20
 
@@ -36339,7 +36215,7 @@
 
     goto/16 :goto_3
 
-    .line 5904
+    .line 5907
     .end local v5           #bottom:I
     .end local v7           #cr:Landroid/graphics/Rect;
     .end local v15           #i:I
@@ -36356,7 +36232,7 @@
     :try_start_2
     invoke-static {}, Landroid/view/Surface;->closeTransaction()V
 
-    .line 5905
+    .line 5908
     invoke-static/range {v16 .. v17}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     throw v36
@@ -36380,7 +36256,7 @@
 
     throw v36
 
-    .line 5877
+    .line 5880
     .restart local v3       #aboveAppLayer:I
     .restart local v8       #dh:I
     .restart local v9       #displayContent:Lcom/android/server/wm/DisplayContent;
@@ -36397,16 +36273,16 @@
 
     goto/16 :goto_4
 
-    .line 5904
+    .line 5907
     .end local v35           #ws:Lcom/android/server/wm/WindowState;
     :cond_9
     :try_start_3
     invoke-static {}, Landroid/view/Surface;->closeTransaction()V
 
-    .line 5905
+    .line 5908
     invoke-static/range {v16 .. v17}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 5909
+    .line 5912
     const/16 v36, 0x0
 
     const/16 v38, 0x0
@@ -36417,7 +36293,7 @@
 
     invoke-virtual {v13, v0, v1, v11, v8}, Landroid/graphics/Rect;->intersect(IIII)Z
 
-    .line 5911
+    .line 5914
     invoke-virtual {v13}, Landroid/graphics/Rect;->isEmpty()Z
 
     move-result v36
@@ -36426,7 +36302,7 @@
 
     if-nez v22, :cond_b
 
-    .line 5912
+    .line 5915
     :cond_a
     const/4 v4, 0x0
 
@@ -36434,7 +36310,7 @@
 
     goto/16 :goto_0
 
-    .line 5916
+    .line 5919
     :cond_b
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
@@ -36448,27 +36324,8 @@
 
     move-result v25
 
-    .line 5918
-    .local v25, rot:I
-    const-string v36, "ro.sf.hwrotation"
-
-    const/16 v38, 0x0
-
-    move-object/from16 v0, v36
-
-    move/from16 v1, v38
-
-    invoke-static {v0, v1}, Landroid/os/SystemProperties;->getInt(Ljava/lang/String;I)I
-
-    move-result v36
-
-    div-int/lit8 v36, v36, 0x5a
-
-    add-int v36, v36, v25
-
-    rem-int/lit8 v25, v36, 0x4
-
     .line 5920
+    .local v25, rot:I
     invoke-virtual {v13}, Landroid/graphics/Rect;->width()I
 
     move-result v14
@@ -36876,7 +36733,7 @@
     .parameter "sync"
 
     .prologue
-    .line 2667
+    .line 2664
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     if-eq p1, v0, :cond_0
@@ -36889,11 +36746,11 @@
 
     if-ne p1, v0, :cond_3
 
-    .line 2669
+    .line 2666
     :cond_0
     move/from16 v9, p7
 
-    .line 2670
+    .line 2667
     .local v9, doWait:Z
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
@@ -36901,15 +36758,15 @@
 
     move-result v7
 
-    .line 2671
+    .line 2668
     .local v7, curTokenIndex:I
     :cond_1
     if-lez v7, :cond_2
 
-    .line 2672
+    .line 2669
     add-int/lit8 v7, v7, -0x1
 
-    .line 2673
+    .line 2670
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v0, v7}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -36918,7 +36775,7 @@
 
     check-cast v10, Lcom/android/server/wm/WindowToken;
 
-    .line 2674
+    .line 2671
     .local v10, token:Lcom/android/server/wm/WindowToken;
     iget-object v0, v10, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
@@ -36926,15 +36783,15 @@
 
     move-result v8
 
-    .line 2675
+    .line 2672
     .local v8, curWallpaperIndex:I
     :goto_0
     if-lez v8, :cond_1
 
-    .line 2676
+    .line 2673
     add-int/lit8 v8, v8, -0x1
 
-    .line 2677
+    .line 2674
     iget-object v0, v10, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v0, v8}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -36943,7 +36800,7 @@
 
     check-cast v11, Lcom/android/server/wm/WindowState;
 
-    .line 2679
+    .line 2676
     .local v11, wallpaper:Lcom/android/server/wm/WindowState;
     :try_start_0
     iget-object v0, v11, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
@@ -36964,19 +36821,19 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 2682
+    .line 2679
     const/16 p7, 0x0
 
     goto :goto_0
 
-    .line 2688
+    .line 2685
     .end local v8           #curWallpaperIndex:I
     .end local v10           #token:Lcom/android/server/wm/WindowToken;
     .end local v11           #wallpaper:Lcom/android/server/wm/WindowState;
     :cond_2
     if-eqz v9, :cond_3
 
-    .line 2693
+    .line 2690
     .end local v7           #curTokenIndex:I
     .end local v9           #doWait:Z
     :cond_3
@@ -36984,7 +36841,7 @@
 
     return-object v0
 
-    .line 2683
+    .line 2680
     .restart local v7       #curTokenIndex:I
     .restart local v8       #curWallpaperIndex:I
     .restart local v9       #doWait:Z
@@ -37002,12 +36859,12 @@
     .parameter "params"
 
     .prologue
-    .line 9878
+    .line 9824
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
     monitor-enter v1
 
-    .line 9879
+    .line 9825
     :try_start_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
@@ -37015,16 +36872,16 @@
 
     invoke-virtual {v0, p1, p2}, Landroid/util/SparseArray;->put(ILjava/lang/Object;)V
 
-    .line 9880
+    .line 9826
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->scheduleAnimationLocked()V
 
-    .line 9881
+    .line 9827
     monitor-exit v1
 
-    .line 9882
+    .line 9828
     return-void
 
-    .line 9881
+    .line 9827
     :catchall_0
     move-exception v0
 
@@ -37041,7 +36898,7 @@
     .parameter "scale"
 
     .prologue
-    .line 5389
+    .line 5386
     const-string v0, "android.permission.SET_ANIMATION_SCALE"
 
     const-string v1, "setAnimationScale()"
@@ -37052,7 +36909,7 @@
 
     if-nez v0, :cond_0
 
-    .line 5391
+    .line 5388
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v1, "Requires SET_ANIMATION_SCALE permission"
@@ -37061,7 +36918,7 @@
 
     throw v0
 
-    .line 5394
+    .line 5391
     :cond_0
     const/4 v0, 0x0
 
@@ -37071,17 +36928,17 @@
 
     const/4 p2, 0x0
 
-    .line 5396
+    .line 5393
     :cond_1
     :goto_0
     invoke-static {p2}, Ljava/lang/Math;->abs(F)F
 
     move-result p2
 
-    .line 5397
+    .line 5394
     packed-switch p1, :pswitch_data_0
 
-    .line 5404
+    .line 5401
     :goto_1
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
@@ -37093,10 +36950,10 @@
 
     invoke-virtual {v0}, Landroid/os/Message;->sendToTarget()V
 
-    .line 5405
+    .line 5402
     return-void
 
-    .line 5395
+    .line 5392
     :cond_2
     const/high16 v0, 0x41a0
 
@@ -37108,7 +36965,7 @@
 
     goto :goto_0
 
-    .line 5398
+    .line 5395
     :pswitch_0
     invoke-static {p2}, Lcom/android/server/wm/WindowManagerService;->fixScale(F)F
 
@@ -37118,7 +36975,7 @@
 
     goto :goto_1
 
-    .line 5399
+    .line 5396
     :pswitch_1
     invoke-static {p2}, Lcom/android/server/wm/WindowManagerService;->fixScale(F)F
 
@@ -37128,7 +36985,7 @@
 
     goto :goto_1
 
-    .line 5400
+    .line 5397
     :pswitch_2
     invoke-static {p2}, Lcom/android/server/wm/WindowManagerService;->fixScale(F)F
 
@@ -37138,7 +36995,7 @@
 
     goto :goto_1
 
-    .line 5397
+    .line 5394
     nop
 
     :pswitch_data_0
@@ -37158,7 +37015,7 @@
 
     const/4 v2, 0x1
 
-    .line 5408
+    .line 5405
     const-string v0, "android.permission.SET_ANIMATION_SCALE"
 
     const-string v1, "setAnimationScale()"
@@ -37169,7 +37026,7 @@
 
     if-nez v0, :cond_0
 
-    .line 5410
+    .line 5407
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v1, "Requires SET_ANIMATION_SCALE permission"
@@ -37178,16 +37035,16 @@
 
     throw v0
 
-    .line 5413
+    .line 5410
     :cond_0
     if-eqz p1, :cond_3
 
-    .line 5414
+    .line 5411
     array-length v0, p1
 
     if-lt v0, v2, :cond_1
 
-    .line 5415
+    .line 5412
     const/4 v0, 0x0
 
     aget v0, p1, v0
@@ -37198,13 +37055,13 @@
 
     iput v0, p0, Lcom/android/server/wm/WindowManagerService;->mWindowAnimationScale:F
 
-    .line 5417
+    .line 5414
     :cond_1
     array-length v0, p1
 
     if-lt v0, v3, :cond_2
 
-    .line 5418
+    .line 5415
     aget v0, p1, v2
 
     invoke-static {v0}, Lcom/android/server/wm/WindowManagerService;->fixScale(F)F
@@ -37213,7 +37070,7 @@
 
     iput v0, p0, Lcom/android/server/wm/WindowManagerService;->mTransitionAnimationScale:F
 
-    .line 5420
+    .line 5417
     :cond_2
     array-length v0, p1
 
@@ -37221,7 +37078,7 @@
 
     if-lt v0, v1, :cond_3
 
-    .line 5421
+    .line 5418
     aget v0, p1, v3
 
     invoke-static {v0}, Lcom/android/server/wm/WindowManagerService;->fixScale(F)F
@@ -37230,7 +37087,7 @@
 
     invoke-direct {p0, v0}, Lcom/android/server/wm/WindowManagerService;->setAnimatorDurationScale(F)V
 
-    .line 5426
+    .line 5423
     :cond_3
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
@@ -37242,7 +37099,7 @@
 
     invoke-virtual {v0}, Landroid/os/Message;->sendToTarget()V
 
-    .line 5427
+    .line 5424
     return-void
 .end method
 
@@ -37252,7 +37109,7 @@
     .parameter "groupId"
 
     .prologue
-    .line 3844
+    .line 3841
     const-string v1, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v2, "setAppGroupId()"
@@ -37263,7 +37120,7 @@
 
     if-nez v1, :cond_0
 
-    .line 3846
+    .line 3843
     new-instance v1, Ljava/lang/SecurityException;
 
     const-string v2, "Requires MANAGE_APP_TOKENS permission"
@@ -37272,23 +37129,23 @@
 
     throw v1
 
-    .line 3849
+    .line 3846
     :cond_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 3850
+    .line 3847
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->findAppWindowToken(Landroid/os/IBinder;)Lcom/android/server/wm/AppWindowToken;
 
     move-result-object v0
 
-    .line 3851
+    .line 3848
     .local v0, atoken:Lcom/android/server/wm/AppWindowToken;
     if-nez v0, :cond_1
 
-    .line 3852
+    .line 3849
     const-string v1, "WindowManager"
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -37311,18 +37168,18 @@
 
     invoke-static {v1, v3}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3853
+    .line 3850
     monitor-exit v2
 
-    .line 3857
+    .line 3854
     :goto_0
     return-void
 
-    .line 3855
+    .line 3852
     :cond_1
     iput p2, v0, Lcom/android/server/wm/AppWindowToken;->groupId:I
 
-    .line 3856
+    .line 3853
     monitor-exit v2
 
     goto :goto_0
@@ -37344,7 +37201,7 @@
     .parameter "requestedOrientation"
 
     .prologue
-    .line 4082
+    .line 4079
     const-string v1, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v2, "setAppOrientation()"
@@ -37355,7 +37212,7 @@
 
     if-nez v1, :cond_0
 
-    .line 4084
+    .line 4081
     new-instance v1, Ljava/lang/SecurityException;
 
     const-string v2, "Requires MANAGE_APP_TOKENS permission"
@@ -37364,13 +37221,13 @@
 
     throw v1
 
-    .line 4087
+    .line 4084
     :cond_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 4088
+    .line 4085
     :try_start_0
     invoke-interface {p1}, Landroid/view/IApplicationToken;->asBinder()Landroid/os/IBinder;
 
@@ -37380,11 +37237,11 @@
 
     move-result-object v0
 
-    .line 4089
+    .line 4086
     .local v0, atoken:Lcom/android/server/wm/AppWindowToken;
     if-nez v0, :cond_1
 
-    .line 4090
+    .line 4087
     const-string v1, "WindowManager"
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -37407,18 +37264,18 @@
 
     invoke-static {v1, v3}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 4091
+    .line 4088
     monitor-exit v2
 
-    .line 4096
+    .line 4093
     :goto_0
     return-void
 
-    .line 4094
+    .line 4091
     :cond_1
     iput p2, v0, Lcom/android/server/wm/AppWindowToken;->requestedOrientation:I
 
-    .line 4095
+    .line 4092
     monitor-exit v2
 
     goto :goto_0
@@ -37448,7 +37305,7 @@
     .parameter "createIfNeeded"
 
     .prologue
-    .line 4283
+    .line 4280
     const-string v2, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v3, "setAppStartingWindow()"
@@ -37461,7 +37318,7 @@
 
     if-nez v2, :cond_0
 
-    .line 4285
+    .line 4282
     new-instance v2, Ljava/lang/SecurityException;
 
     const-string v3, "Requires MANAGE_APP_TOKENS permission"
@@ -37470,7 +37327,7 @@
 
     throw v2
 
-    .line 4288
+    .line 4285
     :cond_0
     move-object/from16 v0, p0
 
@@ -37480,17 +37337,17 @@
 
     monitor-enter v19
 
-    .line 4293
+    .line 4290
     :try_start_0
     invoke-virtual/range {p0 .. p1}, Lcom/android/server/wm/WindowManagerService;->findAppWindowToken(Landroid/os/IBinder;)Lcom/android/server/wm/AppWindowToken;
 
     move-result-object v18
 
-    .line 4294
+    .line 4291
     .local v18, wtoken:Lcom/android/server/wm/AppWindowToken;
     if-nez v18, :cond_1
 
-    .line 4295
+    .line 4292
     const-string v2, "WindowManager"
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -37515,14 +37372,14 @@
 
     invoke-static {v2, v3}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 4296
+    .line 4293
     monitor-exit v19
 
-    .line 4489
+    .line 4486
     :goto_0
     return-void
 
-    .line 4302
+    .line 4299
     :cond_1
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->okToDisplay()Z
 
@@ -37530,12 +37387,12 @@
 
     if-nez v2, :cond_2
 
-    .line 4303
+    .line 4300
     monitor-exit v19
 
     goto :goto_0
 
-    .line 4488
+    .line 4485
     .end local v18           #wtoken:Lcom/android/server/wm/AppWindowToken;
     :catchall_0
     move-exception v2
@@ -37546,7 +37403,7 @@
 
     throw v2
 
-    .line 4306
+    .line 4303
     .restart local v18       #wtoken:Lcom/android/server/wm/AppWindowToken;
     :cond_2
     :try_start_1
@@ -37556,16 +37413,16 @@
 
     if-eqz v2, :cond_3
 
-    .line 4307
+    .line 4304
     monitor-exit v19
 
     goto :goto_0
 
-    .line 4310
+    .line 4307
     :cond_3
     if-eqz p9, :cond_d
 
-    .line 4311
+    .line 4308
     move-object/from16 v0, p0
 
     move-object/from16 v1, p9
@@ -37574,40 +37431,40 @@
 
     move-result-object v16
 
-    .line 4312
+    .line 4309
     .local v16, ttoken:Lcom/android/server/wm/AppWindowToken;
     if-eqz v16, :cond_d
 
-    .line 4313
+    .line 4310
     move-object/from16 v0, v16
 
     iget-object v14, v0, Lcom/android/server/wm/AppWindowToken;->startingWindow:Lcom/android/server/wm/WindowState;
 
-    .line 4314
+    .line 4311
     .local v14, startingWindow:Lcom/android/server/wm/WindowState;
     if-eqz v14, :cond_a
 
-    .line 4315
+    .line 4312
     move-object/from16 v0, p0
 
     iget-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mStartingIconInTransition:Z
 
     if-eqz v2, :cond_4
 
-    .line 4319
+    .line 4316
     const/4 v2, 0x1
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mSkipAppTransitionAnimation:Z
 
-    .line 4324
+    .line 4321
     :cond_4
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v12
 
-    .line 4328
+    .line 4325
     .local v12, origId:J
     move-object/from16 v0, v16
 
@@ -37617,7 +37474,7 @@
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingData:Lcom/android/server/wm/StartingData;
 
-    .line 4329
+    .line 4326
     move-object/from16 v0, v16
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingView:Landroid/view/View;
@@ -37626,7 +37483,7 @@
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingView:Landroid/view/View;
 
-    .line 4330
+    .line 4327
     move-object/from16 v0, v16
 
     iget-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->startingDisplayed:Z
@@ -37635,19 +37492,19 @@
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->startingDisplayed:Z
 
-    .line 4331
+    .line 4328
     const/4 v2, 0x0
 
     move-object/from16 v0, v16
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->startingDisplayed:Z
 
-    .line 4332
+    .line 4329
     move-object/from16 v0, v18
 
     iput-object v14, v0, Lcom/android/server/wm/AppWindowToken;->startingWindow:Lcom/android/server/wm/WindowState;
 
-    .line 4333
+    .line 4330
     move-object/from16 v0, v16
 
     iget-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->reportedVisible:Z
@@ -37656,50 +37513,50 @@
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->reportedVisible:Z
 
-    .line 4334
+    .line 4331
     const/4 v2, 0x0
 
     move-object/from16 v0, v16
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingData:Lcom/android/server/wm/StartingData;
 
-    .line 4335
+    .line 4332
     const/4 v2, 0x0
 
     move-object/from16 v0, v16
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingView:Landroid/view/View;
 
-    .line 4336
+    .line 4333
     const/4 v2, 0x0
 
     move-object/from16 v0, v16
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingWindow:Lcom/android/server/wm/WindowState;
 
-    .line 4337
+    .line 4334
     const/4 v2, 0x1
 
     move-object/from16 v0, v16
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->startingMoved:Z
 
-    .line 4338
+    .line 4335
     move-object/from16 v0, v18
 
     iput-object v0, v14, Lcom/android/server/wm/WindowState;->mToken:Lcom/android/server/wm/WindowToken;
 
-    .line 4339
+    .line 4336
     move-object/from16 v0, v18
 
     iput-object v0, v14, Lcom/android/server/wm/WindowState;->mRootToken:Lcom/android/server/wm/WindowToken;
 
-    .line 4340
+    .line 4337
     move-object/from16 v0, v18
 
     iput-object v0, v14, Lcom/android/server/wm/WindowState;->mAppToken:Lcom/android/server/wm/AppWindowToken;
 
-    .line 4341
+    .line 4338
     iget-object v2, v14, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
     move-object/from16 v0, v18
@@ -37708,56 +37565,56 @@
 
     iput-object v3, v2, Lcom/android/server/wm/WindowStateAnimator;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
-    .line 4346
+    .line 4343
     invoke-virtual {v14}, Lcom/android/server/wm/WindowState;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v2
 
     invoke-virtual {v2, v14}, Lcom/android/server/wm/WindowList;->remove(Ljava/lang/Object;)Z
 
-    .line 4347
+    .line 4344
     const/4 v2, 0x1
 
     move-object/from16 v0, p0
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mWindowsChanged:Z
 
-    .line 4350
+    .line 4347
     move-object/from16 v0, v16
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v2, v14}, Lcom/android/server/wm/WindowList;->remove(Ljava/lang/Object;)Z
 
-    .line 4351
+    .line 4348
     move-object/from16 v0, v16
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v2, v14}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 4352
+    .line 4349
     const/4 v2, 0x1
 
     move-object/from16 v0, p0
 
     invoke-direct {v0, v14, v2}, Lcom/android/server/wm/WindowManagerService;->addWindowToListInOrderLocked(Lcom/android/server/wm/WindowState;Z)V
 
-    .line 4359
+    .line 4356
     move-object/from16 v0, v16
 
     iget-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->allDrawn:Z
 
     if-eqz v2, :cond_5
 
-    .line 4360
+    .line 4357
     const/4 v2, 0x1
 
     move-object/from16 v0, v18
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->allDrawn:Z
 
-    .line 4362
+    .line 4359
     :cond_5
     move-object/from16 v0, v16
 
@@ -37765,14 +37622,14 @@
 
     if-eqz v2, :cond_6
 
-    .line 4363
+    .line 4360
     const/4 v2, 0x1
 
     move-object/from16 v0, v18
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->firstWindowDrawn:Z
 
-    .line 4365
+    .line 4362
     :cond_6
     move-object/from16 v0, v16
 
@@ -37780,28 +37637,28 @@
 
     if-nez v2, :cond_7
 
-    .line 4366
+    .line 4363
     const/4 v2, 0x0
 
     move-object/from16 v0, v18
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->hidden:Z
 
-    .line 4367
+    .line 4364
     const/4 v2, 0x0
 
     move-object/from16 v0, v18
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->hiddenRequested:Z
 
-    .line 4368
+    .line 4365
     const/4 v2, 0x0
 
     move-object/from16 v0, v18
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->willBeHidden:Z
 
-    .line 4370
+    .line 4367
     :cond_7
     move-object/from16 v0, v18
 
@@ -37813,7 +37670,7 @@
 
     if-eq v2, v3, :cond_8
 
-    .line 4371
+    .line 4368
     move-object/from16 v0, v16
 
     iget-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->clientHidden:Z
@@ -37822,16 +37679,16 @@
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->clientHidden:Z
 
-    .line 4372
+    .line 4369
     invoke-virtual/range {v18 .. v18}, Lcom/android/server/wm/AppWindowToken;->sendAppVisibilityToClients()V
 
-    .line 4374
+    .line 4371
     :cond_8
     move-object/from16 v0, v16
 
     iget-object v15, v0, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
-    .line 4375
+    .line 4372
     .local v15, tAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
     move-object/from16 v0, v18
 
@@ -37839,50 +37696,50 @@
 
     move-object/from16 v17, v0
 
-    .line 4376
+    .line 4373
     .local v17, wAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
     iget-object v2, v15, Lcom/android/server/wm/AppWindowAnimator;->animation:Landroid/view/animation/Animation;
 
     if-eqz v2, :cond_9
 
-    .line 4377
+    .line 4374
     iget-object v2, v15, Lcom/android/server/wm/AppWindowAnimator;->animation:Landroid/view/animation/Animation;
 
     move-object/from16 v0, v17
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowAnimator;->animation:Landroid/view/animation/Animation;
 
-    .line 4378
+    .line 4375
     iget-boolean v2, v15, Lcom/android/server/wm/AppWindowAnimator;->animating:Z
 
     move-object/from16 v0, v17
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowAnimator;->animating:Z
 
-    .line 4379
+    .line 4376
     iget v2, v15, Lcom/android/server/wm/AppWindowAnimator;->animLayerAdjustment:I
 
     move-object/from16 v0, v17
 
     iput v2, v0, Lcom/android/server/wm/AppWindowAnimator;->animLayerAdjustment:I
 
-    .line 4380
+    .line 4377
     const/4 v2, 0x0
 
     iput-object v2, v15, Lcom/android/server/wm/AppWindowAnimator;->animation:Landroid/view/animation/Animation;
 
-    .line 4381
+    .line 4378
     const/4 v2, 0x0
 
     iput v2, v15, Lcom/android/server/wm/AppWindowAnimator;->animLayerAdjustment:I
 
-    .line 4382
+    .line 4379
     invoke-virtual/range {v17 .. v17}, Lcom/android/server/wm/AppWindowAnimator;->updateLayers()V
 
-    .line 4383
+    .line 4380
     invoke-virtual {v15}, Lcom/android/server/wm/AppWindowAnimator;->updateLayers()V
 
-    .line 4386
+    .line 4383
     :cond_9
     const/4 v2, 0x3
 
@@ -37892,7 +37749,7 @@
 
     invoke-direct {v0, v2, v3}, Lcom/android/server/wm/WindowManagerService;->updateFocusedWindowLocked(IZ)Z
 
-    .line 4388
+    .line 4385
     invoke-virtual/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v2
@@ -37901,18 +37758,18 @@
 
     iput-boolean v3, v2, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 4389
+    .line 4386
     invoke-direct/range {p0 .. p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 4390
+    .line 4387
     invoke-static {v12, v13}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 4391
+    .line 4388
     monitor-exit v19
 
     goto/16 :goto_0
 
-    .line 4392
+    .line 4389
     .end local v12           #origId:J
     .end local v15           #tAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
     .end local v17           #wAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
@@ -37923,7 +37780,7 @@
 
     if-eqz v2, :cond_b
 
-    .line 4398
+    .line 4395
     move-object/from16 v0, v16
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingData:Lcom/android/server/wm/StartingData;
@@ -37932,21 +37789,21 @@
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingData:Lcom/android/server/wm/StartingData;
 
-    .line 4399
+    .line 4396
     const/4 v2, 0x0
 
     move-object/from16 v0, v16
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingData:Lcom/android/server/wm/StartingData;
 
-    .line 4400
+    .line 4397
     const/4 v2, 0x1
 
     move-object/from16 v0, v16
 
     iput-boolean v2, v0, Lcom/android/server/wm/AppWindowToken;->startingMoved:Z
 
-    .line 4401
+    .line 4398
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -37959,7 +37816,7 @@
 
     move-result-object v11
 
-    .line 4405
+    .line 4402
     .local v11, m:Landroid/os/Message;
     move-object/from16 v0, p0
 
@@ -37967,19 +37824,19 @@
 
     invoke-virtual {v2, v11}, Lcom/android/server/wm/WindowManagerService$H;->sendMessageAtFrontOfQueue(Landroid/os/Message;)Z
 
-    .line 4406
+    .line 4403
     monitor-exit v19
 
     goto/16 :goto_0
 
-    .line 4408
+    .line 4405
     .end local v11           #m:Landroid/os/Message;
     :cond_b
     move-object/from16 v0, v16
 
     iget-object v15, v0, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
-    .line 4409
+    .line 4406
     .restart local v15       #tAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
     move-object/from16 v0, v18
 
@@ -37987,27 +37844,27 @@
 
     move-object/from16 v17, v0
 
-    .line 4410
+    .line 4407
     .restart local v17       #wAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
     iget-object v2, v15, Lcom/android/server/wm/AppWindowAnimator;->thumbnail:Landroid/view/Surface;
 
     if-eqz v2, :cond_d
 
-    .line 4413
+    .line 4410
     move-object/from16 v0, v17
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowAnimator;->thumbnail:Landroid/view/Surface;
 
     if-eqz v2, :cond_c
 
-    .line 4414
+    .line 4411
     move-object/from16 v0, v17
 
     iget-object v2, v0, Lcom/android/server/wm/AppWindowAnimator;->thumbnail:Landroid/view/Surface;
 
     invoke-virtual {v2}, Landroid/view/Surface;->destroy()V
 
-    .line 4416
+    .line 4413
     :cond_c
     iget-object v2, v15, Lcom/android/server/wm/AppWindowAnimator;->thumbnail:Landroid/view/Surface;
 
@@ -38015,40 +37872,40 @@
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowAnimator;->thumbnail:Landroid/view/Surface;
 
-    .line 4417
+    .line 4414
     iget v2, v15, Lcom/android/server/wm/AppWindowAnimator;->thumbnailX:I
 
     move-object/from16 v0, v17
 
     iput v2, v0, Lcom/android/server/wm/AppWindowAnimator;->thumbnailX:I
 
-    .line 4418
+    .line 4415
     iget v2, v15, Lcom/android/server/wm/AppWindowAnimator;->thumbnailY:I
 
     move-object/from16 v0, v17
 
     iput v2, v0, Lcom/android/server/wm/AppWindowAnimator;->thumbnailY:I
 
-    .line 4419
+    .line 4416
     iget v2, v15, Lcom/android/server/wm/AppWindowAnimator;->thumbnailLayer:I
 
     move-object/from16 v0, v17
 
     iput v2, v0, Lcom/android/server/wm/AppWindowAnimator;->thumbnailLayer:I
 
-    .line 4420
+    .line 4417
     iget-object v2, v15, Lcom/android/server/wm/AppWindowAnimator;->thumbnailAnimation:Landroid/view/animation/Animation;
 
     move-object/from16 v0, v17
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowAnimator;->thumbnailAnimation:Landroid/view/animation/Animation;
 
-    .line 4421
+    .line 4418
     const/4 v2, 0x0
 
     iput-object v2, v15, Lcom/android/server/wm/AppWindowAnimator;->thumbnail:Landroid/view/Surface;
 
-    .line 4428
+    .line 4425
     .end local v14           #startingWindow:Lcom/android/server/wm/WindowState;
     .end local v15           #tAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
     .end local v16           #ttoken:Lcom/android/server/wm/AppWindowToken;
@@ -38056,16 +37913,16 @@
     :cond_d
     if-nez p10, :cond_e
 
-    .line 4429
+    .line 4426
     monitor-exit v19
 
     goto/16 :goto_0
 
-    .line 4438
+    .line 4435
     :cond_e
     if-eqz p3, :cond_12
 
-    .line 4439
+    .line 4436
     invoke-static {}, Lcom/android/server/AttributeCache;->instance()Lcom/android/server/AttributeCache;
 
     move-result-object v2
@@ -38084,16 +37941,16 @@
 
     move-result-object v10
 
-    .line 4441
+    .line 4438
     .local v10, ent:Lcom/android/server/AttributeCache$Entry;
     if-nez v10, :cond_f
 
-    .line 4444
+    .line 4441
     monitor-exit v19
 
     goto/16 :goto_0
 
-    .line 4455
+    .line 4452
     :cond_f
     iget-object v2, v10, Lcom/android/server/AttributeCache$Entry;->array:Landroid/content/res/TypedArray;
 
@@ -38107,12 +37964,12 @@
 
     if-eqz v2, :cond_10
 
-    .line 4457
+    .line 4454
     monitor-exit v19
 
     goto/16 :goto_0
 
-    .line 4459
+    .line 4456
     :cond_10
     iget-object v2, v10, Lcom/android/server/AttributeCache$Entry;->array:Landroid/content/res/TypedArray;
 
@@ -38126,12 +37983,12 @@
 
     if-eqz v2, :cond_11
 
-    .line 4461
+    .line 4458
     monitor-exit v19
 
     goto/16 :goto_0
 
-    .line 4463
+    .line 4460
     :cond_11
     iget-object v2, v10, Lcom/android/server/AttributeCache$Entry;->array:Landroid/content/res/TypedArray;
 
@@ -38145,19 +38002,19 @@
 
     if-eqz v2, :cond_12
 
-    .line 4465
+    .line 4462
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     if-nez v2, :cond_13
 
-    .line 4471
+    .line 4468
     const/high16 v2, 0x10
 
     or-int p8, p8, v2
 
-    .line 4479
+    .line 4476
     .end local v10           #ent:Lcom/android/server/AttributeCache$Entry;
     :cond_12
     const/4 v2, 0x1
@@ -38166,7 +38023,7 @@
 
     iput-boolean v2, v0, Lcom/android/server/wm/WindowManagerService;->mStartingIconInTransition:Z
 
-    .line 4480
+    .line 4477
     new-instance v2, Lcom/android/server/wm/StartingData;
 
     move-object/from16 v3, p2
@@ -38189,7 +38046,7 @@
 
     iput-object v2, v0, Lcom/android/server/wm/AppWindowToken;->startingData:Lcom/android/server/wm/StartingData;
 
-    .line 4482
+    .line 4479
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -38202,7 +38059,7 @@
 
     move-result-object v11
 
-    .line 4487
+    .line 4484
     .restart local v11       #m:Landroid/os/Message;
     move-object/from16 v0, p0
 
@@ -38210,12 +38067,12 @@
 
     invoke-virtual {v2, v11}, Lcom/android/server/wm/WindowManagerService$H;->sendMessageAtFrontOfQueue(Landroid/os/Message;)Z
 
-    .line 4488
+    .line 4485
     monitor-exit v19
 
     goto/16 :goto_0
 
-    .line 4473
+    .line 4470
     .end local v11           #m:Landroid/os/Message;
     .restart local v10       #ent:Lcom/android/server/AttributeCache$Entry;
     :cond_13
@@ -38238,7 +38095,7 @@
 
     const/4 v2, 0x0
 
-    .line 4615
+    .line 4612
     const-string v3, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v4, "setAppVisibility()"
@@ -38249,7 +38106,7 @@
 
     if-nez v3, :cond_0
 
-    .line 4617
+    .line 4614
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v2, "Requires MANAGE_APP_TOKENS permission"
@@ -38258,23 +38115,23 @@
 
     throw v0
 
-    .line 4622
+    .line 4619
     :cond_0
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v8
 
-    .line 4623
+    .line 4620
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->findAppWindowToken(Landroid/os/IBinder;)Lcom/android/server/wm/AppWindowToken;
 
     move-result-object v1
 
-    .line 4624
+    .line 4621
     .local v1, wtoken:Lcom/android/server/wm/AppWindowToken;
     if-nez v1, :cond_1
 
-    .line 4625
+    .line 4622
     const-string v0, "WindowManager"
 
     new-instance v2, Ljava/lang/StringBuilder;
@@ -38297,14 +38154,14 @@
 
     invoke-static {v0, v2}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 4626
+    .line 4623
     monitor-exit v8
 
-    .line 4699
+    .line 4696
     :goto_0
     return-void
 
-    .line 4643
+    .line 4640
     :cond_1
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->okToDisplay()Z
 
@@ -38316,17 +38173,17 @@
 
     if-eq v3, v5, :cond_7
 
-    .line 4645
+    .line 4642
     iget-boolean v3, v1, Lcom/android/server/wm/AppWindowToken;->hiddenRequested:Z
 
     if-eq v3, p2, :cond_2
 
-    .line 4646
+    .line 4643
     monitor-exit v8
 
     goto :goto_0
 
-    .line 4698
+    .line 4695
     .end local v1           #wtoken:Lcom/android/server/wm/AppWindowToken;
     :catchall_0
     move-exception v0
@@ -38337,7 +38194,7 @@
 
     throw v0
 
-    .line 4648
+    .line 4645
     .restart local v1       #wtoken:Lcom/android/server/wm/AppWindowToken;
     :cond_2
     if-nez p2, :cond_5
@@ -38346,81 +38203,81 @@
     :try_start_1
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->hiddenRequested:Z
 
-    .line 4650
+    .line 4647
     iget-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->startingDisplayed:Z
 
     if-nez v0, :cond_3
 
-    .line 4653
+    .line 4650
     iget-object v0, v1, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     invoke-virtual {v0}, Lcom/android/server/wm/AppWindowAnimator;->setDummyAnimation()V
 
-    .line 4655
+    .line 4652
     :cond_3
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mOpeningApps:Ljava/util/ArrayList;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 4656
+    .line 4653
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mClosingApps:Ljava/util/ArrayList;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->remove(Ljava/lang/Object;)Z
 
-    .line 4657
+    .line 4654
     const/4 v0, 0x0
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->waitingToHide:Z
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->waitingToShow:Z
 
-    .line 4658
+    .line 4655
     const/4 v0, 0x1
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->inPendingTransaction:Z
 
-    .line 4659
+    .line 4656
     if-eqz p2, :cond_6
 
-    .line 4660
+    .line 4657
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mOpeningApps:Ljava/util/ArrayList;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 4661
+    .line 4658
     const/4 v0, 0x0
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->startingMoved:Z
 
-    .line 4666
+    .line 4663
     iget-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->hidden:Z
 
     if-eqz v0, :cond_4
 
-    .line 4667
+    .line 4664
     const/4 v0, 0x0
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->allDrawn:Z
 
-    .line 4668
+    .line 4665
     const/4 v0, 0x1
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->waitingToShow:Z
 
-    .line 4670
+    .line 4667
     iget-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->clientHidden:Z
 
     if-eqz v0, :cond_4
 
-    .line 4677
+    .line 4674
     const/4 v0, 0x0
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->clientHidden:Z
 
-    .line 4678
+    .line 4675
     invoke-virtual {v1}, Lcom/android/server/wm/AppWindowToken;->sendAppVisibilityToClients()V
 
-    .line 4690
+    .line 4687
     :cond_4
     :goto_2
     monitor-exit v8
@@ -38430,34 +38287,34 @@
     :cond_5
     move v0, v2
 
-    .line 4648
+    .line 4645
     goto :goto_1
 
-    .line 4682
+    .line 4679
     :cond_6
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mClosingApps:Ljava/util/ArrayList;
 
     invoke-virtual {v0, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 4686
+    .line 4683
     iget-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->hidden:Z
 
     if-nez v0, :cond_4
 
-    .line 4687
+    .line 4684
     const/4 v0, 0x1
 
     iput-boolean v0, v1, Lcom/android/server/wm/AppWindowToken;->waitingToHide:Z
 
     goto :goto_2
 
-    .line 4693
+    .line 4690
     :cond_7
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v6
 
-    .line 4694
+    .line 4691
     .local v6, origId:J
     const/4 v2, 0x0
 
@@ -38471,13 +38328,13 @@
 
     invoke-virtual/range {v0 .. v5}, Lcom/android/server/wm/WindowManagerService;->setTokenVisibilityLocked(Lcom/android/server/wm/AppWindowToken;Landroid/view/WindowManager$LayoutParams;ZIZ)Z
 
-    .line 4696
+    .line 4693
     invoke-virtual {v1}, Lcom/android/server/wm/AppWindowToken;->updateReportedVisibilityLocked()V
 
-    .line 4697
+    .line 4694
     invoke-static {v6, v7}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 4698
+    .line 4695
     monitor-exit v8
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
@@ -38490,7 +38347,7 @@
     .parameter "token"
 
     .prologue
-    .line 4492
+    .line 4489
     const-string v1, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v2, "setAppWillBeHidden()"
@@ -38501,7 +38358,7 @@
 
     if-nez v1, :cond_0
 
-    .line 4494
+    .line 4491
     new-instance v1, Ljava/lang/SecurityException;
 
     const-string v2, "Requires MANAGE_APP_TOKENS permission"
@@ -38510,23 +38367,23 @@
 
     throw v1
 
-    .line 4499
+    .line 4496
     :cond_0
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 4500
+    .line 4497
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->findAppWindowToken(Landroid/os/IBinder;)Lcom/android/server/wm/AppWindowToken;
 
     move-result-object v0
 
-    .line 4501
+    .line 4498
     .local v0, wtoken:Lcom/android/server/wm/AppWindowToken;
     if-nez v0, :cond_1
 
-    .line 4502
+    .line 4499
     const-string v1, "WindowManager"
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -38549,20 +38406,20 @@
 
     invoke-static {v1, v3}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 4503
+    .line 4500
     monitor-exit v2
 
-    .line 4507
+    .line 4504
     :goto_0
     return-void
 
-    .line 4505
+    .line 4502
     :cond_1
     const/4 v1, 0x1
 
     iput-boolean v1, v0, Lcom/android/server/wm/AppWindowToken;->willBeHidden:Z
 
-    .line 4506
+    .line 4503
     monitor-exit v2
 
     goto :goto_0
@@ -38583,26 +38440,26 @@
     .parameter "newUserId"
 
     .prologue
-    .line 5503
+    .line 5500
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v5
 
-    .line 5504
+    .line 5501
     :try_start_0
     iput p1, p0, Lcom/android/server/wm/WindowManagerService;->mCurrentUserId:I
 
-    .line 5505
+    .line 5502
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v4, p1}, Landroid/view/WindowManagerPolicy;->setCurrentUserLw(I)V
 
-    .line 5508
+    .line 5505
     new-instance v1, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
 
     invoke-direct {v1, p0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 5509
+    .line 5506
     .local v1, iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :cond_0
     invoke-virtual {v1}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->hasNext()Z
@@ -38611,7 +38468,7 @@
 
     if-eqz v4, :cond_2
 
-    .line 5510
+    .line 5507
     invoke-virtual {v1}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v4
@@ -38620,7 +38477,7 @@
 
     move-result-object v3
 
-    .line 5511
+    .line 5508
     .local v3, windows:Lcom/android/server/wm/WindowList;
     const/4 v0, 0x0
 
@@ -38632,14 +38489,14 @@
 
     if-ge v0, v4, :cond_0
 
-    .line 5512
+    .line 5509
     invoke-virtual {v3, v0}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v2
 
     check-cast v2, Lcom/android/server/wm/WindowState;
 
-    .line 5513
+    .line 5510
     .local v2, win:Lcom/android/server/wm/WindowState;
     invoke-virtual {v2}, Lcom/android/server/wm/WindowState;->isHiddenFromUserLocked()Z
 
@@ -38647,7 +38504,7 @@
 
     if-eqz v4, :cond_1
 
-    .line 5514
+    .line 5511
     const-string v4, "WindowManager"
 
     new-instance v6, Ljava/lang/StringBuilder;
@@ -38706,31 +38563,31 @@
 
     invoke-static {v4, v6}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 5517
+    .line 5514
     const/4 v4, 0x0
 
     invoke-virtual {v2, v4}, Lcom/android/server/wm/WindowState;->hideLw(Z)Z
 
-    .line 5511
+    .line 5508
     :cond_1
     add-int/lit8 v0, v0, 0x1
 
     goto :goto_0
 
-    .line 5521
+    .line 5518
     .end local v0           #i:I
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     .end local v3           #windows:Lcom/android/server/wm/WindowList;
     :cond_2
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 5522
+    .line 5519
     monitor-exit v5
 
-    .line 5523
+    .line 5520
     return-void
 
-    .line 5522
+    .line 5519
     .end local v1           #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :catchall_0
     move-exception v4
@@ -38747,7 +38604,7 @@
     .parameter "enabled"
 
     .prologue
-    .line 7240
+    .line 7208
     const-string v0, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v1, "setEventDispatching()"
@@ -38758,7 +38615,7 @@
 
     if-nez v0, :cond_0
 
-    .line 7242
+    .line 7210
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v1, "Requires MANAGE_APP_TOKENS permission"
@@ -38767,37 +38624,37 @@
 
     throw v0
 
-    .line 7245
+    .line 7213
     :cond_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 7246
+    .line 7214
     :try_start_0
     iput-boolean p1, p0, Lcom/android/server/wm/WindowManagerService;->mEventDispatchingEnabled:Z
 
-    .line 7247
+    .line 7215
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mDisplayEnabled:Z
 
     if-eqz v0, :cond_1
 
-    .line 7248
+    .line 7216
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v0, p1}, Lcom/android/server/wm/InputMonitor;->setEventDispatchingLw(Z)V
 
-    .line 7250
+    .line 7218
     :cond_1
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->sendScreenStatusToClientsLocked()V
 
-    .line 7251
+    .line 7219
     monitor-exit v1
 
-    .line 7252
+    .line 7220
     return-void
 
-    .line 7251
+    .line 7219
     :catchall_0
     move-exception v0
 
@@ -38818,7 +38675,7 @@
 
     const/4 v5, 0x0
 
-    .line 4112
+    .line 4109
     const-string v6, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v7, "setFocusedApp()"
@@ -38829,7 +38686,7 @@
 
     if-nez v6, :cond_0
 
-    .line 4114
+    .line 4111
     new-instance v4, Ljava/lang/SecurityException;
 
     const-string v5, "Requires MANAGE_APP_TOKENS permission"
@@ -38838,20 +38695,20 @@
 
     throw v4
 
-    .line 4117
+    .line 4114
     :cond_0
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v6
 
-    .line 4118
+    .line 4115
     const/4 v0, 0x0
 
-    .line 4119
+    .line 4116
     .local v0, changed:Z
     if-nez p1, :cond_4
 
-    .line 4121
+    .line 4118
     :try_start_0
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mFocusedApp:Lcom/android/server/wm/AppWindowToken;
 
@@ -38859,35 +38716,35 @@
 
     move v0, v4
 
-    .line 4122
+    .line 4119
     :goto_0
     const/4 v4, 0x0
 
     iput-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mFocusedApp:Lcom/android/server/wm/AppWindowToken;
 
-    .line 4123
+    .line 4120
     if-eqz v0, :cond_1
 
-    .line 4124
+    .line 4121
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     const/4 v5, 0x0
 
     invoke-virtual {v4, v5}, Lcom/android/server/wm/InputMonitor;->setFocusedAppLw(Lcom/android/server/wm/AppWindowToken;)V
 
-    .line 4141
+    .line 4138
     :cond_1
     :goto_1
     if-eqz p2, :cond_2
 
     if-eqz v0, :cond_2
 
-    .line 4142
+    .line 4139
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v2
 
-    .line 4143
+    .line 4140
     .local v2, origId:J
     const/4 v4, 0x0
 
@@ -38895,35 +38752,35 @@
 
     invoke-direct {p0, v4, v5}, Lcom/android/server/wm/WindowManagerService;->updateFocusedWindowLocked(IZ)Z
 
-    .line 4144
+    .line 4141
     invoke-static {v2, v3}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 4146
+    .line 4143
     .end local v2           #origId:J
     :cond_2
     monitor-exit v6
 
-    .line 4147
+    .line 4144
     :goto_2
     return-void
 
     :cond_3
     move v0, v5
 
-    .line 4121
+    .line 4118
     goto :goto_0
 
-    .line 4127
+    .line 4124
     :cond_4
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->findAppWindowToken(Landroid/os/IBinder;)Lcom/android/server/wm/AppWindowToken;
 
     move-result-object v1
 
-    .line 4128
+    .line 4125
     .local v1, newFocus:Lcom/android/server/wm/AppWindowToken;
     if-nez v1, :cond_5
 
-    .line 4129
+    .line 4126
     const-string v4, "WindowManager"
 
     new-instance v5, Ljava/lang/StringBuilder;
@@ -38946,12 +38803,12 @@
 
     invoke-static {v4, v5}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 4130
+    .line 4127
     monitor-exit v6
 
     goto :goto_2
 
-    .line 4146
+    .line 4143
     .end local v1           #newFocus:Lcom/android/server/wm/AppWindowToken;
     :catchall_0
     move-exception v4
@@ -38962,7 +38819,7 @@
 
     throw v4
 
-    .line 4132
+    .line 4129
     .restart local v1       #newFocus:Lcom/android/server/wm/AppWindowToken;
     :cond_5
     :try_start_1
@@ -38972,14 +38829,14 @@
 
     move v0, v4
 
-    .line 4133
+    .line 4130
     :goto_3
     iput-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mFocusedApp:Lcom/android/server/wm/AppWindowToken;
 
-    .line 4136
+    .line 4133
     if-eqz v0, :cond_1
 
-    .line 4137
+    .line 4134
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v4, v1}, Lcom/android/server/wm/InputMonitor;->setFocusedAppLw(Lcom/android/server/wm/AppWindowToken;)V
@@ -38991,7 +38848,7 @@
     :cond_6
     move v0, v5
 
-    .line 4132
+    .line 4129
     goto :goto_3
 .end method
 
@@ -39001,25 +38858,25 @@
     .parameter "density"
 
     .prologue
-    .line 8095
+    .line 8063
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 8096
+    .line 8064
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
 
     move-result-object v0
 
-    .line 8097
+    .line 8065
     .local v0, displayContent:Lcom/android/server/wm/DisplayContent;
     if-eqz v0, :cond_0
 
-    .line 8098
+    .line 8066
     invoke-direct {p0, v0, p2}, Lcom/android/server/wm/WindowManagerService;->setForcedDisplayDensityLocked(Lcom/android/server/wm/DisplayContent;I)V
 
-    .line 8099
+    .line 8067
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     invoke-virtual {v1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
@@ -39034,14 +38891,14 @@
 
     invoke-static {v1, v3, v4}, Landroid/provider/Settings$Global;->putString(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;)Z
 
-    .line 8102
+    .line 8070
     :cond_0
     monitor-exit v2
 
-    .line 8103
+    .line 8071
     return-void
 
-    .line 8102
+    .line 8070
     .end local v0           #displayContent:Lcom/android/server/wm/DisplayContent;
     :catchall_0
     move-exception v1
@@ -39060,34 +38917,34 @@
     .parameter "height"
 
     .prologue
-    .line 8011
+    .line 7979
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v5
 
-    .line 8014
+    .line 7982
     const/16 v2, 0xc8
 
-    .line 8015
+    .line 7983
     .local v2, MIN_WIDTH:I
     const/16 v1, 0xc8
 
-    .line 8016
+    .line 7984
     .local v1, MIN_HEIGHT:I
     const/4 v0, 0x2
 
-    .line 8017
+    .line 7985
     .local v0, MAX_SCALE:I
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->getDisplayContentLocked(I)Lcom/android/server/wm/DisplayContent;
 
     move-result-object v3
 
-    .line 8018
+    .line 7986
     .local v3, displayContent:Lcom/android/server/wm/DisplayContent;
     if-eqz v3, :cond_0
 
-    .line 8019
+    .line 7987
     const/16 v4, 0xc8
 
     invoke-static {p2, v4}, Ljava/lang/Math;->max(II)I
@@ -39102,7 +38959,7 @@
 
     move-result p2
 
-    .line 8021
+    .line 7989
     const/16 v4, 0xc8
 
     invoke-static {p3, v4}, Ljava/lang/Math;->max(II)I
@@ -39117,10 +38974,10 @@
 
     move-result p3
 
-    .line 8023
+    .line 7991
     invoke-direct {p0, v3, p2, p3}, Lcom/android/server/wm/WindowManagerService;->setForcedDisplaySizeLocked(Lcom/android/server/wm/DisplayContent;II)V
 
-    .line 8024
+    .line 7992
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     invoke-virtual {v4}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
@@ -39153,14 +39010,14 @@
 
     invoke-static {v4, v6, v7}, Landroid/provider/Settings$Global;->putString(Landroid/content/ContentResolver;Ljava/lang/String;Ljava/lang/String;)Z
 
-    .line 8027
+    .line 7995
     :cond_0
     monitor-exit v5
 
-    .line 8028
+    .line 7996
     return-void
 
-    .line 8027
+    .line 7995
     .end local v3           #displayContent:Lcom/android/server/wm/DisplayContent;
     :catchall_0
     move-exception v4
@@ -39177,35 +39034,35 @@
     .parameter "enabled"
 
     .prologue
-    .line 7120
+    .line 7088
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 7121
+    .line 7089
     :try_start_0
     iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardEnabled:Z
 
     if-eq v0, p1, :cond_0
 
-    .line 7122
+    .line 7090
     iput-boolean p1, p0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardEnabled:Z
 
-    .line 7123
+    .line 7091
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/16 v2, 0x12
 
     invoke-virtual {v0, v2}, Lcom/android/server/wm/WindowManagerService$H;->sendEmptyMessage(I)Z
 
-    .line 7125
+    .line 7093
     :cond_0
     monitor-exit v1
 
-    .line 7126
+    .line 7094
     return-void
 
-    .line 7125
+    .line 7093
     :catchall_0
     move-exception v0
 
@@ -39221,12 +39078,12 @@
     .parameter "newHoldScreen"
 
     .prologue
-    .line 9781
+    .line 9727
     if-eqz p1, :cond_2
 
     const/4 v0, 0x1
 
-    .line 9783
+    .line 9729
     .local v0, hold:Z
     :goto_0
     if-eqz v0, :cond_0
@@ -39235,7 +39092,7 @@
 
     if-eq v2, p1, :cond_0
 
-    .line 9784
+    .line 9730
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mHoldingScreenWakeLock:Landroid/os/PowerManager$WakeLock;
 
     new-instance v3, Landroid/os/WorkSource;
@@ -39246,40 +39103,40 @@
 
     invoke-virtual {v2, v3}, Landroid/os/PowerManager$WakeLock;->setWorkSource(Landroid/os/WorkSource;)V
 
-    .line 9786
+    .line 9732
     :cond_0
     iput-object p1, p0, Lcom/android/server/wm/WindowManagerService;->mHoldingScreenOn:Lcom/android/server/wm/Session;
 
-    .line 9788
+    .line 9734
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mHoldingScreenWakeLock:Landroid/os/PowerManager$WakeLock;
 
     invoke-virtual {v2}, Landroid/os/PowerManager$WakeLock;->isHeld()Z
 
     move-result v1
 
-    .line 9789
+    .line 9735
     .local v1, state:Z
     if-eq v0, v1, :cond_1
 
-    .line 9790
+    .line 9736
     if-eqz v0, :cond_3
 
-    .line 9791
+    .line 9737
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mHoldingScreenWakeLock:Landroid/os/PowerManager$WakeLock;
 
     invoke-virtual {v2}, Landroid/os/PowerManager$WakeLock;->acquire()V
 
-    .line 9792
+    .line 9738
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v2}, Landroid/view/WindowManagerPolicy;->keepScreenOnStartedLw()V
 
-    .line 9798
+    .line 9744
     :cond_1
     :goto_1
     return-void
 
-    .line 9781
+    .line 9727
     .end local v0           #hold:Z
     .end local v1           #state:Z
     :cond_2
@@ -39287,7 +39144,7 @@
 
     goto :goto_0
 
-    .line 9794
+    .line 9740
     .restart local v0       #hold:Z
     .restart local v1       #state:Z
     :cond_3
@@ -39295,7 +39152,7 @@
 
     invoke-interface {v2}, Landroid/view/WindowManagerPolicy;->keepScreenOnStoppedLw()V
 
-    .line 9795
+    .line 9741
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mHoldingScreenWakeLock:Landroid/os/PowerManager$WakeLock;
 
     invoke-virtual {v2}, Landroid/os/PowerManager$WakeLock;->release()V
@@ -39308,22 +39165,22 @@
     .parameter "mode"
 
     .prologue
-    .line 5744
+    .line 5741
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 5745
+    .line 5742
     :try_start_0
     iput-boolean p1, p0, Lcom/android/server/wm/WindowManagerService;->mInTouchMode:Z
 
-    .line 5746
+    .line 5743
     monitor-exit v1
 
-    .line 5747
+    .line 5744
     return-void
 
-    .line 5746
+    .line 5743
     :catchall_0
     move-exception v0
 
@@ -39339,7 +39196,7 @@
     .parameter "filter"
 
     .prologue
-    .line 5490
+    .line 5493
     const-string v0, "android.permission.FILTER_EVENTS"
 
     const-string v1, "setInputFilter()"
@@ -39350,7 +39207,7 @@
 
     if-nez v0, :cond_0
 
-    .line 5491
+    .line 5494
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v1, "Requires FILTER_EVENTS permission"
@@ -39359,13 +39216,13 @@
 
     throw v0
 
-    .line 5493
+    .line 5496
     :cond_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
 
     invoke-virtual {v0, p1}, Lcom/android/server/input/InputManagerService;->setInputFilter(Landroid/view/IInputFilter;)V
 
-    .line 5494
+    .line 5497
     return-void
 .end method
 
@@ -39374,17 +39231,17 @@
     .parameter "adj"
 
     .prologue
-    .line 1376
+    .line 1373
     iput p1, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodAnimLayerAdjustment:I
 
-    .line 1377
+    .line 1374
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodWindow:Lcom/android/server/wm/WindowState;
 
-    .line 1378
+    .line 1375
     .local v2, imw:Lcom/android/server/wm/WindowState;
     if-eqz v2, :cond_0
 
-    .line 1379
+    .line 1376
     iget-object v4, v2, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
     iget v5, v2, Lcom/android/server/wm/WindowState;->mLayer:I
@@ -39393,22 +39250,22 @@
 
     iput v5, v4, Lcom/android/server/wm/WindowStateAnimator;->mAnimLayer:I
 
-    .line 1382
+    .line 1379
     iget-object v4, v2, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v4}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v3
 
-    .line 1383
+    .line 1380
     .local v3, wi:I
     :goto_0
     if-lez v3, :cond_0
 
-    .line 1384
+    .line 1381
     add-int/lit8 v3, v3, -0x1
 
-    .line 1385
+    .line 1382
     iget-object v4, v2, Lcom/android/server/wm/WindowState;->mChildWindows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v4, v3}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -39417,7 +39274,7 @@
 
     check-cast v0, Lcom/android/server/wm/WindowState;
 
-    .line 1386
+    .line 1383
     .local v0, cw:Lcom/android/server/wm/WindowState;
     iget-object v4, v0, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
@@ -39429,7 +39286,7 @@
 
     goto :goto_0
 
-    .line 1391
+    .line 1388
     .end local v0           #cw:Lcom/android/server/wm/WindowState;
     .end local v3           #wi:I
     :cond_0
@@ -39439,15 +39296,15 @@
 
     move-result v1
 
-    .line 1392
+    .line 1389
     .local v1, di:I
     :goto_1
     if-lez v1, :cond_1
 
-    .line 1393
+    .line 1390
     add-int/lit8 v1, v1, -0x1
 
-    .line 1394
+    .line 1391
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mInputMethodDialogs:Ljava/util/ArrayList;
 
     invoke-virtual {v4, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -39457,7 +39314,7 @@
     .end local v2           #imw:Lcom/android/server/wm/WindowState;
     check-cast v2, Lcom/android/server/wm/WindowState;
 
-    .line 1395
+    .line 1392
     .restart local v2       #imw:Lcom/android/server/wm/WindowState;
     iget-object v4, v2, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
@@ -39469,7 +39326,7 @@
 
     goto :goto_1
 
-    .line 1399
+    .line 1396
     :cond_1
     return-void
 .end method
@@ -39484,12 +39341,12 @@
     .parameter "touchableRegion"
 
     .prologue
-    .line 2608
+    .line 2605
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v0
 
-    .line 2610
+    .line 2607
     .local v0, origId:J
     :try_start_0
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
@@ -39498,7 +39355,7 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_1
 
-    .line 2611
+    .line 2608
     const/4 v3, 0x0
 
     :try_start_1
@@ -39506,34 +39363,34 @@
 
     move-result-object v2
 
-    .line 2612
+    .line 2609
     .local v2, w:Lcom/android/server/wm/WindowState;
     if-eqz v2, :cond_1
 
-    .line 2613
+    .line 2610
     const/4 v3, 0x0
 
     iput-boolean v3, v2, Lcom/android/server/wm/WindowState;->mGivenInsetsPending:Z
 
-    .line 2614
+    .line 2611
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mGivenContentInsets:Landroid/graphics/Rect;
 
     invoke-virtual {v3, p4}, Landroid/graphics/Rect;->set(Landroid/graphics/Rect;)V
 
-    .line 2615
+    .line 2612
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mGivenVisibleInsets:Landroid/graphics/Rect;
 
     invoke-virtual {v3, p5}, Landroid/graphics/Rect;->set(Landroid/graphics/Rect;)V
 
-    .line 2616
+    .line 2613
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mGivenTouchableRegion:Landroid/graphics/Region;
 
     invoke-virtual {v3, p6}, Landroid/graphics/Region;->set(Landroid/graphics/Region;)Z
 
-    .line 2617
+    .line 2614
     iput p3, v2, Lcom/android/server/wm/WindowState;->mTouchableInsets:I
 
-    .line 2618
+    .line 2615
     iget v3, v2, Lcom/android/server/wm/WindowState;->mGlobalScale:F
 
     const/high16 v5, 0x3f80
@@ -39542,28 +39399,28 @@
 
     if-eqz v3, :cond_0
 
-    .line 2619
+    .line 2616
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mGivenContentInsets:Landroid/graphics/Rect;
 
     iget v5, v2, Lcom/android/server/wm/WindowState;->mGlobalScale:F
 
     invoke-virtual {v3, v5}, Landroid/graphics/Rect;->scale(F)V
 
-    .line 2620
+    .line 2617
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mGivenVisibleInsets:Landroid/graphics/Rect;
 
     iget v5, v2, Lcom/android/server/wm/WindowState;->mGlobalScale:F
 
     invoke-virtual {v3, v5}, Landroid/graphics/Rect;->scale(F)V
 
-    .line 2621
+    .line 2618
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mGivenTouchableRegion:Landroid/graphics/Region;
 
     iget v5, v2, Lcom/android/server/wm/WindowState;->mGlobalScale:F
 
     invoke-virtual {v3, v5}, Landroid/graphics/Region;->scale(F)V
 
-    .line 2623
+    .line 2620
     :cond_0
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
@@ -39571,22 +39428,22 @@
 
     iput-boolean v5, v3, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 2624
+    .line 2621
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 2626
+    .line 2623
     :cond_1
     monitor-exit v4
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 2628
+    .line 2625
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 2630
+    .line 2627
     return-void
 
-    .line 2626
+    .line 2623
     .end local v2           #w:Lcom/android/server/wm/WindowState;
     :catchall_0
     move-exception v3
@@ -39601,7 +39458,7 @@
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_1
 
-    .line 2628
+    .line 2625
     :catchall_1
     move-exception v3
 
@@ -39610,12 +39467,35 @@
     throw v3
 .end method
 
+.method public setLandscapeProperty(Ljava/lang/String;)V
+    .locals 1
+    .parameter "value"
+
+    .prologue
+    .line 5800
+    iget-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mSetLandscapeProperty:Z
+
+    if-nez v0, :cond_0
+
+    .line 5802
+    :goto_0
+    return-void
+
+    .line 5801
+    :cond_0
+    const-string v0, "sys.orientation.landscape"
+
+    invoke-static {v0, p1}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
+
+    goto :goto_0
+.end method
+
 .method public setNewConfiguration(Landroid/content/res/Configuration;)V
     .locals 2
     .parameter "config"
 
     .prologue
-    .line 4068
+    .line 4065
     const-string v0, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v1, "setNewConfiguration()"
@@ -39626,7 +39506,7 @@
 
     if-nez v0, :cond_0
 
-    .line 4070
+    .line 4067
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v1, "Requires MANAGE_APP_TOKENS permission"
@@ -39635,13 +39515,13 @@
 
     throw v0
 
-    .line 4073
+    .line 4070
     :cond_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 4074
+    .line 4071
     :try_start_0
     new-instance v0, Landroid/content/res/Configuration;
 
@@ -39649,21 +39529,21 @@
 
     iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mCurConfiguration:Landroid/content/res/Configuration;
 
-    .line 4075
+    .line 4072
     const/4 v0, 0x0
 
     iput-boolean v0, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForConfig:Z
 
-    .line 4076
+    .line 4073
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 4077
+    .line 4074
     monitor-exit v1
 
-    .line 4078
+    .line 4075
     return-void
 
-    .line 4077
+    .line 4074
     :catchall_0
     move-exception v0
 
@@ -39679,22 +39559,22 @@
     .parameter "listener"
 
     .prologue
-    .line 7130
+    .line 7098
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 7131
+    .line 7099
     :try_start_0
     iput-object p1, p0, Lcom/android/server/wm/WindowManagerService;->mHardKeyboardStatusChangeListener:Lcom/android/server/wm/WindowManagerService$OnHardKeyboardStatusChangeListener;
 
-    .line 7132
+    .line 7100
     monitor-exit v1
 
-    .line 7133
+    .line 7101
     return-void
 
-    .line 7132
+    .line 7100
     :catchall_0
     move-exception v0
 
@@ -39710,12 +39590,12 @@
     .parameter "value"
 
     .prologue
-    .line 5798
+    .line 5795
     const-string v0, "persist.sys.strictmode.visual"
 
     invoke-static {v0, p1}, Landroid/os/SystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
 
-    .line 5799
+    .line 5796
     return-void
 .end method
 
@@ -39728,16 +39608,16 @@
     .parameter "performLayout"
 
     .prologue
-    .line 4511
+    .line 4508
     const/4 v2, 0x0
 
-    .line 4513
+    .line 4510
     .local v2, delayed:Z
     iget-boolean v8, p1, Lcom/android/server/wm/AppWindowToken;->clientHidden:Z
 
     if-ne v8, p3, :cond_0
 
-    .line 4514
+    .line 4511
     if-nez p3, :cond_6
 
     const/4 v8, 0x1
@@ -39745,34 +39625,34 @@
     :goto_0
     iput-boolean v8, p1, Lcom/android/server/wm/AppWindowToken;->clientHidden:Z
 
-    .line 4515
+    .line 4512
     invoke-virtual {p1}, Lcom/android/server/wm/AppWindowToken;->sendAppVisibilityToClients()V
 
-    .line 4518
+    .line 4515
     :cond_0
     const/4 v8, 0x0
 
     iput-boolean v8, p1, Lcom/android/server/wm/AppWindowToken;->willBeHidden:Z
 
-    .line 4519
+    .line 4516
     iget-boolean v8, p1, Lcom/android/server/wm/AppWindowToken;->hidden:Z
 
     if-ne v8, p3, :cond_e
 
-    .line 4520
+    .line 4517
     const/4 v1, 0x0
 
-    .line 4525
+    .line 4522
     .local v1, changed:Z
     const/4 v4, 0x0
 
-    .line 4527
+    .line 4524
     .local v4, runningAppAnimation:Z
     const/4 v8, -0x1
 
     if-eq p4, v8, :cond_4
 
-    .line 4528
+    .line 4525
     iget-object v8, p1, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     iget-object v8, v8, Lcom/android/server/wm/AppWindowAnimator;->animation:Landroid/view/animation/Animation;
@@ -39781,14 +39661,14 @@
 
     if-ne v8, v9, :cond_1
 
-    .line 4529
+    .line 4526
     iget-object v8, p1, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     const/4 v9, 0x0
 
     iput-object v9, v8, Lcom/android/server/wm/AppWindowAnimator;->animation:Landroid/view/animation/Animation;
 
-    .line 4531
+    .line 4528
     :cond_1
     invoke-direct {p0, p1, p2, p4, p3}, Lcom/android/server/wm/WindowManagerService;->applyAnimationLocked(Lcom/android/server/wm/AppWindowToken;Landroid/view/WindowManager$LayoutParams;IZ)Z
 
@@ -39796,30 +39676,30 @@
 
     if-eqz v8, :cond_2
 
-    .line 4532
+    .line 4529
     const/4 v4, 0x1
 
     move v2, v4
 
-    .line 4534
+    .line 4531
     .end local v2           #delayed:Z
     :cond_2
     invoke-virtual {p1}, Lcom/android/server/wm/AppWindowToken;->findMainWindow()Lcom/android/server/wm/WindowState;
 
     move-result-object v7
 
-    .line 4535
+    .line 4532
     .local v7, window:Lcom/android/server/wm/WindowState;
     if-eqz v7, :cond_3
 
-    .line 4536
+    .line 4533
     invoke-virtual {p0, v7, p4}, Lcom/android/server/wm/WindowManagerService;->scheduleNotifyWindowTranstionIfNeededLocked(Lcom/android/server/wm/WindowState;I)V
 
-    .line 4538
+    .line 4535
     :cond_3
     const/4 v1, 0x1
 
-    .line 4541
+    .line 4538
     .end local v7           #window:Lcom/android/server/wm/WindowState;
     :cond_4
     iget-object v8, p1, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
@@ -39828,7 +39708,7 @@
 
     move-result v0
 
-    .line 4542
+    .line 4539
     .local v0, N:I
     const/4 v3, 0x0
 
@@ -39836,7 +39716,7 @@
     :goto_1
     if-ge v3, v0, :cond_b
 
-    .line 4543
+    .line 4540
     iget-object v8, p1, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v8, v3}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -39845,20 +39725,20 @@
 
     check-cast v6, Lcom/android/server/wm/WindowState;
 
-    .line 4544
+    .line 4541
     .local v6, win:Lcom/android/server/wm/WindowState;
     iget-object v8, p1, Lcom/android/server/wm/AppWindowToken;->startingWindow:Lcom/android/server/wm/WindowState;
 
     if-ne v6, v8, :cond_7
 
-    .line 4542
+    .line 4539
     :cond_5
     :goto_2
     add-int/lit8 v3, v3, 0x1
 
     goto :goto_1
 
-    .line 4514
+    .line 4511
     .end local v0           #N:I
     .end local v1           #changed:Z
     .end local v3           #i:I
@@ -39870,7 +39750,7 @@
 
     goto :goto_0
 
-    .line 4550
+    .line 4547
     .end local v2           #delayed:Z
     .restart local v0       #N:I
     .restart local v1       #changed:Z
@@ -39880,17 +39760,17 @@
     :cond_7
     if-eqz p3, :cond_9
 
-    .line 4551
+    .line 4548
     invoke-virtual {v6}, Lcom/android/server/wm/WindowState;->isVisibleNow()Z
 
     move-result v8
 
     if-nez v8, :cond_5
 
-    .line 4552
+    .line 4549
     if-nez v4, :cond_8
 
-    .line 4553
+    .line 4550
     iget-object v8, v6, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
     const/16 v9, 0x1001
@@ -39899,16 +39779,16 @@
 
     invoke-virtual {v8, v9, v10}, Lcom/android/server/wm/WindowStateAnimator;->applyAnimationLocked(IZ)Z
 
-    .line 4555
+    .line 4552
     const/16 v8, 0x1001
 
     invoke-virtual {p0, v6, v8}, Lcom/android/server/wm/WindowManagerService;->scheduleNotifyWindowTranstionIfNeededLocked(Lcom/android/server/wm/WindowState;I)V
 
-    .line 4558
+    .line 4555
     :cond_8
     const/4 v1, 0x1
 
-    .line 4559
+    .line 4556
     iget-object v8, v6, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
     const/4 v9, 0x1
@@ -39917,7 +39797,7 @@
 
     goto :goto_2
 
-    .line 4561
+    .line 4558
     :cond_9
     invoke-virtual {v6}, Lcom/android/server/wm/WindowState;->isVisibleNow()Z
 
@@ -39925,10 +39805,10 @@
 
     if-eqz v8, :cond_5
 
-    .line 4562
+    .line 4559
     if-nez v4, :cond_a
 
-    .line 4563
+    .line 4560
     iget-object v8, v6, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
     const/16 v9, 0x2002
@@ -39937,16 +39817,16 @@
 
     invoke-virtual {v8, v9, v10}, Lcom/android/server/wm/WindowStateAnimator;->applyAnimationLocked(IZ)Z
 
-    .line 4565
+    .line 4562
     const/16 v8, 0x2002
 
     invoke-virtual {p0, v6, v8}, Lcom/android/server/wm/WindowManagerService;->scheduleNotifyWindowTranstionIfNeededLocked(Lcom/android/server/wm/WindowState;I)V
 
-    .line 4568
+    .line 4565
     :cond_a
     const/4 v1, 0x1
 
-    .line 4569
+    .line 4566
     iget-object v8, v6, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
     const/4 v9, 0x1
@@ -39955,7 +39835,7 @@
 
     goto :goto_2
 
-    .line 4573
+    .line 4570
     .end local v6           #win:Lcom/android/server/wm/WindowState;
     :cond_b
     if-nez p3, :cond_11
@@ -39967,40 +39847,40 @@
 
     iput-boolean v8, p1, Lcom/android/server/wm/AppWindowToken;->hidden:Z
 
-    .line 4574
+    .line 4571
     if-nez p3, :cond_12
 
-    .line 4575
+    .line 4572
     const/4 v8, 0x1
 
     const/4 v9, 0x1
 
     invoke-virtual {p0, p1, v8, v9}, Lcom/android/server/wm/WindowManagerService;->unsetAppFreezingScreenLocked(Lcom/android/server/wm/AppWindowToken;ZZ)V
 
-    .line 4590
+    .line 4587
     :cond_c
     :goto_4
     if-eqz v1, :cond_e
 
-    .line 4591
+    .line 4588
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
     invoke-virtual {v8}, Lcom/android/server/wm/InputMonitor;->setUpdateInputWindowsNeededLw()V
 
-    .line 4592
+    .line 4589
     if-eqz p5, :cond_d
 
-    .line 4593
+    .line 4590
     const/4 v8, 0x3
 
     const/4 v9, 0x0
 
     invoke-direct {p0, v8, v9}, Lcom/android/server/wm/WindowManagerService;->updateFocusedWindowLocked(IZ)Z
 
-    .line 4595
+    .line 4592
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 4597
+    .line 4594
     :cond_d
     iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mInputMonitor:Lcom/android/server/wm/InputMonitor;
 
@@ -40008,7 +39888,7 @@
 
     invoke-virtual {v8, v9}, Lcom/android/server/wm/InputMonitor;->updateInputWindowsLw(Z)V
 
-    .line 4601
+    .line 4598
     .end local v0           #N:I
     .end local v1           #changed:Z
     .end local v3           #i:I
@@ -40020,10 +39900,10 @@
 
     if-eqz v8, :cond_f
 
-    .line 4602
+    .line 4599
     const/4 v2, 0x1
 
-    .line 4605
+    .line 4602
     :cond_f
     iget-object v8, p1, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
@@ -40039,7 +39919,7 @@
 
     if-nez v2, :cond_13
 
-    .line 4606
+    .line 4603
     iget-object v8, p1, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v8, v3}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -40056,16 +39936,16 @@
 
     if-eqz v8, :cond_10
 
-    .line 4607
+    .line 4604
     const/4 v2, 0x1
 
-    .line 4605
+    .line 4602
     :cond_10
     add-int/lit8 v3, v3, -0x1
 
     goto :goto_5
 
-    .line 4573
+    .line 4570
     .restart local v0       #N:I
     .restart local v1       #changed:Z
     .restart local v4       #runningAppAnimation:Z
@@ -40074,11 +39954,11 @@
 
     goto :goto_3
 
-    .line 4579
+    .line 4576
     :cond_12
     iget-object v5, p1, Lcom/android/server/wm/AppWindowToken;->startingWindow:Lcom/android/server/wm/WindowState;
 
-    .line 4580
+    .line 4577
     .local v5, swin:Lcom/android/server/wm/WindowState;
     if-eqz v5, :cond_c
 
@@ -40088,19 +39968,19 @@
 
     if-nez v8, :cond_c
 
-    .line 4581
+    .line 4578
     const/4 v8, 0x0
 
     iput-boolean v8, v5, Lcom/android/server/wm/WindowState;->mPolicyVisibility:Z
 
-    .line 4582
+    .line 4579
     const/4 v8, 0x0
 
     iput-boolean v8, v5, Lcom/android/server/wm/WindowState;->mPolicyVisibilityAfterAnim:Z
 
     goto :goto_4
 
-    .line 4611
+    .line 4608
     .end local v0           #N:I
     .end local v1           #changed:Z
     .end local v4           #runningAppAnimation:Z
@@ -40115,7 +39995,7 @@
     .parameter "region"
 
     .prologue
-    .line 2587
+    .line 2584
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -40132,7 +40012,7 @@
 
     invoke-virtual {v0, v1}, Lcom/android/server/wm/WindowManagerService$H;->sendMessage(Landroid/os/Message;)Z
 
-    .line 2589
+    .line 2586
     return-void
 .end method
 
@@ -40143,12 +40023,12 @@
     .parameter "region"
 
     .prologue
-    .line 2592
+    .line 2589
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v0
 
-    .line 2594
+    .line 2591
     .local v0, origId:J
     :try_start_0
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
@@ -40157,7 +40037,7 @@
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_1
 
-    .line 2595
+    .line 2592
     const/4 v3, 0x0
 
     :try_start_1
@@ -40165,7 +40045,7 @@
 
     move-result-object v2
 
-    .line 2596
+    .line 2593
     .local v2, w:Lcom/android/server/wm/WindowState;
     if-eqz v2, :cond_0
 
@@ -40173,24 +40053,24 @@
 
     if-eqz v3, :cond_0
 
-    .line 2597
+    .line 2594
     iget-object v3, v2, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
     invoke-virtual {p0, v3, p3}, Lcom/android/server/wm/WindowManagerService;->setTransparentRegionHint(Lcom/android/server/wm/WindowStateAnimator;Landroid/graphics/Region;)V
 
-    .line 2599
+    .line 2596
     :cond_0
     monitor-exit v4
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 2601
+    .line 2598
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 2603
+    .line 2600
     return-void
 
-    .line 2599
+    .line 2596
     .end local v2           #w:Lcom/android/server/wm/WindowState;
     :catchall_0
     move-exception v3
@@ -40205,7 +40085,7 @@
     :try_end_3
     .catchall {:try_start_3 .. :try_end_3} :catchall_1
 
-    .line 2601
+    .line 2598
     :catchall_1
     move-exception v3
 
@@ -40226,81 +40106,81 @@
     .parameter "dtdy"
 
     .prologue
-    .line 2698
+    .line 2695
     iget-object v0, p1, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
     iget-object v9, v0, Lcom/android/server/wm/WindowStateAnimator;->mUniverseTransform:Landroid/view/animation/Transformation;
 
-    .line 2699
+    .line 2696
     .local v9, transform:Landroid/view/animation/Transformation;
     invoke-virtual {v9, p2}, Landroid/view/animation/Transformation;->setAlpha(F)V
 
-    .line 2700
+    .line 2697
     invoke-virtual {v9}, Landroid/view/animation/Transformation;->getMatrix()Landroid/graphics/Matrix;
 
     move-result-object v8
 
-    .line 2701
+    .line 2698
     .local v8, matrix:Landroid/graphics/Matrix;
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mTmpFloats:[F
 
     invoke-virtual {v8, v0}, Landroid/graphics/Matrix;->getValues([F)V
 
-    .line 2702
+    .line 2699
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mTmpFloats:[F
 
     const/4 v1, 0x2
 
     aput p3, v0, v1
 
-    .line 2703
+    .line 2700
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mTmpFloats:[F
 
     const/4 v1, 0x5
 
     aput p4, v0, v1
 
-    .line 2704
+    .line 2701
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mTmpFloats:[F
 
     const/4 v1, 0x0
 
     aput p5, v0, v1
 
-    .line 2705
+    .line 2702
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mTmpFloats:[F
 
     const/4 v1, 0x3
 
     aput p6, v0, v1
 
-    .line 2706
+    .line 2703
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mTmpFloats:[F
 
     const/4 v1, 0x1
 
     aput p7, v0, v1
 
-    .line 2707
+    .line 2704
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mTmpFloats:[F
 
     const/4 v1, 0x4
 
     aput p8, v0, v1
 
-    .line 2708
+    .line 2705
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mTmpFloats:[F
 
     invoke-virtual {v8, v0}, Landroid/graphics/Matrix;->setValues([F)V
 
-    .line 2709
+    .line 2706
     iget-object v0, p1, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
     invoke-virtual {v0}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
 
     move-result-object v7
 
-    .line 2710
+    .line 2707
     .local v7, displayInfo:Landroid/view/DisplayInfo;
     new-instance v6, Landroid/graphics/RectF;
 
@@ -40318,11 +40198,11 @@
 
     invoke-direct {v6, v0, v1, v2, v3}, Landroid/graphics/RectF;-><init>(FFFF)V
 
-    .line 2712
+    .line 2709
     .local v6, dispRect:Landroid/graphics/RectF;
     invoke-virtual {v8, v6}, Landroid/graphics/Matrix;->mapRect(Landroid/graphics/RectF;)Z
 
-    .line 2713
+    .line 2710
     iget-object v0, p1, Lcom/android/server/wm/WindowState;->mGivenTouchableRegion:Landroid/graphics/Region;
 
     const/4 v1, 0x0
@@ -40335,7 +40215,7 @@
 
     invoke-virtual {v0, v1, v2, v3, v4}, Landroid/graphics/Region;->set(IIII)Z
 
-    .line 2715
+    .line 2712
     iget-object v0, p1, Lcom/android/server/wm/WindowState;->mGivenTouchableRegion:Landroid/graphics/Region;
 
     iget v1, v6, Landroid/graphics/RectF;->left:F
@@ -40358,22 +40238,22 @@
 
     invoke-virtual/range {v0 .. v5}, Landroid/graphics/Region;->op(IIIILandroid/graphics/Region$Op;)Z
 
-    .line 2717
+    .line 2714
     const/4 v0, 0x3
 
     iput v0, p1, Lcom/android/server/wm/WindowState;->mTouchableInsets:I
 
-    .line 2718
+    .line 2715
     iget-object v0, p1, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
     const/4 v1, 0x1
 
     iput-boolean v1, v0, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 2719
+    .line 2716
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 2720
+    .line 2717
     return-void
 .end method
 
@@ -40382,25 +40262,25 @@
     .parameter "adj"
 
     .prologue
-    .line 1942
+    .line 1939
     iput p1, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperAnimLayerAdjustment:I
 
-    .line 1943
+    .line 1940
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v4}, Ljava/util/ArrayList;->size()I
 
     move-result v0
 
-    .line 1944
+    .line 1941
     .local v0, curTokenIndex:I
     :cond_0
     if-lez v0, :cond_1
 
-    .line 1945
+    .line 1942
     add-int/lit8 v0, v0, -0x1
 
-    .line 1946
+    .line 1943
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v4, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -40409,7 +40289,7 @@
 
     check-cast v2, Lcom/android/server/wm/WindowToken;
 
-    .line 1947
+    .line 1944
     .local v2, token:Lcom/android/server/wm/WindowToken;
     iget-object v4, v2, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
@@ -40417,15 +40297,15 @@
 
     move-result v1
 
-    .line 1948
+    .line 1945
     .local v1, curWallpaperIndex:I
     :goto_0
     if-lez v1, :cond_0
 
-    .line 1949
+    .line 1946
     add-int/lit8 v1, v1, -0x1
 
-    .line 1950
+    .line 1947
     iget-object v4, v2, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v4, v1}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -40434,7 +40314,7 @@
 
     check-cast v3, Lcom/android/server/wm/WindowState;
 
-    .line 1951
+    .line 1948
     .local v3, wallpaper:Lcom/android/server/wm/WindowState;
     iget-object v4, v3, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
@@ -40446,7 +40326,7 @@
 
     goto :goto_0
 
-    .line 1956
+    .line 1953
     .end local v1           #curWallpaperIndex:I
     .end local v2           #token:Lcom/android/server/wm/WindowToken;
     .end local v3           #wallpaper:Lcom/android/server/wm/WindowState;
@@ -40463,7 +40343,7 @@
     .parameter "yStep"
 
     .prologue
-    .line 2646
+    .line 2643
     iget v0, p1, Lcom/android/server/wm/WindowState;->mWallpaperX:F
 
     cmpl-float v0, v0, p2
@@ -40476,25 +40356,25 @@
 
     if-eqz v0, :cond_1
 
-    .line 2647
+    .line 2644
     :cond_0
     iput p2, p1, Lcom/android/server/wm/WindowState;->mWallpaperX:F
 
-    .line 2648
+    .line 2645
     iput p3, p1, Lcom/android/server/wm/WindowState;->mWallpaperY:F
 
-    .line 2649
+    .line 2646
     iput p4, p1, Lcom/android/server/wm/WindowState;->mWallpaperXStep:F
 
-    .line 2650
+    .line 2647
     iput p5, p1, Lcom/android/server/wm/WindowState;->mWallpaperYStep:F
 
-    .line 2651
+    .line 2648
     const/4 v0, 0x1
 
     invoke-virtual {p0, p1, v0}, Lcom/android/server/wm/WindowManagerService;->updateWallpaperOffsetLocked(Lcom/android/server/wm/WindowState;Z)V
 
-    .line 2653
+    .line 2650
     :cond_1
     return-void
 .end method
@@ -40503,7 +40383,7 @@
     .locals 2
 
     .prologue
-    .line 10502
+    .line 10443
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     const-string v1, "android.permission.DEVICE_POWER"
@@ -40514,11 +40394,11 @@
 
     if-eqz v0, :cond_0
 
-    .line 10507
+    .line 10448
     :goto_0
     return-void
 
-    .line 10506
+    .line 10447
     :cond_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
@@ -40533,44 +40413,44 @@
     .parameter "always"
 
     .prologue
-    .line 5698
+    .line 5695
     const/4 v0, 0x0
 
-    .line 5699
+    .line 5696
     .local v0, first:Z
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v2
 
-    .line 5708
+    .line 5705
     :try_start_0
     iget-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mAllowBootMessages:Z
 
     if-nez v1, :cond_1
 
-    .line 5709
+    .line 5706
     monitor-exit v2
 
-    .line 5726
+    .line 5723
     :cond_0
     :goto_0
     return-void
 
-    .line 5711
+    .line 5708
     :cond_1
     iget-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mShowingBootMessages:Z
 
     if-nez v1, :cond_3
 
-    .line 5712
+    .line 5709
     if-nez p2, :cond_2
 
-    .line 5713
+    .line 5710
     monitor-exit v2
 
     goto :goto_0
 
-    .line 5722
+    .line 5719
     :catchall_0
     move-exception v1
 
@@ -40580,42 +40460,42 @@
 
     throw v1
 
-    .line 5715
+    .line 5712
     :cond_2
     const/4 v0, 0x1
 
-    .line 5717
+    .line 5714
     :cond_3
     :try_start_1
     iget-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mSystemBooted:Z
 
     if-eqz v1, :cond_4
 
-    .line 5718
+    .line 5715
     monitor-exit v2
 
     goto :goto_0
 
-    .line 5720
+    .line 5717
     :cond_4
     const/4 v1, 0x1
 
     iput-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mShowingBootMessages:Z
 
-    .line 5721
+    .line 5718
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v1, p1, p2}, Landroid/view/WindowManagerPolicy;->showBootMessage(Ljava/lang/CharSequence;Z)V
 
-    .line 5722
+    .line 5719
     monitor-exit v2
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 5723
+    .line 5720
     if-eqz v0, :cond_0
 
-    .line 5724
+    .line 5721
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->performEnableScreen()V
 
     goto :goto_0
@@ -40626,22 +40506,22 @@
     .parameter "on"
 
     .prologue
-    .line 5753
+    .line 5750
     iget-boolean v1, p0, Lcom/android/server/wm/WindowManagerService;->mHeadless:Z
 
     if-eqz v1, :cond_0
 
-    .line 5756
+    .line 5753
     :goto_0
     return-void
 
-    .line 5754
+    .line 5751
     :cond_0
     invoke-static {}, Landroid/os/Binder;->getCallingPid()I
 
     move-result v0
 
-    .line 5755
+    .line 5752
     .local v0, pid:I
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
@@ -40684,14 +40564,14 @@
     .parameter "confirm"
 
     .prologue
-    .line 5480
+    .line 5477
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->getUiContext()Landroid/content/Context;
 
     move-result-object v0
 
     invoke-static {v0, p1}, Lcom/android/server/power/ShutdownThread;->shutdown(Landroid/content/Context;Z)V
 
-    .line 5481
+    .line 5478
     return-void
 .end method
 
@@ -40701,7 +40581,7 @@
     .parameter "configChanges"
 
     .prologue
-    .line 4767
+    .line 4764
     const-string v3, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v4, "setAppFreezingScreen()"
@@ -40712,7 +40592,7 @@
 
     if-nez v3, :cond_0
 
-    .line 4769
+    .line 4766
     new-instance v3, Ljava/lang/SecurityException;
 
     const-string v4, "Requires MANAGE_APP_TOKENS permission"
@@ -40721,13 +40601,13 @@
 
     throw v3
 
-    .line 4772
+    .line 4769
     :cond_0
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v4
 
-    .line 4773
+    .line 4770
     if-nez p2, :cond_1
 
     :try_start_0
@@ -40737,20 +40617,20 @@
 
     if-eqz v3, :cond_1
 
-    .line 4775
+    .line 4772
     monitor-exit v4
 
-    .line 4787
+    .line 4784
     :goto_0
     return-void
 
-    .line 4778
+    .line 4775
     :cond_1
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->findAppWindowToken(Landroid/os/IBinder;)Lcom/android/server/wm/AppWindowToken;
 
     move-result-object v2
 
-    .line 4779
+    .line 4776
     .local v2, wtoken:Lcom/android/server/wm/AppWindowToken;
     if-eqz v2, :cond_2
 
@@ -40758,7 +40638,7 @@
 
     if-nez v3, :cond_3
 
-    .line 4780
+    .line 4777
     :cond_2
     const-string v3, "WindowManager"
 
@@ -40782,12 +40662,12 @@
 
     invoke-static {v3, v5}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 4781
+    .line 4778
     monitor-exit v4
 
     goto :goto_0
 
-    .line 4786
+    .line 4783
     .end local v2           #wtoken:Lcom/android/server/wm/AppWindowToken;
     :catchall_0
     move-exception v3
@@ -40798,7 +40678,7 @@
 
     throw v3
 
-    .line 4783
+    .line 4780
     .restart local v2       #wtoken:Lcom/android/server/wm/AppWindowToken;
     :cond_3
     :try_start_1
@@ -40806,14 +40686,14 @@
 
     move-result-wide v0
 
-    .line 4784
+    .line 4781
     .local v0, origId:J
     invoke-virtual {p0, v2, p2}, Lcom/android/server/wm/WindowManagerService;->startAppFreezingScreenLocked(Lcom/android/server/wm/AppWindowToken;I)V
 
-    .line 4785
+    .line 4782
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 4786
+    .line 4783
     monitor-exit v4
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
@@ -40833,44 +40713,44 @@
 
     const/4 v4, 0x0
 
-    .line 4747
+    .line 4744
     iget-boolean v3, p1, Lcom/android/server/wm/AppWindowToken;->hiddenRequested:Z
 
     if-nez v3, :cond_1
 
-    .line 4748
+    .line 4745
     iget-object v3, p1, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     iget-boolean v3, v3, Lcom/android/server/wm/AppWindowAnimator;->freezingScreen:Z
 
     if-nez v3, :cond_0
 
-    .line 4749
+    .line 4746
     iget-object v3, p1, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     iput-boolean v7, v3, Lcom/android/server/wm/AppWindowAnimator;->freezingScreen:Z
 
-    .line 4750
+    .line 4747
     iget v3, p0, Lcom/android/server/wm/WindowManagerService;->mAppsFreezingScreen:I
 
     add-int/lit8 v3, v3, 0x1
 
     iput v3, p0, Lcom/android/server/wm/WindowManagerService;->mAppsFreezingScreen:I
 
-    .line 4751
+    .line 4748
     iget v3, p0, Lcom/android/server/wm/WindowManagerService;->mAppsFreezingScreen:I
 
     if-ne v3, v7, :cond_0
 
-    .line 4752
+    .line 4749
     invoke-direct {p0, v4, v4, v4}, Lcom/android/server/wm/WindowManagerService;->startFreezingDisplayLocked(ZII)V
 
-    .line 4753
+    .line 4750
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     invoke-virtual {v3, v5}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 4754
+    .line 4751
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -40883,7 +40763,7 @@
 
     invoke-virtual {v3, v4, v5, v6}, Lcom/android/server/wm/WindowManagerService$H;->sendMessageDelayed(Landroid/os/Message;J)Z
 
-    .line 4758
+    .line 4755
     :cond_0
     iget-object v3, p1, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
@@ -40891,7 +40771,7 @@
 
     move-result v0
 
-    .line 4759
+    .line 4756
     .local v0, N:I
     const/4 v1, 0x0
 
@@ -40899,7 +40779,7 @@
     :goto_0
     if-ge v1, v0, :cond_1
 
-    .line 4760
+    .line 4757
     iget-object v3, p1, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -40908,16 +40788,16 @@
 
     check-cast v2, Lcom/android/server/wm/WindowState;
 
-    .line 4761
+    .line 4758
     .local v2, w:Lcom/android/server/wm/WindowState;
     iput-boolean v7, v2, Lcom/android/server/wm/WindowState;->mAppFreezing:Z
 
-    .line 4759
+    .line 4756
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 4764
+    .line 4761
     .end local v0           #N:I
     .end local v1           #i:I
     .end local v2           #w:Lcom/android/server/wm/WindowState;
@@ -40933,7 +40813,7 @@
     .parameter "height"
 
     .prologue
-    .line 9886
+    .line 9832
     iget-object v0, p1, Lcom/android/server/wm/WindowStateAnimator;->mWin:Lcom/android/server/wm/WindowState;
 
     invoke-virtual {v0}, Lcom/android/server/wm/WindowState;->getDisplayId()I
@@ -40946,7 +40826,7 @@
 
     invoke-virtual {p0, v0, v1}, Lcom/android/server/wm/WindowManagerService;->setAnimDimParams(ILcom/android/server/wm/DimAnimator$Parameters;)V
 
-    .line 9888
+    .line 9834
     return-void
 .end method
 
@@ -40956,7 +40836,7 @@
     .parameter "enterAnim"
 
     .prologue
-    .line 5263
+    .line 5260
     const-string v2, "android.permission.FREEZE_SCREEN"
 
     const-string v3, "startFreezingScreen()"
@@ -40967,7 +40847,7 @@
 
     if-nez v2, :cond_0
 
-    .line 5265
+    .line 5262
     new-instance v2, Ljava/lang/SecurityException;
 
     const-string v3, "Requires FREEZE_SCREEN permission"
@@ -40976,45 +40856,45 @@
 
     throw v2
 
-    .line 5268
+    .line 5265
     :cond_0
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v3
 
-    .line 5269
+    .line 5266
     :try_start_0
     iget-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mClientFreezingScreen:Z
 
     if-nez v2, :cond_1
 
-    .line 5270
+    .line 5267
     const/4 v2, 0x1
 
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mClientFreezingScreen:Z
 
-    .line 5271
+    .line 5268
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_1
 
     move-result-wide v0
 
-    .line 5273
+    .line 5270
     .local v0, origId:J
     const/4 v2, 0x0
 
     :try_start_1
     invoke-direct {p0, v2, p1, p2}, Lcom/android/server/wm/WindowManagerService;->startFreezingDisplayLocked(ZII)V
 
-    .line 5274
+    .line 5271
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     const/16 v4, 0x23
 
     invoke-virtual {v2, v4}, Lcom/android/server/wm/WindowManagerService$H;->removeMessages(I)V
 
-    .line 5275
+    .line 5272
     iget-object v2, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
@@ -41031,19 +40911,19 @@
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 5278
+    .line 5275
     :try_start_2
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 5281
+    .line 5278
     .end local v0           #origId:J
     :cond_1
     monitor-exit v3
 
-    .line 5282
+    .line 5279
     return-void
 
-    .line 5278
+    .line 5275
     .restart local v0       #origId:J
     :catchall_0
     move-exception v2
@@ -41052,7 +40932,7 @@
 
     throw v2
 
-    .line 5281
+    .line 5278
     .end local v0           #origId:J
     :catchall_1
     move-exception v2
@@ -41181,7 +41061,7 @@
     .parameter "visibility"
 
     .prologue
-    .line 10388
+    .line 10334
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mContext:Landroid/content/Context;
 
     const-string v1, "android.permission.STATUS_BAR"
@@ -41192,7 +41072,7 @@
 
     if-eqz v0, :cond_0
 
-    .line 10390
+    .line 10336
     new-instance v0, Ljava/lang/SecurityException;
 
     const-string v1, "Caller does not hold permission android.permission.STATUS_BAR"
@@ -41201,33 +41081,33 @@
 
     throw v0
 
-    .line 10394
+    .line 10340
     :cond_0
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 10395
+    .line 10341
     :try_start_0
     iput p1, p0, Lcom/android/server/wm/WindowManagerService;->mLastStatusBarVisibility:I
 
-    .line 10396
+    .line 10342
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v0, p1}, Landroid/view/WindowManagerPolicy;->adjustSystemUiVisibilityLw(I)I
 
     move-result p1
 
-    .line 10397
+    .line 10343
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->updateStatusBarVisibilityLocked(I)V
 
-    .line 10398
+    .line 10344
     monitor-exit v1
 
-    .line 10399
+    .line 10345
     return-void
 
-    .line 10398
+    .line 10344
     :catchall_0
     move-exception v0
 
@@ -41244,7 +41124,7 @@
     .parameter "force"
 
     .prologue
-    .line 4790
+    .line 4787
     const-string v3, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v4, "setAppFreezingScreen()"
@@ -41255,7 +41135,7 @@
 
     if-nez v3, :cond_0
 
-    .line 4792
+    .line 4789
     new-instance v3, Ljava/lang/SecurityException;
 
     const-string v4, "Requires MANAGE_APP_TOKENS permission"
@@ -41264,19 +41144,19 @@
 
     throw v3
 
-    .line 4795
+    .line 4792
     :cond_0
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v4
 
-    .line 4796
+    .line 4793
     :try_start_0
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->findAppWindowToken(Landroid/os/IBinder;)Lcom/android/server/wm/AppWindowToken;
 
     move-result-object v2
 
-    .line 4797
+    .line 4794
     .local v2, wtoken:Lcom/android/server/wm/AppWindowToken;
     if-eqz v2, :cond_1
 
@@ -41284,30 +41164,30 @@
 
     if-nez v3, :cond_2
 
-    .line 4798
+    .line 4795
     :cond_1
     monitor-exit v4
 
-    .line 4806
+    .line 4803
     :goto_0
     return-void
 
-    .line 4800
+    .line 4797
     :cond_2
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v0
 
-    .line 4803
+    .line 4800
     .local v0, origId:J
     const/4 v3, 0x1
 
     invoke-virtual {p0, v2, v3, p2}, Lcom/android/server/wm/WindowManagerService;->unsetAppFreezingScreenLocked(Lcom/android/server/wm/AppWindowToken;ZZ)V
 
-    .line 4804
+    .line 4801
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 4805
+    .line 4802
     monitor-exit v4
 
     goto :goto_0
@@ -41329,12 +41209,12 @@
     .parameter "displayId"
 
     .prologue
-    .line 9891
+    .line 9837
     const/4 v0, 0x0
 
     invoke-virtual {p0, p1, v0}, Lcom/android/server/wm/WindowManagerService;->setAnimDimParams(ILcom/android/server/wm/DimAnimator$Parameters;)V
 
-    .line 9892
+    .line 9838
     return-void
 .end method
 
@@ -41342,7 +41222,7 @@
     .locals 4
 
     .prologue
-    .line 5286
+    .line 5283
     const-string v2, "android.permission.FREEZE_SCREEN"
 
     const-string v3, "stopFreezingScreen()"
@@ -41353,7 +41233,7 @@
 
     if-nez v2, :cond_0
 
-    .line 5288
+    .line 5285
     new-instance v2, Ljava/lang/SecurityException;
 
     const-string v3, "Requires FREEZE_SCREEN permission"
@@ -41362,50 +41242,50 @@
 
     throw v2
 
-    .line 5291
+    .line 5288
     :cond_0
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v3
 
-    .line 5292
+    .line 5289
     :try_start_0
     iget-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mClientFreezingScreen:Z
 
     if-eqz v2, :cond_1
 
-    .line 5293
+    .line 5290
     const/4 v2, 0x0
 
     iput-boolean v2, p0, Lcom/android/server/wm/WindowManagerService;->mClientFreezingScreen:Z
 
-    .line 5294
+    .line 5291
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_1
 
     move-result-wide v0
 
-    .line 5296
+    .line 5293
     .local v0, origId:J
     :try_start_1
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->stopFreezingDisplayLocked()V
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 5298
+    .line 5295
     :try_start_2
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 5301
+    .line 5298
     .end local v0           #origId:J
     :cond_1
     monitor-exit v3
 
-    .line 5302
+    .line 5299
     return-void
 
-    .line 5298
+    .line 5295
     .restart local v0       #origId:J
     :catchall_0
     move-exception v2
@@ -41414,7 +41294,7 @@
 
     throw v2
 
-    .line 5301
+    .line 5298
     .end local v0           #origId:J
     :catchall_1
     move-exception v2
@@ -41477,12 +41357,12 @@
     .parameter "direction"
 
     .prologue
-    .line 5474
+    .line 5471
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
 
     invoke-virtual {v0, p1, p2}, Lcom/android/server/input/InputManagerService;->switchKeyboardLayout(II)V
 
-    .line 5475
+    .line 5472
     return-void
 .end method
 
@@ -41490,12 +41370,12 @@
     .locals 1
 
     .prologue
-    .line 7366
+    .line 7334
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v0}, Landroid/view/WindowManagerPolicy;->systemReady()V
 
-    .line 7367
+    .line 7335
     return-void
 .end method
 
@@ -41551,25 +41431,25 @@
 
     const/4 v5, 0x0
 
-    .line 4703
+    .line 4700
     iget-object v4, p1, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     iget-boolean v4, v4, Lcom/android/server/wm/AppWindowAnimator;->freezingScreen:Z
 
     if-eqz v4, :cond_6
 
-    .line 4706
+    .line 4703
     iget-object v4, p1, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v4}, Ljava/util/ArrayList;->size()I
 
     move-result v0
 
-    .line 4707
+    .line 4704
     .local v0, N:I
     const/4 v2, 0x0
 
-    .line 4708
+    .line 4705
     .local v2, unfrozeWindows:Z
     const/4 v1, 0x0
 
@@ -41577,7 +41457,7 @@
     :goto_0
     if-ge v1, v0, :cond_2
 
-    .line 4709
+    .line 4706
     iget-object v4, p1, Lcom/android/server/wm/AppWindowToken;->allAppWindows:Ljava/util/ArrayList;
 
     invoke-virtual {v4, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -41586,16 +41466,16 @@
 
     check-cast v3, Lcom/android/server/wm/WindowState;
 
-    .line 4710
+    .line 4707
     .local v3, w:Lcom/android/server/wm/WindowState;
     iget-boolean v4, v3, Lcom/android/server/wm/WindowState;->mAppFreezing:Z
 
     if-eqz v4, :cond_1
 
-    .line 4711
+    .line 4708
     iput-boolean v5, v3, Lcom/android/server/wm/WindowState;->mAppFreezing:Z
 
-    .line 4712
+    .line 4709
     iget-boolean v4, v3, Lcom/android/server/wm/WindowState;->mHasSurface:Z
 
     if-eqz v4, :cond_0
@@ -41604,64 +41484,64 @@
 
     if-nez v4, :cond_0
 
-    .line 4714
+    .line 4711
     iput-boolean v6, v3, Lcom/android/server/wm/WindowState;->mOrientationChanging:Z
 
-    .line 4715
+    .line 4712
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mInnerFields:Lcom/android/server/wm/WindowManagerService$LayoutFields;
 
     iput-boolean v5, v4, Lcom/android/server/wm/WindowManagerService$LayoutFields;->mOrientationChangeComplete:Z
 
-    .line 4717
+    .line 4714
     :cond_0
     const/4 v2, 0x1
 
-    .line 4718
+    .line 4715
     iget-object v4, v3, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
     iput-boolean v6, v4, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 4708
+    .line 4705
     :cond_1
     add-int/lit8 v1, v1, 0x1
 
     goto :goto_0
 
-    .line 4721
+    .line 4718
     .end local v3           #w:Lcom/android/server/wm/WindowState;
     :cond_2
     if-nez p3, :cond_3
 
     if-eqz v2, :cond_4
 
-    .line 4723
+    .line 4720
     :cond_3
     iget-object v4, p1, Lcom/android/server/wm/AppWindowToken;->mAppAnimator:Lcom/android/server/wm/AppWindowAnimator;
 
     iput-boolean v5, v4, Lcom/android/server/wm/AppWindowAnimator;->freezingScreen:Z
 
-    .line 4724
+    .line 4721
     iget v4, p0, Lcom/android/server/wm/WindowManagerService;->mAppsFreezingScreen:I
 
     add-int/lit8 v4, v4, -0x1
 
     iput v4, p0, Lcom/android/server/wm/WindowManagerService;->mAppsFreezingScreen:I
 
-    .line 4726
+    .line 4723
     :cond_4
     if-eqz p2, :cond_6
 
-    .line 4727
+    .line 4724
     if-eqz v2, :cond_5
 
-    .line 4728
+    .line 4725
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->performLayoutAndPlaceSurfacesLocked()V
 
-    .line 4730
+    .line 4727
     :cond_5
     invoke-direct {p0}, Lcom/android/server/wm/WindowManagerService;->stopFreezingDisplayLocked()V
 
-    .line 4733
+    .line 4730
     .end local v0           #N:I
     .end local v1           #i:I
     .end local v2           #unfrozeWindows:Z
@@ -41669,159 +41549,16 @@
     return-void
 .end method
 
-.method public updateDisplayMetrics()V
-    .locals 10
-
-    .prologue
-    const/4 v4, -0x1
-
-    .line 10510
-    invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
-
-    move-result-wide v6
-
-    .line 10511
-    .local v6, origId:J
-    const/4 v0, 0x0
-
-    .line 10513
-    .local v0, changed:Z
-    iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
-
-    monitor-enter v9
-
-    .line 10514
-    :try_start_0
-    invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
-
-    move-result-object v1
-
-    .line 10515
-    .local v1, displayContent:Lcom/android/server/wm/DisplayContent;
-    if-eqz v1, :cond_4
-
-    invoke-virtual {v1}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
-
-    move-result-object v2
-
-    .line 10517
-    .local v2, displayInfo:Landroid/view/DisplayInfo;
-    :goto_0
-    if-eqz v2, :cond_5
-
-    iget v5, v2, Landroid/view/DisplayInfo;->appWidth:I
-
-    .line 10518
-    .local v5, oldWidth:I
-    :goto_1
-    if-eqz v2, :cond_0
-
-    iget v4, v2, Landroid/view/DisplayInfo;->appHeight:I
-
-    .line 10519
-    .local v4, oldHeight:I
-    :cond_0
-    invoke-direct {p0, v1}, Lcom/android/server/wm/WindowManagerService;->updateApplicationDisplayMetricsLocked(Lcom/android/server/wm/DisplayContent;)Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-
-    move-result-object v3
-
-    .line 10522
-    .local v3, metrics:Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-    if-eqz v3, :cond_2
-
-    if-ltz v5, :cond_2
-
-    if-ltz v4, :cond_2
-
-    .line 10523
-    iget v8, v3, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->appWidth:I
-
-    if-ne v5, v8, :cond_1
-
-    iget v8, v3, Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;->appHeight:I
-
-    if-eq v4, v8, :cond_6
-
-    :cond_1
-    const/4 v0, 0x1
-
-    .line 10525
-    :cond_2
-    :goto_2
-    monitor-exit v9
-    :try_end_0
-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
-
-    .line 10527
-    if-eqz v0, :cond_3
-
-    .line 10528
-    iget-object v8, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
-
-    const/16 v9, 0x12
-
-    invoke-virtual {v8, v9}, Lcom/android/server/wm/WindowManagerService$H;->sendEmptyMessage(I)Z
-
-    .line 10531
-    :cond_3
-    invoke-static {v6, v7}, Landroid/os/Binder;->restoreCallingIdentity(J)V
-
-    .line 10532
-    return-void
-
-    .line 10515
-    .end local v2           #displayInfo:Landroid/view/DisplayInfo;
-    .end local v3           #metrics:Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-    .end local v4           #oldHeight:I
-    .end local v5           #oldWidth:I
-    :cond_4
-    const/4 v2, 0x0
-
-    goto :goto_0
-
-    .restart local v2       #displayInfo:Landroid/view/DisplayInfo;
-    :cond_5
-    move v5, v4
-
-    .line 10517
-    goto :goto_1
-
-    .line 10523
-    .restart local v3       #metrics:Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-    .restart local v4       #oldHeight:I
-    .restart local v5       #oldWidth:I
-    :cond_6
-    const/4 v0, 0x0
-
-    goto :goto_2
-
-    .line 10525
-    .end local v1           #displayContent:Lcom/android/server/wm/DisplayContent;
-    .end local v2           #displayInfo:Landroid/view/DisplayInfo;
-    .end local v3           #metrics:Lcom/android/server/wm/WindowManagerService$ApplicationDisplayMetrics;
-    .end local v4           #oldHeight:I
-    .end local v5           #oldWidth:I
-    :catchall_0
-    move-exception v8
-
-    :try_start_1
-    monitor-exit v9
-    :try_end_1
-    .catchall {:try_start_1 .. :try_end_1} :catchall_0
-
-    throw v8
-.end method
-
 .method updateLayoutToAnimWallpaperTokens()V
     .locals 6
 
     .prologue
-    .line 9871
+    .line 9817
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
     monitor-enter v1
 
-    .line 9872
+    .line 9818
     :try_start_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
@@ -41833,7 +41570,7 @@
 
     iput-object v2, v0, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mWallpaperTokens:Ljava/util/ArrayList;
 
-    .line 9873
+    .line 9819
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
     iget-wide v2, v0, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mChanges:J
@@ -41844,13 +41581,13 @@
 
     iput-wide v2, v0, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mChanges:J
 
-    .line 9874
+    .line 9820
     monitor-exit v1
 
-    .line 9875
+    .line 9821
     return-void
 
-    .line 9874
+    .line 9820
     :catchall_0
     move-exception v0
 
@@ -41865,27 +41602,27 @@
     .locals 12
 
     .prologue
-    .line 9825
+    .line 9771
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mLayoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
 
-    .line 9826
+    .line 9772
     .local v5, layoutToAnim:Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;
     monitor-enter v5
 
-    .line 9828
+    .line 9774
     :try_start_0
     iget-object v1, v5, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mWinAnimatorLists:Landroid/util/SparseArray;
 
-    .line 9829
+    .line 9775
     .local v1, allWinAnimatorLists:Landroid/util/SparseArray;,"Landroid/util/SparseArray<Lcom/android/server/wm/WinAnimatorList;>;"
     invoke-virtual {v1}, Landroid/util/SparseArray;->clear()V
 
-    .line 9830
+    .line 9776
     new-instance v4, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
 
     invoke-direct {v4, p0}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;-><init>(Lcom/android/server/wm/WindowManagerService;)V
 
-    .line 9831
+    .line 9777
     .local v4, iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :goto_0
     invoke-virtual {v4}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->hasNext()Z
@@ -41894,30 +41631,30 @@
 
     if-eqz v10, :cond_2
 
-    .line 9832
+    .line 9778
     invoke-virtual {v4}, Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;->next()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v2
 
-    .line 9833
+    .line 9779
     .local v2, displayContent:Lcom/android/server/wm/DisplayContent;
     new-instance v8, Lcom/android/server/wm/WinAnimatorList;
 
     invoke-direct {v8}, Lcom/android/server/wm/WinAnimatorList;-><init>()V
 
-    .line 9834
+    .line 9780
     .local v8, winAnimatorList:Lcom/android/server/wm/WinAnimatorList;
     invoke-virtual {v2}, Lcom/android/server/wm/DisplayContent;->getWindowList()Lcom/android/server/wm/WindowList;
 
     move-result-object v9
 
-    .line 9835
+    .line 9781
     .local v9, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v9}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v0
 
-    .line 9836
+    .line 9782
     .local v0, N:I
     const/4 v3, 0x0
 
@@ -41925,7 +41662,7 @@
     :goto_1
     if-ge v3, v0, :cond_1
 
-    .line 9837
+    .line 9783
     invoke-virtual {v9, v3}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v10
@@ -41934,22 +41671,22 @@
 
     iget-object v7, v10, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
-    .line 9838
+    .line 9784
     .local v7, winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     iget-object v10, v7, Lcom/android/server/wm/WindowStateAnimator;->mSurface:Landroid/view/Surface;
 
     if-eqz v10, :cond_0
 
-    .line 9839
+    .line 9785
     invoke-virtual {v8, v7}, Lcom/android/server/wm/WinAnimatorList;->add(Ljava/lang/Object;)Z
 
-    .line 9836
+    .line 9782
     :cond_0
     add-int/lit8 v3, v3, 0x1
 
     goto :goto_1
 
-    .line 9842
+    .line 9788
     .end local v7           #winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     :cond_1
     invoke-virtual {v2}, Lcom/android/server/wm/DisplayContent;->getDisplayId()I
@@ -41960,7 +41697,7 @@
 
     goto :goto_0
 
-    .line 9867
+    .line 9813
     .end local v0           #N:I
     .end local v1           #allWinAnimatorLists:Landroid/util/SparseArray;,"Landroid/util/SparseArray<Lcom/android/server/wm/WinAnimatorList;>;"
     .end local v2           #displayContent:Lcom/android/server/wm/DisplayContent;
@@ -41977,7 +41714,7 @@
 
     throw v10
 
-    .line 9854
+    .line 9800
     .restart local v1       #allWinAnimatorLists:Landroid/util/SparseArray;,"Landroid/util/SparseArray<Lcom/android/server/wm/WinAnimatorList;>;"
     .restart local v4       #iterator:Lcom/android/server/wm/WindowManagerService$DisplayContentsIterator;
     :cond_2
@@ -41986,31 +41723,31 @@
 
     iput-object v10, v5, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 9855
+    .line 9801
     iget-object v10, p0, Lcom/android/server/wm/WindowManagerService;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     iput-object v10, v5, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mLowerWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 9856
+    .line 9802
     iget-object v10, p0, Lcom/android/server/wm/WindowManagerService;->mUpperWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     iput-object v10, v5, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mUpperWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 9858
+    .line 9804
     iget-object v6, v5, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mAppWindowAnimParams:Ljava/util/ArrayList;
 
-    .line 9859
+    .line 9805
     .local v6, paramList:Ljava/util/ArrayList;,"Ljava/util/ArrayList<Lcom/android/server/wm/WindowManagerService$AppWindowAnimParams;>;"
     invoke-virtual {v6}, Ljava/util/ArrayList;->clear()V
 
-    .line 9860
+    .line 9806
     iget-object v10, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v10}, Ljava/util/ArrayList;->size()I
 
     move-result v0
 
-    .line 9861
+    .line 9807
     .restart local v0       #N:I
     const/4 v3, 0x0
 
@@ -42018,7 +41755,7 @@
     :goto_2
     if-ge v3, v0, :cond_3
 
-    .line 9862
+    .line 9808
     new-instance v11, Lcom/android/server/wm/WindowManagerService$AppWindowAnimParams;
 
     iget-object v10, p0, Lcom/android/server/wm/WindowManagerService;->mAnimatingAppTokens:Ljava/util/ArrayList;
@@ -42035,26 +41772,26 @@
 
     invoke-virtual {v6, v11}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 9861
+    .line 9807
     add-int/lit8 v3, v3, 0x1
 
     goto :goto_2
 
-    .line 9865
+    .line 9811
     :cond_3
     const/4 v10, 0x1
 
     iput-boolean v10, v5, Lcom/android/server/wm/WindowManagerService$LayoutToAnimatorParams;->mParamsModified:Z
 
-    .line 9866
+    .line 9812
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->scheduleAnimationLocked()V
 
-    .line 9867
+    .line 9813
     monitor-exit v5
     :try_end_1
     .catchall {:try_start_1 .. :try_end_1} :catchall_0
 
-    .line 9868
+    .line 9814
     return-void
 .end method
 
@@ -42064,7 +41801,7 @@
     .parameter "freezeThisOneIfNeeded"
 
     .prologue
-    .line 3970
+    .line 3967
     const-string v3, "android.permission.MANAGE_APP_TOKENS"
 
     const-string v4, "updateOrientationFromAppTokens()"
@@ -42075,7 +41812,7 @@
 
     if-nez v3, :cond_0
 
-    .line 3972
+    .line 3969
     new-instance v3, Ljava/lang/SecurityException;
 
     const-string v4, "Requires MANAGE_APP_TOKENS permission"
@@ -42084,40 +41821,40 @@
 
     throw v3
 
-    .line 3975
+    .line 3972
     :cond_0
     const/4 v0, 0x0
 
-    .line 3976
+    .line 3973
     .local v0, config:Landroid/content/res/Configuration;
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v1
 
-    .line 3978
+    .line 3975
     .local v1, ident:J
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v4
 
-    .line 3979
+    .line 3976
     :try_start_0
     invoke-direct {p0, p1, p2}, Lcom/android/server/wm/WindowManagerService;->updateOrientationFromAppTokensLocked(Landroid/content/res/Configuration;Landroid/os/IBinder;)Landroid/content/res/Configuration;
 
     move-result-object v0
 
-    .line 3981
+    .line 3978
     monitor-exit v4
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
-    .line 3983
+    .line 3980
     invoke-static {v1, v2}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
-    .line 3984
+    .line 3981
     return-object v0
 
-    .line 3981
+    .line 3978
     :catchall_0
     move-exception v3
 
@@ -42134,33 +41871,33 @@
     .parameter "inTransaction"
 
     .prologue
-    .line 4037
+    .line 4034
     invoke-static {}, Landroid/os/Binder;->clearCallingIdentity()J
 
     move-result-wide v0
 
-    .line 4039
+    .line 4036
     .local v0, ident:J
     :try_start_0
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->computeForcedAppOrientationLocked()I
 
     move-result v2
 
-    .line 4041
+    .line 4038
     .local v2, req:I
     iget v3, p0, Lcom/android/server/wm/WindowManagerService;->mForcedAppOrientation:I
 
     if-eq v2, v3, :cond_0
 
-    .line 4042
+    .line 4039
     iput v2, p0, Lcom/android/server/wm/WindowManagerService;->mForcedAppOrientation:I
 
-    .line 4045
+    .line 4042
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mPolicy:Landroid/view/WindowManagerPolicy;
 
     invoke-interface {v3, v2}, Landroid/view/WindowManagerPolicy;->setCurrentOrientationLw(I)V
 
-    .line 4046
+    .line 4043
     invoke-virtual {p0, p1}, Lcom/android/server/wm/WindowManagerService;->updateRotationUncheckedLocked(Z)Z
     :try_end_0
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
@@ -42169,20 +41906,20 @@
 
     if-eqz v3, :cond_0
 
-    .line 4048
+    .line 4045
     const/4 v3, 0x1
 
-    .line 4054
+    .line 4051
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     :goto_0
     return v3
 
-    .line 4052
+    .line 4049
     :cond_0
     const/4 v3, 0x0
 
-    .line 4054
+    .line 4051
     invoke-static {v0, v1}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 
     goto :goto_0
@@ -42650,23 +42387,23 @@
     .parameter "visibility"
 
     .prologue
-    .line 10403
+    .line 10349
     iget-object v7, p0, Lcom/android/server/wm/WindowManagerService;->mInputManager:Lcom/android/server/input/InputManagerService;
 
     invoke-virtual {v7, p1}, Lcom/android/server/input/InputManagerService;->setSystemUiVisibility(I)V
 
-    .line 10404
+    .line 10350
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultWindowListLocked()Lcom/android/server/wm/WindowList;
 
     move-result-object v5
 
-    .line 10405
+    .line 10351
     .local v5, windows:Lcom/android/server/wm/WindowList;
     invoke-virtual {v5}, Lcom/android/server/wm/WindowList;->size()I
 
     move-result v0
 
-    .line 10406
+    .line 10352
     .local v0, N:I
     const/4 v3, 0x0
 
@@ -42674,32 +42411,32 @@
     :goto_0
     if-ge v3, v0, :cond_3
 
-    .line 10407
+    .line 10353
     invoke-virtual {v5, v3}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
 
     move-result-object v6
 
     check-cast v6, Lcom/android/server/wm/WindowState;
 
-    .line 10409
+    .line 10355
     .local v6, ws:Lcom/android/server/wm/WindowState;
     :try_start_0
     iget v1, v6, Lcom/android/server/wm/WindowState;->mSystemUiVisibility:I
 
-    .line 10410
+    .line 10356
     .local v1, curValue:I
     xor-int v2, v1, p1
 
-    .line 10413
+    .line 10359
     .local v2, diff:I
     and-int/lit8 v2, v2, 0x7
 
-    .line 10415
+    .line 10361
     xor-int/lit8 v7, p1, -0x1
 
     and-int/2addr v2, v7
 
-    .line 10416
+    .line 10362
     xor-int/lit8 v7, v2, -0x1
 
     and-int/2addr v7, v1
@@ -42708,21 +42445,21 @@
 
     or-int v4, v7, v8
 
-    .line 10417
+    .line 10363
     .local v4, newValue:I
     if-eq v4, v1, :cond_0
 
-    .line 10418
+    .line 10364
     iget v7, v6, Lcom/android/server/wm/WindowState;->mSeq:I
 
     add-int/lit8 v7, v7, 0x1
 
     iput v7, v6, Lcom/android/server/wm/WindowState;->mSeq:I
 
-    .line 10419
+    .line 10365
     iput v4, v6, Lcom/android/server/wm/WindowState;->mSystemUiVisibility:I
 
-    .line 10421
+    .line 10367
     :cond_0
     if-ne v4, v1, :cond_1
 
@@ -42732,7 +42469,7 @@
 
     if-eqz v7, :cond_2
 
-    .line 10422
+    .line 10368
     :cond_1
     iget-object v7, v6, Lcom/android/server/wm/WindowState;->mClient:Landroid/view/IWindow;
 
@@ -42742,7 +42479,7 @@
     :try_end_0
     .catch Landroid/os/RemoteException; {:try_start_0 .. :try_end_0} :catch_0
 
-    .line 10406
+    .line 10352
     .end local v1           #curValue:I
     .end local v2           #diff:I
     .end local v4           #newValue:I
@@ -42752,12 +42489,12 @@
 
     goto :goto_0
 
-    .line 10429
+    .line 10375
     .end local v6           #ws:Lcom/android/server/wm/WindowState;
     :cond_3
     return-void
 
-    .line 10425
+    .line 10371
     .restart local v6       #ws:Lcom/android/server/wm/WindowState;
     :catch_0
     move-exception v7
@@ -42773,44 +42510,44 @@
     .prologue
     const/4 v11, 0x0
 
-    .line 2046
+    .line 2043
     iget-object v3, p1, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
-    .line 2047
+    .line 2044
     .local v3, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-virtual {v3}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
 
     move-result-object v4
 
-    .line 2048
+    .line 2045
     .local v4, displayInfo:Landroid/view/DisplayInfo;
     iget v5, v4, Landroid/view/DisplayInfo;->appWidth:I
 
-    .line 2049
+    .line 2046
     .local v5, dw:I
     iget v2, v4, Landroid/view/DisplayInfo;->appHeight:I
 
-    .line 2051
+    .line 2048
     .local v2, dh:I
     iget-object v6, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
-    .line 2052
+    .line 2049
     .local v6, target:Lcom/android/server/wm/WindowState;
     if-eqz v6, :cond_1
 
-    .line 2053
+    .line 2050
     iget v10, v6, Lcom/android/server/wm/WindowState;->mWallpaperX:F
 
     cmpl-float v10, v10, v11
 
     if-ltz v10, :cond_6
 
-    .line 2054
+    .line 2051
     iget v10, v6, Lcom/android/server/wm/WindowState;->mWallpaperX:F
 
     iput v10, p0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperX:F
 
-    .line 2058
+    .line 2055
     :cond_0
     :goto_0
     iget v10, v6, Lcom/android/server/wm/WindowState;->mWallpaperY:F
@@ -42819,12 +42556,12 @@
 
     if-ltz v10, :cond_7
 
-    .line 2059
+    .line 2056
     iget v10, v6, Lcom/android/server/wm/WindowState;->mWallpaperY:F
 
     iput v10, p0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperY:F
 
-    .line 2065
+    .line 2062
     :cond_1
     :goto_1
     iget-object v10, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
@@ -42833,15 +42570,15 @@
 
     move-result v0
 
-    .line 2066
+    .line 2063
     .local v0, curTokenIndex:I
     :cond_2
     if-lez v0, :cond_8
 
-    .line 2067
+    .line 2064
     add-int/lit8 v0, v0, -0x1
 
-    .line 2068
+    .line 2065
     iget-object v10, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v10, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -42850,7 +42587,7 @@
 
     check-cast v7, Lcom/android/server/wm/WindowToken;
 
-    .line 2069
+    .line 2066
     .local v7, token:Lcom/android/server/wm/WindowToken;
     iget-object v10, v7, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
@@ -42858,16 +42595,16 @@
 
     move-result v1
 
-    .line 2070
+    .line 2067
     .local v1, curWallpaperIndex:I
     :cond_3
     :goto_2
     if-lez v1, :cond_2
 
-    .line 2071
+    .line 2068
     add-int/lit8 v1, v1, -0x1
 
-    .line 2072
+    .line 2069
     iget-object v10, v7, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v10, v1}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -42876,7 +42613,7 @@
 
     check-cast v8, Lcom/android/server/wm/WindowState;
 
-    .line 2073
+    .line 2070
     .local v8, wallpaper:Lcom/android/server/wm/WindowState;
     invoke-virtual {p0, v8, v5, v2, p2}, Lcom/android/server/wm/WindowManagerService;->updateWallpaperOffsetLocked(Lcom/android/server/wm/WindowState;IIZ)Z
 
@@ -42884,14 +42621,14 @@
 
     if-eqz v10, :cond_3
 
-    .line 2074
+    .line 2071
     iget-object v9, v8, Lcom/android/server/wm/WindowState;->mWinAnimator:Lcom/android/server/wm/WindowStateAnimator;
 
-    .line 2075
+    .line 2072
     .local v9, winAnimator:Lcom/android/server/wm/WindowStateAnimator;
     invoke-virtual {v9}, Lcom/android/server/wm/WindowStateAnimator;->computeShownFrameLocked()V
 
-    .line 2079
+    .line 2076
     iget v10, v9, Lcom/android/server/wm/WindowStateAnimator;->mSurfaceX:F
 
     iget-object v11, v8, Lcom/android/server/wm/WindowState;->mShownFrame:Landroid/graphics/RectF;
@@ -42912,7 +42649,7 @@
 
     if-eqz v10, :cond_5
 
-    .line 2081
+    .line 2078
     :cond_4
     iget-object v10, v8, Lcom/android/server/wm/WindowState;->mShownFrame:Landroid/graphics/RectF;
 
@@ -42928,13 +42665,13 @@
 
     invoke-virtual {v9, v10, v11}, Lcom/android/server/wm/WindowStateAnimator;->setWallpaperOffset(II)V
 
-    .line 2085
+    .line 2082
     :cond_5
     const/4 p2, 0x0
 
     goto :goto_2
 
-    .line 2055
+    .line 2052
     .end local v0           #curTokenIndex:I
     .end local v1           #curWallpaperIndex:I
     .end local v7           #token:Lcom/android/server/wm/WindowToken;
@@ -42947,14 +42684,14 @@
 
     if-ltz v10, :cond_0
 
-    .line 2056
+    .line 2053
     iget v10, p1, Lcom/android/server/wm/WindowState;->mWallpaperX:F
 
     iput v10, p0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperX:F
 
     goto :goto_0
 
-    .line 2060
+    .line 2057
     :cond_7
     iget v10, p1, Lcom/android/server/wm/WindowState;->mWallpaperY:F
 
@@ -42962,14 +42699,14 @@
 
     if-ltz v10, :cond_1
 
-    .line 2061
+    .line 2058
     iget v10, p1, Lcom/android/server/wm/WindowState;->mWallpaperY:F
 
     iput v10, p0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperY:F
 
     goto :goto_1
 
-    .line 2089
+    .line 2086
     .restart local v0       #curTokenIndex:I
     :cond_8
     return-void
@@ -42983,14 +42720,14 @@
     .parameter "sync"
 
     .prologue
-    .line 1960
+    .line 1957
     const/4 v10, 0x0
 
-    .line 1961
+    .line 1958
     .local v10, changed:Z
     const/4 v12, 0x0
 
-    .line 1962
+    .line 1959
     .local v12, rawChanged:Z
     move-object/from16 v0, p0
 
@@ -43006,7 +42743,7 @@
 
     iget v15, v0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperX:F
 
-    .line 1963
+    .line 1960
     .local v15, wpx:F
     :goto_0
     move-object/from16 v0, p0
@@ -43025,7 +42762,7 @@
 
     move/from16 v16, v0
 
-    .line 1964
+    .line 1961
     .local v16, wpxs:F
     :goto_1
     move-object/from16 v0, p1
@@ -43044,7 +42781,7 @@
 
     sub-int v9, v2, p2
 
-    .line 1965
+    .line 1962
     .local v9, availw:I
     if-lez v9, :cond_b
 
@@ -43060,7 +42797,7 @@
 
     neg-int v11, v2
 
-    .line 1966
+    .line 1963
     .local v11, offset:I
     :goto_2
     move-object/from16 v0, p1
@@ -43071,16 +42808,16 @@
 
     const/4 v10, 0x1
 
-    .line 1967
+    .line 1964
     :goto_3
     if-eqz v10, :cond_0
 
-    .line 1970
+    .line 1967
     move-object/from16 v0, p1
 
     iput v11, v0, Lcom/android/server/wm/WindowState;->mXOffset:I
 
-    .line 1972
+    .line 1969
     :cond_0
     move-object/from16 v0, p1
 
@@ -43098,23 +42835,23 @@
 
     if-eqz v2, :cond_2
 
-    .line 1973
+    .line 1970
     :cond_1
     move-object/from16 v0, p1
 
     iput v15, v0, Lcom/android/server/wm/WindowState;->mWallpaperX:F
 
-    .line 1974
+    .line 1971
     move/from16 v0, v16
 
     move-object/from16 v1, p1
 
     iput v0, v1, Lcom/android/server/wm/WindowState;->mWallpaperXStep:F
 
-    .line 1975
+    .line 1972
     const/4 v12, 0x1
 
-    .line 1978
+    .line 1975
     :cond_2
     move-object/from16 v0, p0
 
@@ -43132,7 +42869,7 @@
 
     move/from16 v17, v0
 
-    .line 1979
+    .line 1976
     .local v17, wpy:F
     :goto_4
     move-object/from16 v0, p0
@@ -43151,7 +42888,7 @@
 
     move/from16 v18, v0
 
-    .line 1980
+    .line 1977
     .local v18, wpys:F
     :goto_5
     move-object/from16 v0, p1
@@ -43170,7 +42907,7 @@
 
     sub-int v8, v2, p3
 
-    .line 1981
+    .line 1978
     .local v8, availh:I
     if-lez v8, :cond_f
 
@@ -43186,7 +42923,7 @@
 
     neg-int v11, v2
 
-    .line 1982
+    .line 1979
     :goto_6
     move-object/from16 v0, p1
 
@@ -43194,15 +42931,15 @@
 
     if-eq v2, v11, :cond_3
 
-    .line 1985
+    .line 1982
     const/4 v10, 0x1
 
-    .line 1986
+    .line 1983
     move-object/from16 v0, p1
 
     iput v11, v0, Lcom/android/server/wm/WindowState;->mYOffset:I
 
-    .line 1988
+    .line 1985
     :cond_3
     move-object/from16 v0, p1
 
@@ -43220,7 +42957,7 @@
 
     if-eqz v2, :cond_5
 
-    .line 1989
+    .line 1986
     :cond_4
     move/from16 v0, v17
 
@@ -43228,17 +42965,17 @@
 
     iput v0, v1, Lcom/android/server/wm/WindowState;->mWallpaperY:F
 
-    .line 1990
+    .line 1987
     move/from16 v0, v18
 
     move-object/from16 v1, p1
 
     iput v0, v1, Lcom/android/server/wm/WindowState;->mWallpaperYStep:F
 
-    .line 1991
+    .line 1988
     const/4 v12, 0x1
 
-    .line 1994
+    .line 1991
     :cond_5
     if-eqz v12, :cond_8
 
@@ -43252,10 +42989,10 @@
 
     if-eqz v2, :cond_8
 
-    .line 2000
+    .line 1997
     if-eqz p4, :cond_6
 
-    .line 2001
+    .line 1998
     :try_start_0
     move-object/from16 v0, p1
 
@@ -43263,7 +43000,7 @@
 
     iput-object v0, v1, Lcom/android/server/wm/WindowManagerService;->mWaitingOnWallpaper:Lcom/android/server/wm/WindowState;
 
-    .line 2003
+    .line 2000
     :cond_6
     move-object/from16 v0, p1
 
@@ -43289,22 +43026,22 @@
 
     invoke-interface/range {v2 .. v7}, Landroid/view/IWindow;->dispatchWallpaperOffsets(FFFFZ)V
 
-    .line 2006
+    .line 2003
     if-eqz p4, :cond_8
 
-    .line 2007
+    .line 2004
     move-object/from16 v0, p0
 
     iget-object v2, v0, Lcom/android/server/wm/WindowManagerService;->mWaitingOnWallpaper:Lcom/android/server/wm/WindowState;
 
     if-eqz v2, :cond_8
 
-    .line 2008
+    .line 2005
     invoke-static {}, Landroid/os/SystemClock;->uptimeMillis()J
 
     move-result-wide v13
 
-    .line 2009
+    .line 2006
     .local v13, start:J
     move-object/from16 v0, p0
 
@@ -43320,7 +43057,7 @@
 
     if-gez v2, :cond_7
 
-    .line 2014
+    .line 2011
     :try_start_1
     move-object/from16 v0, p0
 
@@ -43333,7 +43070,7 @@
     .catch Ljava/lang/InterruptedException; {:try_start_1 .. :try_end_1} :catch_1
     .catch Landroid/os/RemoteException; {:try_start_1 .. :try_end_1} :catch_0
 
-    .line 2018
+    .line 2015
     :goto_7
     const-wide/16 v2, 0x96
 
@@ -43348,7 +43085,7 @@
 
     if-gez v2, :cond_7
 
-    .line 2020
+    .line 2017
     const-string v2, "WindowManager"
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -43373,12 +43110,12 @@
 
     invoke-static {v2, v3}, Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 2022
+    .line 2019
     move-object/from16 v0, p0
 
     iput-wide v13, v0, Lcom/android/server/wm/WindowManagerService;->mLastWallpaperTimeoutTime:J
 
-    .line 2025
+    .line 2022
     :cond_7
     const/4 v2, 0x0
 
@@ -43388,13 +43125,13 @@
     :try_end_2
     .catch Landroid/os/RemoteException; {:try_start_2 .. :try_end_2} :catch_0
 
-    .line 2032
+    .line 2029
     .end local v13           #start:J
     :cond_8
     :goto_8
     return v10
 
-    .line 1962
+    .line 1959
     .end local v8           #availh:I
     .end local v9           #availw:I
     .end local v11           #offset:I
@@ -43407,14 +43144,14 @@
 
     goto/16 :goto_0
 
-    .line 1963
+    .line 1960
     .restart local v15       #wpx:F
     :cond_a
     const/high16 v16, -0x4080
 
     goto/16 :goto_1
 
-    .line 1965
+    .line 1962
     .restart local v9       #availw:I
     .restart local v16       #wpxs:F
     :cond_b
@@ -43422,27 +43159,27 @@
 
     goto/16 :goto_2
 
-    .line 1966
+    .line 1963
     .restart local v11       #offset:I
     :cond_c
     const/4 v10, 0x0
 
     goto/16 :goto_3
 
-    .line 1978
+    .line 1975
     :cond_d
     const/high16 v17, 0x3f00
 
     goto/16 :goto_4
 
-    .line 1979
+    .line 1976
     .restart local v17       #wpy:F
     :cond_e
     const/high16 v18, -0x4080
 
     goto/16 :goto_5
 
-    .line 1981
+    .line 1978
     .restart local v8       #availh:I
     .restart local v18       #wpys:F
     :cond_f
@@ -43450,13 +43187,13 @@
 
     goto/16 :goto_6
 
-    .line 2028
+    .line 2025
     :catch_0
     move-exception v2
 
     goto :goto_8
 
-    .line 2015
+    .line 2012
     .restart local v13       #start:J
     :catch_1
     move-exception v2
@@ -43472,34 +43209,34 @@
 
     const/4 v11, 0x0
 
-    .line 2110
+    .line 2107
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     invoke-virtual {p0, v9}, Lcom/android/server/wm/WindowManagerService;->isWallpaperVisible(Lcom/android/server/wm/WindowState;)Z
 
     move-result v7
 
-    .line 2111
+    .line 2108
     .local v7, visible:Z
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTarget:Lcom/android/server/wm/WindowState;
 
     iget-object v3, v9, Lcom/android/server/wm/WindowState;->mDisplayContent:Lcom/android/server/wm/DisplayContent;
 
-    .line 2112
+    .line 2109
     .local v3, displayContent:Lcom/android/server/wm/DisplayContent;
     invoke-virtual {v3}, Lcom/android/server/wm/DisplayContent;->getDisplayInfo()Landroid/view/DisplayInfo;
 
     move-result-object v4
 
-    .line 2113
+    .line 2110
     .local v4, displayInfo:Landroid/view/DisplayInfo;
     iget v5, v4, Landroid/view/DisplayInfo;->appWidth:I
 
-    .line 2114
+    .line 2111
     .local v5, dw:I
     iget v2, v4, Landroid/view/DisplayInfo;->appHeight:I
 
-    .line 2116
+    .line 2113
     .local v2, dh:I
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
@@ -43507,15 +43244,15 @@
 
     move-result v0
 
-    .line 2117
+    .line 2114
     .local v0, curTokenIndex:I
     :cond_0
     if-lez v0, :cond_4
 
-    .line 2118
+    .line 2115
     add-int/lit8 v0, v0, -0x1
 
-    .line 2119
+    .line 2116
     iget-object v9, p0, Lcom/android/server/wm/WindowManagerService;->mWallpaperTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v9, v0}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -43524,13 +43261,13 @@
 
     check-cast v6, Lcom/android/server/wm/WindowToken;
 
-    .line 2120
+    .line 2117
     .local v6, token:Lcom/android/server/wm/WindowToken;
     iget-boolean v9, v6, Lcom/android/server/wm/WindowToken;->hidden:Z
 
     if-ne v9, v7, :cond_1
 
-    .line 2121
+    .line 2118
     if-nez v7, :cond_3
 
     move v9, v10
@@ -43538,14 +43275,14 @@
     :goto_0
     iput-boolean v9, v6, Lcom/android/server/wm/WindowToken;->hidden:Z
 
-    .line 2124
+    .line 2121
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->getDefaultDisplayContentLocked()Lcom/android/server/wm/DisplayContent;
 
     move-result-object v9
 
     iput-boolean v10, v9, Lcom/android/server/wm/DisplayContent;->layoutNeeded:Z
 
-    .line 2127
+    .line 2124
     :cond_1
     iget-object v9, v6, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
@@ -43553,15 +43290,15 @@
 
     move-result v1
 
-    .line 2128
+    .line 2125
     .local v1, curWallpaperIndex:I
     :goto_1
     if-lez v1, :cond_0
 
-    .line 2129
+    .line 2126
     add-int/lit8 v1, v1, -0x1
 
-    .line 2130
+    .line 2127
     iget-object v9, v6, Lcom/android/server/wm/WindowToken;->windows:Lcom/android/server/wm/WindowList;
 
     invoke-virtual {v9, v1}, Lcom/android/server/wm/WindowList;->get(I)Ljava/lang/Object;
@@ -43570,14 +43307,14 @@
 
     check-cast v8, Lcom/android/server/wm/WindowState;
 
-    .line 2131
+    .line 2128
     .local v8, wallpaper:Lcom/android/server/wm/WindowState;
     if-eqz v7, :cond_2
 
-    .line 2132
+    .line 2129
     invoke-virtual {p0, v8, v5, v2, v11}, Lcom/android/server/wm/WindowManagerService;->updateWallpaperOffsetLocked(Lcom/android/server/wm/WindowState;IIZ)Z
 
-    .line 2135
+    .line 2132
     :cond_2
     invoke-virtual {p0, v8, v7}, Lcom/android/server/wm/WindowManagerService;->dispatchWallpaperVisibility(Lcom/android/server/wm/WindowState;Z)V
 
@@ -43588,10 +43325,10 @@
     :cond_3
     move v9, v11
 
-    .line 2121
+    .line 2118
     goto :goto_0
 
-    .line 2138
+    .line 2135
     .end local v6           #token:Lcom/android/server/wm/WindowToken;
     :cond_4
     return-void
@@ -43611,7 +43348,7 @@
     .end annotation
 
     .prologue
-    .line 3639
+    .line 3636
     .local p1, tokens:Ljava/util/List;,"Ljava/util/List<Landroid/os/IBinder;>;"
     invoke-interface {p1}, Ljava/util/List;->size()I
 
@@ -43619,7 +43356,7 @@
 
     add-int/lit8 v2, v3, -0x1
 
-    .line 3640
+    .line 3637
     .local v2, v:I
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
@@ -43629,14 +43366,14 @@
 
     add-int/lit8 v1, v3, -0x1
 
-    .line 3641
+    .line 3638
     .local v1, m:I
     :goto_0
     if-ltz v2, :cond_2
 
     if-ltz v1, :cond_2
 
-    .line 3642
+    .line 3639
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -43645,19 +43382,19 @@
 
     check-cast v0, Lcom/android/server/wm/AppWindowToken;
 
-    .line 3643
+    .line 3640
     .local v0, atoken:Lcom/android/server/wm/AppWindowToken;
     iget-boolean v3, v0, Lcom/android/server/wm/AppWindowToken;->removed:Z
 
     if-eqz v3, :cond_0
 
-    .line 3644
+    .line 3641
     add-int/lit8 v1, v1, -0x1
 
-    .line 3645
+    .line 3642
     goto :goto_0
 
-    .line 3647
+    .line 3644
     :cond_0
     invoke-interface {p1, v2}, Ljava/util/List;->get(I)Ljava/lang/Object;
 
@@ -43667,7 +43404,7 @@
 
     if-eq v3, v4, :cond_1
 
-    .line 3648
+    .line 3645
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -43726,23 +43463,23 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3651
+    .line 3648
     :cond_1
     add-int/lit8 v2, v2, -0x1
 
-    .line 3652
+    .line 3649
     add-int/lit8 v1, v1, -0x1
 
-    .line 3653
+    .line 3650
     goto :goto_0
 
-    .line 3654
+    .line 3651
     .end local v0           #atoken:Lcom/android/server/wm/AppWindowToken;
     :cond_2
     :goto_1
     if-ltz v2, :cond_3
 
-    .line 3655
+    .line 3652
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -43779,17 +43516,17 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3656
+    .line 3653
     add-int/lit8 v2, v2, -0x1
 
     goto :goto_1
 
-    .line 3658
+    .line 3655
     :cond_3
     :goto_2
     if-ltz v1, :cond_5
 
-    .line 3659
+    .line 3656
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mAppTokens:Ljava/util/ArrayList;
 
     invoke-virtual {v3, v1}, Ljava/util/ArrayList;->get(I)Ljava/lang/Object;
@@ -43798,13 +43535,13 @@
 
     check-cast v0, Lcom/android/server/wm/AppWindowToken;
 
-    .line 3660
+    .line 3657
     .restart local v0       #atoken:Lcom/android/server/wm/AppWindowToken;
     iget-boolean v3, v0, Lcom/android/server/wm/AppWindowToken;->removed:Z
 
     if-nez v3, :cond_4
 
-    .line 3661
+    .line 3658
     const-string v3, "WindowManager"
 
     new-instance v4, Ljava/lang/StringBuilder;
@@ -43839,14 +43576,14 @@
 
     invoke-static {v3, v4}, Landroid/util/Slog;->w(Ljava/lang/String;Ljava/lang/String;)I
 
-    .line 3663
+    .line 3660
     :cond_4
     add-int/lit8 v1, v1, -0x1
 
-    .line 3664
+    .line 3661
     goto :goto_2
 
-    .line 3665
+    .line 3662
     .end local v0           #atoken:Lcom/android/server/wm/AppWindowToken;
     :cond_5
     return-void
@@ -44844,17 +44581,17 @@
     .prologue
     const/4 v3, 0x1
 
-    .line 9763
+    .line 9709
     if-eqz p1, :cond_1
 
     if-eqz p2, :cond_1
 
-    .line 9764
+    .line 9710
     iget-object v4, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v4
 
-    .line 9765
+    .line 9711
     const/4 v5, 0x0
 
     const/4 v6, 0x1
@@ -44864,16 +44601,16 @@
 
     move-result-object v2
 
-    .line 9766
+    .line 9712
     .local v2, win:Lcom/android/server/wm/WindowState;
     if-eqz v2, :cond_0
 
-    .line 9767
+    .line 9713
     new-instance v1, Landroid/util/Pair;
 
     invoke-direct {v1, v2, p2}, Landroid/util/Pair;-><init>(Ljava/lang/Object;Ljava/lang/Object;)V
 
-    .line 9769
+    .line 9715
     .local v1, pair:Landroid/util/Pair;,"Landroid/util/Pair<Lcom/android/server/wm/WindowState;Landroid/os/IRemoteCallback;>;"
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
@@ -44883,7 +44620,7 @@
 
     move-result-object v0
 
-    .line 9770
+    .line 9716
     .local v0, m:Landroid/os/Message;
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mH:Lcom/android/server/wm/WindowManagerService$H;
 
@@ -44891,37 +44628,37 @@
 
     invoke-virtual {v5, v0, v6, v7}, Lcom/android/server/wm/WindowManagerService$H;->sendMessageDelayed(Landroid/os/Message;J)Z
 
-    .line 9771
+    .line 9717
     iget-object v5, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingForDrawn:Ljava/util/ArrayList;
 
     invoke-virtual {v5, v1}, Ljava/util/ArrayList;->add(Ljava/lang/Object;)Z
 
-    .line 9772
+    .line 9718
     invoke-virtual {p0}, Lcom/android/server/wm/WindowManagerService;->checkDrawnWindowsLocked()V
 
-    .line 9773
+    .line 9719
     monitor-exit v4
 
-    .line 9777
+    .line 9723
     .end local v0           #m:Landroid/os/Message;
     .end local v1           #pair:Landroid/util/Pair;,"Landroid/util/Pair<Lcom/android/server/wm/WindowState;Landroid/os/IRemoteCallback;>;"
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     :goto_0
     return v3
 
-    .line 9775
+    .line 9721
     .restart local v2       #win:Lcom/android/server/wm/WindowState;
     :cond_0
     monitor-exit v4
 
-    .line 9777
+    .line 9723
     .end local v2           #win:Lcom/android/server/wm/WindowState;
     :cond_1
     const/4 v3, 0x0
 
     goto :goto_0
 
-    .line 9775
+    .line 9721
     :catchall_0
     move-exception v3
 
@@ -44938,12 +44675,12 @@
     .parameter "result"
 
     .prologue
-    .line 2656
+    .line 2653
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 2657
+    .line 2654
     :try_start_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingOnWallpaper:Lcom/android/server/wm/WindowState;
 
@@ -44959,24 +44696,24 @@
 
     if-ne v0, p1, :cond_0
 
-    .line 2659
+    .line 2656
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingOnWallpaper:Lcom/android/server/wm/WindowState;
 
-    .line 2660
+    .line 2657
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     invoke-virtual {v0}, Ljava/lang/Object;->notifyAll()V
 
-    .line 2662
+    .line 2659
     :cond_0
     monitor-exit v1
 
-    .line 2663
+    .line 2660
     return-void
 
-    .line 2662
+    .line 2659
     :catchall_0
     move-exception v0
 
@@ -44992,12 +44729,12 @@
     .parameter "window"
 
     .prologue
-    .line 2036
+    .line 2033
     iget-object v1, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     monitor-enter v1
 
-    .line 2037
+    .line 2034
     :try_start_0
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingOnWallpaper:Lcom/android/server/wm/WindowState;
 
@@ -45013,24 +44750,24 @@
 
     if-ne v0, p1, :cond_0
 
-    .line 2039
+    .line 2036
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mWaitingOnWallpaper:Lcom/android/server/wm/WindowState;
 
-    .line 2040
+    .line 2037
     iget-object v0, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     invoke-virtual {v0}, Ljava/lang/Object;->notifyAll()V
 
-    .line 2042
+    .line 2039
     :cond_0
     monitor-exit v1
 
-    .line 2043
+    .line 2040
     return-void
 
-    .line 2042
+    .line 2039
     :catchall_0
     move-exception v0
 
@@ -45116,7 +44853,7 @@
     .prologue
     const/4 v2, 0x0
 
-    .line 8170
+    .line 8138
     iget-object v3, p0, Lcom/android/server/wm/WindowManagerService;->mWindowMap:Ljava/util/HashMap;
 
     invoke-virtual {v3, p2}, Ljava/util/HashMap;->get(Ljava/lang/Object;)Ljava/lang/Object;
@@ -45125,11 +44862,11 @@
 
     check-cast v1, Lcom/android/server/wm/WindowState;
 
-    .line 8173
+    .line 8141
     .local v1, win:Lcom/android/server/wm/WindowState;
     if-nez v1, :cond_2
 
-    .line 8174
+    .line 8142
     new-instance v0, Ljava/lang/IllegalArgumentException;
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -45158,14 +44895,14 @@
 
     invoke-direct {v0, v3}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
 
-    .line 8176
+    .line 8144
     .local v0, ex:Ljava/lang/RuntimeException;
     if-eqz p3, :cond_0
 
-    .line 8177
+    .line 8145
     throw v0
 
-    .line 8179
+    .line 8147
     :cond_0
     const-string v3, "WindowManager"
 
@@ -45175,14 +44912,14 @@
 
     move-object v1, v2
 
-    .line 8193
+    .line 8161
     .end local v0           #ex:Ljava/lang/RuntimeException;
     .end local v1           #win:Lcom/android/server/wm/WindowState;
     :cond_1
     :goto_0
     return-object v1
 
-    .line 8182
+    .line 8150
     .restart local v1       #win:Lcom/android/server/wm/WindowState;
     :cond_2
     if-eqz p1, :cond_1
@@ -45191,7 +44928,7 @@
 
     if-eq v3, p1, :cond_1
 
-    .line 8183
+    .line 8151
     new-instance v0, Ljava/lang/IllegalArgumentException;
 
     new-instance v3, Ljava/lang/StringBuilder;
@@ -45236,14 +44973,14 @@
 
     invoke-direct {v0, v3}, Ljava/lang/IllegalArgumentException;-><init>(Ljava/lang/String;)V
 
-    .line 8186
+    .line 8154
     .restart local v0       #ex:Ljava/lang/RuntimeException;
     if-eqz p3, :cond_3
 
-    .line 8187
+    .line 8155
     throw v0
 
-    .line 8189
+    .line 8157
     :cond_3
     const-string v3, "WindowManager"
 
@@ -45253,7 +44990,7 @@
 
     move-object v1, v2
 
-    .line 8190
+    .line 8158
     goto :goto_0
 .end method
 
@@ -45264,7 +45001,7 @@
     .parameter "throwOnError"
 
     .prologue
-    .line 8165
+    .line 8133
     invoke-interface {p2}, Landroid/view/IWindow;->asBinder()Landroid/os/IBinder;
 
     move-result-object v0
