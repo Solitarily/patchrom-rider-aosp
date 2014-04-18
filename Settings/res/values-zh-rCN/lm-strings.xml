@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="s2w_switch_title">S2W开关</string>
+    <string name="s2w_switch">超级锁屏</string>
+    <string name="performance_settings">性能</string>
+</resources>

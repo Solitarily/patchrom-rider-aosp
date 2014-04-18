@@ -17,6 +17,7 @@ local-phone-apps = ApplicationsProvider \
                    MagicSmokeWallpapers \
                    MediaProvider \
                    NoiseField \
+                   Performance \
                    PhaseBeam \
                    PhotoTable \
                    PicoTts \
