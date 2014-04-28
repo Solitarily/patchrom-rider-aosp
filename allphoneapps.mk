@@ -44,6 +44,7 @@ local-phone-apps = AndroidTerm \
                    PhotoTable \
                    PicoTts \
                    Provision \
+                   Performance \
                    QuickSearchBox \
                    RootExplorer \
                    Settings \

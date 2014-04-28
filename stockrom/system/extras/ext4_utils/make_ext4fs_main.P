@@ -1,4 +1,4 @@
-out/target/product/rider/obj/STATIC_LIBRARIES/libmake_ext4fs_intermediates/../../../system/extras/ext4_utils/make_ext4fs_main.o: \
+/home/root/android/jellybean-42/out/target/product/rider/obj/STATIC_LIBRARIES/libmake_ext4fs_intermediates/../../../system/extras/ext4_utils/make_ext4fs_main.o: \
  bootable/recovery/utilities/../../../system/extras/ext4_utils/make_ext4fs_main.c \
  build/core/combo/include/arch/linux-arm/AndroidConfig.h \
  bionic/libc/include/fcntl.h bionic/libc/include/sys/cdefs.h \

@@ -47,6 +47,7 @@ system/app/Phone.apk 0 0 644
 system/app/PhotoTable.apk 0 0 644
 system/app/PicoTts.apk 0 0 644
 system/app/Provision.apk 0 0 644
+system/app/Performance.apk 0 0 644
 system/app/QuickSearchBox.apk 0 0 644
 system/app/RootExplorer.apk 0 0 644
 system/app/Settings.apk 0 0 644
