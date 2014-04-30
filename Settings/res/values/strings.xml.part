@@ -2,5 +2,6 @@
 <resources>
     <string name="s2w_switch">S2W Switch</string>
     <string name="s2w_switch_title">S2W Switch</string>
+    <string name="pref_s2w_switch_summary">Set Super lock screen and some related options</string>
     <string name="performance_settings">Performance</string>
 </resources>

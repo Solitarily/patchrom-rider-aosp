@@ -15,7 +15,7 @@
         <CheckBoxPreference android:title="@string/pref_volume_wake_title" android:key="pref_volume_wake" android:summary="@string/pref_volume_wake_summary" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/s2w_switch" >
-        <PreferenceScreen android:title="@string/s2w_switch_title">
+        <PreferenceScreen android:title="@string/s2w_switch_title" android:summary="@string/pref_s2w_switch_summary" >
             <intent android:targetPackage="com.android.sweep2wake" android:action="android.intent.action.MAIN" android:targetClass="com.android.sweep2wake.S2WMainActivity" />
         </PreferenceScreen>
     </PreferenceCategory>
