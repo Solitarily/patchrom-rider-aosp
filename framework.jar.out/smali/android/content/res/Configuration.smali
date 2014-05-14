@@ -311,6 +311,55 @@
     return v0
 .end method
 
+.method private loadPreOperator()V
+    .locals 3
+
+    .prologue
+    const/16 v2, 0x1cc
+
+    const-string/jumbo v1, "ro.carrier.name"
+
+    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    .local v0, carrier:Ljava/lang/String;
+    const-string v1, "ct"
+
+    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_1
+
+    iput v2, p0, Landroid/content/res/Configuration;->mcc:I
+
+    const/4 v1, 0x3
+
+    iput v1, p0, Landroid/content/res/Configuration;->mnc:I
+
+    :cond_0
+    :goto_0
+    return-void
+
+    :cond_1
+    const-string v1, "cu"
+
+    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-eqz v1, :cond_0
+
+    iput v2, p0, Landroid/content/res/Configuration;->mcc:I
+
+    const/4 v1, 0x1
+
+    iput v1, p0, Landroid/content/res/Configuration;->mnc:I
+
+    goto :goto_0
+.end method
+
 .method public static needNewResources(II)Z
     .locals 1
     .parameter "configChanges"
@@ -1649,106 +1698,66 @@
 .end method
 
 .method public setToDefaults()V
-    .locals 4
+    .locals 2
 
     .prologue
-    const/16 v3, 0x1cc
+    const/4 v1, 0x0
 
-    const/4 v2, 0x0
+    const/high16 v0, 0x3f80
 
-    const/high16 v1, 0x3f80
-
-    iput v1, p0, Landroid/content/res/Configuration;->fontScale:F
-
-    iput v2, p0, Landroid/content/res/Configuration;->mnc:I
-
-    iput v2, p0, Landroid/content/res/Configuration;->mcc:I
-
-    const-string/jumbo v1, "ro.carrier.name"
-
-    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
-
-    move-result-object v0
-
-    .local v0, carrier:Ljava/lang/String;
-    const-string v1, "ct"
-
-    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v1
-
-    if-eqz v1, :cond_1
-
-    iput v3, p0, Landroid/content/res/Configuration;->mcc:I
-
-    const/4 v1, 0x3
+    iput v0, p0, Landroid/content/res/Configuration;->fontScale:F
 
     iput v1, p0, Landroid/content/res/Configuration;->mnc:I
 
-    :cond_0
-    :goto_0
-    const/4 v1, 0x0
+    iput v1, p0, Landroid/content/res/Configuration;->mcc:I
 
-    iput-object v1, p0, Landroid/content/res/Configuration;->locale:Ljava/util/Locale;
+    invoke-direct {p0}, Landroid/content/res/Configuration;->loadPreOperator()V
 
-    iput-boolean v2, p0, Landroid/content/res/Configuration;->userSetLocale:Z
+    const/4 v0, 0x0
 
-    iput v2, p0, Landroid/content/res/Configuration;->touchscreen:I
+    iput-object v0, p0, Landroid/content/res/Configuration;->locale:Ljava/util/Locale;
 
-    iput v2, p0, Landroid/content/res/Configuration;->keyboard:I
+    iput-boolean v1, p0, Landroid/content/res/Configuration;->userSetLocale:Z
 
-    iput v2, p0, Landroid/content/res/Configuration;->keyboardHidden:I
+    iput v1, p0, Landroid/content/res/Configuration;->touchscreen:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->hardKeyboardHidden:I
+    iput v1, p0, Landroid/content/res/Configuration;->keyboard:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->navigation:I
+    iput v1, p0, Landroid/content/res/Configuration;->keyboardHidden:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->navigationHidden:I
+    iput v1, p0, Landroid/content/res/Configuration;->hardKeyboardHidden:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->orientation:I
+    iput v1, p0, Landroid/content/res/Configuration;->navigation:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->screenLayout:I
+    iput v1, p0, Landroid/content/res/Configuration;->navigationHidden:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->uiMode:I
+    iput v1, p0, Landroid/content/res/Configuration;->orientation:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->compatScreenWidthDp:I
+    iput v1, p0, Landroid/content/res/Configuration;->screenLayout:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->screenWidthDp:I
+    iput v1, p0, Landroid/content/res/Configuration;->uiMode:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->compatScreenHeightDp:I
+    iput v1, p0, Landroid/content/res/Configuration;->compatScreenWidthDp:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->screenHeightDp:I
+    iput v1, p0, Landroid/content/res/Configuration;->screenWidthDp:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->compatSmallestScreenWidthDp:I
+    iput v1, p0, Landroid/content/res/Configuration;->compatScreenHeightDp:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->smallestScreenWidthDp:I
+    iput v1, p0, Landroid/content/res/Configuration;->screenHeightDp:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->densityDpi:I
+    iput v1, p0, Landroid/content/res/Configuration;->compatSmallestScreenWidthDp:I
 
-    iput v2, p0, Landroid/content/res/Configuration;->seq:I
+    iput v1, p0, Landroid/content/res/Configuration;->smallestScreenWidthDp:I
+
+    iput v1, p0, Landroid/content/res/Configuration;->densityDpi:I
+
+    iput v1, p0, Landroid/content/res/Configuration;->seq:I
 
     iget-object v1, p0, Landroid/content/res/Configuration;->extraConfig:Lmiui/content/res/ExtraConfiguration;
 
     invoke-virtual {v1}, Lmiui/content/res/ExtraConfiguration;->setToDefaults()V
 
     return-void
-
-    :cond_1
-    const-string v1, "cu"
-
-    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v1
-
-    if-eqz v1, :cond_0
-
-    iput v3, p0, Landroid/content/res/Configuration;->mcc:I
-
-    const/4 v1, 0x1
-
-    iput v1, p0, Landroid/content/res/Configuration;->mnc:I
-
-    goto :goto_0
 .end method
 
 .method public toString()Ljava/lang/String;

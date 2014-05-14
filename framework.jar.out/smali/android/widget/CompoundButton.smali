@@ -482,7 +482,7 @@
 
     move-result v0
 
-    if-eqz v0, :cond_miui_0
+    if-eqz v0, :cond_0
 
     iget-boolean v0, p0, Landroid/widget/CompoundButton;->mChecked:Z
 
@@ -500,7 +500,7 @@
 
     return-void
 
-    :cond_miui_0
+    :cond_0
     invoke-super {p0, p1}, Landroid/widget/Button;->onInitializeAccessibilityEvent(Landroid/view/accessibility/AccessibilityEvent;)V
 
     const-class v0, Landroid/widget/CompoundButton;
@@ -535,7 +535,7 @@
 
     move-result v0
 
-    if-eqz v0, :cond_miui_0
+    if-eqz v0, :cond_0
 
     invoke-virtual {p1, v1}, Landroid/view/accessibility/AccessibilityNodeInfo;->setCheckable(Z)V
 
@@ -555,7 +555,7 @@
 
     return-void
 
-    :cond_miui_0
+    :cond_0
     invoke-super {p0, p1}, Landroid/widget/Button;->onInitializeAccessibilityNodeInfo(Landroid/view/accessibility/AccessibilityNodeInfo;)V
 
     const-class v0, Landroid/widget/CompoundButton;

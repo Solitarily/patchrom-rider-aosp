@@ -501,6 +501,8 @@
 
     invoke-static {v0, v1}, Landroid/app/ContextImpl;->registerService(Ljava/lang/String;Landroid/app/ContextImpl$ServiceFetcher;)V
 
+    invoke-static {}, Landroid/app/ContextImpl;->registerMiuiServices()V
+
     .line 545
     const-string v0, "WiMax"
 
@@ -509,8 +511,6 @@
     invoke-direct {v1}, Landroid/app/ContextImpl$41;-><init>()V
 
     invoke-static {v0, v1}, Landroid/app/ContextImpl;->registerService(Ljava/lang/String;Landroid/app/ContextImpl$ServiceFetcher;)V
-
-    invoke-static {}, Landroid/app/ContextImpl;->registerMiuiServices()V
 
     return-void
 .end method
@@ -1143,42 +1143,6 @@
     .catchall {:try_start_0 .. :try_end_0} :catchall_0
 
     throw v0
-.end method
-
-.method private getTopLevelResources(Landroid/app/ActivityThread;Landroid/content/res/Resources;)Landroid/content/res/Resources;
-    .locals 6
-    .parameter "mainThread"
-    .parameter "container"
-
-    .prologue
-    .line 616
-    iget-object v0, p0, Landroid/app/ContextImpl;->mPackageInfo:Landroid/app/LoadedApk;
-
-    iget-object v1, v0, Landroid/app/LoadedApk;->mPackageName:Ljava/lang/String;
-
-    .line 1899
-    iget-object v0, p0, Landroid/app/ContextImpl;->mPackageInfo:Landroid/app/LoadedApk;
-
-    invoke-virtual {v0}, Landroid/app/LoadedApk;->getResDir()Ljava/lang/String;
-
-    move-result-object v2
-
-    const/4 v3, 0x0
-
-    const/4 v4, 0x0
-
-    invoke-virtual {p2}, Landroid/content/res/Resources;->getCompatibilityInfo()Landroid/content/res/CompatibilityInfo;
-
-    move-result-object v5
-
-    move-object v0, p1
-
-    invoke-virtual/range {v0 .. v5}, Landroid/app/ActivityThread;->getTopLevelResources(Ljava/lang/String;Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources;
-
-    move-result-object v0
-
-    .line 881
-    return-object v0
 .end method
 
 .method private getWallpaperManager()Landroid/app/WallpaperManager;
@@ -6560,4 +6524,40 @@
     move-exception v1
 
     goto :goto_0
+.end method
+
+.method private getTopLevelResources(Landroid/app/ActivityThread;Landroid/content/res/Resources;)Landroid/content/res/Resources;
+    .locals 6
+    .parameter "mainThread"
+    .parameter "container"
+
+    .prologue
+    .line 616
+    iget-object v0, p0, Landroid/app/ContextImpl;->mPackageInfo:Landroid/app/LoadedApk;
+
+    iget-object v1, v0, Landroid/app/LoadedApk;->mPackageName:Ljava/lang/String;
+
+    .line 1899
+    iget-object v0, p0, Landroid/app/ContextImpl;->mPackageInfo:Landroid/app/LoadedApk;
+
+    invoke-virtual {v0}, Landroid/app/LoadedApk;->getResDir()Ljava/lang/String;
+
+    move-result-object v2
+
+    const/4 v3, 0x0
+
+    const/4 v4, 0x0
+
+    invoke-virtual {p2}, Landroid/content/res/Resources;->getCompatibilityInfo()Landroid/content/res/CompatibilityInfo;
+
+    move-result-object v5
+
+    move-object v0, p1
+
+    invoke-virtual/range {v0 .. v5}, Landroid/app/ActivityThread;->getTopLevelResources(Ljava/lang/String;Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources;
+
+    move-result-object v0
+
+    .line 881
+    return-object v0
 .end method

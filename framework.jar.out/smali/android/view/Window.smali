@@ -536,7 +536,7 @@
     const/4 v0, 0x0
 
     invoke-virtual {p0, v0, p1}, Landroid/view/Window;->setExtraFlags(II)V
-
+    
     return-void
 .end method
 
@@ -1246,8 +1246,23 @@
     return-void
 .end method
 
+.method public abstract setFeatureDrawable(ILandroid/graphics/drawable/Drawable;)V
+.end method
+
+.method public abstract setFeatureDrawableAlpha(II)V
+.end method
+
+.method public abstract setFeatureDrawableResource(II)V
+.end method
+
+.method public abstract setFeatureDrawableUri(ILandroid/net/Uri;)V
+.end method
+
+.method public abstract setFeatureInt(II)V
+.end method
+
 .method public setExtraFlags(II)V
-    .locals 4
+    .locals 3
     .parameter "flags"
     .parameter "mask"
 
@@ -1279,21 +1294,6 @@
 
     :cond_0
     return-void
-.end method
-
-.method public abstract setFeatureDrawable(ILandroid/graphics/drawable/Drawable;)V
-.end method
-
-.method public abstract setFeatureDrawableAlpha(II)V
-.end method
-
-.method public abstract setFeatureDrawableResource(II)V
-.end method
-
-.method public abstract setFeatureDrawableUri(ILandroid/net/Uri;)V
-.end method
-
-.method public abstract setFeatureInt(II)V
 .end method
 
 .method public setFlags(II)V

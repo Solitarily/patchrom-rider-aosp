@@ -165,12 +165,10 @@
 .end method
 
 .method private static beginShutdownSequence(Landroid/content/Context;)V
-    .locals 8
+    .locals 7
     .parameter "context"
 
     .prologue
-    const v7, 0x60d003e
-
     const/4 v5, 0x1
 
     const/4 v4, 0x0
@@ -216,7 +214,7 @@
     .line 265
     new-instance v1, Landroid/app/ProgressDialog;
 
-    invoke-direct {v1, p0, v7}, Landroid/app/ProgressDialog;-><init>(Landroid/content/Context;I)V
+    invoke-direct {v1, p0}, Landroid/app/ProgressDialog;-><init>(Landroid/content/Context;)V
 
     .line 266
     .local v1, pd:Landroid/app/ProgressDialog;
@@ -808,13 +806,11 @@
 .end method
 
 .method static shutdownInner(Landroid/content/Context;Z)V
-    .locals 11
+    .locals 10
     .parameter "context"
     .parameter "confirm"
 
     .prologue
-    const v10, 0x60d003e
-
     const v9, 0x1040013
 
     const v8, 0x1040009
@@ -932,7 +928,7 @@
     .line 138
     new-instance v4, Landroid/app/AlertDialog$Builder;
 
-    invoke-direct {v4, p0, v10}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;I)V
+    invoke-direct {v4, p0}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
 
     const v5, 0x10400de
 
@@ -1007,7 +1003,7 @@
 
     invoke-static {v4}, Lcom/android/server/power/ShutdownThread$Injector;->setDialogTitle(Landroid/app/Dialog;)V
 
-    sget-object v4, Lcom/android/server/power/ShutdownThread;->sConfirmDialog:Landroid/app/AlertDialog;
+   sget-object v4, Lcom/android/server/power/ShutdownThread;->sConfirmDialog:Landroid/app/AlertDialog;
 
     iput-object v4, v1, Lcom/android/server/power/ShutdownThread$CloseDialogReceiver;->dialog:Landroid/app/Dialog;
 
@@ -1070,7 +1066,7 @@
     :cond_4
     new-instance v4, Landroid/app/AlertDialog$Builder;
 
-    invoke-direct {v4, p0, v10}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;I)V
+    invoke-direct {v4, p0}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
 
     const v5, 0x1080027
 

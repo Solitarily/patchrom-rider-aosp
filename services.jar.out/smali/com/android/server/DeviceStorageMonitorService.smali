@@ -1402,9 +1402,9 @@
 
     iput v0, v9, Landroid/app/Notification;->flags:I
 
-    invoke-direct {p0, v9}, Lcom/android/server/DeviceStorageMonitorService;->useMiuiIconForNotification(Landroid/app/Notification;)V
+    invoke-direct {p0}, Lcom/android/server/DeviceStorageMonitorService;->getUiContext()Landroid/content/Context;
 
-    iget-object v0, p0, Lcom/android/server/DeviceStorageMonitorService;->mContext:Landroid/content/Context;
+    move-result-object v0
 
     invoke-virtual {v9, v0, v10, v6, v7}, Landroid/app/Notification;->setLatestEventInfo(Landroid/content/Context;Ljava/lang/CharSequence;Ljava/lang/CharSequence;Landroid/app/PendingIntent;)V
 
@@ -1413,6 +1413,8 @@
     sget-object v1, Landroid/os/UserHandle;->ALL:Landroid/os/UserHandle;
 
     invoke-virtual {v8, v4, v0, v9, v1}, Landroid/app/NotificationManager;->notifyAsUser(Ljava/lang/String;ILandroid/app/Notification;Landroid/os/UserHandle;)V
+
+    invoke-direct {p0, v9}, Lcom/android/server/DeviceStorageMonitorService;->useMiuiIconForNotification(Landroid/app/Notification;)V
 
     iget-object v0, p0, Lcom/android/server/DeviceStorageMonitorService;->mContext:Landroid/content/Context;
 

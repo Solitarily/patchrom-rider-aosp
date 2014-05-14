@@ -23,6 +23,7 @@
     .line 77
     invoke-direct {p0}, Ljava/lang/Thread;-><init>()V
 
+    .line 95
     return-void
 .end method
 
@@ -1366,15 +1367,6 @@
 
     invoke-static {v7, v9}, Landroid/os/ServiceManager;->addService(Ljava/lang/String;Landroid/os/IBinder;)V
 
-    .line 447
-    const-string v7, "miui.clipserviceext"
-
-    new-instance v9, Lcom/miui/server/ClipServiceExtra;
-
-    invoke-direct {v9}, Lcom/miui/server/ClipServiceExtra;-><init>()V
-
-    invoke-static {v7, v9}, Landroid/os/ServiceManager;->addService(Ljava/lang/String;Landroid/os/IBinder;)V
-        
     invoke-direct/range {p0 .. p0}, Lcom/android/server/ServerThread;->addClipServiceExtra()V
     :try_end_1d
     .catch Ljava/lang/Throwable; {:try_start_1d .. :try_end_1d} :catch_b

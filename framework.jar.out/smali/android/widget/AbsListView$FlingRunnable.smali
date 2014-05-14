@@ -623,6 +623,7 @@
     sub-int v2, v20, v2
 
     neg-int v4, v2
+
     move-object/from16 v0, p0
 
     iget-object v2, v0, Landroid/widget/AbsListView$FlingRunnable;->this$0:Landroid/widget/AbsListView;

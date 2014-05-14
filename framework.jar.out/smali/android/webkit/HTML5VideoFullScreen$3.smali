@@ -48,7 +48,7 @@
 
     move-result-object v0
 
-    if-eqz v0, :cond_0
+    if-eqz v0, :cond_miui_0
 
     iget-object v1, p0, Landroid/webkit/HTML5VideoFullScreen$3;->this$0:Landroid/webkit/HTML5VideoFullScreen;
 
@@ -59,19 +59,18 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/FrameLayout;->removeView(Landroid/view/View;)V
 
-    :cond_0
+    :cond_miui_0
     invoke-static {}, Landroid/webkit/HTML5VideoFullScreen;->access$1000()Landroid/view/View;
 
     move-result-object v0
 
-    if-eqz v0, :cond_2
+    if-eqz v0, :cond_0
 
-    .line 255
     invoke-static {}, Landroid/webkit/HTML5VideoFullScreen;->access$900()Landroid/widget/FrameLayout;
 
     move-result-object v0
 
-    if-eqz v0, :cond_1
+    if-eqz v0, :cond_miui_2
 
     invoke-static {}, Landroid/webkit/HTML5VideoFullScreen;->access$1000()Landroid/view/View;
 
@@ -79,18 +78,17 @@
 
     invoke-virtual {v0, v1}, Landroid/widget/FrameLayout;->removeView(Landroid/view/View;)V
 
-    :cond_1
+    :cond_miui_2
     invoke-static {v2}, Landroid/webkit/HTML5VideoFullScreen;->access$1002(Landroid/view/View;)Landroid/view/View;
 
-    :cond_2
+    :cond_0
     invoke-static {v2}, Landroid/webkit/HTML5VideoFullScreen;->access$902(Landroid/widget/FrameLayout;)Landroid/widget/FrameLayout;
 
-    .line 260
     iget-object v0, p0, Landroid/webkit/HTML5VideoFullScreen$3;->this$0:Landroid/webkit/HTML5VideoFullScreen;
 
     iget-object v0, v0, Landroid/webkit/HTML5VideoFullScreen;->mProxy:Landroid/webkit/HTML5VideoViewProxy;
 
-    if-eqz v0, :cond_3
+    if-eqz v0, :cond_miui_1
 
     invoke-virtual {v0}, Landroid/webkit/HTML5VideoViewProxy;->getWebView()Landroid/webkit/WebViewClassic;
 
@@ -122,11 +120,10 @@
 
     invoke-virtual {v0, v1}, Landroid/webkit/HTML5VideoViewProxy;->dispatchOnStopFullScreen(Z)V
 
-    .line 265
     iget-object v0, p0, Landroid/webkit/HTML5VideoFullScreen$3;->this$0:Landroid/webkit/HTML5VideoFullScreen;
 
     iput-object v2, v0, Landroid/webkit/HTML5VideoFullScreen;->mProxy:Landroid/webkit/HTML5VideoViewProxy;
 
-    :cond_3
+    :cond_miui_1
     return-void
 .end method

@@ -23,7 +23,7 @@ then
             rm -rf "$file3"
     done
 
-	rm -rf "$BUILD_OUT/framework/smali/com/google/android/mms"
+	#rm -rf "$BUILD_OUT/framework/smali/com/google/android/mms"
 
     # move some smali to create a separate $SEP_FRAME.jar
     # including: smali/miui smali/android/widget
@@ -31,12 +31,10 @@ then
     #rm -rf $BUILD_OUT/$SEP_FRAME/smali/miui
 	rm -rf "$BUILD_OUT/$SEP_FRAME/smali/android/"
 	mkdir -p "$BUILD_OUT/$SEP_FRAME/smali/android"
-	mkdir -p "$BUILD_OUT/$SEP_FRAME/smali/android/service"
         #overlay
         cp -f overlay/Editor/* $BUILD_OUT/framework/smali/android/widget
-    #mv "$BUILD_OUT/framework/smali/android/widget" "$BUILD_OUT/$SEP_FRAME/smali/android/"
+    mv "$BUILD_OUT/framework/smali/android/widget" "$BUILD_OUT/$SEP_FRAME/smali/android/"
 	#mv "$BUILD_OUT/framework/smali/miui" "$BUILD_OUT/$SEP_FRAME/smali"
-   mv "$BUILD_OUT/framework/smali/android/service/dreams"  "$BUILD_OUT/$SEP_FRAME/smali/android/service/"
 fi
 
 if [ $2 = "$BUILD_OUT/framework_ext" ]
@@ -60,8 +58,7 @@ then
     done
 
 	#cp -rf "$BUILD_OUT/framework_miui/smali/com/google/android/mms" "$BUILD_OUT/framework_ext/smali/com/google/android"
-    cp -rf "$BUILD_OUT/$SEP_FRAME/smali/android/service/dreams"  "$BUILD_OUT/framework_ext/smali/android/service"
-	#mv "$BUILD_OUT/$SEP_FRAME/smali/android/widget/"  "$BUILD_OUT/framework_ext/smali/android/widget"
+	mv "$BUILD_OUT/$SEP_FRAME/smali/android/widget/"  "$BUILD_OUT/framework_ext/smali/android/widget"
 	#mv "$BUILD_OUT/$SEP_FRAME/smali/miui/"  "$BUILD_OUT/framework_ext/smali/miui"
 	rm -rf $BUILD_OUT/$SEP_FRAME
 fi

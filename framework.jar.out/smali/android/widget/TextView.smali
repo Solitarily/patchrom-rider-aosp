@@ -8882,6 +8882,7 @@
     :cond_19
     if-eqz v22, :cond_1a
 
+    .line 3700
     const/4 v4, 0x0
 
     move-object/from16 v0, p0
@@ -8907,6 +8908,7 @@
 
     invoke-virtual {v0, v1, v4, v2, v3}, Landroid/widget/TextView;->onTextChanged(Ljava/lang/CharSequence;III)V
 
+    .line 3702
     if-eqz v15, :cond_1b
 
     .line 3708
@@ -8915,6 +8917,7 @@
     .end local p1
     invoke-virtual/range {p0 .. p1}, Landroid/widget/TextView;->sendAfterTextChanged(Landroid/text/Editable;)V
 
+    .line 3707
     :cond_1b
     move-object/from16 v0, p0
 
@@ -8928,6 +8931,7 @@
 
     invoke-virtual {v4}, Landroid/widget/Editor;->prepareCursorControllers()V
 
+    .line 3708
     :cond_1c
     return-void
 .end method
@@ -8939,49 +8943,59 @@
     .parameter "styleIndex"
 
     .prologue
+    .line 1267
     const/4 v0, 0x0
 
+    .line 1268
     .local v0, tf:Landroid/graphics/Typeface;
     if-eqz p1, :cond_0
 
+    .line 1269
     invoke-static {p1, p3}, Landroid/graphics/Typeface;->create(Ljava/lang/String;I)Landroid/graphics/Typeface;
 
     move-result-object v0
 
+    .line 1270
     if-eqz v0, :cond_0
 
+    .line 1271
     invoke-virtual {p0, v0}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
 
+    .line 1290
     :goto_0
     return-void
 
+    .line 1275
     :cond_0
     packed-switch p2, :pswitch_data_0
 
+    .line 1289
     :goto_1
-    invoke-static {v0, p2, p3}, Landroid/graphics/MiuiTypeface;->getChangedTypeface(Landroid/graphics/Typeface;II)Landroid/graphics/Typeface;
-
-    move-result-object v0
-
     invoke-virtual {p0, v0, p3}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;I)V
 
     goto :goto_0
 
+    .line 1277
     :pswitch_0
     sget-object v0, Landroid/graphics/Typeface;->SANS_SERIF:Landroid/graphics/Typeface;
 
+    .line 1278
     goto :goto_1
 
+    .line 1281
     :pswitch_1
     sget-object v0, Landroid/graphics/Typeface;->SERIF:Landroid/graphics/Typeface;
 
+    .line 1282
     goto :goto_1
 
+    .line 1285
     :pswitch_2
     sget-object v0, Landroid/graphics/Typeface;->MONOSPACE:Landroid/graphics/Typeface;
 
     goto :goto_1
 
+    .line 1275
     nop
 
     :pswitch_data_0
@@ -22452,6 +22466,7 @@
 
     return v8
 
+    .line 7516
     :cond_0
     invoke-super {p0, p1}, Landroid/view/View;->onTouchEvent(Landroid/view/MotionEvent;)Z
 
@@ -27876,14 +27891,12 @@
 
     invoke-virtual {v4, v2}, Landroid/text/TextPaint;->setFakeBoldText(Z)V
 
+    .line 1385
     iget-object v2, p0, Landroid/widget/TextView;->mTextPaint:Landroid/text/TextPaint;
 
     invoke-virtual {v2, v3}, Landroid/text/TextPaint;->setTextSkewX(F)V
 
-    invoke-static {p1}, Landroid/graphics/MiuiTypeface;->getDefaultTypeface(Landroid/graphics/Typeface;)Landroid/graphics/Typeface;
-
-    move-result-object p1
-
+    .line 1386
     invoke-virtual {p0, p1}, Landroid/widget/TextView;->setTypeface(Landroid/graphics/Typeface;)V
 
     goto :goto_3

@@ -4379,9 +4379,10 @@
     .parameter "showSubtypes"
 
     .prologue
-    move-object/from16 v0, p0
+    .line 2591
+    invoke-direct/range {p0 .. p0}, Lcom/android/server/InputMethodManagerService;->getUiContext()Landroid/content/Context;
 
-    iget-object v8, v0, Lcom/android/server/InputMethodManagerService;->mContext:Landroid/content/Context;
+    move-result-object v8
 
     .line 2592
     .local v8, context:Landroid/content/Context;

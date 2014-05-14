@@ -1527,8 +1527,6 @@
     .line 782
     .restart local v15       #title:Ljava/lang/CharSequence;
     :goto_2
-
-    .line 783
     const v1, 0x1080522
 
     invoke-virtual {v9, v1}, Landroid/app/Notification$Builder;->setSmallIcon(I)Landroid/app/Notification$Builder;

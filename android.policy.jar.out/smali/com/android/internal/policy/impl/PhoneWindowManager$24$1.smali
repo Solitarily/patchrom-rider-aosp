@@ -23,6 +23,7 @@
     .locals 0
     .parameter
     .parameter "x0"
+    .parameter "x1"
 
     .prologue
     .line 4377

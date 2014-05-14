@@ -193,7 +193,7 @@
 
     .line 3860
     .local v1, bundle:Landroid/os/Bundle;
-    const-string/jumbo v3, "originalWord"
+    const-string v3, "originalWord"
 
     invoke-virtual {v1, v3}, Landroid/os/Bundle;->getString(Ljava/lang/String;)Ljava/lang/String;
 
@@ -201,7 +201,7 @@
 
     .line 3861
     .local v2, originalWord:Ljava/lang/String;
-    const-string/jumbo v3, "word"
+    const-string v3, "word"
 
     invoke-virtual {v1, v3}, Landroid/os/Bundle;->getString(Ljava/lang/String;)Ljava/lang/String;
 
