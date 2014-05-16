@@ -29,7 +29,7 @@
     <bool name="config_unplugTurnsOnScreen">false</bool>
     <bool name="config_animateScreenLights">true</bool>
     <bool name="config_enableScreenshotChord">true</bool>
-    <bool name="config_allowAllRotations">false</bool>
+    <bool name="config_allowAllRotations">true</bool>
     <bool name="config_reverseDefaultRotation">false</bool>
     <bool name="config_deskDockEnablesAccelerometer">true</bool>
     <bool name="config_carDockEnablesAccelerometer">true</bool>
@@ -38,7 +38,7 @@
     <bool name="config_use_strict_phone_number_comparation">false</bool>
     <bool name="config_intrusiveNotificationLed">true</bool>
     <bool name="config_disableMenuKeyInLockScreen">true</bool>
-    <bool name="config_enableLockBeforeUnlockScreen">false</bool>
+    <bool name="config_enableLockBeforeUnlockScreen">true</bool>
     <bool name="config_enableLockScreenRotation">false</bool>
     <bool name="config_enable_puk_unlock_screen">true</bool>
     <bool name="config_enable_emergency_call_while_sim_locked">true</bool>

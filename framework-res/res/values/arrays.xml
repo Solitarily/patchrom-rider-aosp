@@ -421,6 +421,11 @@
         <item>bootloader</item>
     </string-array>
     <string-array name="config_statusBarIcons">
+        <item>bluetooth_handsfree_battery</item>
+        <item>location</item>
+        <item>privacy_mode</item>
+        <item>call_record</item>
+        <item>headset</item>
         <item>ime</item>
         <item>sync_failing</item>
         <item>sync_active</item>
@@ -582,8 +587,10 @@
         <item>0</item>
     </integer-array>
     <string-array name="config_locationProviderPackageNames">
-        <item>com.google.android.location</item>
         <item>com.android.location.fused</item>
+        <item>com.google.android.location</item>
+        <item>com.baidu.map.location</item>
+        <item>com.amap.android.location</item>
     </string-array>
     <array name="config_twoDigitNumberPattern" />
     <array name="config_sms_enabled_single_shift_tables" />

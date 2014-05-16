@@ -94,6 +94,8 @@ dalvik.vm.heapmaxfree=8m
 net.bt.name=Android
 dalvik.vm.stack-trace-file=/data/anr/traces.txt
 
+dalvik.vm.dexopt-data-only=1
+ro.telephony.call_ring.multiple=false
 ro.miui.ui.version.code=3
 ro.miui.ui.version.name=V5
 ro.product.mod_device=Rider_Luomu
